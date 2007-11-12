@@ -1,0 +1,11 @@
+﻿## Interface: 20200
+## Title: Sick of Clicking Dailys ?
+## Author: OrionShock
+## Notes: AutoMagicly clicks though Daily Quests, and Turns them In :D
+## Version: 3
+## X-License: WTFPL
+## X-Email: Orionshock@gmail.com
+## SavedVariables: SOCD_DEBUG_TABLE
+
+localization-enUS.lua
+core.lua
