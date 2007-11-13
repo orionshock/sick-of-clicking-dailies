@@ -36,7 +36,7 @@ Distibuted under the "Do What The Fuck You Want To Public License" (http://sam.z
 SOCD = {}
 local mod = SOCD
 local L = SOCD_LOCALE_TABLE
-
+local DEF = DEFAULT_CHAT_FRAME --DEF:AddMessage("")
 mod["QuestTable"] = {   --<<<<<<<<<<<<============== THIS IS THE TABLE !!!!!
 	--Skettis Dailies >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	[L["Sky Sergeant Doryn"]] = {
@@ -147,6 +147,7 @@ function mod:QUEST_PROGRESS()
 end
 
 function mod:QUEST_COMPLETE()
+	nextQuestFlag = false
 	if IsShiftKeyDown() then return end
 	local npc = mod.CheckNPC()
 	local quest = mod.TitleCheck(npc)
@@ -174,7 +175,7 @@ function mod.CheckNPC()
 	end	
 end
 
-local function QuestItterate(npc, ...)	
+local function QuestItterate(npc, ...)
 	if nextQuestFlag then
 		nextQuestFlag = false
 		if (qi+1) > select("#", ...) then 
@@ -197,11 +198,11 @@ function mod.OpeningCheckQuest(npc)
 	if npc == nil then return end
 	local selection, quest = QuestItterate(npc, GetGossipAvailableQuests())	
 	if quest then
-			return selection, quest, "Active"
+			return selection, quest, "Available"
 	else
 		selection, quest = QuestItterate(npc, GetGossipActiveQuests())
 		if quest then
-			return selection, quest, "Available"
+			return selection, quest, "Active"
 		end
 	end
 end
