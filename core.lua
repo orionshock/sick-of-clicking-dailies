@@ -1,5 +1,5 @@
 ﻿--[[
-Major 3,  MinorSVN:  $Revision$
+Major 4,  MinorSVN:  $Revision$
 
 Sick Of Clicking Dailys is a simple addon designed to pick up and turn in Dailiy Quests for WoW.
 it does no checking to see if you have actualy completed them. If you have DailyFu installed it will quiry it for what
@@ -33,9 +33,9 @@ Distibuted under the "Do What The Fuck You Want To Public License" (http://sam.z
   ***http://sam.zoy.org/wtfpl/COPYING for more details. 
 =====================================================================================================
 ]]--
-SOCD3 = {}
-local mod = SOCD3
-local L = SOCD3_LOCALE_TABLE
+SOCD = {}
+local mod = SOCD
+local L = SOCD_LOCALE_TABLE
 
 mod["QuestTable"] = {   --<<<<<<<<<<<<============== THIS IS THE TABLE !!!!!
 	--Skettis Dailies >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -105,9 +105,7 @@ mod["QuestTable"] = {   --<<<<<<<<<<<<============== THIS IS THE TABLE !!!!!
 		},
 	}
 local MTable = mod["QuestTable"]
-	
-local ftnq, qi
-	
+
 function mod:GOSSIP_SHOW()
 	if IsShiftKeyDown() then return end
 	local npc = mod.CheckNPC()
@@ -130,16 +128,19 @@ function mod:QUEST_DETAIL()
     end
 end
 
+local nextQuestFlag, questIndex
+
 function mod:QUEST_PROGRESS()
     if IsShiftKeyDown() then return end
 	local npc = mod.CheckNPC()
 	local quest = mod.TitleCheck(npc)
 	if npc and quest then
 		if not IsQuestCompletable() then
-			ftnq = true
+			nextQuestFlag = true
+			DeclineQuest()
 			return
 		else
-			ftnq = false
+			nextQuestFlag = false
 		end
 		CompleteQuest()
     end
@@ -174,26 +175,31 @@ function mod.CheckNPC()
 end
 
 local function QuestItterate(npc, ...)	
-	if ftnq then
-		ftnq = false
-		return qi + 1, select(qi+1, ...)
+	if nextQuestFlag then
+		nextQuestFlag = false
+		if (qi+1) > select("#", ...) then 
+			questIndex = 1 
+			return questIndex , select(qi, ...)
+		end
+		questIndex = questIndex + 1
+		return questIndex, select(questIndex + 1, ...)
 	end
 	
 	for i=1, select("#", ...) do
 		if MTable[npc][select(i, ...)] then
-				qi = (i+1)/2 --hacking in loop code.
-				return (i+1)/2 , select(i, ...)
+				questIndex = (i+1)/2 --hacking in loop code.
+				return questIndex , select(i, ...)
 		end
 	end
 end
 
 function mod.OpeningCheckQuest(npc)
 	if npc == nil then return end
-	local selection, quest = QuestItterate(npc, GetGossipActiveQuests())	
+	local selection, quest = QuestItterate(npc, GetGossipAvailableQuests())	
 	if quest then
 			return selection, quest, "Active"
 	else
-		selection, quest = QuestItterate(npc, GetGossipAvailableQuests())
+		selection, quest = QuestItterate(npc, GetGossipActiveQuests())
 		if quest then
 			return selection, quest, "Available"
 		end

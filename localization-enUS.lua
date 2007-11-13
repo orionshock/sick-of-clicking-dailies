@@ -1,7 +1,7 @@
---$Revision$
+--Major 4, Minor $Revision$
 
 if GetLocale() == "enUS" or "enGB" then
-SOCD3_LOCALE_TABLE = {
+SOCD_LOCALE_TABLE = {
 --QNPC's
 	--Skettis
 		["Sky Sergeant Doryn"] = true,
@@ -42,12 +42,11 @@ SOCD3_LOCALE_TABLE = {
 		["The Booterang: A Cure For The Common Worthless Peon"] = true,
 		["Disrupting the Twilight Portal"] = true,
 		["The Deadliest Trap Ever Laid"] = true,
-		["The Deadliest Trap Ever Laid"] = true,
 	}
 
-	for k, v in pairs(SOCD3_LOCALE_TABLE) do
+	for k, v in pairs(SOCD_LOCALE_TABLE) do
 		if v == true then
-			SOCD3_LOCALE_TABLE[k] = k
+			SOCD_LOCALE_TABLE[k] = k
 		end
 	end
 end
