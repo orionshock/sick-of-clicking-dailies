@@ -38,7 +38,7 @@ local mod = SOCD
 local L = SOCD_LOCALE_TABLE
 local DEF = DEFAULT_CHAT_FRAME --DEF:AddMessage("")
 mod["QuestTable"] = {   --<<<<<<<<<<<<============== THIS IS THE TABLE !!!!!
-	--Skettis Dailies >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	--Skettis Dailies 			>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	[L["Sky Sergeant Doryn"]] = {
 		enabled = true,
 		[L["Fires Over Skettis"]] = true,
@@ -48,7 +48,7 @@ mod["QuestTable"] = {   --<<<<<<<<<<<<============== THIS IS THE TABLE !!!!!
 		enabled = true,
 		[L["Escape from Skettis"]] = true,
 		},
-	--Blade's Edge Mountains >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	--Blade's Edge Mountains	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	[L["Skyguard Khatie"]] = {
 		enabled = true,
 		[L["Wrangle More Aether Rays!"]] = true,
@@ -65,7 +65,7 @@ mod["QuestTable"] = {   --<<<<<<<<<<<<============== THIS IS THE TABLE !!!!!
 		enabled = true,
 		[L["Banish More Demons"]] = true,
 		},
-	--Netherwing>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	--Netherwing			>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	[L["Mistress of the Mines"]] = {
 		enabled = true,
 		[L["Picking Up The Pieces..."]] = true,
@@ -178,18 +178,19 @@ end
 local function QuestItterate(npc, ...)
 	if nextQuestFlag then
 		nextQuestFlag = false
-		if (qi+1) > select("#", ...) then 
+		if (questIndex+1) > (select("#", ...)/3) then 
 			questIndex = 1 
-			return questIndex , select(qi, ...)
+			return questIndex , select(questIndex, ...)
 		end
 		questIndex = questIndex + 1
 		return questIndex, select(questIndex + 1, ...)
 	end
-	
-	for i=1, select("#", ...) do
+
+	qi = 0
+	for i=1, select("#", ...), 3 do
+		qi = qi + 1
 		if MTable[npc][select(i, ...)] then
-				questIndex = (i+1)/2 --hacking in loop code.
-				return questIndex , select(i, ...)
+			return qi , select(i, ...)
 		end
 	end
 end
@@ -207,6 +208,23 @@ function mod.OpeningCheckQuest(npc)
 	end
 end
 
+--[[
+1Quest, 1lvl, 1nil, 2Quest, 2lvl, 2nil, 3Quest, 3lvl, 3nil, 4Quest, 4lvl, 4nil, 5Quest, 5lvl, 5nil,
+
+quest / selection
+
+1  1
+2 4 /2 = 2
+3 7 /2 = 
+4 8
+
+ "A Slow Death", 70, nil,                                 1 +1 /2
+ "The Not-So-Friendly Skies...", 70, nil,       4
+ "Accepting All Eggs", 70, nil                         7
+ x, x, x,  						10
+
+
+]]--
 function mod.TitleCheck(npc)
 	if npc == nil then return end
 	if MTable[npc][GetTitleText()] then 

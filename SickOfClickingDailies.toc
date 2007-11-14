@@ -1,10 +1,11 @@
 ﻿## Interface: 20300
-## Title: Sick of Clicking Dailys ? (Version 4)
+## Title: Sick of Clicking Dailys ?
 ## Author: OrionShock
-## Notes: AutoMagicly clicks though Daily Quest Gossip, and Turns them In :D
+## Notes: AutoMagicly clicks though Daily Quests, and Turns them In :D
 ## Version: 4
 ## X-License: WTFPL
 ## X-Email: Orionshock@gmail.com
+## ##SavedVariables:
 
 localization-enUS.lua
 core.lua
