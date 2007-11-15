@@ -103,6 +103,13 @@ mod["QuestTable"] = {   --<<<<<<<<<<<<============== THIS IS THE TABLE !!!!!
 		enabled = false,
 		[L["The Deadliest Trap Ever Laid"]] = true,
 		},
+	--Wintersaber Trainer
+	[L["Rivern Frostwind"]] = {
+		enabled = true,
+		[L["Frostsaber Provisions"]] = true,
+		[L["Winterfall Intrusion"]] = true,
+		[L["Rampaging Giants"]] = true,
+		}
 	}
 local MTable = mod["QuestTable"]
 

@@ -21,6 +21,8 @@ SOCD_LOCALE_TABLE = {
 		["Overlord Mor'ghor"] = true,
 		["Commander Hobb"] = true, -- Scryer
 		["Commander Arcus"] = true, --Aldor
+	--Wintersaber Trainer
+		["Rivern Frostwind"] = true,
 --Quests
 	--Skettis
 		["Fires Over Skettis"] = true,
@@ -42,6 +44,11 @@ SOCD_LOCALE_TABLE = {
 		["The Booterang: A Cure For The Common Worthless Peon"] = true,
 		["Disrupting the Twilight Portal"] = true,
 		["The Deadliest Trap Ever Laid"] = true,
+	--Wintersaber Trainer
+		["Frostsaber Provisions"] = true,
+		["Winterfall Intrusion"] = true,
+		["Rampaging Giants"] = true,
+
 	}
 
 	for k, v in pairs(SOCD_LOCALE_TABLE) do
