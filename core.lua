@@ -135,7 +135,7 @@ function mod:QUEST_DETAIL()
     end
 end
 
-local nextQuestFlag, questIndex
+local nextQuestFlag, questIndex = false, 0
 
 function mod:QUEST_PROGRESS()
     if IsShiftKeyDown() then return end
@@ -144,7 +144,7 @@ function mod:QUEST_PROGRESS()
 	if npc and quest then
 		if not IsQuestCompletable() then
 			nextQuestFlag = true
-			DeclineQuest()
+			--DeclineQuest()
 			return
 		else
 			nextQuestFlag = false
@@ -185,7 +185,7 @@ end
 local function QuestItterate(npc, ...)
 	if nextQuestFlag then
 		nextQuestFlag = false
-		if (questIndex+1) > (select("#", ...)/3) then 
+		if (questIndex + 1) > (select("#", ...)/3) then 
 			questIndex = 1 
 			return questIndex , select(questIndex, ...)
 		end
