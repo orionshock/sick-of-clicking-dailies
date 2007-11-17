@@ -144,7 +144,7 @@ function mod:QUEST_PROGRESS()
 	if npc and quest then
 		if not IsQuestCompletable() then
 			nextQuestFlag = true
-			--DeclineQuest()
+			DeclineQuest()
 			return
 		else
 			nextQuestFlag = false
@@ -182,21 +182,28 @@ function mod.CheckNPC()
 	end	
 end
 
+local ghettoTable = { 1, 4, 7, 10, 13 } --Ghetto Table is the string # for the ... values
+
 local function QuestItterate(npc, ...)
+	if (...) == nil then return end
+	local npcTbl = MTable[npc]
 	if nextQuestFlag then
 		nextQuestFlag = false
-		if (questIndex + 1) > (select("#", ...)/3) then 
-			questIndex = 1 
-			return questIndex , select(questIndex, ...)
-		end
 		questIndex = questIndex + 1
-		return questIndex, select(questIndex + 1, ...)
+		if questIndex > (select( "#", ...)/3) then 
+			questIndex = 1 
+		end
+		
+		if npcTbl[select( ghettoTable[questIndex] , ... ) ] then
+			return questIndex, select( ghettoTable[questIndex] , ... )
+		end
+		
 	end
-
-	qi = 0
+	local qi = 0
 	for i=1, select("#", ...), 3 do
 		qi = qi + 1
-		if MTable[npc][select(i, ...)] then
+		if npcTbl[select(i, ...)] then
+			questIndex = qi
 			return qi , select(i, ...)
 		end
 	end
@@ -225,10 +232,11 @@ quest / selection
 3 7 /2 = 
 4 8
 
- "A Slow Death", 70, nil,                                 1 +1 /2
- "The Not-So-Friendly Skies...", 70, nil,       4
- "Accepting All Eggs", 70, nil                         7
- x, x, x,  						10
+ "A Slow Death", 70, nil,                                 1  , 2, 3
+ "The Not-So-Friendly Skies...", 70, nil,       4. 5. 6
+ "Accepting All Eggs", 70, nil                         7,  8, 9
+ x, x, x,  						10, 11, 12
+ yyy							13, 14, 15
 
 
 ]]--
