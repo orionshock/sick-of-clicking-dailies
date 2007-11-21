@@ -5,7 +5,7 @@
 ## Version: 4
 ## X-License: WTFPL
 ## X-Email: Orionshock@gmail.com
-## ##SavedVariables:
+
 
 localization-enUS.lua
 core.lua
