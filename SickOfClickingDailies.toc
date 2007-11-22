@@ -6,6 +6,6 @@
 ## X-License: WTFPL
 ## X-Email: Orionshock@gmail.com
 
-
+LibStub\LibStub.lua
 localization-enUS.lua
 core.lua
