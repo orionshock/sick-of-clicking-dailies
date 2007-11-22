@@ -1,4 +1,4 @@
---Major 4, Minor Revision: 137 
+--Major 4, Minor Revision: 137
 
 local L = LibStub("AceLocale-3.0"):NewLocale("SickOfClickingDailies", "enUS", true)
 if L then
@@ -39,7 +39,7 @@ if L then
 
 		L["Chief Overseer Mudlump"] = true
 			L["The Booterang: A Cure For The Common Worthless Peon"] = true
-		
+
 		L["Commander Arcus"] = true
 		L["Commander Hobb"] = true
 		L["Overlord Mor'ghor"] = true

@@ -1,10 +1,10 @@
 ﻿--[[
-Major 4,  MinorSVN:  Revision: 137 
+Major 4,  MinorSVN:  Revision: 137
 
 Sick Of Clicking Dailys is a simple addon designed to pick up and turn in Dailiy Quests for WoW.
-it does no checking to see if you have actualy completed them. 
+it does no checking to see if you have actualy completed them.
 
-To Modify Options of what quests / NPC's are enabled look at the Table blolow Titltled "QuestTable", 
+To Modify Options of what quests / NPC's are enabled look at the Table below named "QuestTable",
 find the NPC/Quest and toggle the true/false options.
 
 
@@ -24,22 +24,22 @@ Distibuted under the "Do What The Fuck You Want To Public License" (http://sam.z
    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
   0. You just DO WHAT THE FUCK YOU WANT TO.
-  
+
  ***This program is free software. It comes without any warranty, to
  *** the extent permitted by applicable law. You can redistribute it
   ***and/or modify it under the terms of the Do What The Fuck You Want
-  ***To Public License, Version 2, as published by Sam Hocevar. See 
-  ***http://sam.zoy.org/wtfpl/COPYING for more details. 
+  ***To Public License, Version 2, as published by Sam Hocevar. See
+  ***http://sam.zoy.org/wtfpl/COPYING for more details.
 =====================================================================================================
 ]]--
 SOCD = {}
-SOCD.version = 4 
+SOCD.version = 4
 local addon = SOCD
 local L = LibStub("AceLocale-3.0"):GetLocale("SickOfClickingDailies")
 local DEF = DEFAULT_CHAT_FRAME --DEF:AddMessage("")
-addon["QuestTable"] = {							--- << STARTS HERE>
+addon["QuestTable"] = {							--- << STARTS HERE>>
 				--Skettis Dailies
-				[L["Sky Sergeant Doryn"]] = { 
+				[L["Sky Sergeant Doryn"]] = {
 					enabled = true,
 					[L["Fires Over Skettis"]] = true,
 					[L["Escape from Skettis"]] = true,
@@ -300,7 +300,7 @@ end
 
 function addon:GetQuestOption(info, eNpc, eQuest)
 	local npc, quest
-	if info then 
+	if info then
 		npc = info.arg[1]
 		quest = info.arg[2]
 	else
