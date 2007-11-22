@@ -2,10 +2,9 @@
 Major 4,  MinorSVN:  Revision: 137 
 
 Sick Of Clicking Dailys is a simple addon designed to pick up and turn in Dailiy Quests for WoW.
-it does no checking to see if you have actualy completed them. If you have DailyFu installed it will quiry it for what
-Potion you'd like for the Skettis Escort Quest, but outside of that there are no other quest rewards outside of GOLD!
+it does no checking to see if you have actualy completed them. 
 
-To Modify Options of what quests / NPC's are enabled look at the Table blolow Titltled "MTable", 
+To Modify Options of what quests / NPC's are enabled look at the Table blolow Titltled "QuestTable", 
 find the NPC/Quest and toggle the true/false options.
 
 
@@ -38,7 +37,7 @@ SOCD.version = 4
 local addon = SOCD
 local L = LibStub("AceLocale-3.0"):GetLocale("SickOfClickingDailies")
 local DEF = DEFAULT_CHAT_FRAME --DEF:AddMessage("")
-addon["QuestTable"] = {
+addon["QuestTable"] = {							--- << STARTS HERE>
 				--Skettis Dailies
 				[L["Sky Sergeant Doryn"]] = { 
 					enabled = true,
