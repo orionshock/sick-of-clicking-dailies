@@ -1,5 +1,5 @@
 ﻿--[[
-Major 4,  MinorSVN:  Revision: 137
+Major 4,  MinorSVN:  $Revision: 137$
 
 Sick Of Clicking Dailys is a simple addon designed to pick up and turn in Dailiy Quests for WoW.
 it does no checking to see if you have actualy completed them.
@@ -227,19 +227,22 @@ end
 
 function addon:QUEST_COMPLETE()
 	nextQuestFlag = false
-	if IsShiftKeyDown() then return end
+	if IsShiftKeyDown() or not self.db.profile.QUEST_COMPLETE then return end
 	local npc = addon.CheckNPC()
 	local quest = addon.TitleCheck(npc)
 	if npc and quest then
-		if MTable[npc].qOptions and  MTable[npc].qOptions[quest] then
-			local opt = self:GetQuestOption( nil, npc, quest)
-			if opt == 3 then return end
+		local opt = self:GetQuestOption(false, npc, quest)
+		if opt == 3 then
+			return
+		elseif opt == (1 or 2) then 
 			GetQuestReward( opt )
 		end
-
 		return GetQuestReward(0)
     end
+end
 
+function addon:PLAYER_TARGET_CHANGED()
+	nextQuestFlag, questIndex = false, 0
 end
 
 function addon.CheckNPC()
@@ -251,40 +254,55 @@ function addon.CheckNPC()
 	end
 end
 
-local ghettoTable = { 1, 4, 7, 10, 13 } --Ghetto Table is the string # for the ... values
+local function QuestItteratePickUp(npc, ...)
+	if (...) == nil then return end
+	local npcTbl = MTable[npc]
+	for i=1, select("#", ...), 3 do
+		if npcTbl[select(i, ...)] then
+			questIndex = qi
+			return (i+2)/3 , select(i, ...)
+		end
+	end
+end
 
-local function QuestItterate(npc, ...)
+local function QuestItterateTurnIn(npc, ...)
 	if (...) == nil then return end
 	local npcTbl = MTable[npc]
 	if nextQuestFlag then
 		nextQuestFlag = false
 		questIndex = questIndex + 1
-		if questIndex > (select( "#", ...)/3) then
+		if questIndex > (select("#", ...)/3) then
 			questIndex = 1
+			for i=1, select("#", ...), 3 do
+				if npcTbl[select(i, ...)] then
+					questIndex = (i+2)/3
+					return (i+2)/3 , select(i, ...)
+				end
+			end
+		else
+			for i = ((questIndex*3)-2) , select("#", ...) do
+				if npcTbl[select(i, ...)] then
+					questIndex = (i+2)/3
+					return (i+2)/3 , select(i, ...)
+				end
+			end
 		end
-
-		if npcTbl[select( ghettoTable[questIndex] , ... ) ] then
-			return questIndex, select( ghettoTable[questIndex] , ... )
-		end
-
 	end
-	local qi = 0
 	for i=1, select("#", ...), 3 do
-		qi = qi + 1
 		if npcTbl[select(i, ...)] then
-			questIndex = qi
-			return qi , select(i, ...)
+			questIndex = (i+2)/3
+			return (i+2)/3 , select(i, ...)
 		end
 	end
 end
 
 function addon.OpeningCheckQuest(npc)
 	if npc == nil then return end
-	local selection, quest = QuestItterate(npc, GetGossipAvailableQuests())
+	local selection, quest = QuestItteratePickUp(npc, GetGossipAvailableQuests())
 	if quest then
 			return selection, quest, "Available"
 	else
-		selection, quest = QuestItterate(npc, GetGossipActiveQuests())
+		selection, quest = QuestItterateTurnIn(npc, GetGossipActiveQuests())
 		if quest then
 			return selection, quest, "Active"
 		end
@@ -300,13 +318,16 @@ end
 
 function addon:GetQuestOption(info, eNpc, eQuest)
 	local npc, quest
-	if info then
+	if info then 
 		npc = info.arg[1]
 		quest = info.arg[2]
 	else
 		npc, quest = eNpc, eQuest
 	end
-	return MTable[npc].qOptions[quest]
+	local npcTable = MTable[npc] 
+	if (npcTable.qOptions) and (npcTable.qOptions[quest]) then
+		return npcTable.qOptions[quest]
+	end
 end
 
 addon.eventFrame = CreateFrame("Frame", "SOCD_EVENT_FRAME", UIParent)
@@ -319,3 +340,4 @@ addon.eventFrame:RegisterEvent("GOSSIP_SHOW")
 addon.eventFrame:RegisterEvent("QUEST_DETAIL")
 addon.eventFrame:RegisterEvent("QUEST_PROGRESS")
 addon.eventFrame:RegisterEvent("QUEST_COMPLETE")
+addon.eventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
