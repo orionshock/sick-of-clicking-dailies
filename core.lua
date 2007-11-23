@@ -1,5 +1,5 @@
 ﻿--[[
-Major 4,  MinorSVN:  $Revision: 137$
+Major 4,  MinorSVN:  Revision: 137
 
 Sick Of Clicking Dailys is a simple addon designed to pick up and turn in Dailiy Quests for WoW.
 it does no checking to see if you have actualy completed them.
@@ -36,7 +36,8 @@ SOCD = {}
 SOCD.version = 4
 local addon = SOCD
 local L = LibStub("AceLocale-3.0"):GetLocale("SickOfClickingDailies")
-local DEF = DEFAULT_CHAT_FRAME --DEF:AddMessage("")
+addon.db = { profile = { questLoop = true} }
+
 addon["QuestTable"] = {							--- << STARTS HERE>>
 				--Skettis Dailies
 				[L["Sky Sergeant Doryn"]] = {
