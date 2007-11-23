@@ -7,5 +7,7 @@
 ## X-Email: Orionshock@gmail.com
 
 LibStub\LibStub.lua
+embeds.xml
+
 localization-enUS.lua
 core.lua
