@@ -96,3 +96,9 @@ local L = SOCD_LOCALE
 	L["Warrant Officer Tracy Proudwell"] = true
 	L["Battlecryer Blackeye"] = true
 		L["Hellfire Fortifications"] = true
+
+for k, v in pairs(L) do
+	if v == true then
+		L[k] = k
+	end
+end

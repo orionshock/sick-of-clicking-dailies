@@ -36,7 +36,6 @@ SOCD = {}
 SOCD.version = 4
 local addon = SOCD
 local L = SOCD_LOCALE
-addon.db = { profile = { questLoop = true} }
 
 addon["QuestTable"] = {							--- << STARTS HERE>>
 				--Skettis Dailies
@@ -217,7 +216,7 @@ function addon:QUEST_PROGRESS()
 	if npc and quest then
 		if not IsQuestCompletable() then
 			nextQuestFlag = true
-			if self.db.profile.questLoop then DeclineQuest() end
+			DeclineQuest()
 			return
 		else
 			nextQuestFlag = false
@@ -228,7 +227,7 @@ end
 
 function addon:QUEST_COMPLETE()
 	nextQuestFlag = false
-	if IsShiftKeyDown() or not self.db.profile.QUEST_COMPLETE then return end
+	if IsShiftKeyDown() then return end
 	local npc = addon.CheckNPC()
 	local quest = addon.TitleCheck(npc)
 	if npc and quest then
