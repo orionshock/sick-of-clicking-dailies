@@ -35,7 +35,7 @@ Distibuted under the "Do What The Fuck You Want To Public License" (http://sam.z
 SOCD = {}
 SOCD.version = 4
 local addon = SOCD
-local L = LibStub("AceLocale-3.0"):GetLocale("SickOfClickingDailies")
+local L = SOCD_LOCALE
 addon.db = { profile = { questLoop = true} }
 
 addon["QuestTable"] = {							--- << STARTS HERE>>

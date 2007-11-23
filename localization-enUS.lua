@@ -1,7 +1,11 @@
 --Major 4, Minor Revision: 137
 
-local L = LibStub("AceLocale-3.0"):NewLocale("SickOfClickingDailies", "enUS", true)
-if L then
+if GetLocale() ~= "enUS" then return end
+
+SOCD_LOCALE = {}
+
+local L = SOCD_LOCALE
+
 --Skettis
 		L["Sky Sergeant Doryn"] = true
 			L["Fires Over Skettis"] = true
@@ -92,5 +96,3 @@ if L then
 	L["Warrant Officer Tracy Proudwell"] = true
 	L["Battlecryer Blackeye"] = true
 		L["Hellfire Fortifications"] = true
-
-end
