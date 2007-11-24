@@ -1,5 +1,5 @@
 ﻿--[[
-Major 4,  MinorSVN:  Revision: 137
+Major 4
 
 Sick Of Clicking Dailys is a simple addon designed to pick up and turn in Dailiy Quests for WoW.
 it does no checking to see if you have actualy completed them.
@@ -34,6 +34,7 @@ Distibuted under the "Do What The Fuck You Want To Public License" (http://sam.z
 ]]--
 SOCD = {}
 SOCD.version = 4
+SOCD.svnVersion = "$Rev$"
 local addon = SOCD
 local L = SOCD_LOCALE
 
@@ -333,7 +334,7 @@ end
 addon.eventFrame = CreateFrame("Frame", "SOCD_EVENT_FRAME", UIParent)
 addon.eventFrame:SetScript("OnEvent", function(self, event)
 		if addon[event] then
-			return addon[event]()
+			return addon[event](addon)
 		end
     end)
 addon.eventFrame:RegisterEvent("GOSSIP_SHOW")
