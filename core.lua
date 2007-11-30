@@ -1,5 +1,5 @@
 ﻿--[[
-Major 4
+Major 4,  MinorSVN: Revision: 157 
 
 Sick Of Clicking Dailys is a simple addon designed to pick up and turn in Dailiy Quests for WoW.
 it does no checking to see if you have actualy completed them.
@@ -30,11 +30,18 @@ Distibuted under the "Do What The Fuck You Want To Public License" (http://sam.z
   ***and/or modify it under the terms of the Do What The Fuck You Want
   ***To Public License, Version 2, as published by Sam Hocevar. See
   ***http://sam.zoy.org/wtfpl/COPYING for more details.
-=====================================================================================================
+  
+  ~Additional Terms of Distribution: You acknowlage that the origional Author of this code has the rights to the
+  ~Explicit Name used to title the code following and that any alteration and redistribution out side of the
+  ~control of the origional author shall have a new name attached to the code along with a source history.
+  
+  All other rights Reserved.
+  
+=====================================================================================================*
 ]]--
 SOCD = {}
 SOCD.version = 4
-SOCD.svnVersion = "$Rev$"
+SOCD.svn = "Revision: 157"
 local addon = SOCD
 local L = SOCD_LOCALE
 
@@ -185,16 +192,16 @@ addon["QuestTable"] = {							--- << STARTS HERE>>
 			}
 
 local MTable = addon["QuestTable"]
-
+---START REPLACE / Migrate from v5 => v4 Here
 function addon:GOSSIP_SHOW()
 	if IsShiftKeyDown() then return end
 	local npc = addon.CheckNPC()
 	local sel, quest, status = addon.OpeningCheckQuest(npc)
     if npc and quest then
 		if status == "Available" then
-			SelectGossipAvailableQuest(sel)
+			return SelectGossipAvailableQuest(sel)
         elseif status == "Active" then
-			SelectGossipActiveQuest(sel)
+			return SelectGossipActiveQuest(sel)
         end
     end
 end
@@ -204,7 +211,7 @@ function addon:QUEST_DETAIL()
 	local npc = addon.CheckNPC()
 	local quest = addon.TitleCheck(npc)
     if npc and quest then
-		AcceptQuest()
+		return AcceptQuest()
     end
 end
 
@@ -217,12 +224,14 @@ function addon:QUEST_PROGRESS()
 	if npc and quest then
 		if not IsQuestCompletable() then
 			nextQuestFlag = true
-			DeclineQuest()
-			return
+			--if self.db.profile.questLoop then 
+				return DeclineQuest() 
+			-- end
+			-- return
 		else
 			nextQuestFlag = false
 		end
-		CompleteQuest()
+		return CompleteQuest() --HERE
     end
 end
 
@@ -233,10 +242,10 @@ function addon:QUEST_COMPLETE()
 	local quest = addon.TitleCheck(npc)
 	if npc and quest then
 		local opt = self:GetQuestOption(false, npc, quest)
-		if opt == 3 then
+		if opt and (opt == 3) then
 			return
-		elseif opt == (1 or 2) then 
-			GetQuestReward( opt )
+		elseif opt and (opt == 1 or opt == 2) then
+			return GetQuestReward( opt )
 		end
 		return GetQuestReward(0)
     end
@@ -252,6 +261,8 @@ function addon.CheckNPC()
 		if MTable[target].enabled then
 			return target
 		end
+	else
+		 nextQuestFlag, questIndex = false, 0
 	end
 end
 
@@ -260,7 +271,6 @@ local function QuestItteratePickUp(npc, ...)
 	local npcTbl = MTable[npc]
 	for i=1, select("#", ...), 3 do
 		if npcTbl[select(i, ...)] then
-			questIndex = qi
 			return (i+2)/3 , select(i, ...)
 		end
 	end
@@ -269,19 +279,20 @@ end
 local function QuestItterateTurnIn(npc, ...)
 	if (...) == nil then return end
 	local npcTbl = MTable[npc]
+	local numQuest = select("#", ...)
 	if nextQuestFlag then
 		nextQuestFlag = false
 		questIndex = questIndex + 1
-		if questIndex > (select("#", ...)/3) then
+		if questIndex > (numQuest /3) then
 			questIndex = 1
-			for i=1, select("#", ...), 3 do
+			for i=1, numQuest , 3 do
 				if npcTbl[select(i, ...)] then
 					questIndex = (i+2)/3
 					return (i+2)/3 , select(i, ...)
 				end
 			end
 		else
-			for i = ((questIndex*3)-2) , select("#", ...) do
+			for i = ((questIndex*3)-2) , numQuest  do
 				if npcTbl[select(i, ...)] then
 					questIndex = (i+2)/3
 					return (i+2)/3 , select(i, ...)
@@ -289,7 +300,7 @@ local function QuestItterateTurnIn(npc, ...)
 			end
 		end
 	end
-	for i=1, select("#", ...), 3 do
+	for i=1, numQuest , 3 do
 		if npcTbl[select(i, ...)] then
 			questIndex = (i+2)/3
 			return (i+2)/3 , select(i, ...)
@@ -316,6 +327,8 @@ function addon.TitleCheck(npc)
 		return GetTitleText()
 	end
 end
+
+-- END MIGRATION from v5 => v4 here.
 
 function addon:GetQuestOption(info, eNpc, eQuest)
 	local npc, quest
