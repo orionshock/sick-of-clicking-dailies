@@ -34,8 +34,6 @@ Distibuted under the "Do What The Fuck You Want To Public License" (http://sam.z
   ~Explicit Name used to title the code following and that any alteration and redistribution out side of the
   ~control of the origional author shall have a new name attached to the code along with a source history.
 
-  All other rights Reserved.
-
 =====================================================================================================
 ]]--
 
