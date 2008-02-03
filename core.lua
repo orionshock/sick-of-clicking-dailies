@@ -1,12 +1,11 @@
 ﻿--[[
-Major 4,  MinorSVN: Revision: 157 
+Major 5,  MinorSVN:  $Revision$
 
 Sick Of Clicking Dailys is a simple addon designed to pick up and turn in Dailiy Quests for WoW.
-it does no checking to see if you have actualy completed them.
+it does no checking to see if you have actualy completed them. If you have DailyFu installed it will quiry it for what
+Potion you'd like for the Skettis Escort Quest, but outside of that there are no other quest rewards outside of GOLD!
 
-To Modify Options of what quests / NPC's are enabled look at the Table below named "QuestTable",
-find the NPC/Quest and toggle the true/false options.
-
+This version comes with a built in config system made with Ace3's Config GUI Libs.
 
 =====================================================================================================
 Distibuted under the "Do What The Fuck You Want To Public License" (http://sam.zoy.org/wtfpl/)
@@ -30,22 +29,30 @@ Distibuted under the "Do What The Fuck You Want To Public License" (http://sam.z
   ***and/or modify it under the terms of the Do What The Fuck You Want
   ***To Public License, Version 2, as published by Sam Hocevar. See
   ***http://sam.zoy.org/wtfpl/COPYING for more details.
-  
+
   ~Additional Terms of Distribution: You acknowlage that the origional Author of this code has the rights to the
   ~Explicit Name used to title the code following and that any alteration and redistribution out side of the
   ~control of the origional author shall have a new name attached to the code along with a source history.
-  
-  All other rights Reserved.
-  
-=====================================================================================================*
-]]--
-SOCD = {}
-SOCD.version = 4
-SOCD.svn = "Revision: 157"
-local addon = SOCD
-local L = SOCD_LOCALE
 
-addon["QuestTable"] = {							--- << STARTS HERE>>
+  All other rights Reserved.
+
+=====================================================================================================
+]]--
+
+if SOCD and (SOCD.version < 5 ) then return end
+
+local L = LibStub("AceLocale-3.0"):GetLocale("SickOfClickingDailies")
+local MTable
+
+SickOfClickingDailies = LibStub("AceAddon-3.0"):NewAddon("SickOfClickingDailies", "AceEvent-3.0", "AceConsole-3.0")
+local addon = SickOfClickingDailies
+addon.version = tostring("$Revision$")
+addon.author = "Orionshock, aka, Atradies of Nagrand - US"
+
+-- Profile Defaults--
+local defaults = {
+		profile = {
+			QuestOptions = {
 				--Skettis Dailies
 				[L["Sky Sergeant Doryn"]] = {
 					enabled = true,
@@ -94,7 +101,7 @@ addon["QuestTable"] = {							--- << STARTS HERE>>
 					enabled = true,
 					[L["Nethercite Ore"]] = false,
 					[L["Netherdust Pollen"]] = false,
-					[L["Nethermine Flayer Hide"]] = true,
+					[L["Nethermine Flayer Hide"]] = false,
 					[L["Netherwing Crystals"]] = true,
 					},
 				[L["Chief Overseer Mudlump"]] = {
@@ -104,17 +111,15 @@ addon["QuestTable"] = {							--- << STARTS HERE>>
 				[L["Overlord Mor'ghor"]] = {
 					enabled = true,
 					[L["Disrupting the Twilight Portal"]] = true,
-					[L["The Deadliest Trap Ever Laid"]] = false,	--Step 6 turn quest In.
+					[L["The Deadliest Trap Ever Laid"]] = false,
 					},
-				[L["Commander Arcus"]] = {							--AldorNPC
+				[L["Commander Arcus"]] = {
 					enabled = true,
-					[L["Commander Arcus"]] = false,					--Step4 , Turn quest In; Aldor
-					[L["The Deadliest Trap Ever Laid"]] = false,	--Step 5, Pick up and Do Quest ; Aldor
+					[L["The Deadliest Trap Ever Laid"]] = false,
 					},
-				[L["Commander Hobb"]] = {							-- ScryerNPC
+				[L["Commander Hobb"]] = {
 					enabled = true,
-					[L["Commander Hobb"]] = false,					--Step4 , Turn quest In; Scryer
-					[L["The Deadliest Trap Ever Laid"]] = false,	--Step 5, Pick up and Do Quest; Scryer
+					[L["The Deadliest Trap Ever Laid"]] = false,
 					},
 			--Wintersaber Trainer
 				[L["Rivern Frostwind"]] = {
@@ -126,10 +131,10 @@ addon["QuestTable"] = {							--- << STARTS HERE>>
 			--Cooking
 				[L["The Rokk"]] = {
 					enabled = true,
-					[L["Super Hot Stew"]] = true,
-					[L["Soup for the Soul"]] = true,
-					[L["Revenge is Tasty"]] = true,
-					[L["Manalicious"]] = true,
+					[L["Super Hot Stew"]] = false,
+					[L["Soup for the Soul"]] = false,
+					[L["Revenge is Tasty"]] = false,
+					[L["Manalicious"]] = false,
 					qOptions = {
 						[L["Super Hot Stew"]] = 3,
 						[L["Soup for the Soul"]] = 3,
@@ -189,10 +194,293 @@ addon["QuestTable"] = {							--- << STARTS HERE>>
 					enabled = true,
 					[L["Hellfire Fortifications"]] = true,
 				},
-			}
+			},
+		}
+	}
+--GUI Options Tree  .... got this blows .....
+local options = {
+	type = "group",
+	name = L["Sick Of Clicking Dailies?"],
+	handler = SickOfClickingDailies,
+	childGroups = "tab",
+	args = {
+		FactionGrind = { type = "group", name = L["Faction Grinds"], order = 1,
+			args = {
+				ShatariSkyguard = { type = "group", name = L["Skyguard"], order = 1,
+					args = {
+						Fires = { name = L["Fires Over Skettis"], type = "toggle", order = 1,
+							arg = { L["Sky Sergeant Doryn"], L["Fires Over Skettis"] } ,
+							get = "IsQuestEnabled", set = "ToggleQuest" },
+						Escape = { name = L["Escape from Skettis"], type = "toggle", order = 6,
+							desc = L["This will toggle the quest on both Doryn and the Prisoner"],
+							arg = { L["Sky Sergeant Doryn"],  L["Escape from Skettis"] }, get = "IsQuestEnabled",
+							set = function(_ , v) 	addon:ToggleQuest( false , L["Sky Sergeant Doryn"],  L["Escape from Skettis"], v )
+													addon:ToggleQuest( false , L["Skyguard Prisoner"],  L["Escape from Skettis"], v ) end, },
+						EscapeOption = { name = L["Quest Reward"], type = "select", order = 7, get = "GetQuestOption", set = "SetQuestOption",
+							desc = L["Select what Potion you want for the 'Escape from Skettis' quest"],
+							arg = { L["Sky Sergeant Doryn"],  L["Escape from Skettis"] },
+							values = { L["Health Potion"], L["Mana Potion"], L["None"] },},
+						Aether = { name = L["Wrangle More Aether Rays!"], type = "toggle", order = 4, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Skyguard Khatie"], L["Wrangle More Aether Rays!"] } },
+						Bomb = { name = L["Bomb Them Again!"], type = "toggle", order = 5, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Sky Sergeant Vanderlip"], L["Bomb Them Again!"] },},
+					},
+				},
+				Ogrila = { type = "group", name = L["Ogri'la"], order = 2,
+					args = {
+						Emanation = { name = L["The Relic's Emanation"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Chu'a'lor"], L["The Relic's Emanation"] }, },
+						Demons = { name = L["Banish More Demons"], type = "toggle", order = 2, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Kronk"], L["Banish More Demons"] }, },
+					},
+				},
+				Netherwing = { type = "group", name = L["Netherwing"], order = 3,
+					args = {
+						Netural = { type = "group", name = L["Netherwing - Neutral"], order = 1, inline = true,
+							args = {
+								Crystals = { name = L["Netherwing Crystals"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Taskmaster Varkule Dragonbreath"], L["Netherwing Crystals"] } },
+								Ore = { name = L["Nethercite Ore"], type = "toggle", order = 2, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Taskmaster Varkule Dragonbreath"], L["Nethercite Ore"] }, },
+								Pollen = { name = L["Netherdust Pollen"], type = "toggle", order = 2, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Taskmaster Varkule Dragonbreath"], L["Netherdust Pollen"] }, },
+								Hide = { name = L["Nethermine Flayer Hide"], type = "toggle", order = 2, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Taskmaster Varkule Dragonbreath"], L["Nethermine Flayer Hide"] }, },
+								Skies = { name = L["The Not-So-Friendly Skies..."], type = "toggle", order = 3, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Yarzill the Merc"], L["The Not-So-Friendly Skies..."]}, },
+								Death = { name = L["A Slow Death"], type = "toggle", order = 3, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Yarzill the Merc"], L["A Slow Death"] },},
+								noEgs = {type = "description", name = "Accepting All Eggs is not included because it's not a Daily Quest", order = 10 },
+							},
+						},
+						Friendly = { type = "group", name = L["Netherwing - Friendly"], order = 2, inline = true,
+							args = {
+								Pieces = { name = L["Picking Up The Pieces..."], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Mistress of the Mines"] , L["Picking Up The Pieces..."] } },
+								Dragons = { name = L["Dragons are the Least of Our Problems"], type = "toggle", order = 2, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Dragonmaw Foreman"] , L["Dragons are the Least of Our Problems"] } },
+								Booterang = { name = L["The Booterang: A Cure For The Common Worthless Peon"], type = "toggle", order = 3, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Chief Overseer Mudlump"] , L["The Booterang: A Cure For The Common Worthless Peon"] } },
+							},
+						},
+						Honored = { type = "group", name = L["Netherwing - Honored"], order = 3, inline = true,
+							args = {
+								Twilight = { name = L["Disrupting the Twilight Portal"], type = "toggle",order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Overlord Mor'ghor"] , L["Disrupting the Twilight Portal"] } },
+							},
+						},
+						Revered = { type = "group", name = L["Netherwing - Revered"], order = 4, inline = true,
+							args = {
+								Trap = { name = L["The Deadliest Trap Ever Laid"], type = "toggle", order = 1,
+									desc = L["|cffFF0000WARNING!!!|r, This Option also toggles both Scryer and Aldor Quests"],
+									arg = { L["Overlord Mor'ghor"] , L["The Deadliest Trap Ever Laid"] },
+									get = "IsQuestEnabled",
+									set = function()
+											addon:ToggleQuest( nil, L["Commander Hobb"] , L["The Deadliest Trap Ever Laid"] )
+											addon:ToggleQuest( nil, L["Commander Arcus"] , L["The Deadliest Trap Ever Laid"] )
+											addon:ToggleQuest( nil, L["Overlord Mor'ghor"] , L["The Deadliest Trap Ever Laid"] )
+									end,
+								},
+							},
+						},
+					},
+				},
+				WintersaberTrainers = { name = L["Wintersaber Trainer"], type = "group", order = 4,
+					args = {
+						Provisions = { name = L["Frostsaber Provisions"], type = "toggle", order = 2, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Rivern Frostwind"] , L["Frostsaber Provisions"] } },
+						Intrusion = { name = L["Winterfall Intrusion"], type = "toggle", order = 3, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Rivern Frostwind"] , L["Winterfall Intrusion"] } },
+						Giants = { name = L["Rampaging Giants"], type = "toggle", order = 4, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Rivern Frostwind"] , L["Rampaging Giants"] } },
+					},
+				},
+			},
+		},
+		Instance = { type = "group", name = L["Instance Dailies"], order = 2,
+			args = {
+				NonHeroic = { type = "group", name = L["Normal Mode"], order = 1,
+					args = {
+						Sentinels= { name = L["Arcatraz Sentinels"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Nether-Stalker Mah'duun"], L["Wanted: Arcatraz Sentinels"] } },
+						Myrmidons= { name = L["Coilfang Myrmidons"], type = "toggle", order = 2, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Nether-Stalker Mah'duun"], L["Wanted: Coilfang Myrmidons"] } },
+						Instructors= { name = L["Malicious Instructors"], type = "toggle", order = 3, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Nether-Stalker Mah'duun"], L["Wanted: Malicious Instructors"] } },
+						Rift= { name = L["Rift Lords"], type = "toggle", order = 4, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Nether-Stalker Mah'duun"], L["Wanted: Rift Lords"] } },
+						Centurions= { name = L["Shattered Hand Centurions"], type = "toggle", order = 5, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Nether-Stalker Mah'duun"], L["Wanted: Shattered Hand Centurions"] } },
+						Channelers= { name = L["Sunseeker Channelers"], type = "toggle", order = 6, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Nether-Stalker Mah'duun"], L["Wanted: Sunseeker Channelers"] } },
+						Destroyers= { name = L["Tempest-Forge Destroyers"], type = "toggle", order = 7, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Nether-Stalker Mah'duun"], L["Wanted: Tempest-Forge Destroyers"] } },
+						helpText = { type = "header", name = L["All Non-Heroic Quests are from |cff00ff00'Nether-Stalker Mah'duun'|r in LowerCity"], order = 100 },
+					},
+				},
+				Heroic ={ type = "group", name = L["Heroic Mode"], order = 1,
+					args = {
+						Auchindoun = {type = "header", name = L["Auchindoun"], order = 1},
+						Murmur= { name = L["Murmur's Whisper"], type = "toggle", order = 2, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Wind Trader Zhareem"], L["Wanted: Murmur's Whisper"] } },
+						Shaffar= { name = L["Shaffar's Wondrous Pendant"], type = "toggle", order = 3, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Wind Trader Zhareem"], L["Wanted: Shaffar's Wondrous Pendant"] } },
+						Exarch= { name = L["The Exarch's Soul Gem"], type = "toggle", order = 4, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Wind Trader Zhareem"], L["Wanted: The Exarch's Soul Gem"] } },
+						Ikiss= { name = L["The Headfeathers of Ikiss"], type = "toggle", order = 5, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Wind Trader Zhareem"], L["Wanted: The Headfeathers of Ikiss"] } },
+						CoT = {type = "header", name = L["Caverns of Time"], order = 6},
+						Aeonus= { name = L["Aeonus's Hourglass"], type = "toggle", order = 7, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Wind Trader Zhareem"], L["Wanted: Aeonus's Hourglass"] } },
+						Epoch= { name = L["The Epoch Hunter's Head"], type = "toggle", order = 8, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Wind Trader Zhareem"], L["Wanted: The Epoch Hunter's Head"] } },
+						Hellfire = {type = "header", name = L["Hellfire Citadel"], order = 9},
+						Bladefist= { name = L["Bladefist's Seal"], type = "toggle", order = 10, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Wind Trader Zhareem"], L["Wanted: Bladefist's Seal"] } },
+						Kelidan= { name = L["Keli'dan's Feathered Stave"], type = "toggle", order = 11, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Wind Trader Zhareem"], L["Wanted: Keli'dan's Feathered Stave"] } },
+						Nazan= { name = L["Nazan's Riding Crop"], type = "toggle", order = 12, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Wind Trader Zhareem"], L["Wanted: Nazan's Riding Crop"] } },
+						Serpentshrine = {type = "header", name = L["Serpentshrine Cavern"], order = 13},
+						Stalker= { name = L["A Black Stalker Egg"], type = "toggle", order = 14, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Wind Trader Zhareem"], L["Wanted: A Black Stalker Egg"] } },
+						Quagmirran= { name = L["The Heart of Quagmirran"], type = "toggle", order = 15, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Wind Trader Zhareem"], L["Wanted: The Heart of Quagmirran"] } },
+						Warlord= { name = L["The Warlord's Treatise"], type = "toggle", order = 16, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Wind Trader Zhareem"], L["Wanted: The Warlord's Treatise"] } },
+						Eye = {type = "header", name = L["The Eye"], order = 17},
+						WarpSplinter= { name = L["A Warp Splinter Clipping"], type = "toggle", order = 18, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Wind Trader Zhareem"], L["Wanted: A Warp Splinter Clipping"] } },
+						Pathaleon= { name = L["Pathaleon's Projector"], type = "toggle", order = 19, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Wind Trader Zhareem"], L["Wanted: Pathaleon's Projector"] } },
+						Skyriss= { name = L["The Scroll of Skyriss"], type = "toggle", order = 20, get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Wind Trader Zhareem"], L["Wanted: The Scroll of Skyriss"] } },
+						helpText = {type = "header", name = L["All Heroic Dailies from |cff00ff00'Wind Trader Zhareem'|r in LowerCity"], order = 100},
+					},
+				},
+			},
+		},
+		PvP = { type = "group", name = L["PvP Dailies"], order = 3,
+			args = {
+				Alliance = { type = "group", name = L["Alliance PvP"], order = 1,
+					args = {
+						BattleGrounds = { type = "group", name = L["Battlegrounds"], inline = true, order = 1,
+							args = {
+								eots = { name = L["Call to Arms: Eye of the Storm"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Alliance Brigadier General"] , L["Call to Arms: Eye of the Storm"] }, },
+								av = { name = L["Call to Arms: Alterac Valley"], type = "toggle", order = 2, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Alliance Brigadier General"] , L["Call to Arms: Alterac Valley"] }, }, --Quest
+								ab = { name = L["Call to Arms: Arathi Basin"], type = "toggle", order = 3, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Alliance Brigadier General"] , L["Call to Arms: Arathi Basin"] }, },
+								wsg= { name = L["Call to Arms: Warsong Gulch"], type = "toggle", order = 4, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Alliance Brigadier General"], L["Call to Arms: Warsong Gulch"] } },
+							},
+						},
+						WorldPvP = { type = "group", name = L["World PvP"], inline = true, order = 2,
+							args = {
+								fort = { name = L["Hellfire Fortifications"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Warrant Officer Tracy Proudwell"]  , L["Hellfire Fortifications"] } },
+							},
+						},
+					},
+				},
+				Horde = { type = "group", name = L["Horde PvP"], order = 1,
+					args = {
+						BattleGrounds = { type = "group", name = L["Battlegrounds"], inline = true, order = 1,
+							args = {
+								eots = { name = L["Call to Arms: Eye of the Storm"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Horde Warbringer"] , L["Call to Arms: Eye of the Storm"] }, },
+								av = { name = L["Call to Arms: Alterac Valley"], type = "toggle", order = 2, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Horde Warbringer"] , L["Call to Arms: Alterac Valley"] }, }, --Quest
+								ab = { name = L["Call to Arms: Arathi Basin"], type = "toggle", order = 3, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Horde Warbringer"] , L["Call to Arms: Arathi Basin"] }, },
+								wsg= { name = L["Call to Arms: Warsong Gulch"], type = "toggle", order = 4, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Horde Warbringer"], L["Call to Arms: Warsong Gulch"] } },
+							},
+						},
+						WorldPvP = { type = "group", name = L["World PvP"], inline = true, order = 2,
+							args = {
+								fort = { name = L["Hellfire Fortifications"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Battlecryer Blackeye"] , L["Hellfire Fortifications"] } },
+							},
+						},
+					},
+				},
+			},
+		},
+		Cooking = {name = L["Cooking Dailies"], type = "group", order = 4,
+			args = {
+				Rokk = { name = L["The Rokk"], type = "group", order = 1, inline = true,
+					args = {
+						enabled = { name = L["NPC Enabled"], type = "toggle", order = 1,
+							arg = L["The Rokk"], get = "IsNPCEnabled", set = "ToggleNPC" },
 
-local MTable = addon["QuestTable"]
----START REPLACE / Migrate from v5 => v4 Here
+						Stew = {name =  L["Super Hot Stew"], type = "group", order = 2, inline = true,
+							args = {
+								stewQuest = { name =  L["Enable Quest"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["The Rokk"],   L["Super Hot Stew"] }, },
+								StewOption = { name = L["Quest Reward"], type = "select", order = 2,
+									arg = { L["The Rokk"],  L["Super Hot Stew"] }, get = "GetQuestOption", set = "SetQuestOption",
+									values = { L["Barrel of Fish"], L["Crate of Meat"], L["None"] } },
+							},
+						},
+						soup = {name =  L["Soup for the Soul"], type = "group", order = 3, inline = true,
+							args = {
+								soupQuest = { name =  L["Enable Quest"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["The Rokk"],   L["Soup for the Soul"] }, },
+								soupOption = { name = L["Quest Reward"], type = "select", order = 2,
+									arg = { L["The Rokk"],  L["Soup for the Soul"] }, get = "GetQuestOption", set = "SetQuestOption",
+									values = { L["Barrel of Fish"], L["Crate of Meat"], L["None"] } },
+							},
+						},
+						Revenge = {name =  L["Revenge is Tasty"], type = "group", order = 4, inline = true,
+							args = {
+								RevengeQuest = { name =  L["Enable Quest"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["The Rokk"],   L["Revenge is Tasty"] }, },
+								RevengeOption = { name = L["Quest Reward"], type = "select", order = 2,
+									arg = { L["The Rokk"],  L["Revenge is Tasty"] }, get = "GetQuestOption", set = "SetQuestOption",
+									values = { L["Barrel of Fish"], L["Crate of Meat"], L["None"] } },
+							},
+						},
+						Manalicious = {name =  L["Manalicious"], type = "group", order = 5, inline = true,
+							args = {
+								RevengeQuest = { name =  L["Enable Quest"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["The Rokk"],  L["Manalicious"] }, },
+								RevengeOption = { name = L["Quest Reward"], type = "select", order = 2,
+									arg = { L["The Rokk"],  L["Manalicious"] }, get = "GetQuestOption", set = "SetQuestOption",
+									values = { L["Barrel of Fish"], L["Crate of Meat"], L["None"] } },
+							},
+						}
+					},
+				},
+			},
+		},
+		loop = { name = L["Always Loop NPCs"], type = "toggle", order = 2,
+		desc = L["Always Loop on the NPC from one quest to the next forever"],
+		get = function() return addon.db.profile.questLoop end,
+		set = function() if addon.db.profile.questLoop then addon.db.profile.questLoop = false else addon.db.profile.questLoop = true end end, },
+	}, --Close Top Lvl Args Table
+}
+
+function addon:OnInitialize()
+	addon.db = LibStub("AceDB-3.0"):New("SickOfClickingDailiesDB", defaults)
+	MTable = self.db.profile.QuestOptions
+	LibStub("AceConfig-3.0"):RegisterOptionsTable("SickOfClickingDailies", options)
+	self:RegisterChatCommand("socd", function() LibStub("AceConfigDialog-3.0"):Open("SickOfClickingDailies") end )
+
+end
+
+function addon:OnEnable()
+	self:RegisterEvent("GOSSIP_SHOW")
+	self:RegisterEvent("QUEST_DETAIL")
+	self:RegisterEvent("QUEST_PROGRESS")
+	self:RegisterEvent("QUEST_COMPLETE")
+	self:RegisterEvent("PLAYER_TARGET_CHANGED")
+end
+function addon:OnDisable()
+	self:UnregisterAllEvents()
+end
+
 function addon:GOSSIP_SHOW()
 	if IsShiftKeyDown() then return end
 	local npc = addon.CheckNPC()
@@ -224,10 +512,10 @@ function addon:QUEST_PROGRESS()
 	if npc and quest then
 		if not IsQuestCompletable() then
 			nextQuestFlag = true
-			--if self.db.profile.questLoop then 
+			if self.db.profile.questLoop then 
 				return DeclineQuest() 
-			-- end
-			-- return
+			end
+			return
 		else
 			nextQuestFlag = false
 		end
@@ -328,30 +616,54 @@ function addon.TitleCheck(npc)
 	end
 end
 
--- END MIGRATION from v5 => v4 here.
+
+--GUI Options Support Funcs
+
+function addon:IsNPCEnabled(info)
+	return MTable[info.arg].enabled
+end
+
+function addon:ToggleNPC(info)
+	if MTable[info.arg].enabled then
+		MTable[info.arg].enabled = false
+	else
+		MTable[info.arg].enabled = true
+	end
+end
+
+function addon:IsQuestEnabled(info)
+	return MTable[info.arg[1]][info.arg[2]]
+end
+
+function addon:ToggleQuest(info, eNPC, eQuest)
+	local npc, quest
+	if info then
+		npc = info.arg[1]
+		quest = info.arg[2]
+	else
+		npc, quest = eNPC, eQuest
+	end
+	if MTable[npc][quest] then
+		MTable[npc][quest] = false
+	else
+		MTable[npc][quest]= true
+	end
+end
 
 function addon:GetQuestOption(info, eNpc, eQuest)
 	local npc, quest
-	if info then 
+	if info then
 		npc = info.arg[1]
 		quest = info.arg[2]
 	else
 		npc, quest = eNpc, eQuest
 	end
-	local npcTable = MTable[npc] 
+	local npcTable = MTable[npc]
 	if (npcTable.qOptions) and (npcTable.qOptions[quest]) then
 		return npcTable.qOptions[quest]
 	end
 end
 
-addon.eventFrame = CreateFrame("Frame", "SOCD_EVENT_FRAME", UIParent)
-addon.eventFrame:SetScript("OnEvent", function(self, event)
-		if addon[event] then
-			return addon[event](addon)
-		end
-    end)
-addon.eventFrame:RegisterEvent("GOSSIP_SHOW")
-addon.eventFrame:RegisterEvent("QUEST_DETAIL")
-addon.eventFrame:RegisterEvent("QUEST_PROGRESS")
-addon.eventFrame:RegisterEvent("QUEST_COMPLETE")
-addon.eventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+function addon:SetQuestOption(info, v)
+	MTable[info.arg[1]].qOptions[info.arg[2]] = v
+end

@@ -1,11 +1,7 @@
---Major 4, Minor Revision: 137
+--Major 4, Minor $Revision$
 
-if GetLocale() ~= "enUS" then return end
-
-SOCD_LOCALE = {}
-
-local L = SOCD_LOCALE
-
+local L = LibStub("AceLocale-3.0"):NewLocale("SickOfClickingDailies", "enUS", true)
+if L then
 --Skettis
 		L["Sky Sergeant Doryn"] = true
 			L["Fires Over Skettis"] = true
@@ -69,6 +65,17 @@ local L = SOCD_LOCALE
 		L["Wanted: Shattered Hand Centurions"] = true
 		L["Wanted: Sunseeker Channelers"] = true
 		L["Wanted: Tempest-Forge Destroyers"] = true
+--Names...
+		L["Arcatraz Sentinels"] = true
+		L["Coilfang Myrmidons"] = true
+		L["Malicious Instructors"] = true
+		L["Rift Lords"] = true
+		L["Shattered Hand Centurions"] = true
+		L["Sunseeker Channelers"] = true
+		L["Tempest-Forge Destroyers"] = true
+
+
+
 --Heroic Instances
 	L["Wind Trader Zhareem"] = true
 		L["Wanted: A Black Stalker Egg"] = true
@@ -86,6 +93,23 @@ local L = SOCD_LOCALE
 		L["Wanted: The Heart of Quagmirran"] = true
 		L["Wanted: The Scroll of Skyriss"] = true
 		L["Wanted: The Warlord's Treatise"] = true
+---Names....
+		L["A Black Stalker Egg"] = true
+		L["A Warp Splinter Clipping"] = true
+		L["Aeonus's Hourglass"] = true
+		L["Bladefist's Seal"] = true
+		L["Keli'dan's Feathered Stave"] = true
+		L["Murmur's Whisper"] = true
+		L["Nazan's Riding Crop"] = true
+		L["Pathaleon's Projector"] = true
+		L["Shaffar's Wondrous Pendant"] = true
+		L["The Epoch Hunter's Head"] = true
+		L["The Exarch's Soul Gem"] = true
+		L["The Headfeathers of Ikiss"] = true
+		L["The Heart of Quagmirran"] = true
+		L["The Scroll of Skyriss"] = true
+		L["The Warlord's Treatise"] = true
+
 --PvP
 	L["Alliance Brigadier General"] = true
 	L["Horde Warbringer"] = true
@@ -97,8 +121,67 @@ local L = SOCD_LOCALE
 	L["Battlecryer Blackeye"] = true
 		L["Hellfire Fortifications"] = true
 
-for k, v in pairs(L) do
-	if v == true then
-		L[k] = k
-	end
+	-- Options Table Locale
+	--General Titles
+	L["Sick Of Clicking Dailies?"] = true  ---- Addon Name used for Options table
+	L["NPC & Quest Options"] = true
+	L["NPC Enabled"] = true
+	L["Addon Options"] = true
+	L["Enabled"] = true
+	L["Enable Quest"] = true
+	L["Quest Reward"] = true
+	L["None"] = true
+
+	L["Always Loop NPCs"] = true
+	L["Always Loop on the NPC from one quest to the next forever"] = true
+	L["Enable Gossip window"] = true
+	L["Enable skipping the opening gossip text"] = true
+	L["Enable Quest Text window"] = true
+	L["Enable skipping the Quest Descriptive text"] = true
+	L["Enable Completion Gossip"] = true
+	L["Enable skipping the Quest Completion question text"] = true
+	L["Enable Quest Turn In"] = true
+	L["Enable skipping the actual turn in of the quest"] = true
+
+
+	--Titles
+	L["Faction Grinds"] = true
+		L["Skyguard"] = true
+		L["Ogri'la"] = true
+		L["Netherwing"] = true
+		L["Netherwing - Neutral"] = true
+		L["Netherwing - Friendly"] = true
+		L["Netherwing - Honored"] = true
+		L["Netherwing - Revered"] = true
+		L["Wintersaber Trainer"] = true
+	L["PvP Dailies"] = true
+		L["Horde PvP"] = true
+		L["Alliance PvP"] = true
+		L["Battlegrounds"] = true
+		L["World PvP"] = true
+	L["Instance Dailies"] = true
+		L["Normal Mode"] = true
+		L["Heroic Mode"] = true
+			L["The Eye"] = true
+			L["Serpentshrine Cavern"] = true
+			L["Hellfire Citadel"] = true
+			L["Caverns of Time"] = true
+			L["Auchindoun"] = true
+	L["Cooking Dailies"] = true
+
+	--Special Tool Tips
+	L["This will toggle the quest on both Doryn and the Prisoner"] = true
+	L["|cffFF0000WARNING!!!|r, This Option also toggles both Scryer and Aldor Quests"] = true  ---Warning Color Code included in this string
+	L["All Non-Heroic Quests are from |cff00ff00'Nether-Stalker Mah'duun'|r in LowerCity"] = true
+	L["All Heroic Dailies from |cff00ff00'Wind Trader Zhareem'|r in LowerCity"] = true
+
+	--Quest Options
+
+	L["Select what Potion you want for the 'Escape from Skettis' quest"] = true
+	L["Health Potion"] = true
+	L["Mana Potion"] = true
+	--L["Escort Quest Potion"] = true
+	L["Barrel of Fish"] = true
+	L["Crate of Meat"] = true
+
 end
