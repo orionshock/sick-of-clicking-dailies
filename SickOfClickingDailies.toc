@@ -13,5 +13,6 @@ LibStub\LibStub.lua
 embeds.xml
 
 localization-enUS.lua
+localization-deDE.lua
 
 core.lua

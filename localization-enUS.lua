@@ -1,4 +1,4 @@
---Major 4, Minor $Revision$
+--Major 5, Minor $Revision$
 --[[
 
 	How to Localize this, because it's a pain in the ass.
