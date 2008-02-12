@@ -14,5 +14,6 @@ embeds.xml
 
 localization-enUS.lua
 localization-deDE.lua
+localization-frFR.lua
 
 core.lua
