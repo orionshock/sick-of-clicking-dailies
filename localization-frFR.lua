@@ -53,7 +53,7 @@ if L then
 			L["Netherwing Crystals"] = "Les cristaux de l'Aile-du-Néant"				--*Quest
 
 		L["Chief Overseer Mudlump"] = "Surveillant-chef Tadboue"																	--*NPC
-			L["The Booterang: A Cure For The Common Worthless Peon"] = "Le botterang : un traitement pour les péons bons à rien"	--*Quest
+			L["The Booterang: A Cure For The Common Worthless Peon"] = "Le botterang : un traitement pour les péons bons à rien"	--*Quest
 
 		L["Commander Arcus"] = "Commandant Arcus"										--*NPC
 		L["Commander Hobb"] = "Commandant Hobb"											--*NPC
@@ -73,13 +73,13 @@ if L then
 		L["Manalicious"] = "Manalicieux"						--*Quest
 --Non-Heroic Instances
 	L["Nether-Stalker Mah'duun"] = "Traqueur-du-Néant Mah'duun"										--*NPC
-		L["Wanted: Arcatraz Sentinels"] = "On recherche : Des sentinelles de l'Arcatraz"			--*Quest
-		L["Wanted: Coilfang Myrmidons"] = "On recherche : Des myrmidons de Glissecroc"				--*Quest
-		L["Wanted: Malicious Instructors"] = "On recherche : Des instructrices malveillantes"		--*Quest
-		L["Wanted: Rift Lords"] = "On recherche : Des seigneurs des failles"						--*Quest
-		L["Wanted: Shattered Hand Centurions"] = "On recherche : Des centurions de la Main brisée"	--*Quest
-		L["Wanted: Sunseeker Channelers"] = "On recherche : Des canalistes Cherche-soleil"			--*Quest
-		L["Wanted: Tempest-Forge Destroyers"] = "On recherche : Des destructeurs Forge-tempête"		--*Quest
+		L["Wanted: Arcatraz Sentinels"] = "On recherche : Des sentinelles de l'Arcatraz"			--*Quest
+		L["Wanted: Coilfang Myrmidons"] = "On recherche : Des myrmidons de Glissecroc"				--*Quest
+		L["Wanted: Malicious Instructors"] = "On recherche : Des instructrices malveillantes"		--*Quest
+		L["Wanted: Rift Lords"] = "On recherche : Des seigneurs des failles"						--*Quest
+		L["Wanted: Shattered Hand Centurions"] = "On recherche : Des centurions de la Main brisée"	--*Quest
+		L["Wanted: Sunseeker Channelers"] = "On recherche : Des canalistes Cherche-soleil"			--*Quest
+		L["Wanted: Tempest-Forge Destroyers"] = "On recherche : Des destructeurs Forge-tempête"		--*Quest
 
 	--Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
 		L["Arcatraz Sentinels"] = "Sentinelles de l'Arcatraz"
@@ -94,21 +94,21 @@ if L then
 
 --Heroic Instances
 	L["Wind Trader Zhareem"] = "Marchand des vents Zhareem"												--*NPC
-		L["Wanted: A Black Stalker Egg"] = "On recherche : Un oeuf de traqueuse noire"					--*Quest
-		L["Wanted: A Warp Splinter Clipping"] = "On recherche : Une rognure de Brise-dimension"			--*Quest
-		L["Wanted: Aeonus's Hourglass"] = "On recherche : Le sablier d'Aeonus"							--*Quest
-		L["Wanted: Bladefist's Seal"] = "On recherche : Le sceau de Lamepoing"							--*Quest
-		L["Wanted: Keli'dan's Feathered Stave"] = "On recherche : Le bâton à plumes de Keli'dan"		--*Quest
-		L["Wanted: Murmur's Whisper"] = "On recherche : Le murmure de Marmon"							--*Quest
-		L["Wanted: Nazan's Riding Crop"] = "On recherche : La cravache de Nazan"						--*Quest
-		L["Wanted: Pathaleon's Projector"] = "On recherche : Le projecteur de Pathaleon"				--*Quest
-		L["Wanted: Shaffar's Wondrous Pendant"] = "On recherche : L'amulette merveilleuse de Shaffar"	--*Quest
-		L["Wanted: The Epoch Hunter's Head"] = "On recherche : La tête du chasseur d'époques"			--*Quest
-		L["Wanted: The Exarch's Soul Gem"] = "On recherche : La gemme d'âme de l'exarque"				--*Quest
-		L["Wanted: The Headfeathers of Ikiss"] = "On recherche : Le panache d'Ikiss"					--*Quest
-		L["Wanted: The Heart of Quagmirran"] = "On recherche : Le coeur de Bourbierreux"				--*Quest
-		L["Wanted: The Scroll of Skyriss"] = "On recherche : Le parchemin de Cieuriss"					--*Quest
-		L["Wanted: The Warlord's Treatise"] = "On recherche : Le traité du seigneur de guerre"			--*Quest
+		L["Wanted: A Black Stalker Egg"] = "On recherche : Un oeuf de traqueuse noire"					--*Quest
+		L["Wanted: A Warp Splinter Clipping"] = "On recherche : Une rognure de Brise-dimension"			--*Quest
+		L["Wanted: Aeonus's Hourglass"] = "On recherche : Le sablier d'Aeonus"							--*Quest
+		L["Wanted: Bladefist's Seal"] = "On recherche : Le sceau de Lamepoing"							--*Quest
+		L["Wanted: Keli'dan's Feathered Stave"] = "On recherche : Le bâton à plumes de Keli'dan"		--*Quest
+		L["Wanted: Murmur's Whisper"] = "On recherche : Le murmure de Marmon"							--*Quest
+		L["Wanted: Nazan's Riding Crop"] = "On recherche : La cravache de Nazan"						--*Quest
+		L["Wanted: Pathaleon's Projector"] = "On recherche : Le projecteur de Pathaleon"				--*Quest
+		L["Wanted: Shaffar's Wondrous Pendant"] = "On recherche : L'amulette merveilleuse de Shaffar"	--*Quest
+		L["Wanted: The Epoch Hunter's Head"] = "On recherche : La tête du chasseur d'époques"			--*Quest
+		L["Wanted: The Exarch's Soul Gem"] = "On recherche : La gemme d'âme de l'exarque"				--*Quest
+		L["Wanted: The Headfeathers of Ikiss"] = "On recherche : Le panache d'Ikiss"					--*Quest
+		L["Wanted: The Heart of Quagmirran"] = "On recherche : Le coeur de Bourbierreux"				--*Quest
+		L["Wanted: The Scroll of Skyriss"] = "On recherche : Le parchemin de Cieuriss"					--*Quest
+		L["Wanted: The Warlord's Treatise"] = "On recherche : Le traité du seigneur de guerre"			--*Quest
 --Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
 		L["A Black Stalker Egg"] = "Un oeuf de traqueuse noire"
 		L["A Warp Splinter Clipping"] = "Une rognure de Brise-dimension"
@@ -129,10 +129,10 @@ if L then
 --PvP
 	L["Alliance Brigadier General"] = "Général de brigade de l'Alliance"				--*NPC
 	L["Horde Warbringer"] = "Porteguerre de la Horde"									--*NPC
-		L["Call to Arms: Alterac Valley"] = "Appel aux armes : vallée d'Alterac"		--*Quest
-		L["Call to Arms: Arathi Basin"] = "Appel aux armes : bassin d'Arathi"			--*Quest
-		L["Call to Arms: Eye of the Storm"] = "Appel aux armes : Oeil du cyclone"		--*Quest
-		L["Call to Arms: Warsong Gulch"] = "Appel aux armes : goulet des Chanteguerres"	--*Quest
+		L["Call to Arms: Alterac Valley"] = "Appel aux armes : vallée d'Alterac"		--*Quest
+		L["Call to Arms: Arathi Basin"] = "Appel aux armes : bassin d'Arathi"			--*Quest
+		L["Call to Arms: Eye of the Storm"] = "Appel aux armes : Oeil du cyclone"		--*Quest
+		L["Call to Arms: Warsong Gulch"] = "Appel aux armes : goulet des Chanteguerres"	--*Quest
 	L["Warrant Officer Tracy Proudwell"] = "Adjudante Tracy Fièrepuits"					--*NPC
 	L["Battlecryer Blackeye"] = "Crieur-de-guerre Coquard"								--*NPC
 		L["Hellfire Fortifications"] = "Les fortifications des Flammes infernales"		--*Quest
