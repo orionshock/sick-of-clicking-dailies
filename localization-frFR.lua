@@ -37,13 +37,13 @@ if L then
 			L["Banish More Demons"] = "Bannissez plus de démons"			--*Quest
 --Netherwing
 		L["Mistress of the Mines"] = "Maîtresse des mines"				--*NPC
-			L["Picking Up The Pieces..."] = "Ramasser les morceaux..."	--*Quest
+			L["Picking Up The Pieces..."] = "Ramasser les morceaux…"	--*Quest
 
 		L["Dragonmaw Foreman"] = "Contremaître Gueule-de-dragon"										--*NPC
 			L["Dragons are the Least of Our Problems"] = "Les dragons sont les derniers de nos soucis"	--*Quest
 
-		L["Yarzill the Merc"] = "Yarzill le Mercenaire "						--*NPC
-			L["The Not-So-Friendly Skies..."] = "Les cieux pas si cléments..."	--*Quest
+		L["Yarzill the Merc"] = "Yarzill le Mercenaire"						--*NPC
+			L["The Not-So-Friendly Skies..."] = "Les cieux pas si cléments…"	--*Quest
 			L["A Slow Death"] = "Une mort lente"								--*Quest
 
 		L["Taskmaster Varkule Dragonbreath"] = "Sous-chef Varkule Souffle-de-dragon"	--*NPC
@@ -69,7 +69,7 @@ if L then
 	L["The Rokk"] = "Le Rokk"									--*NPC
 		L["Super Hot Stew"] = "Un ragoût très épicé"			--*Quest
 		L["Soup for the Soul"] = "Une soupe pour l'âme"			--*Quest
-		L["Revenge is Tasty"] = "La vengeance est un plat..."	--*Quest
+		L["Revenge is Tasty"] = "La vengeance est un plat…"	--*Quest
 		L["Manalicious"] = "Manalicieux"						--*Quest
 --Non-Heroic Instances
 	L["Nether-Stalker Mah'duun"] = "Traqueur-du-Néant Mah'duun"										--*NPC
