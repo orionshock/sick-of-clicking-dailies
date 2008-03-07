@@ -131,7 +131,7 @@ if L then
 	L["Horde Warbringer"] = "Porteguerre de la Horde"									--*NPC
 		L["Call to Arms: Alterac Valley"] = "Appel aux armes : vallée d'Alterac"		--*Quest
 		L["Call to Arms: Arathi Basin"] = "Appel aux armes : bassin d'Arathi"			--*Quest
-		L["Call to Arms: Eye of the Storm"] = "Appel aux armes : Oeil du cyclone"		--*Quest
+		L["Call to Arms: Eye of the Storm"] = "Appel aux armes : Œil du cyclone"		--*Quest
 		L["Call to Arms: Warsong Gulch"] = "Appel aux armes : goulet des Chanteguerres"	--*Quest
 	L["Warrant Officer Tracy Proudwell"] = "Adjudante Tracy Fièrepuits"					--*NPC
 	L["Battlecryer Blackeye"] = "Crieur-de-guerre Coquard"								--*NPC
