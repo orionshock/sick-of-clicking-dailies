@@ -106,7 +106,7 @@ if L then
 		L["Wanted: The Epoch Hunter's Head"] = "On recherche : La tête du chasseur d'époques"			--*Quest
 		L["Wanted: The Exarch's Soul Gem"] = "On recherche : La gemme d'âme de l'exarque"				--*Quest
 		L["Wanted: The Headfeathers of Ikiss"] = "On recherche : Le panache d'Ikiss"					--*Quest
-		L["Wanted: The Heart of Quagmirran"] = "On recherche : Le coeur de Bourbierreux"				--*Quest
+		L["Wanted: The Heart of Quagmirran"] = "On recherche : Le cœur de Bourbierreux"				--*Quest
 		L["Wanted: The Scroll of Skyriss"] = "On recherche : Le parchemin de Cieuriss"					--*Quest
 		L["Wanted: The Warlord's Treatise"] = "On recherche : Le traité du seigneur de guerre"			--*Quest
 --Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
@@ -122,7 +122,7 @@ if L then
 		L["The Epoch Hunter's Head"] = "La tête du chasseur d'époques"
 		L["The Exarch's Soul Gem"] = "La gemme d'âme de l'exarque"
 		L["The Headfeathers of Ikiss"] = "Le panache d'Ikiss"
-		L["The Heart of Quagmirran"] = "Le coeur de Bourbierreux"
+		L["The Heart of Quagmirran"] = "Le cœur de Bourbierreux"
 		L["The Scroll of Skyriss"] = "Le parchemin de Cieuriss"
 		L["The Warlord's Treatise"] = "Le traité du seigneur de guerre"
 
@@ -141,23 +141,23 @@ if L then
 	--General Titles
 	L["Sick Of Clicking Dailies?"] = "Sick Of Clicking Dailies?"  ---- Addon Name used for Options table
 	L["NPC & Quest Options"] = "Options des PNJ et quêtes"
-	L["NPC Enabled"] = "PNJ actrifs"
+	L["NPC Enabled"] = "PNJ actifs"
 	L["Addon Options"] = "Options de l'addon"
-	L["Enabled"] = "Activé"
-	L["Enable Quest"] = "Activé la quête"
+	L["Enabled"] = "Activer"
+	L["Enable Quest"] = "Activer la quête"
 	L["Quest Reward"] = "Récompense de quête"
 	L["None"] = "Aucune"
 
 	L["Always Loop NPCs"] = "Toujours cycler sur les PNJ"
 	L["Always Loop on the NPC from one quest to the next forever"] = "Cycle continuellement entre les différentes quêtes d'un PNJ"
-	L["Enable Gossip window"] = "Activé la fenêtre de bavardage"
-	L["Enable skipping the opening gossip text"] = "Activé le saut du bavardage"
-	L["Enable Quest Text window"] = "Activé la fenêtre de description de la quête"
-	L["Enable skipping the Quest Descriptive text"] = "Activé le saut de la description de la quête"
-	L["Enable Completion Gossip"] = "Activé l'acquiessement du bavardage"
-	L["Enable skipping the Quest Completion question text"] = "Activé le saut du texte finalisant la quête"
-	L["Enable Quest Turn In"] = "Activé le rendu des quêtes"
-	L["Enable skipping the actual turn in of the quest"] = "Activé le saut du rendu de la quête choisie"
+	L["Enable Gossip window"] = "Activer la fenêtre de bavardage"
+	L["Enable skipping the opening gossip text"] = "Activer le saut du bavardage"
+	L["Enable Quest Text window"] = "Activer la fenêtre de description de la quête"
+	L["Enable skipping the Quest Descriptive text"] = "Activer le saut de la description de la quête"
+	L["Enable Completion Gossip"] = "Activer l'acquiessement du bavardage"
+	L["Enable skipping the Quest Completion question text"] = "Activer le saut du texte finalisant la quête"
+	L["Enable Quest Turn In"] = "Activer le rendu des quêtes"
+	L["Enable skipping the actual turn in of the quest"] = "Activer le saut du rendu de la quête choisie"
 
 
 	--Titles
