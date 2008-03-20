@@ -1,207 +1,215 @@
 --Major 5, Minor $Revision$
 --[[
 
-	How to Localize this, because it's a pain in the ass.
-	
-	/dump UnitName("target")
-	/dump GetTitleText()
-	
-	The Lines marked NPC must have the EXACT spelling and coding as the above command for UnitName()
-	Same applys for the *Quest marked lines, must have the EXACT spelling and coding as given by "GetTitleText()"
-	if they are not the same then it will not work.
-	
-	all other lines are bissness as usual, being touched every few weeks.
+How to Localize this, because it's a pain in the ass.
+
+/dump UnitName("target")
+/dump GetTitleText()
+
+The Lines marked NPC must have the EXACT spelling and coding as the above command for UnitName()
+Same applys for the *Quest marked lines, must have the EXACT spelling and coding as given by "GetTitleText()"
+if they are not the same then it will not work.
+
+all other lines are bissness as usual, being touched every few weeks.
 
 ]]--
 
 
+
+
 local L = LibStub("AceLocale-3.0"):NewLocale("SickOfClickingDailies", "enUS", true)
+
 if L then
 --Skettis
-		L["Sky Sergeant Doryn"] = true					--*NPC
-			L["Fires Over Skettis"] = true				--*Quest
-			L["Escape from Skettis"] = true				--*Quest
+	L["Sky Sergeant Doryn"] = true					--*NPC
+		L["Fires Over Skettis"] = true				--*Quest
+		L["Escape from Skettis"] = true				--*Quest
 
-		L["Skyguard Prisoner"] = true					--*NPC
+	L["Skyguard Prisoner"] = true					--*NPC
 
-		L["Skyguard Khatie"] = true						--*NPC
-			L["Wrangle More Aether Rays!"] = true		--*Quest
+	L["Skyguard Khatie"] = true						--*NPC
+		L["Wrangle More Aether Rays!"] = true		--*Quest
 
-		L["Sky Sergeant Vanderlip"] = true				--*NPC
-			L["Bomb Them Again!"] = true				--*Quest
+	L["Sky Sergeant Vanderlip"] = true				--*NPC
+		L["Bomb Them Again!"] = true				--*Quest
+		
 --Ogri'la
-		L["Chu'a'lor"] = true							--*NPC
-			L["The Relic's Emanation"] = true			--*Quest
+	L["Chu'a'lor"] = true							--*NPC
+		L["The Relic's Emanation"] = true			--*Quest
 
-		L["Kronk"] = true								--*NPC
-			L["Banish More Demons"] = true				--*Quest
+	L["Kronk"] = true								--*NPC
+		L["Banish More Demons"] = true				--*Quest
+		
 --Netherwing
-		L["Mistress of the Mines"] = true				--*NPC
-			L["Picking Up The Pieces..."] = true		--*Quest
+	L["Mistress of the Mines"] = true				--*NPC
+		L["Picking Up The Pieces..."] = true		--*Quest
 
-		L["Dragonmaw Foreman"] = true					--*NPC
-			L["Dragons are the Least of Our Problems"] = true	--*Quest
+	L["Dragonmaw Foreman"] = true					--*NPC
+		L["Dragons are the Least of Our Problems"] = true	--*Quest
 
-		L["Yarzill the Merc"] = true					--*NPC
-			L["The Not-So-Friendly Skies..."] = true	--*Quest
-			L["A Slow Death"] = true					--*Quest
+	L["Yarzill the Merc"] = true					--*NPC
+		L["The Not-So-Friendly Skies..."] = true	--*Quest
+		L["A Slow Death"] = true					--*Quest
 
-		L["Taskmaster Varkule Dragonbreath"] = true		--*NPC
-			L["Nethercite Ore"] = true					--*Quest
-			L["Netherdust Pollen"] = true				--*Quest
-			L["Nethermine Flayer Hide"] = true			--*Quest
-			L["Netherwing Crystals"] = true				--*Quest
+	L["Taskmaster Varkule Dragonbreath"] = true		--*NPC
+		L["Nethercite Ore"] = true					--*Quest
+		L["Netherdust Pollen"] = true				--*Quest
+		L["Nethermine Flayer Hide"] = true			--*Quest
+		L["Netherwing Crystals"] = true				--*Quest
 
-		L["Chief Overseer Mudlump"] = true				--*NPC
-			L["The Booterang: A Cure For The Common Worthless Peon"] = true		--*Quest
+	L["Chief Overseer Mudlump"] = true				--*NPC
+		L["The Booterang: A Cure For The Common Worthless Peon"] = true		--*Quest
 
-		L["Commander Arcus"] = true						--*NPC
-		L["Commander Hobb"] = true						--*NPC
-		L["Overlord Mor'ghor"] = true					--*NPC
-			L["Disrupting the Twilight Portal"] = true	--*Quest
-			L["The Deadliest Trap Ever Laid"] = true	--*Quest
+	L["Commander Arcus"] = true						--*NPC
+	L["Commander Hobb"] = true						--*NPC
+	L["Overlord Mor'ghor"] = true					--*NPC
+		L["Disrupting the Twilight Portal"] = true	--*Quest
+		L["The Deadliest Trap Ever Laid"] = true	--*Quest
+
 --Wintersaber Rep
-	L["Rivern Frostwind"] = true						--*NPC
-		L["Frostsaber Provisions"] = true				--*Quest
-		L["Winterfall Intrusion"] = true				--*Quest
-		L["Rampaging Giants"] = true					--*Quest
+L["Rivern Frostwind"] = true						--*NPC
+	L["Frostsaber Provisions"] = true				--*Quest
+	L["Winterfall Intrusion"] = true				--*Quest
+	L["Rampaging Giants"] = true					--*Quest
+	
 --Cooking
-	L["The Rokk"] = true								--*NPC
-		L["Super Hot Stew"] = true						--*Quest
-		L["Soup for the Soul"] = true					--*Quest
-		L["Revenge is Tasty"] = true					--*Quest
-		L["Manalicious"] = true							--*Quest
+L["The Rokk"] = true								--*NPC
+	L["Super Hot Stew"] = true						--*Quest
+	L["Soup for the Soul"] = true					--*Quest
+	L["Revenge is Tasty"] = true					--*Quest
+	L["Manalicious"] = true							--*Quest
+	
 --Non-Heroic Instances
-	L["Nether-Stalker Mah'duun"] = true					--*NPC
-		L["Wanted: Arcatraz Sentinels"] = true			--*Quest
-		L["Wanted: Coilfang Myrmidons"] = true			--*Quest
-		L["Wanted: Malicious Instructors"] = true		--*Quest
-		L["Wanted: Rift Lords"] = true					--*Quest
-		L["Wanted: Shattered Hand Centurions"] = true	--*Quest
-		L["Wanted: Sunseeker Channelers"] = true		--*Quest
-		L["Wanted: Tempest-Forge Destroyers"] = true	--*Quest
+L["Nether-Stalker Mah'duun"] = true					--*NPC
+	L["Wanted: Arcatraz Sentinels"] = true			--*Quest
+	L["Wanted: Coilfang Myrmidons"] = true			--*Quest
+	L["Wanted: Malicious Instructors"] = true		--*Quest
+	L["Wanted: Rift Lords"] = true					--*Quest
+	L["Wanted: Shattered Hand Centurions"] = true	--*Quest
+	L["Wanted: Sunseeker Channelers"] = true		--*Quest
+	L["Wanted: Tempest-Forge Destroyers"] = true	--*Quest
 
-	--Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
-		L["Arcatraz Sentinels"] = true
-		L["Coilfang Myrmidons"] = true
-		L["Malicious Instructors"] = true
-		L["Rift Lords"] = true
-		L["Shattered Hand Centurions"] = true
-		L["Sunseeker Channelers"] = true
-		L["Tempest-Forge Destroyers"] = true
-
-
+--Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
+	L["Arcatraz Sentinels"] = true
+	L["Coilfang Myrmidons"] = true
+	L["Malicious Instructors"] = true
+	L["Rift Lords"] = true
+	L["Shattered Hand Centurions"] = true
+	L["Sunseeker Channelers"] = true
+	L["Tempest-Forge Destroyers"] = true
 
 --Heroic Instances
-	L["Wind Trader Zhareem"] = true						--*NPC
-		L["Wanted: A Black Stalker Egg"] = true			--*Quest
-		L["Wanted: A Warp Splinter Clipping"] = true	--*Quest
-		L["Wanted: Aeonus's Hourglass"] = true			--*Quest
-		L["Wanted: Bladefist's Seal"] = true			--*Quest
-		L["Wanted: Keli'dan's Feathered Stave"] = true	--*Quest
-		L["Wanted: Murmur's Whisper"] = true			--*Quest
-		L["Wanted: Nazan's Riding Crop"] = true			--*Quest
-		L["Wanted: Pathaleon's Projector"] = true		--*Quest
-		L["Wanted: Shaffar's Wondrous Pendant"] = true	--*Quest
-		L["Wanted: The Epoch Hunter's Head"] = true		--*Quest
-		L["Wanted: The Exarch's Soul Gem"] = true		--*Quest
-		L["Wanted: The Headfeathers of Ikiss"] = true	--*Quest
-		L["Wanted: The Heart of Quagmirran"] = true		--*Quest
-		L["Wanted: The Scroll of Skyriss"] = true		--*Quest
-		L["Wanted: The Warlord's Treatise"] = true		--*Quest
+L["Wind Trader Zhareem"] = true						--*NPC
+	L["Wanted: A Black Stalker Egg"] = true			--*Quest
+	L["Wanted: A Warp Splinter Clipping"] = true	--*Quest
+	L["Wanted: Aeonus's Hourglass"] = true			--*Quest
+	L["Wanted: Bladefist's Seal"] = true			--*Quest
+	L["Wanted: Keli'dan's Feathered Stave"] = true	--*Quest
+	L["Wanted: Murmur's Whisper"] = true			--*Quest
+	L["Wanted: Nazan's Riding Crop"] = true			--*Quest
+	L["Wanted: Pathaleon's Projector"] = true		--*Quest
+	L["Wanted: Shaffar's Wondrous Pendant"] = true	--*Quest
+	L["Wanted: The Epoch Hunter's Head"] = true		--*Quest
+	L["Wanted: The Exarch's Soul Gem"] = true		--*Quest
+	L["Wanted: The Headfeathers of Ikiss"] = true	--*Quest
+	L["Wanted: The Heart of Quagmirran"] = true		--*Quest
+	L["Wanted: The Scroll of Skyriss"] = true		--*Quest
+	L["Wanted: The Warlord's Treatise"] = true		--*Quest
 --Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
-		L["A Black Stalker Egg"] = true
-		L["A Warp Splinter Clipping"] = true
-		L["Aeonus's Hourglass"] = true
-		L["Bladefist's Seal"] = true
-		L["Keli'dan's Feathered Stave"] = true
-		L["Murmur's Whisper"] = true
-		L["Nazan's Riding Crop"] = true
-		L["Pathaleon's Projector"] = true
-		L["Shaffar's Wondrous Pendant"] = true
-		L["The Epoch Hunter's Head"] = true
-		L["The Exarch's Soul Gem"] = true
-		L["The Headfeathers of Ikiss"] = true
-		L["The Heart of Quagmirran"] = true
-		L["The Scroll of Skyriss"] = true
-		L["The Warlord's Treatise"] = true
+
+	L["A Black Stalker Egg"] = true
+	L["A Warp Splinter Clipping"] = true
+	L["Aeonus's Hourglass"] = true
+	L["Bladefist's Seal"] = true
+	L["Keli'dan's Feathered Stave"] = true
+	L["Murmur's Whisper"] = true
+	L["Nazan's Riding Crop"] = true
+	L["Pathaleon's Projector"] = true
+	L["Shaffar's Wondrous Pendant"] = true
+	L["The Epoch Hunter's Head"] = true
+	L["The Exarch's Soul Gem"] = true
+	L["The Headfeathers of Ikiss"] = true
+	L["The Heart of Quagmirran"] = true
+	L["The Scroll of Skyriss"] = true
+	L["The Warlord's Treatise"] = true
 
 --PvP
-	L["Alliance Brigadier General"] = true				--*NPC
-	L["Horde Warbringer"] = true						--*NPC
-		L["Call to Arms: Alterac Valley"] = true		--*Quest
-		L["Call to Arms: Arathi Basin"] = true			--*Quest
-		L["Call to Arms: Eye of the Storm"] = true		--*Quest
-		L["Call to Arms: Warsong Gulch"] = true			--*Quest
-	L["Warrant Officer Tracy Proudwell"] = true			--*NPC
-	L["Battlecryer Blackeye"] = true					--*NPC
-		L["Hellfire Fortifications"] = true				--*Quest
+L["Alliance Brigadier General"] = true				--*NPC
+L["Horde Warbringer"] = true						--*NPC
+	L["Call to Arms: Alterac Valley"] = true		--*Quest
+	L["Call to Arms: Arathi Basin"] = true			--*Quest
+	L["Call to Arms: Eye of the Storm"] = true		--*Quest
+	L["Call to Arms: Warsong Gulch"] = true			--*Quest
+L["Warrant Officer Tracy Proudwell"] = true			--*NPC
+L["Battlecryer Blackeye"] = true					--*NPC
+	L["Hellfire Fortifications"] = true				--*Quest
 
-	-- Options Table Locale
-	--General Titles
-	L["Sick Of Clicking Dailies?"] = true  ---- Addon Name used for Options table
-	L["NPC & Quest Options"] = true
-	L["NPC Enabled"] = true
-	L["Addon Options"] = true
-	L["Enabled"] = true
-	L["Enable Quest"] = true
-	L["Quest Reward"] = true
-	L["None"] = true
+-- Options Table Locale
+--General Titles
+L["Sick Of Clicking Dailies?"] = true  ---- Addon Name used for Options table
+L["NPC & Quest Options"] = true
+L["NPC Enabled"] = true
+L["Addon Options"] = true
+L["Enabled"] = true
+L["Enable Quest"] = true
+L["Quest Reward"] = true
+L["None"] = true
 
-	L["Always Loop NPCs"] = true
-	L["Always Loop on the NPC from one quest to the next forever"] = true
-	L["Enable Gossip window"] = true
-	L["Enable skipping the opening gossip text"] = true
-	L["Enable Quest Text window"] = true
-	L["Enable skipping the Quest Descriptive text"] = true
-	L["Enable Completion Gossip"] = true
-	L["Enable skipping the Quest Completion question text"] = true
-	L["Enable Quest Turn In"] = true
-	L["Enable skipping the actual turn in of the quest"] = true
+L["Always Loop NPCs"] = true
+L["Always Loop on the NPC from one quest to the next forever"] = true
+L["Enable Gossip window"] = true
+L["Enable skipping the opening gossip text"] = true
+L["Enable Quest Text window"] = true
+L["Enable skipping the Quest Descriptive text"] = true
+L["Enable Completion Gossip"] = true
+L["Enable skipping the Quest Completion question text"] = true
+L["Enable Quest Turn In"] = true
+L["Enable skipping the actual turn in of the quest"] = true
 
-
-	--Titles
-	L["Faction Grinds"] = true
-		L["Skyguard"] = true
-			L["Blades Edge Mountains"] = true
-			L["Skettis"] = true
-		L["Ogri'la"] = true
-		L["Netherwing"] = true
+--Titles
+L["Faction Grinds"] = true
+	L["Skyguard"] = true
+		L["Blades Edge Mountains"] = true
+		L["Skettis"] = true
+	L["Ogri'la"] = true
+	L["Netherwing"] = true
 		L["Netherwing - Neutral"] = true
 		L["Netherwing - Friendly"] = true
 		L["Netherwing - Honored"] = true
 		L["Netherwing - Revered"] = true
-		L["Wintersaber Trainer"] = true
-	L["PvP"] = true
-		L["Horde PvP"] = true
-		L["Alliance PvP"] = true
-		L["Battlegrounds"] = true
-		L["World PvP"] = true
-	L["Instance"] = true
-		L["Instance - Normal"] = true
-		L["Instance - Heroic"] = true
-			L["The Eye"] = true
-			L["Serpentshrine Cavern"] = true
-			L["Hellfire Citadel"] = true
-			L["Caverns of Time"] = true
-			L["Auchindoun"] = true
-	L["Cooking"] = true
-	L["Fishing"] = true
-	L["Profession"] = true
+	L["Wintersaber Trainer"] = true
+	
+L["PvP"] = true
+	L["Horde PvP"] = true
+	L["Alliance PvP"] = true
+	L["Battlegrounds"] = true
+	L["World PvP"] = true
+	
+L["Instance"] = true
+	L["Instance - Normal"] = true
+	L["Instance - Heroic"] = true
+		L["The Eye"] = true
+		L["Serpentshrine Cavern"] = true
+		L["Hellfire Citadel"] = true
+		L["Caverns of Time"] = true
+		L["Auchindoun"] = true
+		
+L["Cooking"] = true
+L["Fishing"] = true
+L["Profession"] = true
 
-	--Special Tool Tips
-	L["This will toggle the quest on both Doryn and the Prisoner"] = true
-	L["|cffFF0000WARNING!!!|r, This Option also toggles both Scryer and Aldor Quests"] = true  ---Warning Color Code included in this string
-	L["\nAll Non-Heroic Quests are from |cff00ff00'Nether-Stalker Mah'duun'|r in LowerCity"] = true
-	L["\nAll Heroic Dailies from |cff00ff00'Wind Trader Zhareem'|r in LowerCity"] = true
+--Special Tool Tips
+L["This will toggle the quest on both Doryn and the Prisoner"] = true
+L["|cffFF0000WARNING!!!|r, This Option also toggles both Scryer and Aldor Quests"] = true  ---Warning Color Code included in this string
+L["\nAll Non-Heroic Quests are from |cff00ff00'Nether-Stalker Mah'duun'|r in LowerCity"] = true
+L["\nAll Heroic Dailies from |cff00ff00'Wind Trader Zhareem'|r in LowerCity"] = true
 
-	--Quest Options
+--Quest Options
 
-	L["Select what Potion you want for the 'Escape from Skettis' quest"] = true
-	L["Health Potion"] = true
-	L["Mana Potion"] = true
-	--L["Escort Quest Potion"] = true
-	L["Barrel of Fish"] = true
-	L["Crate of Meat"] = true
+L["Select what Potion you want for the 'Escape from Skettis' quest"] = true
+L["Health Potion"] = true
+L["Mana Potion"] = true
+L["Barrel of Fish"] = true
+L["Crate of Meat"] = true
 
 end

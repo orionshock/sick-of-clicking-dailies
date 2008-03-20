@@ -210,15 +210,20 @@ local options = {
 						Fires = { name = L["Fires Over Skettis"], type = "toggle", order = 2,
 							arg = { L["Sky Sergeant Doryn"], L["Fires Over Skettis"] } ,
 							get = "IsQuestEnabled", set = "ToggleQuest" },
-						Escape = { name = L["Escape from Skettis"], type = "toggle", order = 3,
-							desc = L["This will toggle the quest on both Doryn and the Prisoner"],
-							arg = { L["Sky Sergeant Doryn"],  L["Escape from Skettis"] }, get = "IsQuestEnabled",
-							set = function(_ , v) 	addon:ToggleQuest( false , L["Sky Sergeant Doryn"],  L["Escape from Skettis"], v )
-													addon:ToggleQuest( false , L["Skyguard Prisoner"],  L["Escape from Skettis"], v ) end, },
-						EscapeOption = { name = L["Quest Reward"], type = "select", order = 4, get = "GetQuestOption", set = "SetQuestOption",
-							desc = L["Select what Potion you want for the 'Escape from Skettis' quest"],
-							arg = { L["Sky Sergeant Doryn"],  L["Escape from Skettis"] },
-							values = { L["Health Potion"], L["Mana Potion"], L["None"] },},
+						escort = {
+							name = L["Escape from Skettis"], type = 'group', order = 3, inline = true,
+							args = {
+								Escape = { name = L["Enable Quest"], type = "toggle", order = 3,
+									desc = L["This will toggle the quest on both Doryn and the Prisoner"],
+									arg = { L["Sky Sergeant Doryn"],  L["Escape from Skettis"] }, get = "IsQuestEnabled",
+									set = function(_ , v) 	addon:ToggleQuest( false , L["Sky Sergeant Doryn"],  L["Escape from Skettis"], v )
+															addon:ToggleQuest( false , L["Skyguard Prisoner"],  L["Escape from Skettis"], v ) end, },
+								EscapeOption = { name = L["Quest Reward"], type = "select", order = 4, get = "GetQuestOption", set = "SetQuestOption",
+									desc = L["Select what Potion you want for the 'Escape from Skettis' quest"],
+									arg = { L["Sky Sergeant Doryn"],  L["Escape from Skettis"] },
+									values = { L["Health Potion"], L["Mana Potion"], L["None"] },},
+							},
+						},
 						bem = { type = "description", name = L["Blades Edge Mountains"], order = 5 },
 						Aether = { name = L["Wrangle More Aether Rays!"], type = "toggle", order = 6, get = "IsQuestEnabled", set = "ToggleQuest",
 							arg = { L["Skyguard Khatie"], L["Wrangle More Aether Rays!"] } },
@@ -459,10 +464,10 @@ local options = {
 			},
 		},
 		loop = { name = L["Always Loop NPCs"], type = "toggle", order = 2,
-		desc = L["Always Loop on the NPC from one quest to the next forever"],
-		get = function() return addon.db.profile.questLoop end,
-		set = function() if addon.db.profile.questLoop then addon.db.profile.questLoop = false else addon.db.profile.questLoop = true end end, },
-	}, --Close Top Lvl Args Table
+			desc = L["Always Loop on the NPC from one quest to the next forever"],
+			get = function() return addon.db.profile.questLoop end,
+			set = function() if addon.db.profile.questLoop then addon.db.profile.questLoop = false else addon.db.profile.questLoop = true end end, },
+		}, --Close Top Lvl Args Table
 }
 
 function addon:OnInitialize()
