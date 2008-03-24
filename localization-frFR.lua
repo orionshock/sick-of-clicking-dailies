@@ -100,7 +100,7 @@ L["Nether-Stalker Mah'duun"] = "Traqueur-du-Néant Mah'duun"										--*NPC
 
 --Heroic Instances
 L["Wind Trader Zhareem"] = "Marchand des vents Zhareem"												--*NPC
-	L["Wanted: A Black Stalker Egg"] = "On recherche : Un oeuf de traqueuse noire"					--*Quest
+	L["Wanted: A Black Stalker Egg"] = "On recherche : Un œuf de traqueuse noire"					--*Quest
 	L["Wanted: A Warp Splinter Clipping"] = "On recherche : Une rognure de Brise-dimension"			--*Quest
 	L["Wanted: Aeonus's Hourglass"] = "On recherche : Le sablier d'Aeonus"							--*Quest
 	L["Wanted: Bladefist's Seal"] = "On recherche : Le sceau de Lamepoing"							--*Quest
@@ -117,7 +117,7 @@ L["Wind Trader Zhareem"] = "Marchand des vents Zhareem"												--*NPC
 	L["Wanted: The Warlord's Treatise"] = "On recherche : Le traité du seigneur de guerre"			--*Quest
 --Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
 
-	L["A Black Stalker Egg"] = "Un oeuf de traqueuse noire"
+	L["A Black Stalker Egg"] = "Un œuf de traqueuse noire"
 	L["A Warp Splinter Clipping"] = "Une rognure de Brise-dimension"
 	L["Aeonus's Hourglass"] = "Le sablier d'Aeonus"
 	L["Bladefist's Seal"] = "Le sceau de Lamepoing"
