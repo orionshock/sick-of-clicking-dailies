@@ -119,6 +119,19 @@ local defaults = {
 					enabled = true,
 					[L["The Deadliest Trap Ever Laid"]] = false,
 					},
+			--Shattered Sun Offensive
+				-- [] = {
+					-- enabled = true,
+					-- [] = true,
+				-- },
+				[L["Vindicator Xayann"]] = {
+					enabled = true,
+					[L["Erratic Behavior"]] = true,
+					},
+				[L["Captain Theris Dawnhearth"]] = {
+					enabled = true,
+					[L["The Sanctum Wards"]] = true,
+					},
 			--Wintersaber Trainer
 				[L["Rivern Frostwind"]] = {
 					enabled = true,
@@ -299,7 +312,15 @@ local options = {
 						},
 					},
 				},
-				WintersaberTrainers = { name = L["Wintersaber Trainer"], type = "group", order = 4,
+				ShatteredSun = {type = "group", name = L["Shattered Sun Offensive"], order = 4,
+					args = {
+						Sentries = { name = L["Erratic Behavior"], type = "toggle", get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Vindicator Xayann"], L["Erratic Behavior"]},},
+						SanctumWards = { name = L["The Sanctum Wards"], type = "toggle", get = "IsQuestEnabled", set = "ToggleQuest",
+							arg = { L["Captain Theris Dawnhearth"], L["The Sanctum Wards"]},},
+					},
+				},
+				WintersaberTrainers = { name = L["Wintersaber Trainer"], type = "group", order = 100,
 					args = {
 						Provisions = { name = L["Frostsaber Provisions"], type = "toggle", order = 2, get = "IsQuestEnabled", set = "ToggleQuest",
 							arg = { L["Rivern Frostwind"] , L["Frostsaber Provisions"] } },
@@ -418,11 +439,11 @@ local options = {
 				},
 			},
 		},
-		profession = {type = "group", name = L["Profession"], order = 4, 
+		Profession = {type = "group", name = L["Profession"], order = 4, 
 			args = {
 				Cooking = {name = L["Cooking"], type = "group", order = 1, --childGroups = "tab",
 					args = {
-						Rokk = { name = L["The Rokk"], type = "group", order = 1, --inline = true,
+						Rokk = { name = L["The Rokk"], type = "group", order = 1, inline = true,
 							args = {
 								enabled = { name = L["NPC Enabled"], type = "toggle", order = 1,
 									arg = L["The Rokk"], get = "IsNPCEnabled", set = "ToggleNPC" },
@@ -466,19 +487,19 @@ local options = {
 						},
 					},
 				},
-				fishing = {name = L["Fishing"], type = "group", order = 2, --childGroups = "tab",
+				Fishing = {name = L["Fishing"], type = "group", order = 2, --childGroups = "tab",
 					args = {
-						Barlo = { name = L["Old Man Barlo"], type = "group", order = 1, --inline = true,
+						Barlo = { name = L["Old Man Barlo"], type = "group", order = 1, inline = true,
 							args = {
-								FishingCrocolisks= { name = L["Crocolisks in the City"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+								Crocolisks= { name = L["Crocolisks in the City"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
 									arg = { L["Old Man Barlo"], L["Crocolisks in the City"] } },
-								FishingBaitBandits= { name = L["Bait Bandits"], type = "toggle", order = 2, get = "IsQuestEnabled", set = "ToggleQuest",
+								BaitBandits= { name = L["Bait Bandits"], type = "toggle", order = 2, get = "IsQuestEnabled", set = "ToggleQuest",
 									arg = { L["Old Man Barlo"], L["Bait Bandits"] } },
-								FishingFelbloodFillet= { name = L["Felblood Fillet"], type = "toggle", order = 3, get = "IsQuestEnabled", set = "ToggleQuest",
+								FelbloodFillet= { name = L["Felblood Fillet"], type = "toggle", order = 3, get = "IsQuestEnabled", set = "ToggleQuest",
 									arg = { L["Old Man Barlo"], L["Felblood Fillet"] } },
-								FishingShrimpin= { name = L["Shrimpin' Ain't Easy"], type = "toggle", order = 4, get = "IsQuestEnabled", set = "ToggleQuest",
+								Shrimpin= { name = L["Shrimpin' Ain't Easy"], type = "toggle", order = 4, get = "IsQuestEnabled", set = "ToggleQuest",
 									arg = { L["Old Man Barlo"], L["Shrimpin' Ain't Easy"] } },
-								FishingMudfish= { name = L["The One That Got Away"], type = "toggle", order = 5, get = "IsQuestEnabled", set = "ToggleQuest",
+								Mudfish= { name = L["The One That Got Away"], type = "toggle", order = 5, get = "IsQuestEnabled", set = "ToggleQuest",
 									arg = { L["Old Man Barlo"], L["The One That Got Away"] } },
 							} 
 						}, 

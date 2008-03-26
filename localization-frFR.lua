@@ -2,14 +2,14 @@
 --[[
 
 	How to Localize this, because it's a pain in the ass.
-	
+
 	/dump UnitName("target")
 	/dump GetTitleText()
-	
+
 	The Lines marked NPC must have the EXACT spelling and coding as the above command for UnitName()
 	Same applys for the *Quest marked lines, must have the EXACT spelling and coding as given by "GetTitleText()"
 	if they are not the same then it will not work.
-	
+
 	all other lines are bissness as usual, being touched every few weeks.
 
 ]]--
@@ -32,7 +32,7 @@ if L then
 
 	L["Sky Sergeant Vanderlip"] = "Sergent Vanderlip de la Garde-ciel"	--*NPC
 		L["Bomb Them Again!"] = "Bombardez-les encore !"				--*Quest
-		
+
 --Ogri'la
 	L["Chu'a'lor"] = "Chu'a'lor"											--*NPC
 		L["The Relic's Emanation"] = "Les émanations des reliques"			--*Quest
@@ -65,7 +65,13 @@ if L then
 	L["Overlord Mor'ghor"] = "Suzerain Mor'ghor"									--*NPC
 		L["Disrupting the Twilight Portal"] = "Perturber la Porte du crépuscule"	--*Quest
 		L["The Deadliest Trap Ever Laid"] = "Le plus mortel des pièges"				--*Quest
-	
+
+--Shattered Sun Offensive
+	-- L["Vindicator Xayann"] = true					--*NPC
+		-- L["Erratic Behavior"] = true				--Quest
+	-- L["Captain Theris Dawnhearth"] = true			--*NPC
+		-- L["The Sanctum Wards"] = true				--Quest
+
 --Wintersaber Rep
 L["Rivern Frostwind"] = "Rivern Givrevent"							--*NPC
 	L["Frostsaber Provisions"] = "Provisions de sabres-de-givre" 	--*Quest
@@ -78,7 +84,15 @@ L["The Rokk"] = "Le Rokk"									--*NPC
 	L["Soup for the Soul"] = "Une soupe pour l'âme"			--*Quest
 	L["Revenge is Tasty"] = "La vengeance est un plat…"	--*Quest
 	L["Manalicious"] = "Manalicieux"						--*Quest
-	
+
+--Fishing
+-- L["Old Man Barlo"] = true								--*NPC
+	-- L["Crocolisks in the City"] = true						--*Quest
+	-- L["Bait Bandits"] = true						--*Quest
+	-- L["Felblood Fillet"] = true					--*Quest
+	-- L["Shrimpin' Ain't Easy"] = true					--*Quest
+	-- L["The One That Got Away"] = true							--*Quest
+
 --Non-Heroic Instances
 L["Nether-Stalker Mah'duun"] = "Traqueur-du-Néant Mah'duun"										--*NPC
 	L["Wanted: Arcatraz Sentinels"] = "On recherche : Des sentinelles de l'Arcatraz"			--*Quest
@@ -177,6 +191,7 @@ L["Faction Grinds"] = "Monter les factions"
 		L["Netherwing - Friendly"] = "Aile-du-Néant - Amical"
 		L["Netherwing - Honored"] = "Aile-du-Néant - Honoré"
 		L["Netherwing - Revered"] = "Aile-du-Néant - Révéré"
+	--L["Shattered Sun Offensive"] = true
 	L["Wintersaber Trainer"] = "Éleveur de sabres-d'hiver"
 
 L["PvP"] = "JcJ"
@@ -184,7 +199,7 @@ L["PvP"] = "JcJ"
 	L["Alliance PvP"] = "JcJ Alliance"
 	L["Battlegrounds"] = "Champs-de-batailles"
 	L["World PvP"] = "JcJ ouvert"
-		
+
 L["Instance"] = "Instance"
 	L["Instance - Normal"] = "Instance - Normal"
 	L["Instance - Heroic"] = "Instance - Héroïque"
@@ -193,7 +208,7 @@ L["Instance"] = "Instance"
 		L["Hellfire Citadel"] = "Citadelle des flammes infernales"
 		L["Caverns of Time"] = "Les Grottes du temps"
 		L["Auchindoun"] = "Auchindoun"
-		
+
 L["Cooking"] = "Cuisine"
 L["Fishing"] = "Pêche"
 L["Profession"] = "Profession"

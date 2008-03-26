@@ -1,4 +1,4 @@
-﻿## Interface: 20300
+﻿## Interface: 20400
 ## Title: Sick of Clicking Dailys? v5
 ## Author: OrionShock
 ## Notes: AutoMagicly clicks though Daily Quests, and Turns them In.

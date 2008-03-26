@@ -66,6 +66,12 @@ if L then
 		L["Disrupting the Twilight Portal"] = true	--*Quest
 		L["The Deadliest Trap Ever Laid"] = true	--*Quest
 
+--Shattered Sun Offensive
+	L["Vindicator Xayann"] = true					--*NPC
+		L["Erratic Behavior"] = true				--Quest
+	L["Captain Theris Dawnhearth"] = true
+		L["The Sanctum Wards"] = true
+
 --Wintersaber Rep
 L["Rivern Frostwind"] = true						--*NPC
 	L["Frostsaber Provisions"] = true				--*Quest
@@ -79,7 +85,7 @@ L["The Rokk"] = true								--*NPC
 	L["Revenge is Tasty"] = true					--*Quest
 	L["Manalicious"] = true							--*Quest
 	
---Cooking
+--Fishing
 L["Old Man Barlo"] = true								--*NPC
 	L["Crocolisks in the City"] = true						--*Quest
 	L["Bait Bandits"] = true						--*Quest
@@ -185,6 +191,7 @@ L["Faction Grinds"] = true
 		L["Netherwing - Friendly"] = true
 		L["Netherwing - Honored"] = true
 		L["Netherwing - Revered"] = true
+	L["Shattered Sun Offensive"] = true
 	L["Wintersaber Trainer"] = true
 	
 L["PvP"] = true

@@ -66,6 +66,12 @@ if L then
 		L["Disrupting the Twilight Portal"] = "Schw\195\164cht das Portal des Zwielichts"
 		L["The Deadliest Trap Ever Laid"] = "Die t\195\182dlichste Falle aller Zeiten"
 
+--Shattered Sun Offensive
+	-- L["Vindicator Xayann"] = true					--*NPC
+		-- L["Erratic Behavior"] = true				--Quest
+	-- L["Captain Theris Dawnhearth"] = true			--*NPC
+		-- L["The Sanctum Wards"] = true				--Quest
+
 --Wintersaber Rep
 L["Rivern Frostwind"] = true
 	L["Frostsaber Provisions"] = "Frosts\195\164blerverpflegung"
@@ -78,6 +84,14 @@ L["The Rokk"] = "Der Rokk"
 	L["Soup for the Soul"] = "Suppe f\195\188r die Seele"
 	L["Revenge is Tasty"] = "Rache ist schmackhaft"
 	L["Manalicious"] = "Manazi\195\182s"
+
+--Fishing
+-- L["Old Man Barlo"] = true								--*NPC
+	-- L["Crocolisks in the City"] = true						--*Quest
+	-- L["Bait Bandits"] = true						--*Quest
+	-- L["Felblood Fillet"] = true					--*Quest
+	-- L["Shrimpin' Ain't Easy"] = true					--*Quest
+	-- L["The One That Got Away"] = true							--*Quest
 
 --Non-Heroic Instances
 L["Nether-Stalker Mah'duun"] = "Netherpirscher Mah'duun"
@@ -177,14 +191,15 @@ L["Faction Grinds"] = "Fraktionen"
 		L["Netherwing - Friendly"] = "Netherschwingen - Freundlich"
 		L["Netherwing - Honored"] = "Netherschwingen - Wohlwollend"
 		L["Netherwing - Revered"] = "Netherschwingen - Ehrf\195\188rchtig"
+	--L["Shattered Sun Offensive"] = true
 	L["Wintersaber Trainer"] = "Winters\195\164blerausbilder"
-	
+
 L["PvP"] = true
 	L["Horde PvP"] = true
 	L["Alliance PvP"] = "Allianz PvP"
 	L["Battlegrounds"] = "Schlachtfelder"
 	L["World PvP"] = "Open PvP"
-	
+
 L["Instance"] = "Instanz"
 	L["Instance - Normal"] = "Instanz - Normal"
 	L["Instance - Heroic"] = "Instanz - Heroisch"
@@ -193,7 +208,7 @@ L["Instance"] = "Instanz"
 		L["Hellfire Citadel"] = "H\195\182llenfeuerzitadelle"
 		L["Caverns of Time"] = "H\195\182hlen der Zeit"
 		L["Auchindoun"] = true
-		
+
 L["Cooking"] = "Kochen"
 L["Fishing"] = "Fischen"
 L["Profession"] = "Beruf"
