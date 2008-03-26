@@ -79,6 +79,14 @@ L["The Rokk"] = true								--*NPC
 	L["Revenge is Tasty"] = true					--*Quest
 	L["Manalicious"] = true							--*Quest
 	
+--Cooking
+L["Old Man Barlo"] = true								--*NPC
+	L["Crocolisks in the City"] = true						--*Quest
+	L["Bait Bandits"] = true						--*Quest
+	L["Felblood Fillet"] = true					--*Quest
+	L["Shrimpin' Ain't Easy"] = true					--*Quest
+	L["The One That Got Away"] = true							--*Quest
+
 --Non-Heroic Instances
 L["Nether-Stalker Mah'duun"] = true					--*NPC
 	L["Wanted: Arcatraz Sentinels"] = true			--*Quest

@@ -139,7 +139,16 @@ local defaults = {
 						[L["Revenge is Tasty"]] = 3,
 						[L["Manalicious"]] = 3,
 					}
-					},
+				},
+			--Fishing
+				[L["Old Man Barlo"]] = {
+					enabled = true,
+					[L["Crocolisks in the City"]] = true,
+					[L["Bait Bandits"]] = true,
+					[L["Felblood Fillet"]] = true,
+					[L["Shrimpin' Ain't Easy"]] = true,
+					[L["The One That Got Away"]] = true,
+				},
 			--Instance
 				[L["Nether-Stalker Mah'duun"]] = {		---Non Heroic NPC
 					enabled = true,
@@ -457,10 +466,24 @@ local options = {
 						},
 					},
 				},
-				fishing = {name = L["Fishing"], type = "group", order = 2, childGroups = "tab",
+				fishing = {name = L["Fishing"], type = "group", order = 2, --childGroups = "tab",
 					args = {
-					}
-				}
+						Barlo = { name = L["Old Man Barlo"], type = "group", order = 1, --inline = true,
+							args = {
+								FishingCrocolisks= { name = L["Crocolisks in the City"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Old Man Barlo"], L["Crocolisks in the City"] } },
+								FishingBaitBandits= { name = L["Bait Bandits"], type = "toggle", order = 2, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Old Man Barlo"], L["Bait Bandits"] } },
+								FishingFelbloodFillet= { name = L["Felblood Fillet"], type = "toggle", order = 3, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Old Man Barlo"], L["Felblood Fillet"] } },
+								FishingShrimpin= { name = L["Shrimpin' Ain't Easy"], type = "toggle", order = 4, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Old Man Barlo"], L["Shrimpin' Ain't Easy"] } },
+								FishingMudfish= { name = L["The One That Got Away"], type = "toggle", order = 5, get = "IsQuestEnabled", set = "ToggleQuest",
+									arg = { L["Old Man Barlo"], L["The One That Got Away"] } },
+							} 
+						}, 
+					},
+				},
 			},
 		},
 		loop = { name = L["Always Loop NPCs"], type = "toggle", order = 2,
