@@ -67,10 +67,10 @@ if L then
 		L["The Deadliest Trap Ever Laid"] = "Le plus mortel des pièges"				--*Quest
 
 --Shattered Sun Offensive
-	-- L["Vindicator Xayann"] = true					--*NPC
-		-- L["Erratic Behavior"] = true				--Quest
-	-- L["Captain Theris Dawnhearth"] = true			--*NPC
-		-- L["The Sanctum Wards"] = true				--Quest
+	L["Vindicator Xayann"] = "Redresseur de torts Xayann"					--*NPC
+		L["Erratic Behavior"] = "Comportement erratique"				--Quest
+	L["Captain Theris Dawnhearth"] = "Capitaine Theris Âtraurore"			--*NPC
+		L["The Sanctum Wards"] = "Les protections du sanctum"				--Quest
 
 --Wintersaber Rep
 L["Rivern Frostwind"] = "Rivern Givrevent"							--*NPC
@@ -86,12 +86,12 @@ L["The Rokk"] = "Le Rokk"									--*NPC
 	L["Manalicious"] = "Manalicieux"						--*Quest
 
 --Fishing
--- L["Old Man Barlo"] = true								--*NPC
-	-- L["Crocolisks in the City"] = true						--*Quest
+L["Old Man Barlo"] = "Vieux Barlo"								--*NPC
+	L["Crocolisks in the City"] = "Les crocilisques sont lâchés"						--*Quest
 	-- L["Bait Bandits"] = true						--*Quest
 	-- L["Felblood Fillet"] = true					--*Quest
-	-- L["Shrimpin' Ain't Easy"] = true					--*Quest
-	-- L["The One That Got Away"] = true							--*Quest
+	--L["Shrimpin' Ain't Easy"] = "Les crevettes, c’est pas pour les mauviettes"					--*Quest
+	--L["The One That Got Away"] = "Celui qui s’échappa"							--*Quest
 
 --Non-Heroic Instances
 L["Nether-Stalker Mah'duun"] = "Traqueur-du-Néant Mah'duun"										--*NPC
@@ -191,7 +191,7 @@ L["Faction Grinds"] = "Monter les factions"
 		L["Netherwing - Friendly"] = "Aile-du-Néant - Amical"
 		L["Netherwing - Honored"] = "Aile-du-Néant - Honoré"
 		L["Netherwing - Revered"] = "Aile-du-Néant - Révéré"
-	--L["Shattered Sun Offensive"] = true
+	L["Shattered Sun Offensive"] = "Opération Soleil brisé"
 	L["Wintersaber Trainer"] = "Éleveur de sabres-d'hiver"
 
 L["PvP"] = "JcJ"
