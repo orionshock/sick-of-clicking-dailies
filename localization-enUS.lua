@@ -71,8 +71,8 @@ if L then
 		L["Erratic Behavior"] = true				--Quest
 	L["Captain Theris Dawnhearth"] = true
 		L["The Sanctum Wards"] = true
-	L["Harbinger Haronem"]
-		L["The Multiphase Survey"]
+	L["Harbinger Haronem"] = true
+		L["The Multiphase Survey"] = true
 
 --Wintersaber Rep
 L["Rivern Frostwind"] = true						--*NPC
