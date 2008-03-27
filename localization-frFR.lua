@@ -157,6 +157,13 @@ L["Horde Warbringer"] = "Porteguerre de la Horde"									--*NPC
 L["Warrant Officer Tracy Proudwell"] = "Adjudante Tracy Fièrepuits"					--*NPC
 L["Battlecryer Blackeye"] = "Crieur-de-guerre Coquard"								--*NPC
 	L["Hellfire Fortifications"] = "Les fortifications des Flammes infernales"		--*Quest
+-- L["Exorcist Sullivan"] = true						--*NPC
+-- L["Exorcist Vaisha"] = true							--*NPC
+	-- L["Spirits of Auchindoun"] = true				--Quest
+-- L["Karrtog"] = true									--*NPC
+	-- L["Enemies, Old and New"] = true				--Quest
+-- L["Lakoor"] = true									--*NPC
+	-- L["In Defense of Halaa"] = true					--Quest
 
 -- Options Table Locale
 --General Titles

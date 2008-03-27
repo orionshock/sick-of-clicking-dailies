@@ -157,6 +157,13 @@ L["Horde Warbringer"] = "Kriegshetzer der Horde"
 L["Warrant Officer Tracy Proudwell"] = "Stabsfeldwebel Tracy Stolzbrunn"
 L["Battlecryer Blackeye"] = "Kriegsherold Blauauge"
 	L["Hellfire Fortifications"] = "H\195\182llenfeuerbefestigungen"
+-- L["Exorcist Sullivan"] = true						--*NPC
+-- L["Exorcist Vaisha"] = true							--*NPC
+	-- L["Spirits of Auchindoun"] = true				--Quest
+-- L["Karrtog"] = true									--*NPC
+	-- L["Enemies, Old and New"] = true				--Quest
+-- L["Lakoor"] = true									--*NPC
+	-- L["In Defense of Halaa"] = true					--Quest
 
 -- Options Table Locale
 --General Titles

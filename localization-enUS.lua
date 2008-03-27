@@ -150,13 +150,20 @@ L["Wind Trader Zhareem"] = true						--*NPC
 --PvP
 L["Alliance Brigadier General"] = true				--*NPC
 L["Horde Warbringer"] = true						--*NPC
-	L["Call to Arms: Alterac Valley"] = true		--*Quest
-	L["Call to Arms: Arathi Basin"] = true			--*Quest
-	L["Call to Arms: Eye of the Storm"] = true		--*Quest
-	L["Call to Arms: Warsong Gulch"] = true			--*Quest
+	L["Call to Arms: Alterac Valley"] = true		--Quest
+	L["Call to Arms: Arathi Basin"] = true			--Quest
+	L["Call to Arms: Eye of the Storm"] = true		--Quest
+	L["Call to Arms: Warsong Gulch"] = true			--Quest
 L["Warrant Officer Tracy Proudwell"] = true			--*NPC
 L["Battlecryer Blackeye"] = true					--*NPC
-	L["Hellfire Fortifications"] = true				--*Quest
+	L["Hellfire Fortifications"] = true				--Quest
+L["Exorcist Sullivan"] = true						--*NPC
+L["Exorcist Vaisha"] = true							--*NPC
+	L["Spirits of Auchindoun"] = true				--Quest
+L["Karrtog"] = true									--*NPC
+	L["Enemies, Old and New"] = true				--Quest
+L["Lakoor"] = true									--*NPC
+	L["In Defense of Halaa"] = true					--Quest
 
 -- Options Table Locale
 --General Titles
