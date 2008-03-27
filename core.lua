@@ -347,7 +347,7 @@ local options = {
 						Survey = GetGenericQuestOptions( L["Harbinger Haronem"], L["The Multiphase Survey"]),
 						SunfuryPlans = GetGenericQuestOptions( L["Lord Torvos"], L["Sunfury Attack Plans"]),
 						Advantage = GetGenericQuestOptions( L["Emissary Mordin"], L["Gaining the Advantage"]),
-						MagistrixSeyla = {name = L["Magistrix Seyla"], type = "group", inline = true,
+						MagistrixSeyla = {name = L["Magistrix Seyla"], type = "group", inline = true, order = 1000,
 							args = {
 								Gateway = GetGenericQuestOptions( L["Magistrix Seyla"], L["Blast the Gateway"]),
 								BloodForBlood = {name =  L["Blood for Blood"], type = "group", inline=true,
