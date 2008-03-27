@@ -71,7 +71,8 @@ if L then
 		-- L["Erratic Behavior"] = true				--Quest
 	-- L["Captain Theris Dawnhearth"] = true			--*NPC
 		-- L["The Sanctum Wards"] = true				--Quest
-
+	-- L["Harbinger Haronem"]
+		-- L["The Multiphase Survey"]
 --Wintersaber Rep
 L["Rivern Frostwind"] = true
 	L["Frostsaber Provisions"] = "Frosts\195\164blerverpflegung"

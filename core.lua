@@ -132,6 +132,10 @@ local defaults = {
 					enabled = true,
 					[L["The Sanctum Wards"]] = true,
 					},
+				[L["Harbinger Haronem"]] = {
+					enabled = true,
+					[L["The Multiphase Survey"]] = true,
+				},
 			--Wintersaber Trainer
 				[L["Rivern Frostwind"]] = {
 					enabled = true,
@@ -321,6 +325,7 @@ local options = {
 					args = {
 						Sentries = GetGenericQuestOptions( L["Vindicator Xayann"], L["Erratic Behavior"]),
 						SanctumWards = GetGenericQuestOptions(L["Captain Theris Dawnhearth"], L["The Sanctum Wards"] ),
+						survay = GetGenericQuestOptions( L["Harbinger Haronem"], L["The Multiphase Survey"]),
 					},
 				},
 				WintersaberTrainers = { name = L["Wintersaber Trainer"], type = "group", order = 100,

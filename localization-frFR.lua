@@ -71,6 +71,8 @@ if L then
 		L["Erratic Behavior"] = "Comportement erratique"				--Quest
 	L["Captain Theris Dawnhearth"] = "Capitaine Theris Âtraurore"			--*NPC
 		L["The Sanctum Wards"] = "Les protections du sanctum"				--Quest
+	-- L["Harbinger Haronem"]
+		-- L["The Multiphase Survey"]
 
 --Wintersaber Rep
 L["Rivern Frostwind"] = "Rivern Givrevent"							--*NPC
