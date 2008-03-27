@@ -69,10 +69,19 @@ if L then
 --Shattered Sun Offensive
 	L["Vindicator Xayann"] = "Redresseur de torts Xayann"					--*NPC
 		L["Erratic Behavior"] = "Comportement erratique"				--Quest
-	L["Captain Theris Dawnhearth"] = "Capitaine Theris Âtraurore"			--*NPC
-		L["The Sanctum Wards"] = "Les protections du sanctum"				--Quest
-	-- L["Harbinger Haronem"]
-		-- L["The Multiphase Survey"]
+		--L["Further Conversions"] = true				--Quest
+	L["Captain Theris Dawnhearth"] = "Capitaine Theris Âtraurore"
+		L["The Sanctum Wards"] = "Les protections du sanctum"
+		-- L["Arm the Wards!"] = true
+	-- L["Harbinger Haronem"] = true
+		-- L["The Multiphase Survey"] = true
+	-- L["Lord Torvos"] = true
+		-- L["Sunfury Attack Plans"] = true
+	-- L["Emissary Mordin"] = true
+		-- L["Gaining the Advantage"] = true
+	-- L["Magistrix Seyla"] = true
+		-- L["Blast the Gateway"] = true
+		-- L["Blood for Blood"] = true
 
 --Wintersaber Rep
 L["Rivern Frostwind"] = "Rivern Givrevent"							--*NPC
