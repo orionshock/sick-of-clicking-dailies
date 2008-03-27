@@ -431,7 +431,7 @@ local options = {
 				Skyriss= { name = L["The Scroll of Skyriss"], type = "toggle", order = 20, get = "IsQuestEnabled", set = "ToggleQuest",
 					arg = { L["Wind Trader Zhareem"], L["Wanted: The Scroll of Skyriss"] } },
 				SunWell = {type = "header", name = L["Magister's Terrace"], order = 21},
-				Kaelthas= { name = L["Ring of Prince Kael'thas"] = true, type = "toggle", order = 22, get = "IsQuestEnabled", set = "ToggleQuest",
+				Kaelthas= { name = L["Ring of Prince Kael'thas"] , type = "toggle", order = 22, get = "IsQuestEnabled", set = "ToggleQuest",
 					arg = { L["Wind Trader Zhareem"], L["Wanted: The Signet Ring of Prince Kael'thas"] } },
 				helpText = {type = "description", name = L["\nAll Heroic Dailies from |cff00ff00'Wind Trader Zhareem'|r in LowerCity"], order = 100},
 			},
