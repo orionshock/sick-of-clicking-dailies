@@ -113,7 +113,8 @@ L["Nether-Stalker Mah'duun"] = "Netherpirscher Mah'duun"
 	L["Wanted: Shattered Hand Centurions"] = "Gesucht: Zenturionen der Zerschmetterten Hand"
 	L["Wanted: Sunseeker Channelers"] = "Gesucht: Kanalisierer der Sonnensucher"
 	L["Wanted: Tempest-Forge Destroyers"] = "Gesucht: Zerst\195\182rer der Sturmschmiede"
-
+	--L["Wanted: Sisters of Torment"] = true	--*Quest
+	
 	--Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
 	L["Arcatraz Sentinels"] = "Schildwachen der Arkatraz"
 	L["Coilfang Myrmidons"] = "Myrmidonen des Echsenkessels"
@@ -122,7 +123,8 @@ L["Nether-Stalker Mah'duun"] = "Netherpirscher Mah'duun"
 	L["Shattered Hand Centurions"] = "Zenturionen der Zerschmetterten Hand"
 	L["Sunseeker Channelers"] = "Kanalisierer der Sonnensucher"
 	L["Tempest-Forge Destroyers"] = "Zerst\195\182rer der Sturmschmiede"
-
+	--L["Sisters of Torment"] = true
+	
 --Heroic Instances
 L["Wind Trader Zhareem"] = "Windh\195\164ndler Zhareem"
 	L["Wanted: A Black Stalker Egg"] = "Gesucht: Ei der Schattenmutter"
@@ -140,6 +142,7 @@ L["Wind Trader Zhareem"] = "Windh\195\164ndler Zhareem"
 	L["Wanted: The Heart of Quagmirran"] = "Gesucht: Das Herz von Quagmirran"
 	L["Wanted: The Scroll of Skyriss"] = "Gesucht: Horizontiss' Schriftrolle"
 	L["Wanted: The Warlord's Treatise"] = "Gesucht: Die Aufzeichnungen des Kriegsherren"
+	--L["Wanted: The Signet Ring of Prince Kael'thas"] = true		--*Quest
 
 --Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
 	L["A Black Stalker Egg"] = "Ei der Schattenmutter"
@@ -157,6 +160,7 @@ L["Wind Trader Zhareem"] = "Windh\195\164ndler Zhareem"
 	L["The Heart of Quagmirran"] = "Das Herz von Quagmirran"
 	L["The Scroll of Skyriss"] = "Horizontiss' Schriftrolle"
 	L["The Warlord's Treatise"] = "Die Aufzeichnungen des Kriegsherren"
+	--L["Ring of Prince Kael'thas"] = true
 
 --PvP
 L["Alliance Brigadier General"] = "Brigadegeneral der Allianz"
@@ -226,6 +230,7 @@ L["Instance"] = "Instanz"
 		L["Hellfire Citadel"] = "H\195\182llenfeuerzitadelle"
 		L["Caverns of Time"] = "H\195\182hlen der Zeit"
 		L["Auchindoun"] = true
+		--L["Magister's Terrace"] = true
 
 L["Cooking"] = "Kochen"
 L["Fishing"] = "Fischen"
@@ -242,8 +247,8 @@ L["\nAll Heroic Dailies from |cff00ff00'Wind Trader Zhareem'|r in LowerCity"] = 
 L["Select what Potion you want for the 'Escape from Skettis' quest"] = "Welcher Trank soll als Questbelohnung f\195\188r 'Flucht aus Skettis' gew\195\164hlt werden?"
 L["Health Potion"] = "Heiltrank"
 L["Mana Potion"] = "Manatrank"
---L["Escort Quest Potion"] = ""
 L["Barrel of Fish"] = "Fass mit Fischen"
 L["Crate of Meat"] = "Kiste mit Fleisch"
-
+-- L["Mark of Sargeras"] = true
+-- L["Sunfury Signet"] = true
 end

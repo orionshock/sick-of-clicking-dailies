@@ -113,6 +113,7 @@ L["Nether-Stalker Mah'duun"] = "Traqueur-du-Néant Mah'duun"										--*NPC
 	L["Wanted: Shattered Hand Centurions"] = "On recherche : Des centurions de la Main brisée"	--*Quest
 	L["Wanted: Sunseeker Channelers"] = "On recherche : Des canalistes Cherche-soleil"			--*Quest
 	L["Wanted: Tempest-Forge Destroyers"] = "On recherche : Des destructeurs Forge-tempête"		--*Quest
+	--L["Wanted: Sisters of Torment"] = true	--*Quest
 
 --Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
 	L["Arcatraz Sentinels"] = "Sentinelles de l'Arcatraz"
@@ -122,6 +123,7 @@ L["Nether-Stalker Mah'duun"] = "Traqueur-du-Néant Mah'duun"										--*NPC
 	L["Shattered Hand Centurions"] = "Centurions de la Main brisée"
 	L["Sunseeker Channelers"] = "Canalistes Cherche-soleil"
 	L["Tempest-Forge Destroyers"] = "Destructeurs Forge-tempête"
+	--L["Sisters of Torment"] = true
 
 --Heroic Instances
 L["Wind Trader Zhareem"] = "Marchand des vents Zhareem"												--*NPC
@@ -140,6 +142,7 @@ L["Wind Trader Zhareem"] = "Marchand des vents Zhareem"												--*NPC
 	L["Wanted: The Heart of Quagmirran"] = "On recherche : Le cœur de Bourbierreux"				--*Quest
 	L["Wanted: The Scroll of Skyriss"] = "On recherche : Le parchemin de Cieuriss"					--*Quest
 	L["Wanted: The Warlord's Treatise"] = "On recherche : Le traité du seigneur de guerre"			--*Quest
+	--L["Wanted: The Signet Ring of Prince Kael'thas"] = true		--*Quest
 --Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
 
 	L["A Black Stalker Egg"] = "Un œuf de traqueuse noire"
@@ -157,6 +160,7 @@ L["Wind Trader Zhareem"] = "Marchand des vents Zhareem"												--*NPC
 	L["The Heart of Quagmirran"] = "Le cœur de Bourbierreux"
 	L["The Scroll of Skyriss"] = "Le parchemin de Cieuriss"
 	L["The Warlord's Treatise"] = "Le traité du seigneur de guerre"
+	--L["Ring of Prince Kael'thas"] = true
 
 --PvP
 L["Alliance Brigadier General"] = "Général de brigade de l'Alliance"				--*NPC
@@ -226,6 +230,7 @@ L["Instance"] = "Instance"
 		L["Hellfire Citadel"] = "Citadelle des flammes infernales"
 		L["Caverns of Time"] = "Les Grottes du temps"
 		L["Auchindoun"] = "Auchindoun"
+		--L["Magister's Terrace"] = true
 
 L["Cooking"] = "Cuisine"
 L["Fishing"] = "Pêche"
@@ -244,5 +249,6 @@ L["Health Potion"] = "Potion de soin"
 L["Mana Potion"] = "Poton de Mana"
 L["Barrel of Fish"] = "Tonneau de poissons"
 L["Crate of Meat"] = "Caisse de viande"
-
+-- L["Mark of Sargeras"] = true
+-- L["Sunfury Signet"] = true
 end

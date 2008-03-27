@@ -143,8 +143,8 @@ L["Wind Trader Zhareem"] = true						--*NPC
 	L["Wanted: The Scroll of Skyriss"] = true		--*Quest
 	L["Wanted: The Warlord's Treatise"] = true		--*Quest
 	L["Wanted: The Signet Ring of Prince Kael'thas"] = true		--*Quest
+	
 --Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
-
 	L["A Black Stalker Egg"] = true
 	L["A Warp Splinter Clipping"] = true
 	L["Aeonus's Hourglass"] = true
@@ -160,7 +160,7 @@ L["Wind Trader Zhareem"] = true						--*NPC
 	L["The Heart of Quagmirran"] = true
 	L["The Scroll of Skyriss"] = true
 	L["The Warlord's Treatise"] = true
-	L["The Signet Ring of Prince Kael'thas"] = true
+	L["Ring of Prince Kael'thas"] = true
 
 --PvP
 L["Alliance Brigadier General"] = true				--*NPC
