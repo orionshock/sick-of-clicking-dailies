@@ -127,15 +127,30 @@ local defaults = {
 				[L["Vindicator Xayann"]] = {
 					enabled = true,
 					[L["Erratic Behavior"]] = true,
+					[L["Further Conversions"]] = true,
 					},
 				[L["Captain Theris Dawnhearth"]] = {
 					enabled = true,
 					[L["The Sanctum Wards"]] = true,
+					[L["Arm the Wards!"]] = true,
 					},
 				[L["Harbinger Haronem"]] = {
 					enabled = true,
 					[L["The Multiphase Survey"]] = true,
-				},
+					},
+				[L["Magistrix Seyla"]] = {
+					enabled = true,
+					[L["Blood for Blood"]] = true,
+					[L["Blast the Gateway"]] = true,
+					},
+				[L["Lord Torvos"]] = {
+					enabled = true,
+					[L["Sunfury Attack Plans"]] = true,
+					},
+				[L["Emissary Mordin"]] = {
+					enabled = true,
+					[L["Gaining the Advantage"]] = true,
+					},
 			--Wintersaber Trainer
 				[L["Rivern Frostwind"]] = {
 					enabled = true,
@@ -176,6 +191,7 @@ local defaults = {
 					[L["Wanted: Shattered Hand Centurions"]] = false,
 					[L["Wanted: Sunseeker Channelers"]] = false,
 					[L["Wanted: Tempest-Forge Destroyers"]] = false,
+					[L["Wanted: Sisters of Torment"]] = false,
 				},
 				[L["Wind Trader Zhareem"]] = {			--Heroic Dailies Daily
 					enabled = true,
@@ -194,6 +210,7 @@ local defaults = {
 					[L["Wanted: The Heart of Quagmirran"]] = false,
 					[L["Wanted: The Scroll of Skyriss"]] = false,
 					[L["Wanted: The Warlord's Treatise"]] = false,
+					[L["Wanted: The Signet Ring of Prince Kael'thas"]] = false,
 				},
 			--PvP
 				[L["Horde Warbringer"]] = {				--Horde AV Daily
@@ -323,9 +340,27 @@ local options = {
 				},
 				ShatteredSun = {type = "group", name = L["Shattered Sun Offensive"], order = 4,
 					args = {
-						Sentries = GetGenericQuestOptions( L["Vindicator Xayann"], L["Erratic Behavior"]),
 						SanctumWards = GetGenericQuestOptions(L["Captain Theris Dawnhearth"], L["The Sanctum Wards"] ),
-						survay = GetGenericQuestOptions( L["Harbinger Haronem"], L["The Multiphase Survey"]),
+						ArmTheWards = GetGenericQuestOptions(L["Captain Theris Dawnhearth"], L["Arm the Wards!"] ),
+						Sentries = GetGenericQuestOptions( L["Vindicator Xayann"], L["Erratic Behavior"]),
+						FurtherConversions = GetGenericQuestOptions( L["Vindicator Xayann"], L["Further Conversions"]),
+						Survey = GetGenericQuestOptions( L["Harbinger Haronem"], L["The Multiphase Survey"]),
+						SunfuryPlans = GetGenericQuestOptions( L["Lord Torvos"], L["Sunfury Attack Plans"]),
+						Advantage = GetGenericQuestOptions( L["Emissary Mordin"], L["Gaining the Advantage"]),
+						MagistrixSeyla = {name = L["Magistrix Seyla"], type = "group", inline = true,
+							args = {
+								Gateway = GetGenericQuestOptions( L["Magistrix Seyla"], L["Blast the Gateway"]),
+								BloodForBlood = {name =  L["Blood for Blood"], type = "group", inline=true,
+									args = {
+										BloodQuest = { name =  L["Enable Quest"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+											arg = { L["Magistrix Seyla"],   L["Blood for Blood"] }, },
+										BloodOption = { name = L["Quest Reward"], type = "select", order = 2,
+											arg = { L["Magistrix Seyla"],  L["Blood for Blood"] }, get = "GetQuestOption", set = "SetQuestOption",
+											values = { L["Mark of Sargeras"], L["Sunfury Signet"] } },
+									},
+								},
+							},
+						},
 					},
 				},
 				WintersaberTrainers = { name = L["Wintersaber Trainer"], type = "group", order = 100,
@@ -353,6 +388,8 @@ local options = {
 					arg = { L["Nether-Stalker Mah'duun"], L["Wanted: Sunseeker Channelers"] } },
 				Destroyers= { name = L["Tempest-Forge Destroyers"], type = "toggle", order = 7, get = "IsQuestEnabled", set = "ToggleQuest",
 					arg = { L["Nether-Stalker Mah'duun"], L["Wanted: Tempest-Forge Destroyers"] } },
+				Sisters= { name = L["Sisters of Torment"], type = "toggle", order = 8, get = "IsQuestEnabled", set = "ToggleQuest",
+					arg = { L["Nether-Stalker Mah'duun"], L["Wanted: Sisters of Torment"] } },
 				helpText = { type = "description", name = L["\nAll Non-Heroic Quests are from |cff00ff00'Nether-Stalker Mah'duun'|r in LowerCity"], order = 100 },
 			},
 		},
@@ -393,6 +430,9 @@ local options = {
 					arg = { L["Wind Trader Zhareem"], L["Wanted: Pathaleon's Projector"] } },
 				Skyriss= { name = L["The Scroll of Skyriss"], type = "toggle", order = 20, get = "IsQuestEnabled", set = "ToggleQuest",
 					arg = { L["Wind Trader Zhareem"], L["Wanted: The Scroll of Skyriss"] } },
+				Eye = {type = "header", name = L["Magister's Terrace"], order = 21},
+				Kaelthas= { name = L["The Signet Ring of Prince Kael'thas"], type = "toggle", order = 22, get = "IsQuestEnabled", set = "ToggleQuest",
+					arg = { L["Wind Trader Zhareem"], L["Wanted: The Signet Ring of Prince Kael'thas"] } },
 				helpText = {type = "description", name = L["\nAll Heroic Dailies from |cff00ff00'Wind Trader Zhareem'|r in LowerCity"], order = 100},
 			},
 		},

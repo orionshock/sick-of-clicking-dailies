@@ -69,10 +69,19 @@ if L then
 --Shattered Sun Offensive
 	L["Vindicator Xayann"] = true					--*NPC
 		L["Erratic Behavior"] = true				--Quest
+		L["Further Conversions"] = true				--Quest
 	L["Captain Theris Dawnhearth"] = true
 		L["The Sanctum Wards"] = true
+		L["Arm the Wards!"] = true
 	L["Harbinger Haronem"] = true
 		L["The Multiphase Survey"] = true
+	L["Lord Torvos"] = true
+		L["Sunfury Attack Plans"] = true
+	L["Emissary Mordin"] = true
+		L["Gaining the Advantage"] = true
+	L["Magistrix Seyla"] = true
+		L["Blast the Gateway"] = true
+		L["Blood for Blood"] = true
 
 --Wintersaber Rep
 L["Rivern Frostwind"] = true						--*NPC
@@ -104,6 +113,7 @@ L["Nether-Stalker Mah'duun"] = true					--*NPC
 	L["Wanted: Shattered Hand Centurions"] = true	--*Quest
 	L["Wanted: Sunseeker Channelers"] = true		--*Quest
 	L["Wanted: Tempest-Forge Destroyers"] = true	--*Quest
+	L["Wanted: Sisters of Torment"] = true	--*Quest
 
 --Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
 	L["Arcatraz Sentinels"] = true
@@ -113,6 +123,7 @@ L["Nether-Stalker Mah'duun"] = true					--*NPC
 	L["Shattered Hand Centurions"] = true
 	L["Sunseeker Channelers"] = true
 	L["Tempest-Forge Destroyers"] = true
+	L["Sisters of Torment"] = true
 
 --Heroic Instances
 L["Wind Trader Zhareem"] = true						--*NPC
@@ -131,6 +142,7 @@ L["Wind Trader Zhareem"] = true						--*NPC
 	L["Wanted: The Heart of Quagmirran"] = true		--*Quest
 	L["Wanted: The Scroll of Skyriss"] = true		--*Quest
 	L["Wanted: The Warlord's Treatise"] = true		--*Quest
+	L["Wanted: The Signet Ring of Prince Kael'thas"] = true		--*Quest
 --Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
 
 	L["A Black Stalker Egg"] = true
@@ -148,6 +160,7 @@ L["Wind Trader Zhareem"] = true						--*NPC
 	L["The Heart of Quagmirran"] = true
 	L["The Scroll of Skyriss"] = true
 	L["The Warlord's Treatise"] = true
+	L["The Signet Ring of Prince Kael'thas"] = true
 
 --PvP
 L["Alliance Brigadier General"] = true				--*NPC
@@ -217,6 +230,7 @@ L["Instance"] = true
 		L["Hellfire Citadel"] = true
 		L["Caverns of Time"] = true
 		L["Auchindoun"] = true
+		L["Magister's Terrace"] = true
 		
 L["Cooking"] = true
 L["Fishing"] = true
@@ -235,5 +249,7 @@ L["Health Potion"] = true
 L["Mana Potion"] = true
 L["Barrel of Fish"] = true
 L["Crate of Meat"] = true
+L["Mark of Sargeras"] = true
+L["Sunfury Signet"] = true
 
 end
