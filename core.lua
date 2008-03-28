@@ -151,6 +151,14 @@ local defaults = {
 					enabled = true,
 					[L["Gaining the Advantage"]] = true,
 					},
+				[L["Harbinger Inuuro"]] = {
+					enabled = true,
+					[L["The Battle for the Sun's Reach Armory"]] = true,
+					},
+				[L["Battlemage Arynna"]] = {
+					enabled = true,
+					[L["Distraction at the Dead Scar"]] = true,
+					},
 			--Wintersaber Trainer
 				[L["Rivern Frostwind"]] = {
 					enabled = true,
@@ -347,6 +355,8 @@ local options = {
 						Survey = GetGenericQuestOptions( L["Harbinger Haronem"], L["The Multiphase Survey"]),
 						SunfuryPlans = GetGenericQuestOptions( L["Lord Torvos"], L["Sunfury Attack Plans"]),
 						Advantage = GetGenericQuestOptions( L["Emissary Mordin"], L["Gaining the Advantage"]),
+						Armory = GetGenericQuestOptions( L["Harbinger Inuuro"], L["The Battle for the Sun's Reach Armory"]),
+						Distraction = GetGenericQuestOptions( L["Battlemage Arynna"], L["Distraction at the Dead Scar"]),
 						MagistrixSeyla = {name = L["Magistrix Seyla"], type = "group", inline = true, order = 1000,
 							args = {
 								Gateway = GetGenericQuestOptions( L["Magistrix Seyla"], L["Blast the Gateway"]),

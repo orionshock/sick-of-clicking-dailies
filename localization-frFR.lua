@@ -79,6 +79,10 @@ if L then
 		-- L["Sunfury Attack Plans"] = true
 	-- L["Emissary Mordin"] = true
 		-- L["Gaining the Advantage"] = true
+	L["Harbinger Inuuro"] = true
+		L["The Battle for the Sun's Reach Armory"] = true,
+	L["Battlemage Arynna"] = true
+		L["Distraction at the Dead Scar"] = true
 	-- L["Magistrix Seyla"] = true
 		-- L["Blast the Gateway"] = true
 		-- L["Blood for Blood"] = true
