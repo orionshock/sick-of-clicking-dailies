@@ -67,25 +67,27 @@ if L then
 		L["The Deadliest Trap Ever Laid"] = "Die t\195\182dlichste Falle aller Zeiten"
 
 --Shattered Sun Offensive
-	L["Vindicator Xayann"] = true					--*NPC
-		L["Erratic Behavior"] = true				--Quest
-		L["Further Conversions"] = true				--Quest
-	L["Captain Theris Dawnhearth"] = true
-		L["The Sanctum Wards"] = true
-		L["Arm the Wards!"] = true
-	L["Harbinger Haronem"] = true
-		L["The Multiphase Survey"] = true
-	L["Lord Torvos"] = true
-		L["Sunfury Attack Plans"] = true
-	L["Emissary Mordin"] = true
-		L["Gaining the Advantage"] = true
-	L["Harbinger Inuuro"] = true
-		L["The Battle for the Sun's Reach Armory"] = true
-	L["Battlemage Arynna"] = true
-		L["Distraction at the Dead Scar"] = true
-	L["Magistrix Seyla"] = true
-		L["Blast the Gateway"] = true
-		L["Blood for Blood"] = true
+	-- L["Vindicator Xayann"] = true					--*NPC
+		-- L["Erratic Behavior"] = true				--Quest
+		-- L["Further Conversions"] = true				--Quest
+	-- L["Captain Theris Dawnhearth"] = true
+		-- L["The Sanctum Wards"] = true
+		-- L["Arm the Wards!"] = true
+	-- L["Harbinger Haronem"] = true
+		-- L["The Multiphase Survey"] = true
+	-- L["Lord Torvos"] = true
+		-- L["Sunfury Attack Plans"] = true
+	-- L["Emissary Mordin"] = true
+		-- L["Gaining the Advantage"] = true
+	-- L["Harbinger Inuuro"] = true
+		-- L["The Battle for the Sun's Reach Armory"] = true
+	-- L["Battlemage Arynna"] = true
+		-- L["Distraction at the Dead Scar"] = true
+	-- L["Magistrix Seyla"] = true
+		-- L["Blast the Gateway"] = true
+		-- L["Blood for Blood"] = true
+	-- L["Exarch Nasuun"] = true
+		-- L["Intercepting the Mana Cells"] = true
 
 --Wintersaber Rep
 L["Rivern Frostwind"] = true

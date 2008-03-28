@@ -142,6 +142,9 @@ local defaults = {
 					enabled = true,
 					[L["Blood for Blood"]] = true,
 					[L["Blast the Gateway"]] = true,
+					qOptions = {
+							[L["Blood for Blood"]] = 3,
+						},
 					},
 				[L["Lord Torvos"]] = {
 					enabled = true,
@@ -159,6 +162,10 @@ local defaults = {
 					enabled = true,
 					[L["Distraction at the Dead Scar"]] = true,
 					},
+				[L["Exarch Nasuun"]] = {
+					enabled = true,
+					[L["Intercepting the Mana Cells"]] = true,
+				},
 			--Wintersaber Trainer
 				[L["Rivern Frostwind"]] = {
 					enabled = true,
@@ -366,7 +373,7 @@ local options = {
 											arg = { L["Magistrix Seyla"],   L["Blood for Blood"] }, },
 										BloodOption = { name = L["Quest Reward"], type = "select", order = 2,
 											arg = { L["Magistrix Seyla"],  L["Blood for Blood"] }, get = "GetQuestOption", set = "SetQuestOption",
-											values = { L["Mark of Sargeras"], L["Sunfury Signet"] } },
+											values = { L["Mark of Sargeras"], L["Sunfury Signet"], L["None"] } },
 									},
 								},
 							},

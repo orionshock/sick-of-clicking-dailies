@@ -86,6 +86,8 @@ if L then
 	L["Magistrix Seyla"] = true
 		L["Blast the Gateway"] = true
 		L["Blood for Blood"] = true
+	L["Exarch Nasuun"] = true
+		L["Intercepting the Mana Cells"] = true
 
 --Wintersaber Rep
 L["Rivern Frostwind"] = true						--*NPC
