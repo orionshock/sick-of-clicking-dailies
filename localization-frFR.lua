@@ -81,13 +81,37 @@ if L then
 		-- L["Gaining the Advantage"] = true
 	-- L["Harbinger Inuuro"] = true
 		-- L["The Battle for the Sun's Reach Armory"] = true
+		-- L["The Battle Must Go On"] = true
 	-- L["Battlemage Arynna"] = true
 		-- L["Distraction at the Dead Scar"] = true
+		-- L["The Air Strikes Must Continue"] = true
 	-- L["Magistrix Seyla"] = true
 		-- L["Blast the Gateway"] = true
 		-- L["Blood for Blood"] = true
 	-- L["Exarch Nasuun"] = true
 		-- L["Intercepting the Mana Cells"] = true
+		-- l["Maintaining the Sunwell Portal"] = true
+	-- L["Astromancer Darnarian"] = true
+		-- L["Know Your Ley Lines"] = true
+	-- L["Vindicator Kaalan"] = true
+		-- L["Intercept the Reinforcements"] = true
+		-- L["Keeping the Enemy at Bay"] = true
+	-- L["Magister Ilastar"] = true
+		-- L["Taking the Harbor"] = true
+		-- L["Crush the Dawnblade"] = true
+	-- L["Smith Hauthaa"] = true
+		-- L["Making Ready"] = true
+		-- L["Don't Stop Now...."] = true
+		-- L["Ata'mal Armaments"] = true
+	-- L["Anchorite Ayuri"] = true
+		-- L["A Charitable Donation"] = true
+		-- L["Your Continued Support"] = true
+	-- L["Captain Valindria"] = true
+		-- L["Disrupt the Greengill Coast"] = true
+	-- L["Mar'nah"] = true
+		-- L["Discovering Your Roots"] = true
+		-- L["Rediscovering Your Roots"] = true
+		-- L["Open for Business"] = true
 
 --Wintersaber Rep
 L["Rivern Frostwind"] = "Rivern Givrevent"							--*NPC
@@ -257,4 +281,7 @@ L["Barrel of Fish"] = "Tonneau de poissons"
 L["Crate of Meat"] = "Caisse de viande"
 -- L["Mark of Sargeras"] = true
 -- L["Sunfury Signet"] = true
+-- L["Blessed Weapon Coating"] = true
+-- L["Righteous Weapon Coating"] = true
+
 end
