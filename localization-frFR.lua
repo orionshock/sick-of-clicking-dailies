@@ -69,27 +69,27 @@ if L then
 --Shattered Sun Offensive
 	L["Vindicator Xayann"] = "Redresseur de torts Xayann"					--*NPC
 		L["Erratic Behavior"] = "Comportement erratique"				--Quest
-		--L["Further Conversions"] = true				--Quest
+		L["Further Conversions"] = "Plus de conversions"				--Quest
 	L["Captain Theris Dawnhearth"] = "Capitaine Theris Âtraurore"
 		L["The Sanctum Wards"] = "Les protections du sanctum"
-		-- L["Arm the Wards!"] = true
-	-- L["Harbinger Haronem"] = true
-		-- L["The Multiphase Survey"] = true
-	-- L["Lord Torvos"] = true
-		-- L["Sunfury Attack Plans"] = true
-	-- L["Emissary Mordin"] = true
-		-- L["Gaining the Advantage"] = true
-	-- L["Harbinger Inuuro"] = true
-		-- L["The Battle for the Sun's Reach Armory"] = true
+		L["Arm the Wards!"] = "Armez les protections !"
+	L["Harbinger Haronem"] = "Messager Haronem"
+		L["The Multiphase Survey"] = "L’examen multiphase"
+	L["Lord Torvos"] = "Seigneur Torvos"
+		L["Sunfury Attack Plans"] = "Les plans d'attaque solfurie"
+	L["Emissary Mordin"] = "Emissaire Mordin"
+		L["Gaining the Advantage"] = "Prendre l'avantage"
+	L["Magistrix Seyla"] = "Magistrice Seyla"
+		L["Blast the Gateway"] = "Détruire la porte"
+		L["Blood for Blood"] = "Sang pour sang"
+	L["Harbinger Inuuro"] = "Messager Inuuro"
+		L["The Battle for the Sun's Reach Armory"] = "La bataille pour l'Armurerie des Confins du soleil"
 		-- L["The Battle Must Go On"] = true
-	-- L["Battlemage Arynna"] = true
-		-- L["Distraction at the Dead Scar"] = true
+	L["Battlemage Arynna"] = "Mage de bataille Arynna"
+		L["Distraction at the Dead Scar"] = "Diversion à la Malebrèche"
 		-- L["The Air Strikes Must Continue"] = true
-	-- L["Magistrix Seyla"] = true
-		-- L["Blast the Gateway"] = true
-		-- L["Blood for Blood"] = true
-	-- L["Exarch Nasuun"] = true
-		-- L["Intercepting the Mana Cells"] = true
+	L["Exarch Nasuun"] = "Exarque Nasuun"
+		L["Intercepting the Mana Cells"] = "Intercepter des cellules de mana"
 		-- l["Maintaining the Sunwell Portal"] = true
 	-- L["Astromancer Darnarian"] = true
 		-- L["Know Your Ley Lines"] = true
@@ -129,10 +129,10 @@ L["The Rokk"] = "Le Rokk"									--*NPC
 --Fishing
 L["Old Man Barlo"] = "Vieux Barlo"								--*NPC
 	L["Crocolisks in the City"] = "Les crocilisques sont lâchés"						--*Quest
-	-- L["Bait Bandits"] = true						--*Quest
-	-- L["Felblood Fillet"] = true					--*Quest
-	--L["Shrimpin' Ain't Easy"] = "Les crevettes, c’est pas pour les mauviettes"					--*Quest
-	--L["The One That Got Away"] = "Celui qui s’échappa"							--*Quest
+	L["Bait Bandits"] = "Succomber à vos appâts"						--*Quest
+	L["Felblood Fillet"] = "Filet de gangresang"					--*Quest
+	L["Shrimpin' Ain't Easy"] = "Les crevettes, c'est pas pour les mauviettes"					--*Quest
+	L["The One That Got Away"] = "Celui qui s'échappa"							--*Quest
 
 --Non-Heroic Instances
 L["Nether-Stalker Mah'duun"] = "Traqueur-du-Néant Mah'duun"										--*NPC
@@ -143,7 +143,7 @@ L["Nether-Stalker Mah'duun"] = "Traqueur-du-Néant Mah'duun"										--*NPC
 	L["Wanted: Shattered Hand Centurions"] = "On recherche : Des centurions de la Main brisée"	--*Quest
 	L["Wanted: Sunseeker Channelers"] = "On recherche : Des canalistes Cherche-soleil"			--*Quest
 	L["Wanted: Tempest-Forge Destroyers"] = "On recherche : Des destructeurs Forge-tempête"		--*Quest
-	--L["Wanted: Sisters of Torment"] = true	--*Quest
+	L["Wanted: Sisters of Torment"] = "On recherche : Des soeur du tourment"	--*Quest
 
 --Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
 	L["Arcatraz Sentinels"] = "Sentinelles de l'Arcatraz"
@@ -153,7 +153,7 @@ L["Nether-Stalker Mah'duun"] = "Traqueur-du-Néant Mah'duun"										--*NPC
 	L["Shattered Hand Centurions"] = "Centurions de la Main brisée"
 	L["Sunseeker Channelers"] = "Canalistes Cherche-soleil"
 	L["Tempest-Forge Destroyers"] = "Destructeurs Forge-tempête"
-	--L["Sisters of Torment"] = true
+	L["Sisters of Torment"] = "Soeurs du tourment"
 
 --Heroic Instances
 L["Wind Trader Zhareem"] = "Marchand des vents Zhareem"												--*NPC
@@ -172,7 +172,7 @@ L["Wind Trader Zhareem"] = "Marchand des vents Zhareem"												--*NPC
 	L["Wanted: The Heart of Quagmirran"] = "On recherche : Le cœur de Bourbierreux"				--*Quest
 	L["Wanted: The Scroll of Skyriss"] = "On recherche : Le parchemin de Cieuriss"					--*Quest
 	L["Wanted: The Warlord's Treatise"] = "On recherche : Le traité du seigneur de guerre"			--*Quest
-	--L["Wanted: The Signet Ring of Prince Kael'thas"] = true		--*Quest
+	L["Wanted: The Signet Ring of Prince Kael'thas"] = "On recherche : La chevalière du prince Kael'thas"		--*Quest
 --Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
 
 	L["A Black Stalker Egg"] = "Un œuf de traqueuse noire"
@@ -190,7 +190,7 @@ L["Wind Trader Zhareem"] = "Marchand des vents Zhareem"												--*NPC
 	L["The Heart of Quagmirran"] = "Le cœur de Bourbierreux"
 	L["The Scroll of Skyriss"] = "Le parchemin de Cieuriss"
 	L["The Warlord's Treatise"] = "Le traité du seigneur de guerre"
-	--L["Ring of Prince Kael'thas"] = true
+	L["Ring of Prince Kael'thas"] = "La chevalière du prince Kael'thas"
 
 --PvP
 L["Alliance Brigadier General"] = "Général de brigade de l'Alliance"				--*NPC
@@ -202,13 +202,13 @@ L["Horde Warbringer"] = "Porteguerre de la Horde"									--*NPC
 L["Warrant Officer Tracy Proudwell"] = "Adjudante Tracy Fièrepuits"					--*NPC
 L["Battlecryer Blackeye"] = "Crieur-de-guerre Coquard"								--*NPC
 	L["Hellfire Fortifications"] = "Les fortifications des Flammes infernales"		--*Quest
--- L["Exorcist Sullivan"] = true						--*NPC
--- L["Exorcist Vaisha"] = true							--*NPC
-	-- L["Spirits of Auchindoun"] = true				--Quest
--- L["Karrtog"] = true									--*NPC
-	-- L["Enemies, Old and New"] = true				--Quest
--- L["Lakoor"] = true									--*NPC
-	-- L["In Defense of Halaa"] = true					--Quest
+L["Exorcist Sullivan"] = "xorciste Sullivan"						--*NPC
+L["Exorcist Vaisha"] = "Exorciste Vaisha"							--*NPC
+	L["Spirits of Auchindoun"] = "Les esprits d'Auchindoun"				--Quest
+L["Karrtog"] = "Karrtog"									--*NPC
+	L["Enemies, Old and New"] = "Ennemis, anciens et nouveaux"				--Quest
+L["Lakoor"] = "Lakoor"									--*NPC
+	L["In Defense of Halaa"] = "La défense de Halaa"				--Quest
 
 -- Options Table Locale
 --General Titles
@@ -260,7 +260,7 @@ L["Instance"] = "Instance"
 		L["Hellfire Citadel"] = "Citadelle des flammes infernales"
 		L["Caverns of Time"] = "Les Grottes du temps"
 		L["Auchindoun"] = "Auchindoun"
-		--L["Magister's Terrace"] = true
+		L["Magister's Terrace"] = "Terrasse des Magistères"
 
 L["Cooking"] = "Cuisine"
 L["Fishing"] = "Pêche"
@@ -279,8 +279,8 @@ L["Health Potion"] = "Potion de soin"
 L["Mana Potion"] = "Poton de Mana"
 L["Barrel of Fish"] = "Tonneau de poissons"
 L["Crate of Meat"] = "Caisse de viande"
--- L["Mark of Sargeras"] = true
--- L["Sunfury Signet"] = true
+L["Mark of Sargeras"] = "Marque de Sargeras"
+L["Sunfury Signet"] = "Chevalière Solfurie"
 -- L["Blessed Weapon Coating"] = true
 -- L["Righteous Weapon Coating"] = true
 
