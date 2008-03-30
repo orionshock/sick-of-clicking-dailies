@@ -172,7 +172,7 @@ L["Wind Trader Zhareem"] = "Marchand des vents Zhareem"												--*NPC
 	L["Wanted: The Heart of Quagmirran"] = "On recherche : Le cœur de Bourbierreux"				--*Quest
 	L["Wanted: The Scroll of Skyriss"] = "On recherche : Le parchemin de Cieuriss"					--*Quest
 	L["Wanted: The Warlord's Treatise"] = "On recherche : Le traité du seigneur de guerre"			--*Quest
-	L["Wanted: The Signet Ring of Prince Kael'thas"] = "On recherche : La chevalière du prince Kael'thas"		--*Quest
+	L["Wanted: The Signet Ring of Prince Kael'thas"] = "On recherche : La chevalière du prince Kael'thas"		--*Quest
 --Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
 
 	L["A Black Stalker Egg"] = "Un œuf de traqueuse noire"
