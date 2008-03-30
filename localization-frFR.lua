@@ -28,10 +28,10 @@ if L then
 	L["Skyguard Prisoner"] = "Prisonnier de la Garde-ciel"			--*NPC
 
 	L["Skyguard Khatie"] = "Garde-ciel Khatie"											--*NPC
-		L["Wrangle More Aether Rays!"] = "Allez dompter d'autres raies de l'éther !"	--*Quest
+		L["Wrangle More Aether Rays!"] = "Allez dompter d'autres raies de l'éther !"	--*Quest
 
 	L["Sky Sergeant Vanderlip"] = "Sergent Vanderlip de la Garde-ciel"	--*NPC
-		L["Bomb Them Again!"] = "Bombardez-les encore !"				--*Quest
+		L["Bomb Them Again!"] = "Bombardez-les encore !"				--*Quest
 
 --Ogri'la
 	L["Chu'a'lor"] = "Chu'a'lor"											--*NPC
