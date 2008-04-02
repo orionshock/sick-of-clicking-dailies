@@ -643,7 +643,6 @@ function addon:OnInitialize()
 	MTable = self.db.profile.QuestOptions
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("SickOfClickingDailies", options)
 	self:RegisterChatCommand("socd", function() LibStub("AceConfigDialog-3.0"):Open("SickOfClickingDailies") end )
-
 end
 
 function addon:OnEnable()

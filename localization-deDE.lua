@@ -67,51 +67,52 @@ if L then
 		L["The Deadliest Trap Ever Laid"] = "Die t\195\182dlichste Falle aller Zeiten"
 
 --Shattered Sun Offensive
-	-- L["Vindicator Xayann"] = true					--*NPC
-		-- L["Erratic Behavior"] = true				--Quest
-		-- L["Further Conversions"] = true				--Quest
-	-- L["Captain Theris Dawnhearth"] = true
-		-- L["The Sanctum Wards"] = true
-		-- L["Arm the Wards!"] = true
-	-- L["Harbinger Haronem"] = true
-		-- L["The Multiphase Survey"] = true
-	-- L["Lord Torvos"] = true
-		-- L["Sunfury Attack Plans"] = true
-	-- L["Emissary Mordin"] = true
-		-- L["Gaining the Advantage"] = true
-	-- L["Harbinger Inuuro"] = true
-		-- L["The Battle for the Sun's Reach Armory"] = true
-		-- L["The Battle Must Go On"] = true
-	-- L["Battlemage Arynna"] = true
-		-- L["Distraction at the Dead Scar"] = true
-		-- L["The Air Strikes Must Continue"] = true
-	-- L["Magistrix Seyla"] = true
-		-- L["Blast the Gateway"] = true
-		-- L["Blood for Blood"] = true
-	-- L["Exarch Nasuun"] = true
-		-- L["Intercepting the Mana Cells"] = true
-		-- L["Maintaining the Sunwell Portal"] = true
-        -- L["Astromancer Darnarian"] = true
-		-- L["Know Your Ley Lines"] = true
-	-- L["Vindicator Kaalan"] = true
-		-- L["Intercept the Reinforcements"] = true
-		-- L["Keeping the Enemy at Bay"] = true
-	-- L["Magister Ilastar"] = true
-		-- L["Taking the Harbor"] = true
-		-- L["Crush the Dawnblade"] = true
-	-- L["Smith Hauthaa"] = true
-		-- L["Making Ready"] = true
-		-- L["Don't Stop Now...."] = true
-		-- L["Ata'mal Armaments"] = true
-	-- L["Anchorite Ayuri"] = true
-		-- L["A Charitable Donation"] = true
-		-- L["Your Continued Support"] = true
-	-- L["Captain Valindria"] = true
-		-- L["Disrupt the Greengill Coast"] = true
-	-- L["Mar'nah"] = true
-		-- L["Discovering Your Roots"] = true
-		-- L["Rediscovering Your Roots"] = true
-		-- L["Open for Business"] = true
+	L["Vindicator Xayann"] = "Verteidigerin Xayann"
+		L["Erratic Behavior"] = "Unberechenbares Verhalten"
+		L["Further Conversions"] = "Weitere Konvertierungen"
+	L["Captain Theris Dawnhearth"] = "Hauptmann Theris Morgenheim"
+		L["The Sanctum Wards"] = "Die Barrieren des Sanktums"
+		L["Arm the Wards!"] = "Fahrt die Barrieren hoch!"
+	L["Harbinger Haronem"] = "Herold Haronem"
+		L["The Multiphase Survey"] = "Die Multiphasen-Vermessung"
+	L["Lord Torvos"] = true
+		L["Sunfury Attack Plans"] = "Angriffspl\195\164ne der Sonnenzorn"
+	L["Emissary Mordin"] = "Abgesandter Mordin"
+		L["Gaining the Advantage"] = "Einen Vorteil gewinnen"
+	L["Harbinger Inuuro"] = "Herold Inuuro"
+		L["The Battle for the Sun's Reach Armory"] = "Die Schlacht um die Waffenkammer der Sonnenweiten"
+		L["The Battle Must Go On"] = "Die Schlacht muss weitergehen"
+	L["Battlemage Arynna"] = "Kampfmagierin Arynna"
+		L["Distraction at the Dead Scar"] = "Ablenkungsman\195\182ver an der Todesschneise"
+		L["The Air Strikes Must Continue"] = "Die Luftangriffe m\195\188ssen weitergehen"
+	L["Magistrix Seyla"] = true
+		L["Blast the Gateway"] = "Vernichtet den Durchgang"
+		L["Blood for Blood"] = "Blut f\195\188r Blut"
+	L["Exarch Nasuun"] = true
+		L["Intercepting the Mana Cells"] = "Manazellen abfangen"
+		L["Maintaining the Sunwell Portal"] = "Das Sonnenbrunnenportal aufrechterhalten"
+        L["Astromancer Darnarian"] = "Astromant Darnarian"
+		L["Know Your Ley Lines"] = "Kenne deine Leylinien"
+	L["Vindicator Kaalan"] = "Verteidiger Kaalan"
+		L["Intercept the Reinforcements"] = "Haltet die Verst\195\164rkung auf"
+		--L["Keeping the Enemy at Bay"] = true																							-- Have a look at this!
+	L["Magister Ilastar"] = true
+		L["Taking the Harbor"] = "Den Hafen einnehmen"
+		--L["Crush the Dawnblade"] = true																									-- Have a look at this!
+	L["Smith Hauthaa"] = "Schmiedin Hauthaa"
+		L["Making Ready"] = "Vorbereitungen"
+		L["Don't Stop Now...."] = "H\195\182rt jetzt nicht auf!"
+		L["Ata'mal Armaments"] = "Waffen von Ata'mal"
+	L["Anchorite Ayuri"] = "Anachoretin Ayuri"
+		--L["A Charitable Donation"] = true																									-- Have a look at this!
+		--L["Your Continued Support"] = true																								-- Have a look at this!
+	L["Captain Valindria"] = "Kapit\195\164n Valindria"
+		--L["Disrupt the Greengill Coast"] = true																							-- Have a look at this!
+	L["Mar'nah"] = true
+		--L["Discovering Your Roots"] = true																									-- Have a look at this!
+		--L["Rediscovering Your Roots"] = true																								-- Have a look at this!
+		--L["Open for Business"] = true																											-- Have a look at this!
+
 	
 --Wintersaber Rep
 L["Rivern Frostwind"] = true
@@ -127,12 +128,12 @@ L["The Rokk"] = "Der Rokk"
 	L["Manalicious"] = "Manazi\195\182s"
 
 --Fishing
--- L["Old Man Barlo"] = true								--*NPC
-	-- L["Crocolisks in the City"] = true						--*Quest
-	-- L["Bait Bandits"] = true						--*Quest
-	-- L["Felblood Fillet"] = true					--*Quest
-	-- L["Shrimpin' Ain't Easy"] = true					--*Quest
-	-- L["The One That Got Away"] = true							--*Quest
+L["Old Man Barlo"] = "Der alte Barlo"
+	L["Crocolisks in the City"] = "Krokilisken in der Stadt"
+	L["Bait Bandits"] = "K\195\182derbanditen"
+	L["Felblood Fillet"] = "Teufelsblutfilet"
+	L["Shrimpin' Ain't Easy"] = "Garnelenfangen ist nicht einfach"
+	L["The One That Got Away"] = "Der Eine, der entkam"
 
 --Non-Heroic Instances
 L["Nether-Stalker Mah'duun"] = "Netherpirscher Mah'duun"
@@ -143,9 +144,9 @@ L["Nether-Stalker Mah'duun"] = "Netherpirscher Mah'duun"
 	L["Wanted: Shattered Hand Centurions"] = "Gesucht: Zenturionen der Zerschmetterten Hand"
 	L["Wanted: Sunseeker Channelers"] = "Gesucht: Kanalisierer der Sonnensucher"
 	L["Wanted: Tempest-Forge Destroyers"] = "Gesucht: Zerst\195\182rer der Sturmschmiede"
-	--L["Wanted: Sisters of Torment"] = true	--*Quest
+	L["Wanted: Sisters of Torment"] = "Gesucht: Schwestern der Qual"
 	
-	--Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
+--Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
 	L["Arcatraz Sentinels"] = "Schildwachen der Arkatraz"
 	L["Coilfang Myrmidons"] = "Myrmidonen des Echsenkessels"
 	L["Malicious Instructors"] = "B\195\182sartige Ausbilderinnen"
@@ -153,7 +154,7 @@ L["Nether-Stalker Mah'duun"] = "Netherpirscher Mah'duun"
 	L["Shattered Hand Centurions"] = "Zenturionen der Zerschmetterten Hand"
 	L["Sunseeker Channelers"] = "Kanalisierer der Sonnensucher"
 	L["Tempest-Forge Destroyers"] = "Zerst\195\182rer der Sturmschmiede"
-	--L["Sisters of Torment"] = true
+	L["Sisters of Torment"] = "Schwestern der Qual"
 	
 --Heroic Instances
 L["Wind Trader Zhareem"] = "Windh\195\164ndler Zhareem"
@@ -172,7 +173,7 @@ L["Wind Trader Zhareem"] = "Windh\195\164ndler Zhareem"
 	L["Wanted: The Heart of Quagmirran"] = "Gesucht: Das Herz von Quagmirran"
 	L["Wanted: The Scroll of Skyriss"] = "Gesucht: Horizontiss' Schriftrolle"
 	L["Wanted: The Warlord's Treatise"] = "Gesucht: Die Aufzeichnungen des Kriegsherren"
-	--L["Wanted: The Signet Ring of Prince Kael'thas"] = true		--*Quest
+	L["Wanted: The Signet Ring of Prince Kael'thas"] = "Gesucht: Der Siegelring von Prinz Kael'thas"
 
 --Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
 	L["A Black Stalker Egg"] = "Ei der Schattenmutter"
@@ -190,7 +191,7 @@ L["Wind Trader Zhareem"] = "Windh\195\164ndler Zhareem"
 	L["The Heart of Quagmirran"] = "Das Herz von Quagmirran"
 	L["The Scroll of Skyriss"] = "Horizontiss' Schriftrolle"
 	L["The Warlord's Treatise"] = "Die Aufzeichnungen des Kriegsherren"
-	--L["Ring of Prince Kael'thas"] = true
+	L["Ring of Prince Kael'thas"] = "Der Siegelring von Prinz Kael'thas"
 
 --PvP
 L["Alliance Brigadier General"] = "Brigadegeneral der Allianz"
@@ -202,13 +203,13 @@ L["Horde Warbringer"] = "Kriegshetzer der Horde"
 L["Warrant Officer Tracy Proudwell"] = "Stabsfeldwebel Tracy Stolzbrunn"
 L["Battlecryer Blackeye"] = "Kriegsherold Blauauge"
 	L["Hellfire Fortifications"] = "H\195\182llenfeuerbefestigungen"
--- L["Exorcist Sullivan"] = true						--*NPC
--- L["Exorcist Vaisha"] = true							--*NPC
-	-- L["Spirits of Auchindoun"] = true				--Quest
--- L["Karrtog"] = true									--*NPC
-	-- L["Enemies, Old and New"] = true				--Quest
--- L["Lakoor"] = true									--*NPC
-	-- L["In Defense of Halaa"] = true					--Quest
+L["Exorcist Sullivan"] = "Exorzist Sullivan"
+L["Exorcist Vaisha"] = "Exorzistin Vaisha"
+	L["Spirits of Auchindoun"] = "Geister von Auchindoun"
+L["Karrtog"] = true
+	L["Enemies, Old and New"] = "Feinde - alte und neue"
+L["Lakoor"] = true
+	L["In Defense of Halaa"] = "Zur Verteidigung von Halaa"
 
 -- Options Table Locale
 --General Titles
@@ -243,7 +244,7 @@ L["Faction Grinds"] = "Fraktionen"
 		L["Netherwing - Friendly"] = "Netherschwingen - Freundlich"
 		L["Netherwing - Honored"] = "Netherschwingen - Wohlwollend"
 		L["Netherwing - Revered"] = "Netherschwingen - Ehrf\195\188rchtig"
-	--L["Shattered Sun Offensive"] = true
+	L["Shattered Sun Offensive"] = "Zerschmetterte Sonne"
 	L["Wintersaber Trainer"] = "Winters\195\164blerausbilder"
 
 L["PvP"] = true
@@ -260,7 +261,7 @@ L["Instance"] = "Instanz"
 		L["Hellfire Citadel"] = "H\195\182llenfeuerzitadelle"
 		L["Caverns of Time"] = "H\195\182hlen der Zeit"
 		L["Auchindoun"] = true
-		--L["Magister's Terrace"] = true
+		L["Magister's Terrace"] = "Terrasse der Magister"
 
 L["Cooking"] = "Kochen"
 L["Fishing"] = "Fischen"
@@ -273,15 +274,14 @@ L["\nAll Non-Heroic Quests are from |cff00ff00'Nether-Stalker Mah'duun'|r in Low
 L["\nAll Heroic Dailies from |cff00ff00'Wind Trader Zhareem'|r in LowerCity"] = "\nAlle Heroic-Dailies von |cff00ff00'Windh\195\164ndler Zhareem'|r im unteren Viertel"
 
 --Quest Options
-
 L["Select what Potion you want for the 'Escape from Skettis' quest"] = "Welcher Trank soll als Questbelohnung f\195\188r 'Flucht aus Skettis' gew\195\164hlt werden?"
 L["Health Potion"] = "Heiltrank"
 L["Mana Potion"] = "Manatrank"
 L["Barrel of Fish"] = "Fass mit Fischen"
 L["Crate of Meat"] = "Kiste mit Fleisch"
--- L["Mark of Sargeras"] = true
--- L["Sunfury Signet"] = true
--- L["Blessed Weapon Coating"] = true
--- L["Righteous Weapon Coating"] = true
+L["Mark of Sargeras"] = "Mal des Sargeras"
+L["Sunfury Signet"] = "Siegel des Sonnenzorns"
+L["Blessed Weapon Coating"] = "Gesegnete Waffenbeschichtung"
+L["Righteous Weapon Coating"] = "Rechtschaffene Waffenbeschichtung"
 
 end
