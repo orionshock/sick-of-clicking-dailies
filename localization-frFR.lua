@@ -28,7 +28,7 @@ if L then
 	L["Skyguard Prisoner"] = "Prisonnier de la Garde-ciel"			--*NPC
 
 	L["Skyguard Khatie"] = "Garde-ciel Khatie"											--*NPC
-		L["Wrangle More Aether Rays!"] = "Allez dompter d'autres raies de l'éther !"	--*Quest
+		L["Wrangle More Aether Rays!"] = "Allez dompter d’autres raies de l’éther !"	--*Quest
 
 	L["Sky Sergeant Vanderlip"] = "Sergent Vanderlip de la Garde-ciel"	--*NPC
 		L["Bomb Them Again!"] = "Bombardez-les encore !"				--*Quest
@@ -84,34 +84,34 @@ if L then
 		L["Blood for Blood"] = "Sang pour sang"
 	L["Harbinger Inuuro"] = "Messager Inuuro"
 		L["The Battle for the Sun's Reach Armory"] = "La bataille pour l'Armurerie des Confins du soleil"
-		-- L["The Battle Must Go On"] = true
+		L["The Battle Must Go On"] = "La bataille doit continuer"
 	L["Battlemage Arynna"] = "Mage de bataille Arynna"
 		L["Distraction at the Dead Scar"] = "Diversion à la Malebrèche"
-		-- L["The Air Strikes Must Continue"] = true
+		L["The Air Strikes Must Continue"] = "Les frappes aériennes doivent continuer"
 	L["Exarch Nasuun"] = "Exarque Nasuun"
 		L["Intercepting the Mana Cells"] = "Intercepter des cellules de mana"
-		-- l["Maintaining the Sunwell Portal"] = true
-	-- L["Astromancer Darnarian"] = true
-		-- L["Know Your Ley Lines"] = true
-	-- L["Vindicator Kaalan"] = true
-		-- L["Intercept the Reinforcements"] = true
-		-- L["Keeping the Enemy at Bay"] = true
-	-- L["Magister Ilastar"] = true
-		-- L["Taking the Harbor"] = true
-		-- L["Crush the Dawnblade"] = true
-	-- L["Smith Hauthaa"] = true
-		-- L["Making Ready"] = true
-		-- L["Don't Stop Now...."] = true
-		-- L["Ata'mal Armaments"] = true
-	-- L["Anchorite Ayuri"] = true
-		-- L["A Charitable Donation"] = true
-		-- L["Your Continued Support"] = true
-	-- L["Captain Valindria"] = true
-		-- L["Disrupt the Greengill Coast"] = true
-	-- L["Mar'nah"] = true
-		-- L["Discovering Your Roots"] = true
-		-- L["Rediscovering Your Roots"] = true
-		-- L["Open for Business"] = true
+		L["Maintaining the Sunwell Portal"] = "Maintenir le portail du Puits de soleil"
+	L["Astromancer Darnarian"] = "Astromancien Darnarian"
+		L["Know Your Ley Lines"] = "Les lignes telluriques et vous"
+	L["Vindicator Kaalan"] = "Redresseur de torts Kaalan"
+		L["Intercept the Reinforcements"] = "Intercepter les renforts"
+		L["Keeping the Enemy at Bay"] = "Tenir l'ennemi à distance"
+	L["Magister Ilastar"] = "Magistère Ilastar"
+		L["Taking the Harbor"] = "Prendre le port"
+		L["Crush the Dawnblade"] = "Écraser la Lame de l'aube"
+	L["Smith Hauthaa"] = "Forgeron Hauthaa"
+		L["Making Ready"] = "Préparatifs"
+		L["Don't Stop Now...."] = "Ne vous arrêtez pas…"
+		L["Ata'mal Armaments"] = "Les armes d'Ata'mal"
+	L["Anchorite Ayuri"] = "Anachorète Ayuri"
+		L["A Charitable Donation"] = "Un don charitable"
+		L["Your Continued Support"] = "Votre soutien indéfectible"
+	L["Captain Valindria"] = "Capitaine Valindria"
+		L["Disrupt the Greengill Coast"] = "Déstabilisation de la Côte de Verte-branchie"
+	L["Mar'nah"] = "Mar'nah"
+		L["Discovering Your Roots"] = "À la découverte de vos racines"
+		L["Rediscovering Your Roots"] = "À la redécouverte de vos racines"
+		L["Open for Business"] = "On est ouverts"
 
 --Wintersaber Rep
 L["Rivern Frostwind"] = "Rivern Givrevent"							--*NPC
@@ -131,7 +131,7 @@ L["Old Man Barlo"] = "Vieux Barlo"								--*NPC
 	L["Crocolisks in the City"] = "Les crocilisques sont lâchés"						--*Quest
 	L["Bait Bandits"] = "Succomber à vos appâts"						--*Quest
 	L["Felblood Fillet"] = "Filet de gangresang"					--*Quest
-	L["Shrimpin' Ain't Easy"] = "Les crevettes, c'est pas pour les mauviettes"					--*Quest
+	L["Shrimpin' Ain't Easy"] = "Les crevettes, c’est pas pour les mauviettes"					--*Quest
 	L["The One That Got Away"] = "Celui qui s'échappa"							--*Quest
 
 --Non-Heroic Instances
@@ -143,7 +143,7 @@ L["Nether-Stalker Mah'duun"] = "Traqueur-du-Néant Mah'duun"										--*NPC
 	L["Wanted: Shattered Hand Centurions"] = "On recherche : Des centurions de la Main brisée"	--*Quest
 	L["Wanted: Sunseeker Channelers"] = "On recherche : Des canalistes Cherche-soleil"			--*Quest
 	L["Wanted: Tempest-Forge Destroyers"] = "On recherche : Des destructeurs Forge-tempête"		--*Quest
-	L["Wanted: Sisters of Torment"] = "On recherche : Des soeur du tourment"	--*Quest
+	L["Wanted: Sisters of Torment"] = "On recherche : les sœurs du tourment"	--*Quest
 
 --Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
 	L["Arcatraz Sentinels"] = "Sentinelles de l'Arcatraz"
@@ -153,7 +153,7 @@ L["Nether-Stalker Mah'duun"] = "Traqueur-du-Néant Mah'duun"										--*NPC
 	L["Shattered Hand Centurions"] = "Centurions de la Main brisée"
 	L["Sunseeker Channelers"] = "Canalistes Cherche-soleil"
 	L["Tempest-Forge Destroyers"] = "Destructeurs Forge-tempête"
-	L["Sisters of Torment"] = "Soeurs du tourment"
+	L["Sisters of Torment"] = "Sœurs du tourment"
 
 --Heroic Instances
 L["Wind Trader Zhareem"] = "Marchand des vents Zhareem"												--*NPC
@@ -202,7 +202,7 @@ L["Horde Warbringer"] = "Porteguerre de la Horde"									--*NPC
 L["Warrant Officer Tracy Proudwell"] = "Adjudante Tracy Fièrepuits"					--*NPC
 L["Battlecryer Blackeye"] = "Crieur-de-guerre Coquard"								--*NPC
 	L["Hellfire Fortifications"] = "Les fortifications des Flammes infernales"		--*Quest
-L["Exorcist Sullivan"] = "xorciste Sullivan"						--*NPC
+L["Exorcist Sullivan"] = "Exorciste Sullivan"						--*NPC
 L["Exorcist Vaisha"] = "Exorciste Vaisha"							--*NPC
 	L["Spirits of Auchindoun"] = "Les esprits d'Auchindoun"				--Quest
 L["Karrtog"] = "Karrtog"									--*NPC
