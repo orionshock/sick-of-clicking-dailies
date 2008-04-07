@@ -19,6 +19,10 @@ end
 local SOCD = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
 local dbo
 
+local function escape(s)
+    return (s:gsub("[\128-\255]", function (c) return ("\\%03d"):format(c:byte()) end))
+end
+
 local qTable = {
 	["11545"] = "A Charitable Donation",
 	["11020"] = "A Slow Death",
@@ -158,7 +162,7 @@ function SOCD:CommitLocalizedNames()
 		tt:SetHyperlink("quest:"..k)
 		tt:Show()
 		
-		dbo[v] = QuestScanTTTextLeft1:GetText()
+		dbo[v] = escape(QuestScanTTTextLeft1:GetText())
 		D("Count = "..i)
 		i = i + 1
 	end

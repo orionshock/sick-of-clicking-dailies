@@ -2,8 +2,6 @@
 Major 5,  MinorSVN:  $Revision$
 
 Sick Of Clicking Dailys is a simple addon designed to pick up and turn in Dailiy Quests for WoW.
-it does no checking to see if you have actualy completed them. If you have DailyFu installed it will quiry it for what
-Potion you'd like for the Skettis Escort Quest, but outside of that there are no other quest rewards outside of GOLD!
 
 This version comes with a built in config system made with Ace3's Config GUI Libs.
 
@@ -364,7 +362,7 @@ local options = {
 								Hide = GetGenericQuestOptions( L["Taskmaster Varkule Dragonbreath"], L["Nethermine Flayer Hide"] ),
 								Skies = GetGenericQuestOptions( L["Yarzill the Merc"], L["The Not-So-Friendly Skies..."] ),
 								Death = GetGenericQuestOptions( L["Yarzill the Merc"], L["A Slow Death"] ),
-								noEgs = {type = "description", name = "Accepting All Eggs is not included because it's not a Daily Quest", order = 10 },
+								noEgs = {type = "description", name = L["Accepting All Eggs is not included because it's not a Daily Quest"], order = 10 },
 							},
 						},
 						Friendly = { type = "group", name = L["Netherwing - Friendly"], order = 2, inline = true,

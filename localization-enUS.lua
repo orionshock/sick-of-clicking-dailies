@@ -271,6 +271,7 @@ L["This will toggle the quest on both Doryn and the Prisoner"] = true
 L["|cffFF0000WARNING!!!|r, This Option also toggles both Scryer and Aldor Quests"] = true  ---Warning Color Code included in this string
 L["\nAll Non-Heroic Quests are from |cff00ff00'Nether-Stalker Mah'duun'|r in LowerCity"] = true
 L["\nAll Heroic Dailies from |cff00ff00'Wind Trader Zhareem'|r in LowerCity"] = true
+L["Accepting All Eggs is not included because it's not a Daily Quest"] = true
 
 --Quest Options
 

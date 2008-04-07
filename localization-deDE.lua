@@ -113,7 +113,6 @@ if L then
 		--L["Rediscovering Your Roots"] = true																								-- Have a look at this!
 		--L["Open for Business"] = true																											-- Have a look at this!
 
-	
 --Wintersaber Rep
 L["Rivern Frostwind"] = true
 	L["Frostsaber Provisions"] = "Frosts\195\164blerverpflegung"
@@ -272,8 +271,10 @@ L["This will toggle the quest on both Doryn and the Prisoner"] = "Diese Option s
 L["|cffFF0000WARNING!!!|r, This Option also toggles both Scryer and Aldor Quests"] = "|cffFF0000WARNUNG!!!|r, Diese Option schaltet Seher und Aldor Quests ein"  ---Warning Color Code included in this string
 L["\nAll Non-Heroic Quests are from |cff00ff00'Nether-Stalker Mah'duun'|r in LowerCity"] = "\nAlle non-heroic-Dailies von |cff00ff00'Netherpirscher Mah'duun'|r im unteren Viertel"
 L["\nAll Heroic Dailies from |cff00ff00'Wind Trader Zhareem'|r in LowerCity"] = "\nAlle Heroic-Dailies von |cff00ff00'Windh\195\164ndler Zhareem'|r im unteren Viertel"
+--L["Accepting All Eggs is not included because it's not a Daily Quest"] = true
 
 --Quest Options
+
 L["Select what Potion you want for the 'Escape from Skettis' quest"] = "Welcher Trank soll als Questbelohnung f\195\188r 'Flucht aus Skettis' gew\195\164hlt werden?"
 L["Health Potion"] = "Heiltrank"
 L["Mana Potion"] = "Manatrank"
