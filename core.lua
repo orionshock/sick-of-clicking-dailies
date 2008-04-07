@@ -315,7 +315,8 @@ function GetGenericQuestOptions(npc, quest)
 end
 
 --GUI Options Tree  
-local options = {
+local function GetOptionsTable()
+	return {
 	type = "group",
 	name = L["Sick Of Clicking Dailies?"],
 	handler = SickOfClickingDailies,
@@ -395,49 +396,46 @@ local options = {
 				},
 				ShatteredSun = {type = "group", name = L["Shattered Sun Offensive"], order = 4,
 					args = {
-						SanctumWards = GetGenericQuestOptions(L["Captain Theris Dawnhearth"], L["The Sanctum Wards"] ),
-						ArmTheWards = GetGenericQuestOptions(L["Captain Theris Dawnhearth"], L["Arm the Wards!"] ),
-						Sentries = GetGenericQuestOptions( L["Vindicator Xayann"], L["Erratic Behavior"]),
-						FurtherConversions = GetGenericQuestOptions( L["Vindicator Xayann"], L["Further Conversions"]),
-						Survey = GetGenericQuestOptions( L["Harbinger Haronem"], L["The Multiphase Survey"]),
-						SunfuryPlans = GetGenericQuestOptions( L["Lord Torvos"], L["Sunfury Attack Plans"]),
-						Advantage = GetGenericQuestOptions( L["Emissary Mordin"], L["Gaining the Advantage"]),
-						Armory = GetGenericQuestOptions( L["Harbinger Inuuro"], L["The Battle for the Sun's Reach Armory"]),
-						ArmoryContinued = GetGenericQuestOptions( L["Harbinger Inuuro"], L["The Battle Must Go On"]),
-						Distraction = GetGenericQuestOptions( L["Battlemage Arynna"], L["Distraction at the Dead Scar"]),
-						DistractionContinued = GetGenericQuestOptions( L["Battlemage Arynna"], L["The Air Strikes Must Continue"]),
-						LeyLines = GetGenericQuestOptions( L["Astromancer Darnarian"], L["Know Your Ley Lines"]),
-						InterceptingManaCells = GetGenericQuestOptions( L["Exarch Nasuun"], L["Intercepting the Mana Cells"]),
-						SunwellPortal = GetGenericQuestOptions( L["Exarch Nasuun"], L["Maintaining the Sunwell Portal"]),
-						LeyLines = GetGenericQuestOptions( L["Astromancer Darnarian"], L["Know Your Ley Lines"]),
-						InterceptTheReinforcements = GetGenericQuestOptions( L["Vindicator Kaalan"], L["Intercept the Reinforcements"]),
-						KeepingTheEnemyAtBay = GetGenericQuestOptions( L["Vindicator Kaalan"], L["Keeping the Enemy at Bay"]),
-						TakingTheHarbor = GetGenericQuestOptions( L["Magister Ilastar"], L["Taking the Harbor"]),
-						CrushTheDawnblade = GetGenericQuestOptions( L["Magister Ilastar"], L["Crush the Dawnblade"]),
-						DisruptGreengill = GetGenericQuestOptions( L["Captain Valindria"], L["Disrupt the Greengill Coast"]),
-						DiscoveringRoots = GetGenericQuestOptions( L["Mar'nah"], L["Discovering Your Roots"]),
-						RediscoveringRoots = GetGenericQuestOptions( L["Mar'nah"], L["Rediscovering Your Roots"]),
-						OpenForBusiness = GetGenericQuestOptions( L["Mar'nah"], L["Open for Business"]),
-						CharitableDonation = GetGenericQuestOptions( L["Anchorite Ayuri"], L["A Charitable Donation"]),
-						ContinuedSupport = GetGenericQuestOptions( L["Anchorite Ayuri"], L["Your Continued Support"]),
-						MagistrixSeyla = {name = L["Magistrix Seyla"], type = "group", inline = true, order = 1000,
+						Explination = { type = 'description', name = L["SSO_TEXT"],order = 1},
+						POne = { name = L["Phase 1"], order = 1, type = 'group', --inline = true,
 							args = {
-								Gateway = GetGenericQuestOptions( L["Magistrix Seyla"], L["Blast the Gateway"]),
-								BloodForBlood = {name =  L["Blood for Blood"], type = "group", inline=true,
-									args = {
-										BloodQuest = { name =  L["Enable Quest"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
-											arg = { L["Magistrix Seyla"],   L["Blood for Blood"] }, },
-										BloodOption = { name = L["Quest Reward"], type = "select", order = 2,
-											arg = { L["Magistrix Seyla"],  L["Blood for Blood"] }, get = "GetQuestOption", set = "SetQuestOption",
-											values = { L["Mark of Sargeras"], L["Sunfury Signet"], L["None"] } },
-									},
-								},
+								pDesc = {type = "description", order = 1, name = L["Recovering the Sun's Reach Sanctum"]},
+								Sentries = GetGenericQuestOptions( L["Vindicator Xayann"], L["Erratic Behavior"]),
+								SanctumWards = GetGenericQuestOptions(L["Captain Theris Dawnhearth"], L["The Sanctum Wards"] ),
+								ArmTheWards = GetGenericQuestOptions(L["Captain Theris Dawnhearth"], L["Arm the Wards!"] ),
+								FurtherConversions = GetGenericQuestOptions( L["Vindicator Xayann"], L["Further Conversions"]),
 							},
 						},
-						SmithHauthaa = {name = L["Smith Hauthaa"], type = "group", inline = true, order = 2000,
+						PTwo = { name = L["Phase 2"], order = 2, type = 'group', --inline = true,
 							args = {
+								pDesc = {type = "description", order = 1, name = L["Recovering the Sun's Reach Armory"]},
+								Armory = GetGenericQuestOptions( L["Harbinger Inuuro"], L["The Battle for the Sun's Reach Armory"]),
+								Distraction = GetGenericQuestOptions( L["Battlemage Arynna"], L["Distraction at the Dead Scar"]),
+								ArmoryContinued = GetGenericQuestOptions( L["Harbinger Inuuro"], L["The Battle Must Go On"]),
+								DistractionContinued = GetGenericQuestOptions( L["Battlemage Arynna"], L["The Air Strikes Must Continue"]),
+							},
+						},
+						PTwoB= { name = L["Phase 2B"], order = 3, type = 'group', --inline = true,
+							args = {
+								pDesc = {type = "description", order = 1, name = L["Open the Sunwell Portal"]},
+								InterceptingManaCells = GetGenericQuestOptions( L["Exarch Nasuun"], L["Intercepting the Mana Cells"]),
+								SunwellPortal = GetGenericQuestOptions( L["Exarch Nasuun"], L["Maintaining the Sunwell Portal"]),
+								LeyLines = GetGenericQuestOptions( L["Astromancer Darnarian"], L["Know Your Ley Lines"]),
+							},
+						},
+						PThree= { name = L["Phase 3"], order = 4, type = 'group', --inline = true,
+							args = {
+								pDesc = {type = "description", order = 1, name = L["Recovering the Sun's Reach Harbor"]},
+								InterceptTheReinforcements = GetGenericQuestOptions( L["Vindicator Kaalan"], L["Intercept the Reinforcements"]),
+								TakingTheHarbor = GetGenericQuestOptions( L["Magister Ilastar"], L["Taking the Harbor"]),
+								KeepingTheEnemyAtBay = GetGenericQuestOptions( L["Vindicator Kaalan"], L["Keeping the Enemy at Bay"]),
+								CrushTheDawnblade = GetGenericQuestOptions( L["Magister Ilastar"], L["Crush the Dawnblade"]),
+							},
+						},
+						PThreeB= { name = L["Phase 3B"], order = 5, type = 'group', --inline = true,
+							args = {
+								pDesc = {type = "description", order = 1, name = L["Building the Anvil"]},
 								MakingReady = GetGenericQuestOptions( L["Smith Hauthaa"], L["Making Ready"]),
-								DontStopNow = GetGenericQuestOptions( L["Smith Hauthaa"], L["Don't Stop Now...."]),
 								AtamalArmaments = {name =  L["Ata'mal Armaments"], type = "group", inline=true, 
 									args = {
 										ArmamentsQuest = { name =  L["Enable Quest"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
@@ -445,6 +443,44 @@ local options = {
 										ArmamentsOption = { name = L["Quest Reward"], type = "select", order = 2,
 											arg = { L["Smith Hauthaa"],  L["Ata'mal Armaments"] }, get = "GetQuestOption", set = "SetQuestOption",
 											values = { L["Blessed Weapon Coating"], L["Righteous Weapon Coating"], L["None"] } },
+									},
+								},
+								DontStopNow = GetGenericQuestOptions( L["Smith Hauthaa"], L["Don't Stop Now...."]),
+							},
+						},
+						PFour= { name = L["Phase 4"], order = 6, type = 'group', --inline = true,
+							args = {
+								pDesc = {type = "description", order = 1, name = L["The Final Push"]},
+								DiscoveringRoots = GetGenericQuestOptions( L["Mar'nah"], L["Discovering Your Roots"]),
+								DisruptGreengill = GetGenericQuestOptions( L["Captain Valindria"], L["Disrupt the Greengill Coast"]),
+								RediscoveringRoots = GetGenericQuestOptions( L["Mar'nah"], L["Rediscovering Your Roots"]),
+								OpenForBusiness = GetGenericQuestOptions( L["Mar'nah"], L["Open for Business"]),
+							},
+						},
+						PFourB = { name = L["Phase 4B"], order = 7, type = 'group', --inline = true,
+							args = {
+								pDesc = {type = "description", order = 1, name = L["Memorial for the Fallen"]},
+								CharitableDonation = GetGenericQuestOptions( L["Anchorite Ayuri"], L["A Charitable Donation"]),
+								ContinuedSupport = GetGenericQuestOptions( L["Anchorite Ayuri"], L["Your Continued Support"]),
+							},
+						},
+						Associated = { name = L["Associated Daily Quests"], order = 100, type = 'group', inline = true,
+							args = {
+								Survey = GetGenericQuestOptions( L["Harbinger Haronem"], L["The Multiphase Survey"]),
+								SunfuryPlans = GetGenericQuestOptions( L["Lord Torvos"], L["Sunfury Attack Plans"]),
+								Advantage = GetGenericQuestOptions( L["Emissary Mordin"], L["Gaining the Advantage"]),
+								MagistrixSeyla = {name = L["Magistrix Seyla"], type = "group", inline = true, order = 1000,
+									args = {
+										Gateway = GetGenericQuestOptions( L["Magistrix Seyla"], L["Blast the Gateway"]),
+										BloodForBlood = {name =  L["Blood for Blood"], type = "group", inline=true,
+											args = {
+												BloodQuest = { name =  L["Enable Quest"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+													arg = { L["Magistrix Seyla"],   L["Blood for Blood"] }, },
+												BloodOption = { name = L["Quest Reward"], type = "select", order = 2,
+													arg = { L["Magistrix Seyla"],  L["Blood for Blood"] }, get = "GetQuestOption", set = "SetQuestOption",
+													values = { L["Mark of Sargeras"], L["Sunfury Signet"], L["None"] } },
+											},
+										},
 									},
 								},
 							},
@@ -635,11 +671,11 @@ local options = {
 			set = function() if addon.db.profile.questLoop then addon.db.profile.questLoop = false else addon.db.profile.questLoop = true end end, },
 		}, --Close Top Lvl Args Table
 }
-
+end
 function addon:OnInitialize()
 	addon.db = LibStub("AceDB-3.0"):New("SickOfClickingDailiesDB", defaults)
 	MTable = self.db.profile.QuestOptions
-	LibStub("AceConfig-3.0"):RegisterOptionsTable("SickOfClickingDailies", options)
+	LibStub("AceConfig-3.0"):RegisterOptionsTable("SickOfClickingDailies", GetOptionsTable)
 	self:RegisterChatCommand("socd", function() LibStub("AceConfigDialog-3.0"):Open("SickOfClickingDailies") end )
 end
 
