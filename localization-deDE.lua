@@ -244,22 +244,22 @@ L["Faction Grinds"] = "Fraktionen"
 		L["Netherwing - Honored"] = "Netherschwingen - Wohlwollend"
 		L["Netherwing - Revered"] = "Netherschwingen - Ehrf\195\188rchtig"
 	L["Shattered Sun Offensive"] = "Zerschmetterte Sonne"
-		-- L["Phase 1"] = true
-			-- L["Recovering the Sun's Reach Sanctum"] = true
-		-- L["Phase 2"] = true
-			-- L["Recovering the Sun's Reach Armory"] = true
-		-- L["Phase 2B"] = true
-			-- L["Open the Sunwell Portal"] = true
-		 -- L["Phase 3"] = true
-			-- L["Recovering the Sun's Reach Harbor"] = true
-		-- L["Phase 3B"] = true
-			-- L["Building the Anvil"] = true
-		-- L["Phase 4"] = true
-			-- L["The Final Push"] = true
-		-- L["Phase 4B"] = true
-			-- L["Memorial for the Fallen"] = true
-		-- L["Associated Daily Quests"] = true
-	-- L["SSO_TEXT"] = "See >> http://www.wowwiki.com/SSO << for information as so how the Daily Quests here in Isle of Quel'Danas and Outland"
+		L["Phase 1"] = true
+			L["Recovering the Sun's Reach Sanctum"] = "Die Entdeckung des Allerheiligsten der Sonne"
+		L["Phase 2"] = true
+			L["Recovering the Sun's Reach Armory"] = "Die Entdeckung der Waffenkammer der Sonne"
+		L["Phase 2B"] = true
+			L["Open the Sunwell Portal"] = "\195\150ffnet das Sunwell Portal"
+		 L["Phase 3"] = true
+			L["Recovering the Sun's Reach Harbor"] = "Die Entdeckung des Hafens der Sonne"
+		L["Phase 3B"] = true
+			L["Building the Anvil"] = "Den Amboss herstellen"
+		L["Phase 4"] = true
+			L["The Final Push"] = "Die finale Offensive"
+		L["Phase 4B"] = true
+			L["Memorial for the Fallen"] = "Denkmal f?r die Gefallenen"
+		L["Associated Daily Quests"] = "Dazugeh\195\182rige t\195\164gliche Quests"
+	L["SSO_TEXT"] = "Auf >> http://www.wowwiki.com/SSO << gibt es Informationen ?ber die Ruf- und Questbelohnungen"
 	L["Wintersaber Trainer"] = "Winters\195\164blerausbilder"
 
 L["PvP"] = true
@@ -287,7 +287,7 @@ L["This will toggle the quest on both Doryn and the Prisoner"] = "Diese Option s
 L["|cffFF0000WARNING!!!|r, This Option also toggles both Scryer and Aldor Quests"] = "|cffFF0000WARNUNG!!!|r, Diese Option schaltet Seher und Aldor Quests ein"  ---Warning Color Code included in this string
 L["\nAll Non-Heroic Quests are from |cff00ff00'Nether-Stalker Mah'duun'|r in LowerCity"] = "\nAlle non-heroic-Dailies von |cff00ff00'Netherpirscher Mah'duun'|r im unteren Viertel"
 L["\nAll Heroic Dailies from |cff00ff00'Wind Trader Zhareem'|r in LowerCity"] = "\nAlle Heroic-Dailies von |cff00ff00'Windh\195\164ndler Zhareem'|r im unteren Viertel"
---L["Accepting All Eggs is not included because it's not a Daily Quest"] = true
+L["Accepting All Eggs is not included because it's not a Daily Quest"] = "Immer her mit den Eiern ist nicht enthalten, weil es keine t\195\164gliche Quest ist"
 
 --Quest Options
 
