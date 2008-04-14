@@ -34,6 +34,9 @@ Distibuted under the "Do What The Fuck You Want To Public License" (http://sam.z
 
 =====================================================================================================
 ]]--
+-- local function D(msg)
+	-- DEFAULT_CHAT_FRAME:AddMessage("SOCD: "..msg)
+-- end
 
 if SOCD and (SOCD.version < 5 ) then return end
 
@@ -689,10 +692,15 @@ end
 function addon:OnDisable()
 	self:UnregisterAllEvents()
 end
+local npcBad, nextQuestFlag, questIndex = nil, false, 0
 
 function addon:GOSSIP_SHOW()
-	if IsShiftKeyDown() then return end
 	local npc = addon.CheckNPC()
+	if (IsShiftKeyDown())then return end
+	if (not self.db.profile.questLoop) and npcBad then 
+		return --D("GossipShow npc Bad Exit")
+	end
+
 	local sel, quest, status = addon.OpeningCheckQuest(npc)
     if npc and quest then
 		if status == "Available" then
@@ -712,7 +720,6 @@ function addon:QUEST_DETAIL()
     end
 end
 
-local nextQuestFlag, questIndex = false, 0
 
 function addon:QUEST_PROGRESS()
     if IsShiftKeyDown() then return end
@@ -749,7 +756,7 @@ function addon:QUEST_COMPLETE()
 end
 
 function addon:PLAYER_TARGET_CHANGED()
-	nextQuestFlag, questIndex = false, 0
+	npcBad, nextQuestFlag, questIndex = false, false, 0
 end
 
 function addon.CheckNPC()
@@ -781,6 +788,7 @@ local function QuestItterateTurnIn(npc, ...)
 		nextQuestFlag = false
 		questIndex = questIndex + 1
 		if questIndex > (numQuest /3) then
+			npcBad = true
 			questIndex = 1
 			for i=1, numQuest , 3 do
 				if npcTbl[select(i, ...)] then
@@ -797,6 +805,7 @@ local function QuestItterateTurnIn(npc, ...)
 			end
 		end
 	end
+	if numQuest <= 3 then npcBad = true end
 	for i=1, numQuest , 3 do
 		if npcTbl[select(i, ...)] then
 			questIndex = (i+2)/3
