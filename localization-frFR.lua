@@ -298,7 +298,7 @@ L["Barrel of Fish"] = "Tonneau de poissons"
 L["Crate of Meat"] = "Caisse de viande"
 L["Mark of Sargeras"] = "Marque de Sargeras"
 L["Sunfury Signet"] = "Chevalière Solfurie"
--- L["Blessed Weapon Coating"] = true
--- L["Righteous Weapon Coating"] = true
+L["Blessed Weapon Coating"] = "Enduit d'arme béni"
+L["Righteous Weapon Coating"] = "Enduit d'arme vertueux"
 
 end
