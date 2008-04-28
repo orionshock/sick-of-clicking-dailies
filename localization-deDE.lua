@@ -1,4 +1,4 @@
-﻿--Major 5, Minor $Revision$
+﻿wq--Major 5, Minor $Revision$
 --[[
 
 	How to Localize this, because it's a pain in the ass.
@@ -95,21 +95,21 @@ if L then
 		L["Know Your Ley Lines"] = "Kenne deine Leylinien"
 	L["Vindicator Kaalan"] = "Verteidiger Kaalan"
 		L["Intercept the Reinforcements"] = "Haltet die Verst\195\164rkung auf"
-		--L["Keeping the Enemy at Bay"] = true																							-- Have a look at this!
+		L["Keeping the Enemy at Bay"] = "Den Feind vom Leibe halten"
 	L["Magister Ilastar"] = true
 		L["Taking the Harbor"] = "Den Hafen einnehmen"
-		--L["Crush the Dawnblade"] = true																									-- Have a look at this!
+		L["Crush the Dawnblade"] = "Vernichtet die D\195\164mmerklingen"
 	L["Smith Hauthaa"] = "Schmiedin Hauthaa"
 		L["Making Ready"] = "Vorbereitungen"
 		L["Don't Stop Now...."] = "H\195\182rt jetzt nicht auf!"
 		L["Ata'mal Armaments"] = "Waffen von Ata'mal"
 	L["Anchorite Ayuri"] = "Anachoretin Ayuri"
-		--L["A Charitable Donation"] = true																									-- Have a look at this!
-		--L["Your Continued Support"] = true																								-- Have a look at this!
+		L["A Charitable Donation"] = "Eine milde Gabe"
+		L["Your Continued Support"] = "Eure weitere Unterst\195\188tzung"
 	L["Captain Valindria"] = "Kapit\195\164n Valindria"
-		--L["Disrupt the Greengill Coast"] = true																							-- Have a look at this!
+		L["Disrupt the Greengill Coast"] = "Bel\195\194stigung an der K\195\188ste der Gr\195\188nkiemen"
 	L["Mar'nah"] = true
-		--L["Discovering Your Roots"] = true																									-- Have a look at this!
+		L["Discovering Your Roots"] = "Die eigenen Wurzeln entdecken"
 		--L["Rediscovering Your Roots"] = true																								-- Have a look at this!
 		--L["Open for Business"] = true																											-- Have a look at this!
 
