@@ -8,7 +8,7 @@
 ##SavedVariables: SickOfClickingDailiesDB
 ## X-Embeds: Ace3
 
-LibStub\LibStub.lua
+LibStub.lua
 
 embeds.xml
 
