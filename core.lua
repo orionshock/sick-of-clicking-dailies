@@ -38,8 +38,6 @@ Distibuted under the "Do What The Fuck You Want To Public License" (http://sam.z
 	-- DEFAULT_CHAT_FRAME:AddMessage("SOCD: "..msg)
 -- end
 
-if SOCD and (SOCD.version < 5 ) then return end
-
 local L = LibStub("AceLocale-3.0"):GetLocale("SickOfClickingDailies")
 local MTable
 
@@ -313,7 +311,7 @@ local defaults = {
 		}
 	}
 	
-function GetGenericQuestOptions(npc, quest)
+local function GetGenericQuestOptions(npc, quest)
 	return { name = quest, type = "toggle", get = "IsQuestEnabled", set = "ToggleQuest", arg = { npc, quest } }
 end
 
@@ -675,6 +673,7 @@ local function GetOptionsTable()
 		}, --Close Top Lvl Args Table
 }
 end
+
 function addon:OnInitialize()
 	addon.db = LibStub("AceDB-3.0"):New("SickOfClickingDailiesDB", defaults)
 	MTable = self.db.profile.QuestOptions
@@ -828,7 +827,7 @@ function addon.OpeningCheckQuest(npc)
 end
 
 function addon.TitleCheck(npc)
-	if npc == nil then return end
+	if not npc then return end
 	if MTable[npc][GetTitleText()] then
 		return GetTitleText()
 	end

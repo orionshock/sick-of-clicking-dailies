@@ -110,8 +110,8 @@ if L then
 		L["Disrupt the Greengill Coast"] = "Bel\195\194stigung an der K\195\188ste der Gr\195\188nkiemen"
 	L["Mar'nah"] = true
 		L["Discovering Your Roots"] = "Die eigenen Wurzeln entdecken"
-		--L["Rediscovering Your Roots"] = true																								-- Have a look at this!
-		--L["Open for Business"] = true																											-- Have a look at this!
+		L["Rediscovering Your Roots"] = "Eure Wurzeln wiederentdecken"
+		L["Open for Business"] = "Gesch\195\164ft ge\195\182ffnet"
 
 --Wintersaber Rep
 L["Rivern Frostwind"] = true
