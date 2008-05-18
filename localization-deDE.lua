@@ -76,7 +76,7 @@ if L then
 	L["Harbinger Haronem"] = "Herold Haronem"
 		L["The Multiphase Survey"] = "Die Multiphasen-Vermessung"
 	L["Lord Torvos"] = true
-		L["Sunfury Attack Plans"] = "Angriffspl\195\164ne der Sonnenzorn"
+		L["Sunfury Attack Plans"] = "Angriffspl\195\164ne des Sonnenzorns"
 	L["Emissary Mordin"] = "Abgesandter Mordin"
 		L["Gaining the Advantage"] = "Einen Vorteil gewinnen"
 	L["Harbinger Inuuro"] = "Herold Inuuro"
@@ -107,7 +107,7 @@ if L then
 		L["A Charitable Donation"] = "Eine milde Gabe"
 		L["Your Continued Support"] = "Eure weitere Unterst\195\188tzung"
 	L["Captain Valindria"] = "Kapit\195\164n Valindria"
-		L["Disrupt the Greengill Coast"] = "Bel\195\194stigung an der K\195\188ste der Gr\195\188nkiemen"
+		L["Disrupt the Greengill Coast"] = "Bel\195\164stigung an der K\195\188ste der Gr\195\188nkiemen"
 	L["Mar'nah"] = true
 		L["Discovering Your Roots"] = "Die eigenen Wurzeln entdecken"
 		L["Rediscovering Your Roots"] = "Eure Wurzeln wiederentdecken"
