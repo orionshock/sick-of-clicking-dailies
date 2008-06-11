@@ -55,9 +55,6 @@ local defaults = {
 					enabled = true,
 					[L["Fires Over Skettis"]] = true,
 					[L["Escape from Skettis"]] = true,
-					qOptions = {
-						[L["Escape from Skettis"]] = 3,
-						}
 					},
 				[L["Skyguard Prisoner"]] = {
 					enabled = true,
@@ -327,25 +324,22 @@ local function GetOptionsTable()
 			args = {
 				ShatariSkyguard = { type = "group", name = L["Skyguard"], order = 1,
 					args = {
-						skettis = { type = "description", name = L["Skettis"], order = 1 },
-						Fires = GetGenericQuestOptions( L["Sky Sergeant Doryn"], L["Fires Over Skettis"]),
-						escort = {
-							name = L["Escape from Skettis"], type = 'group', order = 3, inline = true,
+						skettis = { type = "group", name = L["Skettis"], order = 1, inline = true,
 							args = {
-								Escape = { name = L["Enable Quest"], type = "toggle", order = 3,
+								Fires = GetGenericQuestOptions( L["Sky Sergeant Doryn"], L["Fires Over Skettis"]),
+								Escape = { name = L["Escape from Skettis"], type = "toggle", order = 3,
 									desc = L["This will toggle the quest on both Doryn and the Prisoner"],
 									arg = { L["Sky Sergeant Doryn"],  L["Escape from Skettis"] }, get = "IsQuestEnabled",
 									set = function(_ , v) 	addon:ToggleQuest( false , L["Sky Sergeant Doryn"],  L["Escape from Skettis"], v )
 															addon:ToggleQuest( false , L["Skyguard Prisoner"],  L["Escape from Skettis"], v ) end, },
-								EscapeOption = { name = L["Quest Reward"], type = "select", order = 4, get = "GetQuestOption", set = "SetQuestOption",
-									desc = L["Select what Potion you want for the 'Escape from Skettis' quest"],
-									arg = { L["Sky Sergeant Doryn"],  L["Escape from Skettis"] },
-									values = { L["Health Potion"], L["Mana Potion"], L["None"] },},
 							},
 						},
-						bem = { type = "description", name = L["Blades Edge Mountains"], order = 5 },
-						Aether = GetGenericQuestOptions( L["Skyguard Khatie"], L["Wrangle More Aether Rays!"] ),
-						Bomb = GetGenericQuestOptions(L["Sky Sergeant Vanderlip"], L["Bomb Them Again!"]),
+						bem = { type = "group", name = L["Blades Edge Mountains"], order = 5, inline = true,
+							args = {
+								Aether = GetGenericQuestOptions( L["Skyguard Khatie"], L["Wrangle More Aether Rays!"] ),
+								Bomb = GetGenericQuestOptions(L["Sky Sergeant Vanderlip"], L["Bomb Them Again!"])
+							},
+						},
 					},
 				},
 				Ogrila = { type = "group", name = L["Ogri'la"], order = 2,
@@ -465,23 +459,20 @@ local function GetOptionsTable()
 								ContinuedSupport = GetGenericQuestOptions( L["Anchorite Ayuri"], L["Your Continued Support"]),
 							},
 						},
-						Associated = { name = L["Associated Daily Quests"], order = 100, type = 'group', inline = true,
+						Associated = { name = L["Associated Daily Quests"], order = 100, type = 'description'},
+						Survey = GetGenericQuestOptions( L["Harbinger Haronem"], L["The Multiphase Survey"]),
+						SunfuryPlans = GetGenericQuestOptions( L["Lord Torvos"], L["Sunfury Attack Plans"]),
+						Advantage = GetGenericQuestOptions( L["Emissary Mordin"], L["Gaining the Advantage"]),
+						MagistrixSeyla = {name = L["Magistrix Seyla"], type = "group", inline = true, order = 1000,
 							args = {
-								Survey = GetGenericQuestOptions( L["Harbinger Haronem"], L["The Multiphase Survey"]),
-								SunfuryPlans = GetGenericQuestOptions( L["Lord Torvos"], L["Sunfury Attack Plans"]),
-								Advantage = GetGenericQuestOptions( L["Emissary Mordin"], L["Gaining the Advantage"]),
-								MagistrixSeyla = {name = L["Magistrix Seyla"], type = "group", inline = true, order = 1000,
+								Gateway = GetGenericQuestOptions( L["Magistrix Seyla"], L["Blast the Gateway"]),
+								BloodForBlood = {name =  L["Blood for Blood"], type = "group", inline=true,
 									args = {
-										Gateway = GetGenericQuestOptions( L["Magistrix Seyla"], L["Blast the Gateway"]),
-										BloodForBlood = {name =  L["Blood for Blood"], type = "group", inline=true,
-											args = {
-												BloodQuest = { name =  L["Enable Quest"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
-													arg = { L["Magistrix Seyla"],   L["Blood for Blood"] }, },
-												BloodOption = { name = L["Quest Reward"], type = "select", order = 2,
-													arg = { L["Magistrix Seyla"],  L["Blood for Blood"] }, get = "GetQuestOption", set = "SetQuestOption",
-													values = { L["Mark of Sargeras"], L["Sunfury Signet"], L["None"] } },
-											},
-										},
+										BloodQuest = { name =  L["Enable Quest"], type = "toggle", order = 1, get = "IsQuestEnabled", set = "ToggleQuest",
+											arg = { L["Magistrix Seyla"],   L["Blood for Blood"] }, },
+										BloodOption = { name = L["Quest Reward"], type = "select", order = 2,
+											arg = { L["Magistrix Seyla"],  L["Blood for Blood"] }, get = "GetQuestOption", set = "SetQuestOption",
+											values = { L["Mark of Sargeras"], L["Sunfury Signet"], L["None"] } },
 									},
 								},
 							},
