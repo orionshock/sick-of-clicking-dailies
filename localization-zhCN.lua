@@ -95,7 +95,7 @@ if L then
 		L["Know Your Ley Lines"] = "魔网能量线的读数"
 	L["Vindicator Kaalan"] = "守备官凯兰"
 		L["Intercept the Reinforcements"] = "拦截援军"
-		L["Keeping the Enemy at Bay"] = "拒敌钢外"
+		L["Keeping the Enemy at Bay"] = "拒敌港外"
 	L["Magister Ilastar"] = "魔导师伊拉斯塔"
 		L["Taking the Harbor"] = "占领港口"
 		L["Crush the Dawnblade"] = "击溃晨锋部队"
@@ -121,7 +121,7 @@ L["Rivern Frostwind"] = "雷沃·霜翼" --*NPC
 
 --Cooking
 L["The Rokk"] = "巨石洛克"  --*NPC
-	L["Super Hot Stew"] = "超级美味烧烤"  --*Quest
+	L["Super Hot Stew"] = "超级美味烧烤" --*Quest
 	L["Soup for the Soul"] = "灵魂之汤" --*Quest
 	L["Revenge is Tasty"] = "甜美的复仇" --*Quest
 	L["Manalicious"] = "魔法美味" --*Quest
@@ -142,7 +142,7 @@ L["Nether-Stalker Mah'duun"] = "虚空猎手玛哈杜恩" 	--*NPC
 	L["Wanted: Rift Lords"] = "悬赏：裂隙领主" --*Quest
 	L["Wanted: Shattered Hand Centurions"] = "悬赏：碎手百夫长" --*Quest
 	L["Wanted: Sunseeker Channelers"] = "悬赏：寻日者导魔者" --*Quest
-	L["Wanted: Tempest-Forge Destroyers"] = "悬赏：风暴锻铸摧毁着" --*Quest
+	L["Wanted: Tempest-Forge Destroyers"] = "悬赏：风暴锻铸摧毁者" --*Quest
 	L["Wanted: Sisters of Torment"] = "悬赏：痛苦妖女" --*Quest
 
 --Names...		These lines are used for display in the gui to shorten the idea of what the quest is.
@@ -244,22 +244,22 @@ L["Faction Grinds"] = "声望任务"
 		L["Netherwing - Honored"] = "灵翼之龙 - 尊敬"
 		L["Netherwing - Revered"] = "灵翼之龙 - 崇敬"
 	L["Shattered Sun Offensive"] = "破碎残阳"
-		L["Phase 1"] = true
-			-- L["Recovering the Sun's Reach Sanctum"] = true
-		-- L["Phase 2"] = true
-			-- L["Recovering the Sun's Reach Armory"] = true
-		-- L["Phase 2B"] = true
-			-- L["Open the Sunwell Portal"] = true
-		 -- L["Phase 3"] = true
-			-- L["Recovering the Sun's Reach Harbor"] = true
-		-- L["Phase 3B"] = true
-			-- L["Building the Anvil"] = true
-		-- L["Phase 4"] = true
-			-- L["The Final Push"] = true
-		-- L["Phase 4B"] = true
-			-- L["Memorial for the Fallen"] = true
-		-- L["Associated Daily Quests"] = true
-	-- L["SSO_TEXT"] = "See >> http://www.wowwiki.com/SSO << for information as so how the Daily Quests here in Isle of Quel'Danas and Outland"
+		L["Phase 1"] = "第一阶段"
+			 L["Recovering the Sun's Reach Sanctum"] = "收复阳湾圣殿"
+		 L["Phase 2"] = "第二阶段"
+			 L["Recovering the Sun's Reach Armory"] = "收复阳湾军械库"
+		 L["Phase 2B"] = "第二阶段"
+			 L["Open the Sunwell Portal"] = "开启太阳之井传送门"
+		 L["Phase 3"] = "第三阶段"
+			 L["Recovering the Sun's Reach Harbor"] = "收复阳湾港口"
+		 L["Phase 3B"] = "第三阶段"
+			 L["Building the Anvil"] = "建造铁砧"
+		 L["Phase 4"] = "第四阶段"
+			 L["The Final Push"] = "后期建设"
+		 L["Phase 4B"] = "第四阶段"
+			 L["Memorial for the Fallen"] = "殉难者纪念碑"
+		 L["Associated Daily Quests"] = "关联每日任务"
+	L["SSO_TEXT"] = "查看 >> http://www.wowwiki.com/SSO << 以获取最新的日常任务列表"
 	L["Wintersaber Trainer"] = "冬刃豹训练师"
 	
 L["PvP"] = "PvP"
@@ -300,5 +300,4 @@ L["Mark of Sargeras"] = "萨格拉斯印记"
 L["Sunfury Signet"] = "日怒徽记"
 L["Blessed Weapon Coating"] = "神圣武器涂层"
 L["Righteous Weapon Coating"] = "正义武器涂层"
-
 end
