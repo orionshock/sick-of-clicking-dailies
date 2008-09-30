@@ -2,7 +2,7 @@
 ## Title: Sick of Clicking Dailys? v5
 ## Author: OrionShock
 ## Notes: AutoMagicly clicks though Daily Quests, and Turns them In.
-## Version: 5
+## Version: 5.1
 ## X-License: WTFPL
 ## X-Email: Orionshock@gmail.com
 ##SavedVariables: SickOfClickingDailiesDB
