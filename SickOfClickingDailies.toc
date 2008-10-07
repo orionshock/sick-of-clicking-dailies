@@ -10,7 +10,6 @@
 
 ## X-Category: Quests & Leveling
 
-LibStub.lua
 #@no-lib-strip@
 embeds.xml
 #@end-no-lib-strip@
