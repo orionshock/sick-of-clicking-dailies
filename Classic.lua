@@ -49,19 +49,19 @@ end
 
 
 function module:OnInitialize()
-	D("OnInit")
+	--D("OnInit")
 	db = AddonParent.db:RegisterNamespace("Classic", module.defaults)
 	self.db = db
 end
 
 function module:OnEnable()
-	D("OnEnable")
+	--D("OnEnable")
 	AddonParent:RegisterQuests("Classic", db.profile, self.npcList, db.profile.qOptions)
 	--assert(db.profile == AddonParent.moduleQLookup["Classic"])
 end
 
 function module:OnDisable()
-	D("OnDisable")
+	--D("OnDisable")
 	AddonParent:UnRegisterQuests("Classic")
 end
 

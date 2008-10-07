@@ -104,14 +104,14 @@ function addon:RegisterQuests(name, questTable, npcID, options)
 	--Quest Options
 	assert(type(options) == "table")
 	moduleQOptions[name] = options
-	D("Quest Grouping %s registered", name)
+	--D("Quest Grouping %s registered", name)
 end
 
 function addon:UnRegisterQuests(name)
 	if moduleQLookup[name] then
 		moduleQLookup[name] = nil
 		moduleQOptions[name] = nil
-		D("Quest Grouping %s unregistered", name)
+		--D("Quest Grouping %s unregistered", name)
 	end
 end
 

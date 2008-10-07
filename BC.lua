@@ -56,13 +56,13 @@ end
 local cooking_values
 
 function module:OnInitialize()
-	D("OnInit")
+	--D("OnInit")
 	db = AddonParent.db:RegisterNamespace("BC", module.defaults)
 	self.db = db
 end
 
 function module:OnEnable()
-	D("OnEnable")
+	--D("OnEnable")
 	GameTooltip:SetHyperlink("item:30809")	--Aldor Mark
 	GameTooltip:SetHyperlink("item:30810")	--Scryer Mark
 	GameTooltip:SetHyperlink("item:34538")	--Melee weapon
@@ -76,7 +76,7 @@ function module:OnEnable()
 end
 
 function module:OnDisable()
-	D("OnDisable")
+	--D("OnDisable")
 	AddonParent:UnRegisterQuests("BC")
 end
 
