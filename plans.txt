@@ -1,0 +1,35 @@
+
+
+Core
+	Quest interactions
+	Database
+	core options table
+
+-Modules
+	provide module options table
+	proidee quest database
+
+quest interactions = remain the same
+
+database
+
+sv = {
+	char = {
+		--unUsed
+	},
+	profile = {
+		moduleStatus = {
+			Classic = false,
+			TBC = false,
+			WotLK = false,
+		},
+		qDBstatus = {
+			--["QuestName"] = true/false,
+			--...		We're not going to use NPC/Quest-Option format, as we're going to stop caring about NPC names.	
+		},
+		qDBoptions = {
+		},
+	},
+	global = {
+	}
+}

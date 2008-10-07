@@ -1,22 +1,25 @@
 ﻿## Interface: 20400
-## Title: Sick of Clicking Dailys? v5
+## Title: Sick of Clicking Dailys? v6
 ## Author: OrionShock
 ## Notes: AutoMagicly clicks though Daily Quests, and Turns them In.
-## Version: 5.1
+## Version: 6
 ## X-License: WTFPL
 ## X-Email: Orionshock@gmail.com
-##SavedVariables: SickOfClickingDailiesDB
+## SavedVariables: SOCD_SIX
 ## X-Embeds: Ace3
 
-LibStub.lua
+## X-Category: Quests & Leveling
 
+LibStub.lua
 #@no-lib-strip@
 embeds.xml
 #@end-no-lib-strip@
 
-localization-enUS.lua
-localization-deDE.lua
-localization-frFR.lua
-localization-zhCH.lua
+localizations\localization-enUS.lua
+localizations\localization-deDE.lua
+localizations\localization-frFR.lua
+localizations\localization-zhCH.lua
 
 core.lua
+Classic.lua
+BC.lua
