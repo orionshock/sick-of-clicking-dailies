@@ -118,7 +118,10 @@ module.npcList = table.concat({
 	25112,		--Anchorite Ayuri
 	--Professions
 	24393,		--The Rokk
-
+	25580,		--Old Man Barlo
+	--Instance
+	24369,		--Wind Trader Zhareem
+	24370,		--Nether-Stalker Mah'duun
 	}, ":")
 
 
