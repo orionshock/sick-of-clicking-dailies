@@ -1,9 +1,10 @@
-﻿
-local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_Core", "frFR", false)
-
---
+﻿--
 --	General Localizations here
 --
+
+local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_Core", "frFR", false)
+
+if L then
 	L["Sick Of Clicking Dailies"] = "Sick Of Clicking Dailies"
 	L["Module Control"] = "Contrôle des modules"
 	L["PvP"] = PVP
@@ -49,16 +50,16 @@ local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_Core", "frFR", false)
 	L["Professions"] = TRADE_SKILLS
 	L["Cooking"] = "Cuisine"
 	L["Fishing"] = "Pêche"
-	
+end
 
 --All Quests Classified by orgin / content location
-local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "frFR", false)
-
 --
 --	Classic
 --
 --
+local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "frFR", false)
 
+if C then
 --Wintersaber Trainer
 	C["Frostsaber Provisions"] = "Provisions de sabres-de-givre"
 	C["Winterfall Intrusion"] = "L'incursion des Tombe-hiver"
@@ -68,13 +69,16 @@ local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "frFR", false)
 	C["Call to Arms: Warsong Gulch"] = "Appel aux armes : goulet des Chanteguerres"
 	C["Call to Arms: Arathi Basin"] = "Appel aux armes : bassin d'Arathi"
 	C["Call to Arms: Alterac Valley"] = "Appel aux armes : vallée d'Alterac"
-	
+end
 
 
 --
 --	TBC
 --	
+
 local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "frFR", false)
+
+if BC then
 --Skettis Dailies
 	BC["Fires Over Skettis"] = "Un déluge de feu sur Skettis"
 	BC["Escape from Skettis"] = "L'évasion de Skettis"
@@ -193,13 +197,17 @@ local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "frFR", false)
 	BC["In Defense of Halaa"] = "La défense de Halaa"	--Alliance
 	----Battlegrounds
 	BC["Call to Arms: Eye of the Storm"] = "Appel aux armes : Œil du cyclone"
+end
 
-local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "frFR", false)
+
 --
 --	WOTLK
 --	
-	LK["test"] = "test"
+local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "frFR", false)
 
+if LK then
+	LK["test"] = "test"
+end
 
 
 
