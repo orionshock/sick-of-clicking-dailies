@@ -3,6 +3,7 @@
 --
 
 local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_Core", "frFR", false)
+if not L then return end
 
 if L then
 	L["Sick Of Clicking Dailies"] = "Sick Of Clicking Dailies"
