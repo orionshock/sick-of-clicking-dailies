@@ -84,11 +84,11 @@ function module:GetOptionsTable()
 		order = 1,
 		get = "Multi_Get", set = "Multi_Set",
 		args = {
-			Wintersaber = { name = L["Wintersaber Trainers"], type = "multiselect", order = 2,
+			Wintersaber = { name = L["Wintersaber Trainers"], type = "multiselect", order = 2, 
 				values = { LQ["Frostsaber Provisions"], LQ["Winterfall Intrusion"], LQ["Rampaging Giants"] },
 			},--Wintersaber
 			PvP = {
-				name = L["PvP"], type = "multiselect", order = 1,
+				name = L["PvP"], type = "multiselect", order = 1, width = "full",
 				values = { LQ["Call to Arms: Warsong Gulch"], LQ["Call to Arms: Arathi Basin"], LQ["Call to Arms: Alterac Valley"] },
 				}, --PvP
 			}, --Top Lvl Args

@@ -136,7 +136,7 @@ function module:GetOptionsTable()
 		name = L["Burning Crusade"],
 		type = "group",
 		handler = module,
-		order = 1,
+		order = 2,
 		get = "Multi_Get", set = "Multi_Set",
 		args = {
 			faction = {
@@ -155,17 +155,17 @@ function module:GetOptionsTable()
 						name = L["Netherwing"], type = "group", order = 3,
 						args = {
 							Netrual = {
-								name = L["Netural"], type = "multiselect", order = 1,
+								name = L["Netural"], type = "multiselect", order = 1, width = "full",
 								values = { LQ["Nethercite Ore"], LQ["Netherdust Pollen"], LQ["Nethermine Flayer Hide"],
 									LQ["Netherwing Crystals"], LQ["The Not-So-Friendly Skies..."], LQ["A Slow Death"] },
 							},
 							Friendly = {
-								name = L["Friendly"], type = "multiselect", order = 2,
+								name = L["Friendly"], type = "multiselect", order = 2, width = "full",
 								values = { LQ["Picking Up The Pieces..."], LQ["Dragons are the Least of Our Problems"],
 									LQ["The Booterang: A Cure For The Common Worthless Peon"] },
 							},
 							HonorRev = {
-								name = L["Honored"].." / "..L["Revered"], type = "multiselect", order = 3,
+								name = L["Honored"].." / "..L["Revered"], type = "multiselect", order = 3, width = "full",
 								values = { LQ["Disrupting the Twilight Portal"], LQ["The Deadliest Trap Ever Laid"] },
 							},
 						},
@@ -204,7 +204,7 @@ function module:GetOptionsTable()
 				name = L["PvP"], type = "group", order = 3,
 				args = {
 					battlegrounds = {
-						name = L["Battlegrounds"], type = "multiselect", order = 1,
+						name = L["Battlegrounds"], type = "multiselect", order = 1, width = "full",
 						values = { LQ["Call to Arms: Eye of the Storm"] },
 					},
 					world = {
@@ -217,7 +217,7 @@ function module:GetOptionsTable()
 				name = L["Instances"], type = "group", order = 4,
 				args = {
 					normal = {
-						name = L["Instances"], type = "multiselect",
+						name = L["Instances"], type = "multiselect", width = "full",
 						values = { 
 							[LQ["Wanted: Arcatraz Sentinels"]] = LQ["Wanted: Arcatraz Sentinels"]:gsub(L["Wanted: "], ""),
 							[LQ["Wanted: Coilfang Myrmidons"]] = LQ["Wanted: Coilfang Myrmidons"]:gsub(L["Wanted: "], ""),
@@ -230,7 +230,7 @@ function module:GetOptionsTable()
 							},
 					},
 					heroic = {
-						name = L["Heroic Instances"], type = "multiselect",
+						name = L["Heroic Instances"], type = "multiselect", width = "full",
 						values = {
 							[LQ["Wanted: A Black Stalker Egg"]] = LQ["Wanted: A Black Stalker Egg"]:gsub(L["Wanted: "], ""),
 							[LQ["Wanted: A Warp Splinter Clipping"]] = LQ["Wanted: A Warp Splinter Clipping"]:gsub(L["Wanted: "], ""),
@@ -261,39 +261,39 @@ function module:GenerateSSOOptions()
 		name = L["Shattered Sun Offensive"], type = "group", order = 4,
 		args = {
 			p1 = {
-				name = L["SSO Phase 1"], type = "multiselect", order = 1,
+				name = L["SSO Phase 1"], type = "multiselect", order = 1, width = "full",
 				values = {LQ["Erratic Behavior"], LQ["The Sanctum Wards"], },
 			},
 			p2a = {
-				name = L["SSO Phase 2a"], type = "multiselect", order = 2,
+				name = L["SSO Phase 2a"], type = "multiselect", order = 2, width = "full",
 				values = {LQ["Further Conversions"], LQ["Arm the Wards!"],--Final for "Erratic Behavior" & "The Sanctum Wards"
 					LQ["The Battle for the Sun's Reach Armory"], LQ["Distraction at the Dead Scar"],
 					LQ["Intercepting the Mana Cells"], },
 			},
 			p2b = {
-				name = L["SSO Phase 2b"], type = "multiselect", order = 3,
+				name = L["SSO Phase 2b"], type = "multiselect", order = 3, width = "full",
 				values = {LQ["Maintaining the Sunwell Portal"], LQ["Know Your Ley Lines"],}, --Final for "Intercepting the Mana Cells"
 			},
 			p3a = {
-				name = L["SSO Phase 3a"], type = "multiselect", order = 4,
+				name = L["SSO Phase 3a"], type = "multiselect", order = 4, width = "full",
 				values = {LQ["The Battle Must Go On"], LQ["The Air Strikes Must Continue"], --Final for "Battle for Sun's Reach Armory" & "Distraction at the Dad Scar"
 					LQ["Intercept the Reinforcements"], LQ["Taking the Harbor"], LQ["Making Ready"], },
 			},
 			p3b = {
-				name = L["SSO Phase 3b"], type = "multiselect", order = 5,
+				name = L["SSO Phase 3b"], type = "multiselect", order = 5, width = "full",
 				values = {LQ["Don't Stop Now...."], LQ["Ata'mal Armaments"],}, --Final for "Making Ready"
 			},
 			p4a = {
-				name = L["SSO Phase 4a"], type = "multiselect", order = 6,
+				name = L["SSO Phase 4a"], type = "multiselect", order = 6, width = "full",
 				values = {LQ["Keeping the Enemy at Bay"], LQ["Crush the Dawnblade"], --Final for "Intercept the Reinforcements" & "Taking the Harbor"
 					LQ["Discovering Your Roots"], LQ["A Charitable Donation"], LQ["Disrupt the Greengill Coast"], },
 			},
 			p4b = {
-				name = L["SSO Phase 4b"], type = "multiselect", order = 7,
+				name = L["SSO Phase 4b"], type = "multiselect", order = 7, width = "full",
 				values = { LQ["Your Continued Support"], }, --FInal for "A Charitable Donation"
 			},
 			p4c = {
-				name = L["SSO Phase 4c"], type = "multiselect", order = 8,
+				name = L["SSO Phase 4c"], type = "multiselect", order = 8, width = "full",
 				values = { LQ["Rediscovering Your Roots"],LQ["Open for Business"],}, --Final for "Discovering Your Roots"
 			},
 			misc = {
@@ -301,7 +301,7 @@ function module:GenerateSSOOptions()
 				values = { LQ["The Multiphase Survey"], LQ["Blood for Blood"], LQ["Blast the Gateway"], LQ["Sunfury Attack Plans"], LQ["Gaining the Advantage"], },
 			},
 			b4bQo = {
-				name = LQ["Blood for Blood"], type = "select", order = 10,
+				name = LQ["Blood for Blood"], type = "select", order = 10, 
 				values = { (GetItemInfo(30809)), (GetItemInfo(30810)), L["None"] },
 				get = "GetQuestOption", set = "SetQuestOption",
 			},
