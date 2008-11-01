@@ -324,7 +324,11 @@ end
 --end
 
 function module:GetQuestOption(info)
-	return db.profile.qOptions[info.option.name] and db.profile.qOptions[info.option.name] or 3
+	local name = info.option.name
+	if db.profile.qOptions[name] == nil then
+		db.profile.qOptions[name] = 3
+	end
+	return db.profile.qOptions[name]
 end
 
 function module:SetQuestOption(info, val)
