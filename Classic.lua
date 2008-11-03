@@ -35,6 +35,7 @@ module.defaults = {
 	profile = {
 		--This Table will get auto gened by the next block from the locale data
 		qOptions = {
+			["*"] = 3,
 			--This section has to be manually set with the localized quest name and a default option of off
 			--not very many of these quests so it won't matter :D
 		},
@@ -72,10 +73,6 @@ module.npcList = table.concat({
 	}, ":")
 
 
---local function GetGenericToggleOption(questName, order)
---	return {name = questName, type = "toggle", get = "GetQuestEnabled", set = "SetQuestEnabled", order = order}
---end
-
 function module:GetOptionsTable()
 	local options = {
 		name = L["Classic WoW"],
@@ -90,27 +87,11 @@ function module:GetOptionsTable()
 			PvP = {
 				name = L["PvP"], type = "multiselect", order = 1, width = "full",
 				values = { LQ["Call to Arms: Warsong Gulch"], LQ["Call to Arms: Arathi Basin"], LQ["Call to Arms: Alterac Valley"] },
-				}, --PvP
-			}, --Top Lvl Args
-		}--Top lvl options
+			}, --PvP
+		}, --Top Lvl Args
+	}--Top lvl options
 	return options
 end
-
---function module:GetQuestEnabled(info)
---	return db.profile[info.option.name]
---end
-
---function module:SetQuestEnabled(info, val)
---	db.profile[info.option.name] = val
---end
-
---function module:GetQuestOption(info)
---	return db.profile.qOptions[info.option.name] and db.profile.qOptions[info.option.name] or 3
---end
-
---function module:SetQuestOption(info, val)
---	db.profile.qOptions[info.option.name] = val
---end
 
 function module:Multi_Get(info, value)
 	return db.profile[info.option.values[value]]

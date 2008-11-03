@@ -6,8 +6,6 @@ Sick Of Clicking Dailys is a simple addon designed to pick up and turn in Dailiy
 This version comes with a built in config system made with Ace3's Config GUI Libs.
 
 =====================================================================================================
-Distibuted under the "Do What The Fuck You Want To Public License" (http://sam.zoy.org/wtfpl/)
-
  Copyright (c) 2007 by Orionshock
 
 Permission is hereby granted, free of charge, to any person
@@ -266,8 +264,8 @@ function addon:QUEST_COMPLETE()
 	local npc = addon.CheckNPC()
 	local quest = addon.TitleCheck(npc)
 	if npc and quest then
-		local opt = self:GetQuestOption(quest)
-		if opt and (opt == 3) then
+		local opt = qOptions(quest)
+		if (opt and (opt == 3)) or (not opt) then
 			return
 		elseif opt and (opt == 1 or opt == 2) then
 			return GetQuestReward( opt )
@@ -354,6 +352,6 @@ function addon.TitleCheck(npc)
 end
 
 
-function addon:GetQuestOption(quest)
-	return qOptions(quest)
-end
+--function addon:GetQuestOption(quest)
+--	return qOptions(quest)
+--end

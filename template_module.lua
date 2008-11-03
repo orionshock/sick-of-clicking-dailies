@@ -35,6 +35,7 @@ module.defaults = {
 	profile = {
 		--This Table will get auto gened by the next block from the locale data
 		qOptions = {
+			["*"] = 3,
 			--This section has to be manually set with the localized quest name and a default option of off
 			--not very many of these quests so it won't matter :D
 		},
@@ -49,18 +50,18 @@ end
 
 
 function module:OnInitialize()
-	D("OnInit")
+	--D("OnInit")
 	db = AddonParent.db:RegisterNamespace("TEMP", module.defaults)
 	self.db = db
 end
 
 function module:OnEnable()
-	D("OnEnable")
+	--D("OnEnable")
 	AddonParent:RegisterQuests("TEMP", db.profile, self.npcList, db.profile.qOptions)
 end
 
 function module:OnDisable()
-	D("OnDisable")
+	--D("OnDisable")
 	AddonParent:UnRegisterQuests("TEMP")
 end
 
@@ -69,16 +70,13 @@ module.npcList = table.concat({
 
 	}, ":")
 
-
-local function GetGenericToggleOption(questName, order)
-	return {name = questName, type = "toggle", get = "GetQuestEnabled", set = "SetQuestEnabled", order = order}
-end
-
 function module:GetOptionsTable()
 	local options = {
 		name = L["TEMP"],
 		type = "group",
 		handler = module,
+		get = "Multi_Get",
+		set = "Multi_Set",
 		order = 1,
 		args = {
 			}, --Top Lvl Args
@@ -86,20 +84,35 @@ function module:GetOptionsTable()
 	return options
 end
 
-function module:GetQuestEnabled(info)
-	return db.profile[info.option.name]
-end
+--Included for sake of Completeness for single edged quests.
+--function module:GetQuestEnabled(info)
+--	return db.profile[info.option.name]
+--end
 
-function module:SetQuestEnabled(info, val)
-	db.profile[info.option.name] = val
-end
+--function module:SetQuestEnabled(info, val)
+--	db.profile[info.option.name] = val
+--end
 
 function module:GetQuestOption(info)
-	return db.profile.qOptions[info.option.name] and db.profile.qOptions[info.option.name] or 3
+	return db.profile.qOptions[info.option.name]
 end
 
 function module:SetQuestOption(info, val)
 	db.profile.qOptions[info.option.name] = val
 end
 
+function module:Multi_Get(info, value)
+	if type(value) == "number" then
+		return db.profile[info.option.values[value]]
+	else
+		return db.profile[value]
+	end
+end
 
+function module:Multi_Set(info, value, state)
+	if type(value) == "number" then
+		db.profile[info.option.values[value]] = state
+	else
+		db.profile[value] = state
+	end
+end

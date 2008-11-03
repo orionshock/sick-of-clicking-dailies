@@ -33,12 +33,13 @@ local AddonParent = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
 local module = AddonParent:NewModule("BC")
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
 local LQ = LibStub("AceLocale-3.0"):GetLocale("SOCD_BC")
-local db, qTable = nil, AddonParent.qTable
+local db, cooking_values
 
 module.defaults = {
 	profile = {
 		--This Table will get auto gened by the next block from the locale data
 		qOptions = {
+			["*"] = 3,
 			--This section has to be manually set with the localized quest name and a default option of off
 			--not very many of these quests so it won't matter :D
 		},
@@ -52,8 +53,6 @@ do
 	profile[LQ["A Charitable Donation"]] = false
 	profile[LQ["Your Continued Support"]] = false
 end
-
-local cooking_values
 
 function module:OnInitialize()
 	--D("OnInit")
@@ -70,7 +69,7 @@ function module:OnEnable()
 	GameTooltip:SetHyperlink("item:33844")	--Barrel of Fish
 	GameTooltip:SetHyperlink("item:33857")	--Crate Of Meat
 	
-	cooking_values = { (GetItemInfo(33844)), (GetItemInfo(33857)), L["None"]}
+	cooking_values = { (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate Of Meat", L["None"]}
 
 	AddonParent:RegisterQuests("BC", db.profile, self.npcList, db.profile.qOptions)
 end
@@ -123,13 +122,6 @@ module.npcList = table.concat({
 	24369,		--Wind Trader Zhareem
 	24370,		--Nether-Stalker Mah'duun
 	}, ":")
-
-
---local function GetGenericToggleOption(questName, order)
---	return {name = questName, type = "toggle", get = "GetQuestEnabled", set = "SetQuestEnabled", order = order}
---end
-
-
 
 function module:GetOptionsTable()
 	local options = {
@@ -302,12 +294,12 @@ function module:GenerateSSOOptions()
 			},
 			b4bQo = {
 				name = LQ["Blood for Blood"], type = "select", order = 10, 
-				values = { (GetItemInfo(30809)), (GetItemInfo(30810)), L["None"] },
+				values = { (GetItemInfo(30809)) or "Aldor Mark", (GetItemInfo(30810)) or "Scryer Mark", L["None"] },
 				get = "GetQuestOption", set = "SetQuestOption",
 			},
 			aaQo = {
 				name = LQ["Ata'mal Armaments"], type = "select", order = 11,
-				values = { (GetItemInfo(34538)), (GetItemInfo(34539)), L["None"] },
+				values = { (GetItemInfo(34538)) or "Melee Oil" , (GetItemInfo(34539)) or "Caster Oil", L["None"] },
 				get = "GetQuestOption", set = "SetQuestOption",
 			},
 		},
@@ -315,20 +307,8 @@ function module:GenerateSSOOptions()
 	return table
 end
 
---function module:GetQuestEnabled(info)
---	return db.profile[info.option.name]
---end
-
---function module:SetQuestEnabled(info, val)
---	db.profile[info.option.name] = val
---end
-
 function module:GetQuestOption(info)
-	local name = info.option.name
-	if db.profile.qOptions[name] == nil then
-		db.profile.qOptions[name] = 3
-	end
-	return db.profile.qOptions[name]
+	return db.profile.qOptions[info.option.name]
 end
 
 function module:SetQuestOption(info, val)
