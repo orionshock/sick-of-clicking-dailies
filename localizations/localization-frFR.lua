@@ -1,6 +1,7 @@
 ﻿--
 --	General Localizations here
 --
+--	frFR Translation by Cinedelle
 
 local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_Core", "frFR", false)
 if not L then return end
@@ -83,7 +84,6 @@ if BC then
 --Skettis Dailies
 	BC["Fires Over Skettis"] = "Un déluge de feu sur Skettis"
 	BC["Escape from Skettis"] = "L'évasion de Skettis"
-
 --Blade's Edge Mountains
 	BC["Wrangle More Aether Rays!"] = "Allez dompter d’autres raies de l’éther !"
 	BC["Bomb Them Again!"] = "Bombardez-les encore !"
@@ -146,7 +146,6 @@ if BC then
 	BC["Sunfury Attack Plans"] = "Les plans d'attaque solfurie"
 	BC["Gaining the Advantage"] = "Prendre l'avantage"
 
-
 --Professions - Cooking
 	BC["Super Hot Stew"] = "Un ragoût très épicé"
 	BC["Soup for the Soul"] = "Une soupe pour l'âme"
@@ -187,6 +186,7 @@ if BC then
 	BC["Wanted: The Scroll of Skyriss"] = "On recherche : Le parchemin de Cieuriss"
 	BC["Wanted: The Warlord's Treatise"] = "On recherche : Le traité du seigneur de guerre"
 	BC["Wanted: The Signet Ring of Prince Kael'thas"] = "On recherche : La chevalière du prince Kael'thas"
+
 --PvP
 	----World PvP
 	--HellFire
@@ -200,7 +200,6 @@ if BC then
 	BC["Call to Arms: Eye of the Storm"] = "Appel aux armes : Œil du cyclone"
 end
 
-
 --
 --	WOTLK
 --	
@@ -209,7 +208,3 @@ local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "frFR", false)
 if LK then
 	LK["test"] = "test"
 end
-
-
-
-

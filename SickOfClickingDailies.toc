@@ -2,6 +2,7 @@
 ## Title: Sick of Clicking Dailys? v6
 ## Author: OrionShock
 ## Notes: AutoMagicly clicks though Daily Quests, and Turns them In.
+## Credits: Sinxia (deDE Translation), Cinedelle (frFR Translation)
 ## Version: 6
 ## X-License: WTFPL
 ## X-Email: Orionshock@gmail.com

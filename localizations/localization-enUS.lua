@@ -1,9 +1,12 @@
-
-local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_Core", "enUS", true)
-
 --
 --	General Localizations here
 --
+--	:D
+
+local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_Core", "enUS", true)
+if not L then return end
+
+if L then
 	L["Sick Of Clicking Dailies"] = true
 	L["Module Control"] = true
 	L["PvP"] = PVP
@@ -49,16 +52,16 @@ local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_Core", "enUS", true)
 	L["Professions"] = TRADE_SKILLS
 	L["Cooking"] = true
 	L["Fishing"] = true
-	
+end	
 
 --All Quests Classified by orgin / content location
-local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "enUS", true)
-
 --
 --	Classic
 --
 --
+local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "enUS", true)
 
+if C then
 --Wintersaber Trainer
 	C["Frostsaber Provisions"] = true
 	C["Winterfall Intrusion"] = true
@@ -68,13 +71,15 @@ local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "enUS", true)
 	C["Call to Arms: Warsong Gulch"] = true
 	C["Call to Arms: Arathi Basin"] = true
 	C["Call to Arms: Alterac Valley"] = true
-	
-
+end
 
 --
 --	TBC
 --	
+
 local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "enUS", true)
+
+if BC then
 --Skettis Dailies
 	BC["Fires Over Skettis"] = true
 	BC["Escape from Skettis"] = true
@@ -141,7 +146,6 @@ local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "enUS", true)
 	BC["Sunfury Attack Plans"] = true
 	BC["Gaining the Advantage"] = true
 
-
 --Professions - Cooking
 	BC["Super Hot Stew"] = true
 	BC["Soup for the Soul"] = true
@@ -182,6 +186,7 @@ local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "enUS", true)
 	BC["Wanted: The Scroll of Skyriss"] = true
 	BC["Wanted: The Warlord's Treatise"] = true
 	BC["Wanted: The Signet Ring of Prince Kael'thas"] = true
+
 --PvP
 	----World PvP
 	--HellFire
@@ -193,14 +198,13 @@ local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "enUS", true)
 	BC["In Defense of Halaa"] = true	--Alliance
 	----Battlegrounds
 	BC["Call to Arms: Eye of the Storm"] = true
+end
 
-local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "enUS", true)
 --
 --	WOTLK
 --	
+local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "enUS", true)
+
+if LK then
 	LK["test"] = true
-
-
-
-
-
+end
