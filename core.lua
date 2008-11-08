@@ -265,7 +265,7 @@ function addon:QUEST_COMPLETE()
 	local quest = addon.TitleCheck(npc)
 	if npc and quest then
 		local opt = qOptions(quest)
-		if (opt and (opt == 3)) or (not opt) then
+		if (opt and (opt == 3)) then
 			return
 		elseif opt and (opt == 1 or opt == 2) then
 			return GetQuestReward( opt )
