@@ -39,7 +39,7 @@ module.defaults = {
 	profile = {
 		--This Table will get auto gened by the next block from the locale data
 		qOptions = {
-			["*"] = 3,
+			--["*"] = 3,
 			--This section has to be manually set with the localized quest name and a default option of off
 			--not very many of these quests so it won't matter :D
 		},
@@ -52,6 +52,15 @@ do
 	end
 	profile[LQ["A Charitable Donation"]] = false
 	profile[LQ["Your Continued Support"]] = false
+
+	--Cooking
+	profile.qOptions[LQ["Super Hot Stew"]] = 3
+	profile.qOptions[LQ["Soup for the Soul"]] = 3
+	profile.qOptions[LQ["Revenge is Tasty"]] = 3
+	profile.qOptions[LQ["Manalicious"]] = 3
+	--SSO-Misc
+	profile.qOptions[LQ["Blood for Blood"]] = 3
+	profile.qOptions[LQ["Ata'mal Armaments"]] = 3
 end
 
 function module:OnInitialize()

@@ -35,7 +35,7 @@ module.defaults = {
 	profile = {
 		--This Table will get auto gened by the next block from the locale data
 		qOptions = {
-			["*"] = 3,
+			--["*"] = 3,
 			--This section has to be manually set with the localized quest name and a default option of off
 			--not very many of these quests so it won't matter :D
 		},
