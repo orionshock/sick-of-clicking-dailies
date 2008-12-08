@@ -206,5 +206,191 @@ end
 local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "enUS", true)
 
 if LK then
-	LK["test"] = true
+	--Instance Dailies
+	LK["All Things in Good Time"] = true
+		--Heroics
+	LK["Proof of Demise: Anub'arak"] = true
+	LK["Proof of Demise: Cyanigosa"] = true
+	LK["Proof of Demise: Gal'darah"] = true
+	LK["Proof of Demise: Herald Volazj"] = true
+	LK["Proof of Demise: Ingvar the Plunderer"] = true
+	LK["Proof of Demise: Keristrasza"] = true
+	LK["Proof of Demise: King Ymiron"] = true
+	LK["Proof of Demise: Ley-Guardian Eregos"] = true
+	LK["Proof of Demise: Loken"] = true
+	LK["Proof of Demise: Mal'Ganis"] = true
+	LK["Proof of Demise: Sjonnir The Ironshaper"] = true
+	LK["Proof of Demise: The Prophet Tharon'ja"] = true
+		--Non Heroics
+	LK["Timear Foresees Centrifuge Constructs in your Future!"] = true
+	LK["Timear Foresees Infinite Agents in your Future!"] = true
+	LK["Timear Foresees Titanium Vanguards in your Future!"] = true
+	LK["Timear Foresees Ymirjar Berserkers in your Future!"] = true
+
+	--Professions
+		--Cooking
+	LK["Cheese for Glowergold"] = true
+	LK["Convention at the Legerdemain"] = true
+	LK["Infused Mushroom Meatloaf"] = true
+	LK["Mustard Dogs!"] = true
+	LK["Sewer Stew"] = true
+		--Jewlcrafting
+	LK["Shipment: Blood Jade Amulet"] = true
+	LK["Shipment: Bright Armor Relic"] = true
+	LK["Shipment: Glowing Ivory Figurine"] = true
+	LK["Shipment: Intricate Bone Figurine"] = true
+	LK["Shipment: Shifting Sun Curio"] = true
+	LK["Shipment: Wicked Sun Brooch"] = true
+
+	--Factions
+		--The Wyrmrest Accord
+	LK["Aces High!"] = true
+	LK["Drake Hunt"] = true
+	LK["Defending Wyrmrest Temple"] = true
+
+		--The Oracles
+	LK["A Cleansing Song"] = true
+	LK["Appeasing the Great Rain Stone"] = true
+	LK["Hand of the Oracles"] = true
+	LK["Mastery of the Crystals"] = true
+	LK["Power of the Great Ones"] = true
+	LK["Song of Fecundity"] = true
+	LK["Song of Reflection"] = true
+	LK["Song of Wind and Water"] = true
+	LK["Will of the Titans"] = true
+
+		--Frenzyheart Tribe
+	LK["A Hero's Headgear"] = true
+	LK["Chicken Party!"] = true
+	LK["Frenzyheart Champion"] = true
+	LK["Kartak's Rampage"] = true
+	LK["Rejek: First Blood"] = true
+	LK["Secret Strength of the Frenzyheart"] = true
+	LK["Strength of the Tempest"] = true
+	LK["The Heartblood's Strength"] = true
+	LK["Tools of War"] = true
+
+		--The Sons of Hodir
+	LK["Blowing Hodir's Horn"] = true
+	LK["Feeding Arngrim"] = true
+	LK["Hot and Cold"] = true
+	LK["Polishing the Helm"] = true
+	LK["Spy Hunter"] = true
+	LK["Thrusting Hodir's Spear"] = true
+
+		--Argent Crusade
+	LK["The Alchemist's Apprentice"] = true
+	LK["Troll Patrol"] = true
+	LK["Troll Patrol: Can You Dig It?"] = true
+	LK["Troll Patrol: Couldn't Care Less"] = true
+	LK["Troll Patrol: Creature Comforts"] = true
+	LK["Troll Patrol: Done to Death"] = true
+	LK["Troll Patrol: High Standards"] = true
+	LK["Troll Patrol: Intestinal Fortitude"] = true
+	LK["Troll Patrol: Something for the Pain"] = true
+	LK["Troll Patrol: The Alchemist's Apprentice"] = true
+	LK["Troll Patrol: Throwing Down"] = true
+	LK["Troll Patrol: Whatdya Want, a Medal?"] = true
+	LK["Congratulations!"] = true
+
+		--Knights of the Ebon Blade
+	LK["Intelligence Gathering"] = true
+	LK["Leave Our Mark"] = true
+	LK["No Fly Zone"] = true
+	LK["From Their Corpses, Rise!"] = true
+	LK["Shoot 'Em Up"] = true
+	LK["Vile Like Fire!"] = true
+
+		--The Kalu'ak
+	LK["Planning for the Future"] = true
+	LK["Preparing for the Worst"] = true
+	LK["The Way to His Heart..."] = true
+
+		--The Frostborn
+	LK["Pushed Too Far"] = true
+
+	----Horde Expedition / --Alliance Vanguard
+		--These are shared quests for the given zone
+		--IceCrown
+	LK["King of the Mountain"] = true	--Netural
+	LK["Blood of the Chosen"] = true	--Netural
+	LK["Drag and Drop"] = true	--Netural
+	LK["Neutralizing the Plague"] = true	--Netural
+	LK["No Rest For The Wicked"] = true	--Netural
+	LK["Not a Bug"] = true	--Netural
+	LK["Retest Now"] = true	--Netural
+	LK["Slaves to Saronite"] = true	--Netural
+	LK["That's Abominable!"] = true	--Netural
+	LK["Static Shock Troops: the Bombardment"] = true	--Alliance
+	LK["Total Ohmage: The Valley of Lost Hope!"] = true	--Horde
+	LK["The Solution Solution"] = true	--Alliance
+	LK["Volatility"] = true	--Horde
+	LK["Capture More Dispatches"] = true	--Alliance
+	LK["Keeping the Alliance Blind"] = true	--Horde
+	LK["Putting the Hertz: The Valley of Lost Hope"] = true	--Alliance
+	LK["Riding the Wavelength: The Bombardment"] = true	--Horde
+
+		--Grizzly Hills
+	LK["Life or Death"] = true	--Alliance
+	LK["Overwhelmed!"] = true	--Horde
+	LK["Making Repairs"] = true	--Horde
+	LK["Pieces Parts"] = true	--Alliance
+	LK["Keep Them at Bay"] = true	--Netural
+	LK["Riding the Red Rocket"] = true	--Netural
+	LK["Seared Scourge"] = true	--Netural
+	LK["Smoke 'Em Out"] = true	--Netural
+
+		--The Storm Peaks
+	LK["Back to the Pit"] = true
+	LK["Defending Your Title"] = true
+	LK["Overstock"] = true
+	LK["Maintaining Discipline"] = true
+	LK["The Aberrations Must Die"] = true
+
+
+		--World PvP
+		--These Quests Specificlally flag you as PvP Active
+		--Wintergrasp Fortress
+	LK["A Rare Herb"] = true
+	LK["Bones and Arrows"] = true
+	LK["Defend the Siege"] = true
+	LK["Fueling the Demolishers"] = true
+	LK["Healing with Roses"] = true
+	LK["Jinxing the Walls"] = true
+	LK["No Mercy for the Merciless"] = true
+	LK["Slay them all"] = true
+	LK["Stop the Siege"] = true
+	LK["Victory in Wintergrasp"] = true
+	LK["Warding the Walls"] = true
+	LK["Warding the Warriors"] = true
+
+		--BattleGround
+	LK["Call to Arms: Strand of the Ancients"] = true
+
+		--IceCrown
+	LK["Make Them Pay!"] = true	--Horde
+	LK["Shred the Alliance"] = true	--Horde
+	LK["No Mercy!"] = true	--Allaince
+	LK["Shredder Repair"] = true	--Alliance
+
+		--Grizzly Hills
+	LK["Keep Them at Bay"] = true	--Netural
+	LK["Riding the Red Rocket"] = true	--Netural
+	LK["Seared Scourge"] = true	--Netural
+	LK["Smoke 'Em Out"] = true	--Netural
+
+	LK["Down With Captain Zorna!"] = true	--Alliance
+	LK["Kick 'Em While They're Down"] = true	--Alliance
+	LK["Blackriver Skirmish"] = true	--Alliance
+
+	LK["Crush Captain Brightwater!"] = true	--Horde
+	LK["Keep 'Em on Their Heels"] = true	--Horde
+	LK["Blackriver Brawl"] = true	--Horde
+
+
+	--Misc
+		--Howling Fjord
+	LK["Break the Blockade"] = true	--Alliance
+	LK["Steel Gate Patrol"] = true	--Alliance
+
 end
