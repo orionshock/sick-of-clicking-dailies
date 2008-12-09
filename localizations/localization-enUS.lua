@@ -21,7 +21,8 @@ if L then
 	L["Quest Rewards"] = true
 	L["Quests"] = QUESTS_LABEL
 	L["Wanted: "] = true		--Used in Instance quest for dsplay...
-	
+	L["Horde"] = FACTION_HORDE
+	L["Alliance"] = FACTION_ALLIANCE
 
 	--Classic Section
 	L["Classic WoW"] = true
@@ -52,6 +53,30 @@ if L then
 	L["Professions"] = TRADE_SKILLS
 	L["Cooking"] = true
 	L["Fishing"] = true
+
+	--LichKing
+	L["LK"] = "Lich King"
+		--Factions
+	L["The Wyrmrest Accord"] = true
+	L["Sholazar Basin"] = true
+	L["The Oracles"] = true
+	L["Frenzyheart Tribe"] = true
+	L["The Sons of Hodir"] = true
+	L["Argent Crusade"] = true
+	L["Knights of the Ebon Blade"] = true
+	L["The Kalu'ak"] = true
+	L["The Storm Peaks"] = true
+
+		--Misc Titles
+	L["Shared Faction Quests"] = true
+	L["Icecrown"] = true
+	L["Grizzly Hills"] = true
+	L["Wintergrasp"] = true
+	L["Shared Quests"] = true
+
+	L["Troll Patrol: "] = true	--There is a space at the end, this is used to clip ugly quests.
+
+	
 end	
 
 --All Quests Classified by orgin / content location
