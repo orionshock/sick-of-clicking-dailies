@@ -66,7 +66,153 @@ function module:OnDisable()
 end
 
 module.npcList = table.concat({
-	"00000"		--Don't forget to replace this
+		-----INSTANCES-----
+	26653,  --Kilix the Unraveler
+		---Heroics---
+	20735, --Archmage Lan'dalock
+		---Non-Heroics---
+	31439, --Archmage Timear
+
+	-------PROFESSIONS-----
+		---Cooking---
+	29631, --Awilo Lon'gomba
+	28718, --Ranid Glowergold
+	28705, --Katherine Lee
+	29049, --Arille Azuregaze
+	29527, --Orton Bennet
+	28160, --Archmage Pentarus
+	29532, --Ajay Green
+
+		---Jewlcrafting----
+	28701, --Timothy Jones
+
+	-------FACTIONS-----
+		---The, --Wyrmrest Accord---
+	32548, --Corastrasza
+	26117, --Raelorasz
+	27575, --Lord Afrasastrasz
+
+		---The Oracles---
+	28027, --High-Oracle Soo-say
+	29006, --Oracle Soo-nee
+	29149, --Oracle Soo-dow
+	28107, --Lightningcaller Soo-met
+	28667, --Jaloot
+
+		---Frenzyheart Tribe---
+	29043, --Rejek
+	28138, --Elder Harkek
+	28216, --Zepik the Gorloc Hunter
+	29146, --Vekgar
+	28106, --Shaman Jakjek
+
+		---The Sons of Hodir 
+	--Ok these quest might not be so automagic, unless you can target the object..
+	--o:192078, --Hodir's Horn
+	--o:192524, --Arngrim the Insatiable
+	--o:192071, --Fjorn's Anvil
+	--o:192080, --Hodir's Helm
+	--o:192079, --Hodir's Spear
+	30294, --  Frostworg Denmother
+
+		---Argent Crusade---
+	28039, --Commander Kunz
+
+	28043, --Captain Grondel
+	28042, --Captain Brandon
+	28044, --Captain Rupert
+	28205, --Alchemist Finklestein
+
+		---Knights of the Ebon Blade---
+	29456, --Aurochs Grimbane
+	29343, --Baron Sliver
+	29405, --Uzo Deathcaller
+	29396, --Setaal Darkmer
+	30074, --The Leaper
+	30216, --Vile
+
+		---The Kalu'ak---
+	26228, --Trapper Mau'i
+	26213, --Utaik
+	24810, --Anuniaq
+
+		---The Frostborn---
+	29732, --Fjorlin Frostbrow 
+
+	-------ZONE QUESTS-----
+		---IceCrown---
+	31776, --Frazzle Geargrinder
+	31781, --Blast Thunderbomb
+	32302, --Knight-Captain Droche
+	32301, --Warbringer Davos
+	29795, --Koltira Deathweaver
+	29799, --Thassarian
+	30825, --Chief Engineer Copperclaw 
+	30345, --Chief Engineer Boltwrench 
+	31261, --Brother Keltan 
+	31259, --Absalan the Pious 
+	32444, --Kibli Killohertz 
+	32430, --Fringe Engineer Tezzla 
+	30345, --Chief Engineer Boltwrench 
+	30825, --Chief Engineer Copperclaw 
+	30344, --High Captain Justin Bartlett 
+	30824, --Sky-Reaver Korm Blackscar 
+
+		---Grizzly Hills---
+	27484, --Rheanna 
+	27464, --Aumana 
+	27416, --Pipthwack 
+	27422, --Lurz 
+	27423, --Grekk 
+	27371, --Synipus 
+	26604, --Mack Fearsen
+
+		---The, --Storm Peaks--- --Faction Netural--
+	29796, --Gretta the Arbiter
+	29428, --Ricket
+
+		---Howling, --Fjord--- (Alliance Only)
+	23895, --Bombardier Petrov 
+	24399, --Steel Gate Chief Archaeologist 
+
+	-------PvP----- 
+		---Wintergrasp Fortress---
+	31054, --Anchorite Tessa 
+	31053, --Primalist Mulfort 
+	31052, --Bowyer Randolph 
+	31102, --Vieron Blazefeather  
+	31109, --Senior Demolitionist Legoso 
+	31107, --Lieutenant Murp  
+	31108, --Siege Master Stouthandle  
+	31036, --Commander Zanneth  
+	31091, --Commander Dardosh  
+	31106, --Siegesmith Stronghoof  
+	31153, --Tactical Officer Ahbramis 
+	31151, --Tactical Officer Kilrath 
+	31051, --Sorceress Kaylana 
+	31101, --Hoodoo Master Fu'jin 
+
+		---BattleGround---
+	15351, --Alliance Brigadier General 
+	15350, --Horde Warbringer
+
+	---IceCrown---
+	30824, --Sky-Reaver Korm Blackscar
+	30344, --High Captain Justin Bartlett
+
+	---Grizzly, --Hills----
+	27562, --Lieutenant Stuart 
+	27563, --Centurion Kaggrum 
+	27759, --Commander Howser 
+	27708, --General Gorlok 
+	27602, --Sergeant Downey 
+	27606, --Stone Guard Ragetotem 
+	27520, --Baron Freeman 
+	27532, --General Khazgar 
+	27468, --Sergeant Hartsman Kick 
+	27451, --Commander Bargok Keep 
+	27783, --Scout Captain Carter 
+	27120, --Raider Captain Kronn 
 
 	}, ":")
 
