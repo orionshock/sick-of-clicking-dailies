@@ -24,3 +24,5 @@ core.lua
 Classic.lua
 BC.lua
 wotlk.lua
+
+## namescanner.lua
