@@ -117,10 +117,15 @@ module.npcList = table.concat({
 		---The Sons of Hodir 
 	--Ok these quest might not be so automagic, unless you can target the object..
 	--o:192078, --Hodir's Horn
+	LQ["Hodir's Horn"],
 	--o:192524, --Arngrim the Insatiable
+	LQ["Arngrim the Insatiable"],
 	--o:192071, --Fjorn's Anvil
+	LQ["Fjorn's Anvil"],
 	--o:192080, --Hodir's Helm
+	LQ["Hodir's Helm"],
 	--o:192079, --Hodir's Spear
+	LQ["Hodir's Spear"],
 	30294, --  Frostworg Denmother
 
 		---Argent Crusade---

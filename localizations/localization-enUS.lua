@@ -297,11 +297,22 @@ if LK then
 
 		--The Sons of Hodir
 	LK["Blowing Hodir's Horn"] = true
+	LK["Hodir's Horn"] = true	--object Name
+
 	LK["Feeding Arngrim"] = true
+	LK["Arngrim the Insatiable"] = true	--object Name
+
 	LK["Hot and Cold"] = true
+	LK["Fjorn's Anvil"] = true	--object name
+	
+
 	LK["Polishing the Helm"] = true
+	LK["Hodir's Helm"] = true	--object Name
+
 	LK["Spy Hunter"] = true
+
 	LK["Thrusting Hodir's Spear"] = true
+	LK["Hodir's Spear"] = true	--object Name
 
 		--Argent Crusade
 	LK["The Alchemist's Apprentice"] = true

@@ -279,7 +279,10 @@ function addon:PLAYER_TARGET_CHANGED()
 end
 
 function addon.CheckNPC()
-	local npcID = UnitGUID("target") and tonumber( strsub( UnitGUID("target"), -12, -7), 16) or "~"
+	local npcID = UnitGUID("target") and tonumber( strsub( UnitGUID("target"), -12, -7), 16)
+	if not npcID then
+		npcID = GossipFrameNpcNameText:GetText()
+	end
 	for i,v in pairs(questNPCs) do
 		if v:find(npcID) then
 			return npcID
