@@ -265,12 +265,16 @@ function addon:QUEST_COMPLETE()
 	local quest = addon.TitleCheck(npc)
 	if npc and quest then
 		local opt = qOptions(quest)
-		if (opt and (opt == 3)) then
+		if (opt and (opt == 5)) then
 			return
-		elseif opt and (opt == 1 or opt == 2) then
-			return GetQuestReward( opt )
+		elseif opt and (opt >= 1 and opt <= 4 ) then
+			GetQuestReward( opt )
+			self:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", quest, npc, opt)
+			return 
 		end
-		return GetQuestReward(0)
+		GetQuestReward(0)
+		self:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", quest, npc)
+		return 
     end
 end
 

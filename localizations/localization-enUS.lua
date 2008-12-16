@@ -51,8 +51,9 @@ if L then
 	L["SSO_MISC"] = "SSO Misc. Quests"
 		--Professions
 	L["Professions"] = TRADE_SKILLS
-	L["Cooking"] = true
-	L["Fishing"] = true
+	L["Cooking"] = (GetSpellInfo(2550))
+	L["Fishing"] = (GetSpellInfo(7733))
+	L["Jewelcrafting"] = (GetSpellInfo(25229))
 
 	--LichKing
 	L["LK"] = "Lich King"
@@ -73,9 +74,13 @@ if L then
 	L["Grizzly Hills"] = true
 	L["Wintergrasp"] = true
 	L["Shared Quests"] = true
-
+	L["Icecrown Netural Quests"] = true
 	L["Troll Patrol: "] = true	--There is a space at the end, this is used to clip ugly quests.
-
+	L["Shipment: "] = true	--There is also a space at the end of here..
+	L["Proof of Demise: "] = true
+	L["Timear Foresees (.+) in your Future!"] = true	--regex leave the (.+) in the middle there.
+	L["Faction Token"] = true
+	
 	
 end	
 

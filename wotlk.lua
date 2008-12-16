@@ -66,6 +66,17 @@ end
 function module:OnEnable()
 	--D("OnEnable")
 	AddonParent:RegisterQuests("LK", db.profile, self.npcList, db.profile.qOptions)
+	SetItemRef("item:43950")
+	SetItemRef("item:43950")
+	
+	SetItemRef("item:44711")
+	SetItemRef("item:44711")
+
+	SetItemRef("item:44713")
+	SetItemRef("item:44713")
+
+	SetItemRef("item:44710")
+	SetItemRef("item:44710")
 end
 
 function module:OnDisable()
@@ -281,9 +292,13 @@ function module:GetOptionsTable()
 							},
 						},
 					},
-					Ebon = { name = L["Knights of the Ebon Blade"], type = "multiselect", order = 5, width = "full",
-						values = { LQ["Intelligence Gathering"], LQ["Leave Our Mark"], LQ["No Fly Zone"], 
-							LQ["From Their Corpses, Rise!"], LQ["Shoot 'Em Up"], LQ["Vile Like Fire!"],  },
+					ebonWrap = { name = L["Knights of the Ebon Blade"], type = "group", order = 5,
+						args = {
+							Ebon = { name = L["Knights of the Ebon Blade"], type = "multiselect", order = 5, width = "full",
+								values = { LQ["Intelligence Gathering"], LQ["Leave Our Mark"], LQ["No Fly Zone"], 
+									LQ["From Their Corpses, Rise!"], LQ["Shoot 'Em Up"], LQ["Vile Like Fire!"],  },
+							},
+						},
 					},
 					Kalu = { name = L["The Kalu'ak"], type = "multiselect", order = 6, width = "full",
 						values = { LQ["Planning for the Future"], LQ["Preparing for the Worst"], LQ["The Way to His Heart..."], },
@@ -309,6 +324,8 @@ function module:GetOptionsTable()
 				},
 			},
 			world_pvp = module:GetWorldPvP(),
+			professions = module:GetProfessionsOptions(),
+			instance = module:GetInstanceOptions(),
 		}, --Top Lvl Args
 	}--Top lvl options
 	return options
@@ -325,7 +342,8 @@ function module:GetWorldPvP()
 			},
 			iceCrown = { name = L["Icecrown"], order = 2, type = "group",
 				args = {
-					Netural = {name = "Icecrown Netural Quests", type = "multiselect", order = 1, width = "full", values = {},},			
+					Netural = {name = L["Icecrown Netural Quests"], type = "multiselect", order = 1, width = "full", values = {}, hidden = true},
+					--Icrown might not have any pvp quests that are netural...
 					IceHorde = { name = L["Horde"], type = "multiselect", order = 2, width = "full",
 						values = { LQ["Make Them Pay!"], LQ["Shred the Alliance"] },
 						hidden = function(info) return select(2, UnitFactionGroup("player")) == "Alliance" end
@@ -357,7 +375,83 @@ function module:GetWorldPvP()
 	return t
 end
 
+function module:GetProfessionsOptions()
+	local t = { name = L["Professions"], type = "group", order = 4,
+		args = {
+			cooking = { name = L["Cooking"], type = "multiselect", order = 1, width = "full",
+				values = { LQ["Cheese for Glowergold"], LQ["Convention at the Legerdemain"], LQ["Infused Mushroom Meatloaf"], LQ["Mustard Dogs!"], LQ["Sewer Stew"] },
+			},
+			JC = { name = L["Jewelcrafting"], type = "multiselect", order = 2, width = "full",
+				values = {
+					[LQ["Shipment: Blood Jade Amulet"]] = LQ["Shipment: Blood Jade Amulet"]:gsub(L["Shipment: "], ""),
+					[LQ["Shipment: Bright Armor Relic"]] = LQ["Shipment: Bright Armor Relic"]:gsub(L["Shipment: "], ""),
+					[LQ["Shipment: Glowing Ivory Figurine"]] = LQ["Shipment: Glowing Ivory Figurine"]:gsub(L["Shipment: "], ""),
+					[LQ["Shipment: Intricate Bone Figurine"]] = LQ["Shipment: Intricate Bone Figurine"]:gsub(L["Shipment: "], ""),
+					[LQ["Shipment: Shifting Sun Curio"]] = LQ["Shipment: Shifting Sun Curio"]:gsub(L["Shipment: "], ""),
+					[LQ["Shipment: Wicked Sun Brooch"]] = LQ["Shipment: Wicked Sun Brooch"]:gsub(L["Shipment: "], ""),
+				},
+			},
+		},
+	}
+	return t
+end
 
+function module:GetInstanceOptions()
+
+	local t = { name = L["Instances"], type = "group", order = 5,
+		args = {
+			heroicWrap = { type = "group", order = 1, name = L["Heroic Instances"],
+				args = {
+					Heroics = { name = L["Heroic Instances"], type = "multiselect", width = "full",
+						values = {
+							[LQ["Proof of Demise: Anub'arak"]] = LQ["Proof of Demise: Anub'arak"]:gsub(L["Proof of Demise: "], ""),
+							[LQ["Proof of Demise: Cyanigosa"]] = LQ["Proof of Demise: Cyanigosa"]:gsub(L["Proof of Demise: "], ""),
+							[LQ["Proof of Demise: Gal'darah"]] = LQ["Proof of Demise: Gal'darah"]:gsub(L["Proof of Demise: "], ""),
+							[LQ["Proof of Demise: Herald Volazj"]] = LQ["Proof of Demise: Herald Volazj"]:gsub(L["Proof of Demise: "], ""),
+							[LQ["Proof of Demise: Ingvar the Plunderer"]] = LQ["Proof of Demise: Ingvar the Plunderer"]:gsub(L["Proof of Demise: "], ""),
+							[LQ["Proof of Demise: Keristrasza"]] = LQ["Proof of Demise: Keristrasza"]:gsub(L["Proof of Demise: "], ""),
+							[LQ["Proof of Demise: King Ymiron"]] = LQ["Proof of Demise: King Ymiron"]:gsub(L["Proof of Demise: "], ""),
+							[LQ["Proof of Demise: Ley-Guardian Eregos"]] = LQ["Proof of Demise: Ley-Guardian Eregos"]:gsub(L["Proof of Demise: "], ""),
+							[LQ["Proof of Demise: Loken"]] = LQ["Proof of Demise: Loken"]:gsub(L["Proof of Demise: "], ""),
+							[LQ["Proof of Demise: Mal'Ganis"]] = LQ["Proof of Demise: Mal'Ganis"]:gsub(L["Proof of Demise: "], ""),
+							[LQ["Proof of Demise: Sjonnir The Ironshaper"]] = LQ["Proof of Demise: Sjonnir The Ironshaper"]:gsub(L["Proof of Demise: "], ""),
+							[LQ["Proof of Demise: The Prophet Tharon'ja"]] = LQ["Proof of Demise: The Prophet Tharon'ja"]:gsub(L["Proof of Demise: "], ""),
+						},
+					},
+				},
+
+			},	--end Heroic Wrap
+			nonHeroicWrap = { name = L["Instances"], type = "group", order = 2,
+				args = {
+					nonH = { name = L["Instances"], type = "multiselect", order = 1, width = "full",
+						values = {
+			[LQ["Timear Foresees Centrifuge Constructs in your Future!"]] = LQ["Timear Foresees Centrifuge Constructs in your Future!"]:match(L["Timear Foresees (.+) in your Future!"]),
+			[LQ["Timear Foresees Infinite Agents in your Future!"]] = LQ["Timear Foresees Infinite Agents in your Future!"]:match(L["Timear Foresees (.+) in your Future!"]),
+			[LQ["Timear Foresees Titanium Vanguards in your Future!"]] = LQ["Timear Foresees Titanium Vanguards in your Future!"]:match(L["Timear Foresees (.+) in your Future!"]),
+			[LQ["Timear Foresees Ymirjar Berserkers in your Future!"]] = LQ["Timear Foresees Ymirjar Berserkers in your Future!"]:match(L["Timear Foresees (.+) in your Future!"]),
+						},
+					},
+					option = { name = L["Faction Token"], type = "select", order = 2, get = "FactionTokenGet", set = "FactionTokenSet",
+						values = { (GetItemInfo(43950)) or "Kirin Tor", (GetItemInfo(44711)) or "Argent Crusade", 
+								(GetItemInfo(44713)) or "Ebon Blade", (GetItemInfo(44710)) or "Wyrmrest", L["None"]},
+					},
+				},
+			},
+		},
+	}
+	return t
+end
+
+function module:FactionTokenGet(info)
+	return db.profile.qOptions[LQ["Timear Foresees Centrifuge Constructs in your Future!"]]
+end
+
+function module:FactionTokenSet(info, val)
+	db.profile.qOptions[LQ["Timear Foresees Centrifuge Constructs in your Future!"]] = val
+	db.profile.qOptions[LQ["Timear Foresees Infinite Agents in your Future!"]] = val
+	db.profile.qOptions[LQ["Timear Foresees Titanium Vanguards in your Future!"]] = val
+	db.profile.qOptions[LQ["Timear Foresees Ymirjar Berserkers in your Future!"]] = val
+end
 
 --Included for sake of Completeness for single edged quests.
 --function module:GetQuestEnabled(info)

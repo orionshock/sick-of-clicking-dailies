@@ -62,13 +62,13 @@ do
 	profile[LQ["Your Continued Support"]] = false
 
 	--Cooking
-	profile.qOptions[LQ["Super Hot Stew"]] = 3
-	profile.qOptions[LQ["Soup for the Soul"]] = 3
-	profile.qOptions[LQ["Revenge is Tasty"]] = 3
-	profile.qOptions[LQ["Manalicious"]] = 3
+	profile.qOptions[LQ["Super Hot Stew"]] = 5
+	profile.qOptions[LQ["Soup for the Soul"]] = 5
+	profile.qOptions[LQ["Revenge is Tasty"]] = 5
+	profile.qOptions[LQ["Manalicious"]] = 5
 	--SSO-Misc
-	profile.qOptions[LQ["Blood for Blood"]] = 3
-	profile.qOptions[LQ["Ata'mal Armaments"]] = 3
+	profile.qOptions[LQ["Blood for Blood"]] = 5
+	profile.qOptions[LQ["Ata'mal Armaments"]] = 5
 end
 
 function module:OnInitialize()
@@ -311,12 +311,12 @@ function module:GenerateSSOOptions()
 			},
 			b4bQo = {
 				name = LQ["Blood for Blood"], type = "select", order = 10, 
-				values = { (GetItemInfo(30809)) or "Aldor Mark", (GetItemInfo(30810)) or "Scryer Mark", L["None"] },
+				values = { (GetItemInfo(30809)) or "Aldor Mark", (GetItemInfo(30810)) or "Scryer Mark", nil, nil, L["None"] },
 				get = "GetQuestOption", set = "SetQuestOption",
 			},
 			aaQo = {
 				name = LQ["Ata'mal Armaments"], type = "select", order = 11,
-				values = { (GetItemInfo(34538)) or "Melee Oil" , (GetItemInfo(34539)) or "Caster Oil", L["None"] },
+				values = { (GetItemInfo(34538)) or "Melee Oil" , (GetItemInfo(34539)) or "Caster Oil", nil, nil, L["None"] },
 				get = "GetQuestOption", set = "SetQuestOption",
 			},
 		},
