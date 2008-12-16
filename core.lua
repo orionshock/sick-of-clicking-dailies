@@ -258,24 +258,38 @@ function addon:QUEST_PROGRESS()
     end
 end
 
-function addon:QUEST_COMPLETE()
-	nextQuestFlag = false
-	if IsShiftKeyDown() then return end
-	local npc = addon.CheckNPC()
-	local quest = addon.TitleCheck(npc)
-	if npc and quest then
-		local opt = qOptions(quest)
-		if (opt and (opt == 5)) then
-			return
-		elseif opt and (opt >= 1 and opt <= 4 ) then
-			GetQuestReward( opt )
-			self:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", quest, npc, opt)
+do
+	local stopFlag, s_title, s_npc = false
+	function addon:QUEST_COMPLETE()
+		stopFlag = false
+		nextQuestFlag = false
+		if IsShiftKeyDown() then return end
+		local npc = addon.CheckNPC()
+		local quest = addon.TitleCheck(npc)
+		if npc and quest then
+			local opt = qOptions(quest)
+			if (opt and (opt == 5)) then
+				stopFlag = true
+				s_title, s_npc = quest, npc
+				return
+			elseif opt and (opt >= 1 and opt <= 4 ) then
+				stopFlag = false
+				GetQuestReward( opt )
+				self:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", quest, npc, opt)
+				return 
+			end
+			GetQuestReward(0)
+			self:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", quest, npc)
 			return 
+	    end
+	end
+	hooksecurefunc("GetQuestReward", function(opt)
+		if stopFlag then
+			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", s_title, s_npc, opt)
+			stopFlag = false
 		end
-		GetQuestReward(0)
-		self:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", quest, npc)
-		return 
-    end
+	end)
+
 end
 
 function addon:PLAYER_TARGET_CHANGED()
