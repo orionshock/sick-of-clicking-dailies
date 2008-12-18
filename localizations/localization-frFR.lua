@@ -28,7 +28,6 @@ if L then
 	L["Classic WoW"] = "WoW Classique"
 	L["Wintersaber Trainers"] = "Éleveur de sabres-d'hiver"
 
-
 	--BC Section
 	L["Burning Crusade"] = "Burning Crusade"
 		--Instances		Might include instance soft names here, but that would break some automagic stuff
