@@ -247,29 +247,29 @@ if LK then
 	LK["Proof of Demise: Sjonnir The Ironshaper"] = "Preuve de la mort de Sjonnir le Sculptefer"
 	LK["Proof of Demise: The Prophet Tharon'ja"] = "Preuve de la mort du prophète Theron'ja"
 		--Non Heroics
-	LK["Timear Foresees Centrifuge Constructs in your Future!"] = "Timear prédit des assemblages centrifuges dans votre avenir !"
-	LK["Timear Foresees Infinite Agents in your Future!"] = "Timear prédit des agents infinis dans votre avenir !"
-	LK["Timear Foresees Titanium Vanguards in your Future!"] = "Timear prédit des avant-gardes en titane dans votre avenir !"
-	LK["Timear Foresees Ymirjar Berserkers in your Future!"] = "Timear prédit des berserkers ymirjar dans votre avenir !"
+	LK["Timear Foresees Centrifuge Constructs in your Future!"] = "Timear prédit des assemblages centrifuges dans votre avenir !"
+	LK["Timear Foresees Infinite Agents in your Future!"] = "Timear prédit des agents infinis dans votre avenir !"
+	LK["Timear Foresees Titanium Vanguards in your Future!"] = "Timear prédit des avant-gardes en titane dans votre avenir !"
+	LK["Timear Foresees Ymirjar Berserkers in your Future!"] = "Timear prédit des berserkers ymirjar dans votre avenir !"
 
 	--Professions
 		--Cooking
 	LK["Cheese for Glowergold"] = "Du fromage pour Froncelor"
 	LK["Convention at the Legerdemain"] = "Convention à l'Abracadabar"
 	LK["Infused Mushroom Meatloaf"] = "Pain de viande aux champignons infusés"
-	LK["Mustard Dogs!"] = "Hot-dogs à la moutarde !"
+	LK["Mustard Dogs!"] = "Hot-dogs à la moutarde !"
 	LK["Sewer Stew"] = "Le ragoût des égouts"
 		--Jewlcrafting
-	LK["Shipment: Blood Jade Amulet"] = "Livraison : Amulette en jade de sang"
-	LK["Shipment: Bright Armor Relic"] = "Livraison : Relique de l'armure éclatante"
-	LK["Shipment: Glowing Ivory Figurine"] = "Livraison : Figurine luminescente en ivoire"
-	LK["Shipment: Intricate Bone Figurine"] = "Livraison : Figurine complexe en os"
-	LK["Shipment: Shifting Sun Curio"] = "Livraison : Bibelot du soleil changeant"
-	LK["Shipment: Wicked Sun Brooch"] = "Livraison : Broche du soleil pernicieux"
+	LK["Shipment: Blood Jade Amulet"] = "Livraison : Amulette en jade de sang"
+	LK["Shipment: Bright Armor Relic"] = "Livraison : Relique de l'armure éclatante"
+	LK["Shipment: Glowing Ivory Figurine"] = "Livraison : Figurine luminescente en ivoire"
+	LK["Shipment: Intricate Bone Figurine"] = "Livraison : Figurine complexe en os"
+	LK["Shipment: Shifting Sun Curio"] = "Livraison : Bibelot du soleil changeant"
+	LK["Shipment: Wicked Sun Brooch"] = "Livraison : Broche du soleil pernicieux"
 
 	--Factions
 		--The Wyrmrest Accord
-	LK["Aces High!"] = "Un as dans notre jeu !"
+	LK["Aces High!"] = "Un as dans notre jeu !"
 	LK["Drake Hunt"] = "La chasse au drake"
 	LK["Defending Wyrmrest Temple"] = "La défense du temple du Repos du ver"
 
@@ -306,25 +306,25 @@ if LK then
 		--Argent Crusade
 	LK["The Alchemist's Apprentice"] = "L'apprenti alchimiste"
 	LK["Troll Patrol"] = "Patrouille anti-trolls"
-	LK["Troll Patrol: Can You Dig It?"] = "Patrouille anti-trolls : et que ça creuse !"
-	LK["Troll Patrol: Couldn't Care Less"] = "Patrouille anti-trolls : je m'en fiche totalement !"
-	LK["Troll Patrol: Creature Comforts"] = "Patrouille anti-trolls : une bonne flambée"
-	LK["Troll Patrol: Done to Death"] = "Patrouille anti-trolls : morts incinérés"
-	LK["Troll Patrol: High Standards"] = "Patrouille anti-trolls : hissez les étendards !"
-	LK["Troll Patrol: Intestinal Fortitude"] = "Patrouille anti-trolls : un peu de courage !"
-	LK["Troll Patrol: Something for the Pain"] = "Patrouille anti-trolls : un remède contre la douleur"
-	LK["Troll Patrol: The Alchemist's Apprentice"] = "Patrouille anti-trolls : l'apprenti alchimiste"
-	LK["Troll Patrol: Throwing Down"] = "Patrouille anti-trolls : attention en dessous !"
-	LK["Troll Patrol: Whatdya Want, a Medal?"] = "Patrouille anti-trolls : vous voulez quoi ? Une médaille ?"
-	LK["Congratulations!"] = "Félicitations !"
+	LK["Troll Patrol: Can You Dig It?"] = "Patrouille anti-trolls : et que ça creuse !"
+	LK["Troll Patrol: Couldn't Care Less"] = "Patrouille anti-trolls : je m'en fiche totalement !"
+	LK["Troll Patrol: Creature Comforts"] = "Patrouille anti-trolls : une bonne flambée"
+	LK["Troll Patrol: Done to Death"] = "Patrouille anti-trolls : morts incinérés"
+	LK["Troll Patrol: High Standards"] = "Patrouille anti-trolls : hissez les étendards !"
+	LK["Troll Patrol: Intestinal Fortitude"] = "Patrouille anti-trolls : un peu de courage !"
+	LK["Troll Patrol: Something for the Pain"] = "Patrouille anti-trolls : un remède contre la douleur"
+	LK["Troll Patrol: The Alchemist's Apprentice"] = "Patrouille anti-trolls : l'apprenti alchimiste"
+	LK["Troll Patrol: Throwing Down"] = "Patrouille anti-trolls : attention en dessous !"
+	LK["Troll Patrol: Whatdya Want, a Medal?"] = "Patrouille anti-trolls : vous voulez quoi ? Une médaille ?"
+	LK["Congratulations!"] = "Félicitations !"
 
 		--Knights of the Ebon Blade
 	LK["Intelligence Gathering"] = "Trouver des informations"
 	LK["Leave Our Mark"] = "Laisser notre marque"
 	LK["No Fly Zone"] = "Zone d'exclusion aérienne"
-	LK["From Their Corpses, Rise!"] = "Réanimez leurs cadavres !"
-	LK["Shoot 'Em Up"] = "Descendez-les tous !"
-	LK["Vile Like Fire!"] = "Descendez-les tous !"
+	LK["From Their Corpses, Rise!"] = "Réanimez leurs cadavres !"
+	LK["Shoot 'Em Up"] = "Descendez-les tous !"
+	LK["Vile Like Fire!"] = "Vil aime feu !"
 
 		--The Kalu'ak
 	LK["Planning for the Future"] = "Préparer l'avenir"
@@ -345,19 +345,19 @@ if LK then
 	LK["Not a Bug"] = "Il n'est pas nuisible"	--Netural
 	LK["Retest Now"] = "Testez-le à nouveau"	--Netural
 	LK["Slaves to Saronite"] = "Esclaves de la saronite"	--Netural
-	LK["That's Abominable!"] = "C'est abominable !"	--Netural
-	LK["Static Shock Troops: the Bombardment"] = "Troupe de choc statique : le Bombardement"	--Alliance
-	LK["Total Ohmage: The Valley of Lost Hope!"] = "Ohmage total : la vallée de l'Espoir perdu !"	--Horde
+	LK["That's Abominable!"] = "C'est abominable !"	--Netural
+	LK["Static Shock Troops: the Bombardment"] = "Troupe de choc statique : le Bombardement"	--Alliance
+	LK["Total Ohmage: The Valley of Lost Hope!"] = "Ohmage total : la vallée de l'Espoir perdu !"	--Horde
 	LK["The Solution Solution"] = "La solution pour la solution"	--Alliance
 	LK["Volatility"] = "Volatilité"	--Horde
 	LK["Capture More Dispatches"] = "Récupérez plus de dépêches"	--Alliance
 	LK["Keeping the Alliance Blind"] = "Que l'Alliance reste aveugle"	--Horde
-	LK["Putting the Hertz: The Valley of Lost Hope"] = "Objectif Killo : la vallée de l'Espoir perdu"	--Alliance
-	LK["Riding the Wavelength: The Bombardment"] = "Profiter de l'onde : le Bombardement"	--Horde
+	LK["Putting the Hertz: The Valley of Lost Hope"] = "Objectif Killo : la vallée de l'Espoir perdu"	--Alliance
+	LK["Riding the Wavelength: The Bombardment"] = "Profiter de l'onde : le Bombardement"	--Horde
 
 		--Grizzly Hills
 	LK["Life or Death"] = "La vie ou la mort"	--Alliance
-	LK["Overwhelmed!"] = "Débordée !"	--Horde
+	LK["Overwhelmed!"] = "Débordée !"	--Horde
 	LK["Making Repairs"] = "Procéder aux réparations"	--Horde
 	LK["Pieces Parts"] = "Pour quelques bouts de ferraille de plus…"	--Alliance
 
@@ -379,19 +379,19 @@ if LK then
 	LK["Healing with Roses"] = "Guérison par les plantes"
 	LK["Jinxing the Walls"] = "Ensorceler les murs"
 	LK["No Mercy for the Merciless"] = "Pas de pitié pour les sans pitié"
-	LK["Slay them all"] = "Tuez-les tous !"
+	LK["Slay them all"] = "Tuez-les tous !"
 	LK["Stop the Siege"] = "L'arrêt du siège"
 	LK["Victory in Wintergrasp"] = "Victoire à Joug-d'hiver"
 	LK["Warding the Walls"] = "Surveiller les murs"
 	LK["Warding the Warriors"] = "Protéger les guerriers"
 
 		--BattleGround
-	LK["Call to Arms: Strand of the Ancients"] = "Appel aux armes : rivage des Anciens"
+	LK["Call to Arms: Strand of the Ancients"] = "Appel aux armes : rivage des Anciens"
 
 		--IceCrown
-	LK["Make Them Pay!"] = "Faites-les payer !"	--Horde
+	LK["Make Them Pay!"] = "Faites-les payer !"	--Horde
 	LK["Shred the Alliance"] = "Déchiquetez l'Alliance"	--Horde
-	LK["No Mercy!"] = "Pas de pitié !"	--Allaince
+	LK["No Mercy!"] = "Pas de pitié !"	--Allaince
 	LK["Shredder Repair"] = "Réparation de déchiqueteurs"	--Alliance
 
 		--Grizzly Hills
@@ -400,7 +400,7 @@ if LK then
 	LK["Seared Scourge"] = "Fléau flambé"	--Netural
 	LK["Smoke 'Em Out"] = "Enfumez-les"	--Netural
 
-	LK["Down With Captain Zorna!"] = "Mort au capitaine Zorna !"	--Alliance
+	LK["Down With Captain Zorna!"] = "Mort au capitaine Zorna !"	--Alliance
 	LK["Kick 'Em While They're Down"] = "Frappez-les tant qu'ils sont à terre"	--Alliance
 	LK["Blackriver Skirmish"] = "Escarmouches sur la rivière Noire"	--Alliance
 
