@@ -141,6 +141,7 @@ module.npcList = table.concat({
 	}, ":")
 
 function module:GetOptionsTable()
+	local cooking_values = { (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate Of Meat", L["None"]}
 	local options = {
 		name = L["Burning Crusade"],
 		type = "group",

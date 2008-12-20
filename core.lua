@@ -174,7 +174,7 @@ function addon:ToggleModule(info, value)
 		self.db.profile.modules[option] = false
 	end
 end
-	
+
 
 --
 --	Main Addon Functions
@@ -191,7 +191,7 @@ function addon:OnInitialize()
 
 	for name, module in self:IterateModules() do
 		module:SetEnabledState(self.db.profile.modules[name])
-		
+
 	end
 end
 
@@ -212,11 +212,13 @@ end
 --
 
 local npcBad, nextQuestFlag, questIndex = nil, false, 0
+local stopFlag, s_title, s_npc = false
 
 function addon:GOSSIP_SHOW()
 	local npc = addon.CheckNPC()
+	local stopFlag, s_title, s_npc = false, nil, nil
 	if (IsShiftKeyDown())then return end
-	if (not self.db.profile.questLoop) and npcBad then 
+	if (not self.db.profile.questLoop) and npcBad then
 		return --D("GossipShow npc Bad Exit")
 	end
 
@@ -247,8 +249,8 @@ function addon:QUEST_PROGRESS()
 	if npc and quest then
 		if not IsQuestCompletable() then
 			nextQuestFlag = true
-			if self.db.profile.questLoop then 
-				return DeclineQuest() 
+			if self.db.profile.questLoop then
+				return DeclineQuest()
 			end
 			return
 		else
@@ -259,7 +261,6 @@ function addon:QUEST_PROGRESS()
 end
 
 do
-	local stopFlag, s_title, s_npc = false
 	function addon:QUEST_COMPLETE()
 		stopFlag = false
 		nextQuestFlag = false
@@ -276,11 +277,11 @@ do
 				stopFlag = false
 				GetQuestReward( opt )
 				self:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", quest, npc, opt)
-				return 
+				return
 			end
 			GetQuestReward(0)
 			self:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", quest, npc)
-			return 
+			return
 	    end
 	end
 	hooksecurefunc("GetQuestReward", function(opt)
@@ -301,6 +302,7 @@ function addon.CheckNPC()
 	if not npcID then
 		npcID = GossipFrameNpcNameText:GetText()
 	end
+	if not npcID then return end
 	for i,v in pairs(questNPCs) do
 		if v:find(npcID) then
 			return npcID
