@@ -290,7 +290,7 @@ if LK then
 	LK["Kartak's Rampage"] = "Le massacre de Kartak"
 	LK["Rejek: First Blood"] = "Rejek : le premier sang"
 	LK["Secret Strength of the Frenzyheart"] = "La puissance secrète des Frénécœurs"
-	LK["Strength of the Tempest"] = "La puissance secrète des Frénécœurs"
+	LK["Strength of the Tempest"] = "La puissance de la tempête"
 	LK["The Heartblood's Strength"] = "La force du sang du coeur"
 	LK["Tools of War"] = "De drôle d'outils de guerre"
 
