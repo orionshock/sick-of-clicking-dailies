@@ -288,7 +288,7 @@ if LK then
 	LK["Chicken Party!"] = "Des poulets et des varleus"
 	LK["Frenzyheart Champion"] = "Le champion frénécœur"
 	LK["Kartak's Rampage"] = "Le massacre de Kartak"
-	LK["Rejek: First Blood"] = "Rejek : le premier sang"
+	LK["Rejek: First Blood"] = "Rejek : le premier sang"
 	LK["Secret Strength of the Frenzyheart"] = "La puissance secrète des Frénécœurs"
 	LK["Strength of the Tempest"] = "La puissance de la tempête"
 	LK["The Heartblood's Strength"] = "La force du sang du coeur"
