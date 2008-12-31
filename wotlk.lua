@@ -66,17 +66,17 @@ end
 function module:OnEnable()
 	--D("OnEnable")
 	AddonParent:RegisterQuests("LK", db.profile, self.npcList, db.profile.qOptions)
-	SetItemRef("item:43950")
-	SetItemRef("item:43950")
+	SetItemRef("item:43950", "item:43950")
+	SetItemRef("item:43950", "item:43950")
 	
-	SetItemRef("item:44711")
-	SetItemRef("item:44711")
+	SetItemRef("item:44711", "item:44711")
+	SetItemRef("item:44711", "item:44711")
 
-	SetItemRef("item:44713")
-	SetItemRef("item:44713")
+	SetItemRef("item:44713", "item:44713")
+	SetItemRef("item:44713", "item:44713")
 
-	SetItemRef("item:44710")
-	SetItemRef("item:44710")
+	SetItemRef("item:44710", "item:44710")
+	SetItemRef("item:44710", "item:44710")
 end
 
 function module:OnDisable()
