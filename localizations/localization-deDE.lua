@@ -115,7 +115,7 @@ if BC then
 	BC["Escape from Skettis"] = "Flucht aus Skettis"
 
 --Blade's Edge Mountains
-	BC["Wrangle More Aether Rays!"] = "Bändigt noch mehr Netherrochen!"
+	BC["Wrangle More Aether Rays!"] = "Bändigt noch mehr Ätherrochen!"
 	BC["Bomb Them Again!"] = "Und wieder ein Bombenangriff!"
 	BC["The Relic's Emanation"] = "Die Strahlung des Relikts"
 	BC["Banish More Demons"] = "Bannt mehr Dämonen"
@@ -179,7 +179,7 @@ if BC then
 --Professions - Cooking
 	BC["Super Hot Stew"] = "Superheißes Ragout"
 	BC["Soup for the Soul"] = "Suppe für die Seele"
-	BC["Revenge is Tasty"] = "Rache ist schmackhaft"
+	BC["Revenge is Tasty"] = "Rache ist süß"
 	BC["Manalicious"] = "Manaziös"
 
 --Professions - Fishing
@@ -266,11 +266,11 @@ if LK then
 	LK["Sewer Stew"] = "Kanaleintopf"
 		--Jewlcrafting
 	LK["Shipment: Blood Jade Amulet"] = "Lieferung: Blutrotes Nephritamulett"
-	LK["Shipment: Bright Armor Relic"] = "Lieferung: Helles Rüstungsrelikt"
-	LK["Shipment: Glowing Ivory Figurine"] = "Lieferung: Leuchtende Elfenbeinfigur"
-	LK["Shipment: Intricate Bone Figurine"] = "Lieferung: Aufwändige Knochenfigur"
-	LK["Shipment: Shifting Sun Curio"] = "Lieferung: Veränderliche Sonnenkuriosität"
-	LK["Shipment: Wicked Sun Brooch"] = "Lieferung: Tückische Sonnenbrosche"
+	LK["Shipment: Bright Armor Relic"] = "Lieferung: helles Rüstungsrelikt"
+	LK["Shipment: Glowing Ivory Figurine"] = "Lieferung: leuchtende Elfenbeinfigur"
+	LK["Shipment: Intricate Bone Figurine"] = "Lieferung: aufwändige Knochenfigur"
+	LK["Shipment: Shifting Sun Curio"] = "Lieferung: veränderliche Sonnenkuriosität"
+	LK["Shipment: Wicked Sun Brooch"] = "Lieferung: tückische Sonnenbrosche"
 
 	--Factions
 		--The Wyrmrest Accord
@@ -357,7 +357,7 @@ if LK then
 	LK["Blood of the Chosen"] = "Blut der Auserwählten"	--Neutral
 	LK["Drag and Drop"] = "Ziehen und ablegen"	--Neutral
 	LK["Neutralizing the Plague"] = "Die Seuche neutralisieren"	--Neutral
-	LK["No Rest For The Wicked"] = "Die Boshaften haben nicht Frieden"	--Neutral -- __________NEEDS_CHECK__________
+	LK["No Rest For The Wicked"] = "Keine Ruhe für die Boshaften"	--Neutral
 	LK["Not a Bug"] = "Keine Wanze"	--Neutral
 	LK["Retest Now"] = "Jetzt neu testen"	--Neutral
 	LK["Slaves to Saronite"] = "Vom Saronit abhängig"	--Neutral
@@ -366,8 +366,8 @@ if LK then
 	LK["Total Ohmage: The Valley of Lost Hope!"] = "Totale Vernichtung: Das Tal der Verlorenen Hoffnung!"	--Horde
 	LK["The Solution Solution"] = "Die Lösungslösung"	--Alliance
 	LK["Volatility"] = "Verflüchtigung"	--Horde
-	LK["Capture More Dispatches"] = "Capture More Dispatches TODO"	--Alliance -- __________TODO__________
-	LK["Keeping the Alliance Blind"] = "Keeping the Alliance Blind TODO"	--Horde -- __________TODO__________
+	LK["Capture More Dispatches"] = "Mehr Sendungen abfangen"	--Alliance
+	LK["Keeping the Alliance Blind"] = "Der Allianz die Augen zuhalten"	--Horde
 	LK["Putting the Hertz: The Valley of Lost Hope"] = "Mission mit Hertz: Das Tal der Verlorenen Hoffnung"	--Alliance
 	LK["Riding the Wavelength: The Bombardment"] = "Auf derselben Wellenlänge: Das Bombardement"	--Horde
 
