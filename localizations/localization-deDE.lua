@@ -53,6 +53,7 @@ if L then
 	L["Professions"] = TRADE_SKILLS
 	L["Cooking"] = "Kochkunst"
 	L["Fishing"] = "Angeln"
+	L["Jewelcrafting"] = "Juwelenschleifen"
 
 	--LichKing
 	L["LK"] = "Lich King"
@@ -73,8 +74,12 @@ if L then
 	L["Grizzly Hills"] = "Grizzlyhügel"
 	L["Wintergrasp"] = "Tausendwinter"
 	L["Shared Quests"] = "Gemeinsame Quests"
-
-	L["Troll Patrol: "] = "Trollpatrouille: "	--There is a space at the end, this is used to clip ugly quests.
+	L["Icecrown Netural Quests"] = "Eiskrone neutrale Quests"
+	L["Troll Patrol: "] = "Trollpatrouille: " --There is a space at the end, this is used to clip ugly quests.
+	L["Shipment: "] = "Lieferung: " --There is also a space at the end of here..
+	L["Proof of Demise: "] = "Todesbeweis: "
+	L["Timear Foresees (.+) in your Future!"] = "Timear prophezeit (.+) in Eurer Zukunft!" --regex leave the (.+) in the middle there.
+	L["Faction Token"] = "Belobigungsabzeichen"
 
 
 end
@@ -198,7 +203,7 @@ if BC then
 	BC["Wanted: A Black Stalker Egg"] = "Gesucht: Ei der Schattenmutter"
 	BC["Wanted: A Warp Splinter Clipping"] = "Gesucht: Warpzweigsplitter"
 	BC["Wanted: Aeonus's Hourglass"] = "Gesucht: Aeonus' Stundenglas"
-	BC["Wanted: Bladefist's Seal"] = "Messerfausts Siegel"
+	BC["Wanted: Bladefist's Seal"] = "Gesucht: Messerfausts Siegel"
 	BC["Wanted: Keli'dan's Feathered Stave"] = "Gesucht: Keli'dans gefiederter Stab"
 	BC["Wanted: Murmur's Whisper"] = "Gesucht: Murmurs Flüstern"
 	BC["Wanted: Nazan's Riding Crop"] = "Gesucht: Nazans Reitgerte"
@@ -219,8 +224,8 @@ if BC then
 	--Auchindoun
 	BC["Spirits of Auchindoun"] = "Geister von Auchindoun"
 	--Nagrand / Halla
-	BC["Enemies, Old and New"] = "Feinde - alte und neue"
-	BC["In Defense of Halaa"] = "Zur Verteidigung von Halaa"
+	BC["Enemies, Old and New"] = "Feinde - alte und neue"	--Horde
+	BC["In Defense of Halaa"] = "Zur Verteidigung von Halaa" --Alliance
 	----Battlegrounds
 	BC["Call to Arms: Eye of the Storm"] = "Ruf zu den Waffen: Auge des Sturms"
 end
@@ -250,7 +255,7 @@ if LK then
 	LK["Timear Foresees Centrifuge Constructs in your Future!"] = "Timear prophezeit Zentrifugenkonstrukte in Eurer Zukunft!"
 	LK["Timear Foresees Infinite Agents in your Future!"] = "Timear prophezeit Ewige Agenten in Eurer Zukunft!"
 	LK["Timear Foresees Titanium Vanguards in your Future!"] = "Timear prophezeit Titanvorposten in Eurer Zukunft!"
-	LK["Timear Foresees Ymirjar Berserkers in your Future!"] = "Timear prophezeit Berserker von Ymirjar in Eurer Zunkunft!"
+	LK["Timear Foresees Ymirjar Berserkers in your Future!"] = "Timear prophezeit Berserker von Ymirjar in Eurer Zukunft!"
 
 	--Professions
 		--Cooking
@@ -297,11 +302,22 @@ if LK then
 
 		--The Sons of Hodir
 	LK["Blowing Hodir's Horn"] = "Hodirs Horn blasen"
+	LK["Hodir's Horn"] = "Hodirs Horn"	--object Name
+
 	LK["Feeding Arngrim"] = "Arngrim füttern"
+	LK["Arngrim the Insatiable"] = "Arngrimm der Unersättliche"	--object Name
+
 	LK["Hot and Cold"] = "Heiß und kalt"
+	LK["Fjorn's Anvil"] = "Fjorns Amboss"	--object name
+
+
 	LK["Polishing the Helm"] = "Den Helm polieren"
+	LK["Hodir's Helm"] = "Hodirs Helm"	--object Name
+
 	LK["Spy Hunter"] = "Jagd auf Spione"
+
 	LK["Thrusting Hodir's Spear"] = "Hodirs Speer werfen"
+	LK["Hodir's Spear"] = "Hodirs Speer"	--object Name
 
 		--Argent Crusade
 	LK["The Alchemist's Apprentice"] = "Der Lehrling des Alchemisten"
