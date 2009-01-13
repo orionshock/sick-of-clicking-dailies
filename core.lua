@@ -270,7 +270,6 @@ do
 		if IsShiftKeyDown() then return end
 		local npc = addon.CheckNPC()
 		local quest = addon.TitleCheck(npc)
-		D(event, npc, quest)
 		if npc and quest then
 			local opt = qOptions(quest)
 			if (opt and (opt == 5)) then
