@@ -214,7 +214,7 @@ end
 local npcBad, nextQuestFlag, questIndex = nil, false, 0
 local stopFlag, s_title, s_npc = false
 
-function addon:GOSSIP_SHOW()
+function addon:GOSSIP_SHOW(event)
 	local npc = addon.CheckNPC()
 	local stopFlag, s_title, s_npc = false, nil, nil
 	if (IsShiftKeyDown())then return end
@@ -223,6 +223,7 @@ function addon:GOSSIP_SHOW()
 	end
 
 	local sel, quest, status = addon.OpeningCheckQuest(npc)
+--	D( event ,npc, quest, status)
 	if npc and quest then
 		if status == "Available" then
 			return SelectGossipAvailableQuest(sel)
@@ -232,20 +233,22 @@ function addon:GOSSIP_SHOW()
 	end
 end
 
-function addon:QUEST_DETAIL()
+function addon:QUEST_DETAIL(event)
 	if IsShiftKeyDown() then return end
 	local npc = addon.CheckNPC()
 	local quest = addon.TitleCheck(npc)
-    if npc and quest then
+--	D(event, npc, quest)
+	if npc and quest then
 		return AcceptQuest()
-    end
+	end
 end
 
 
-function addon:QUEST_PROGRESS()
+function addon:QUEST_PROGRESS(event)
     if IsShiftKeyDown() then return end
 	local npc = addon.CheckNPC()
 	local quest = addon.TitleCheck(npc)
+--	D(event, npc, quest)
 	if npc and quest then
 		if not IsQuestCompletable() then
 			nextQuestFlag = true
@@ -261,12 +264,13 @@ function addon:QUEST_PROGRESS()
 end
 
 do
-	function addon:QUEST_COMPLETE()
+	function addon:QUEST_COMPLETE(event)
 		stopFlag = false
 		nextQuestFlag = false
 		if IsShiftKeyDown() then return end
 		local npc = addon.CheckNPC()
 		local quest = addon.TitleCheck(npc)
+		D(event, npc, quest)
 		if npc and quest then
 			local opt = qOptions(quest)
 			if (opt and (opt == 5)) then
@@ -293,18 +297,23 @@ do
 
 end
 
-function addon:PLAYER_TARGET_CHANGED()
+function addon:PLAYER_TARGET_CHANGED(event)
 	npcBad, nextQuestFlag, questIndex = false, false, 0
 end
 
 function addon.CheckNPC()
 	local npcID = UnitGUID("target") and tonumber( strsub( UnitGUID("target"), -12, -7), 16)
+--	if npcID then
+--		D("CheckNPC: type = GUID")
+--	end
 	if not npcID then
-		npcID = GossipFrameNpcNameText:GetText()
+		npcID = GossipFrameNpcNameText:GetText() or QuestFrameNpcNameText:GetText()
+		--D("CheckNPC: type =", ( GossipFrameNpcNameText:GetText() and "Gossip Frame") or ( QuestFrameNpcNameText:GetText() and "QuestFrame" ) )
 	end
 	if not npcID then return end
 	for i,v in pairs(questNPCs) do
 		if v:find(npcID) then
+			--D("CheckNPC - found", npcID)
 			return npcID
 		else
 			nextQuestFlag, questIndex = false, 0
@@ -340,6 +349,7 @@ local function QuestItterateTurnIn(npc, ...)
 			for i = ((questIndex*3)-2) , numQuest  do
 				if qTable(select(i, ...)) then
 					questIndex = (i+2)/3
+					--D("Quest Found:", (select(i, ...)) )
 					return (i+2)/3 , select(i, ...)
 				end
 			end
@@ -349,6 +359,7 @@ local function QuestItterateTurnIn(npc, ...)
 	for i=1, numQuest , 3 do
 		if qTable(select(i, ...)) then
 			questIndex = (i+2)/3
+			--D("Quest Found:", (select(i, ...)) )
 			return (i+2)/3 , select(i, ...)
 		end
 	end
@@ -370,6 +381,7 @@ end
 function addon.TitleCheck(npc)
 	if not npc then return end
 	if qTable(GetTitleText()) then
+		--D("Title Check", GetTitleText())
 		return GetTitleText()
 	end
 end
