@@ -2,12 +2,16 @@
 ## Title: Sick of Clicking Dailys? v6
 ## Author: OrionShock
 ## Notes: AutoMagicly clicks though Daily Quests, and Turns them In.
-## Credits: Sinxia (deDE Translation), Cinedelle (frFR Translation)
+## Credits: Sinxia/kunda (deDE Translation), Cinedelle (frFR Translation), Crafty/Vyacheslav (ruRU Translation)
 ## Version: 6
 ## X-License: WTFPL
 ## X-Email: Orionshock@gmail.com
 ## SavedVariables: SOCD_SIX
 ## X-Embeds: Ace3
+## X-Curse-Packaged-Version: r146
+## X-Curse-Project-Name: SickOfClickingDailies
+## X-Curse-Project-ID: sick-of-clicking-dailies
+## X-Curse-Repository-ID: wow/sick-of-clicking-dailies/mainline
 
 ## X-Category: Quests & Leveling
 
@@ -18,7 +22,7 @@ embeds.xml
 localizations\localization-enUS.lua
 localizations\localization-deDE.lua
 localizations\localization-frFR.lua
-localizations\localization-zhCH.lua
+localizations\localization-ruRU.lua
 
 core.lua
 Classic.lua

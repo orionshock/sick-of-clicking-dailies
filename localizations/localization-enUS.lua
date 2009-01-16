@@ -67,6 +67,7 @@ if L then
 	L["Knights of the Ebon Blade"] = true
 	L["The Kalu'ak"] = true
 	L["The Storm Peaks"] = true
+	L["The Frostborn"] = true
 
 		--Misc Titles
 	L["Shared Faction Quests"] = true

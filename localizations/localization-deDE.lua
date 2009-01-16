@@ -67,6 +67,7 @@ if L then
 	L["Knights of the Ebon Blade"] = "Ritter der Schwarzen Klinge"
 	L["The Kalu'ak"] = "Die Kalu'ak"
 	L["The Storm Peaks"] = "Die Sturmgipfel"
+	L["The Frostborn"] = "Die Frosterben"
 
 		--Misc Titles
 	L["Shared Faction Quests"] = "Fraktionsübergreifende Quests"

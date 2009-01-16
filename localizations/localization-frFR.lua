@@ -1,4 +1,4 @@
-﻿--
+--
 --	General Localizations here
 --
 --	frFR Translation by Cinedelle
@@ -28,6 +28,7 @@ if L then
 	L["Classic WoW"] = "WoW Classique"
 	L["Wintersaber Trainers"] = "Éleveur de sabres-d'hiver"
 
+
 	--BC Section
 	L["Burning Crusade"] = "Burning Crusade"
 		--Instances		Might include instance soft names here, but that would break some automagic stuff
@@ -52,6 +53,7 @@ if L then
 	L["Professions"] = TRADE_SKILLS
 	L["Cooking"] = "Cuisine"
 	L["Fishing"] = "Pêche"
+	L["Jewelcrafting"] = "Joaillerie"
 	
 		--LichKing
 	L["LK"] = "Lich King"
@@ -65,6 +67,7 @@ if L then
 	L["Knights of the Ebon Blade"] = "Chevaliers de la Lame d'ébène"
 	L["The Kalu'ak"] = "Les Kalu'aks"
 	L["The Storm Peaks"] = "Les pics Foudroyés"
+	L["The Frostborn"] = "Les Givre-nés"
 
 		--Misc Titles
 	L["Shared Faction Quests"] = "Quêtes communes aux factions"
