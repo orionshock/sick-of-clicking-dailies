@@ -8,10 +8,6 @@
 ## X-Email: Orionshock@gmail.com
 ## SavedVariables: SOCD_SIX
 ## X-Embeds: Ace3
-## X-Curse-Packaged-Version: r146
-## X-Curse-Project-Name: SickOfClickingDailies
-## X-Curse-Project-ID: sick-of-clicking-dailies
-## X-Curse-Repository-ID: wow/sick-of-clicking-dailies/mainline
 
 ## X-Category: Quests & Leveling
 
