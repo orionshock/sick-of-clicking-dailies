@@ -306,7 +306,7 @@ function addon.CheckNPC()
 --		D("CheckNPC: type = GUID")
 --	end
 	if not npcID then
-		npcID = GossipFrameNpcNameText:GetText() or QuestFrameNpcNameText:GetText()
+		npcID = (GossipFrameNpcNameText:GetParent():IsVisible() and GossipFrameNpcNameText:GetText()) or (QuestFrameNpcNameText:GetParent():IsVisible() and QuestFrameNpcNameText:GetText())
 		--D("CheckNPC: type =", ( GossipFrameNpcNameText:GetText() and "Gossip Frame") or ( QuestFrameNpcNameText:GetText() and "QuestFrame" ) )
 	end
 	if not npcID then return end
