@@ -75,8 +75,12 @@ if L then
 	L["Grizzly Hills"] = "Les Grisonnes"
 	L["Wintergrasp"] = "Joug-d'hiver"
 	L["Shared Quests"] = "Quêtes communes"
-
+	L["Icecrown Netural Quests"] = "Quêtes de la Couronne de glace neutre"
 	L["Troll Patrol: "] = "Patrouille anti-trolls : "	--There is a space at the end, this is used to clip ugly quests.
+	L["Shipment: "] = "Livraison : "	--There is also a space at the end of here..
+	L["Proof of Demise: "] = "Preuve de la mort : "
+	L["Timear Foresees (.+) in your Future!"] = "Timear prédit (.+) dans votre avenir !"	--regex leave the (.+) in the middle there.
+	L["Faction Token"] = "Jeton de faction"
 	
 	
 end
@@ -100,7 +104,6 @@ if C then
 	C["Call to Arms: Alterac Valley"] = "Appel aux armes : vallée d'Alterac"
 end
 
-
 --
 --	TBC
 --	
@@ -111,6 +114,7 @@ if BC then
 --Skettis Dailies
 	BC["Fires Over Skettis"] = "Un déluge de feu sur Skettis"
 	BC["Escape from Skettis"] = "L'évasion de Skettis"
+	
 --Blade's Edge Mountains
 	BC["Wrangle More Aether Rays!"] = "Allez dompter d’autres raies de l’éther !"
 	BC["Bomb Them Again!"] = "Bombardez-les encore !"
@@ -299,11 +303,22 @@ if LK then
 
 		--The Sons of Hodir
 	LK["Blowing Hodir's Horn"] = "Souffler dans le cor de Hodir"
-	LK["Feeding Arngrim"] = "Feeding Arngrim"
+	LK["Hodir's Horn"] = "Cor de Hodir"	--object Name
+	
+	LK["Feeding Arngrim"] = "Caler la dent creuse d'Arngrim"
+	LK["Arngrim the Insatiable"] = "Arngrim l'Insatiable"	--object Name
+	
 	LK["Hot and Cold"] = "Chaud et froid"
+	LK["Fjorn's Anvil"] = "Enclume de Fjorn"	--object name
+	
+	
 	LK["Polishing the Helm"] = "Polir le heaume"
+	LK["Hodir's Helm"] = "Heaume de Hodir"	--object Name
+	
 	LK["Spy Hunter"] = "À la chasse aux espions"
+	
 	LK["Thrusting Hodir's Spear"] = "Planter la lance de Hodir"
+	LK["Hodir's Spear"] = "Lance de Hodir"	--object Name
 
 		--Argent Crusade
 	LK["The Alchemist's Apprentice"] = "L'apprenti alchimiste"
@@ -362,7 +377,11 @@ if LK then
 	LK["Overwhelmed!"] = "Débordée !"	--Horde
 	LK["Making Repairs"] = "Procéder aux réparations"	--Horde
 	LK["Pieces Parts"] = "Pour quelques bouts de ferraille de plus…"	--Alliance
-
+	LK["Keep Them at Bay"] = "Ra-baie-ssez l'ennemi"	--Netural
+	LK["Riding the Red Rocket"] = "À cheval sur la fusée…"	--Netural
+	LK["Seared Scourge"] = "Fléau flambé"	--Netural
+	LK["Smoke 'Em Out"] = "Enfumez-les"	--Netural
+	
 		--The Storm Peaks
 	LK["Back to the Pit"] = "Retour dans la fosse"
 	LK["Defending Your Title"] = "Défendre votre titre"
