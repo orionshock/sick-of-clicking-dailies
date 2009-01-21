@@ -271,7 +271,7 @@ if LK then
 	LK["Shipment: Glowing Ivory Figurine"] = true
 	LK["Shipment: Intricate Bone Figurine"] = true
 	LK["Shipment: Shifting Sun Curio"] = true
-	LK["Shipment: Wicked Sun Brooch"] = true
+	LK["Shipment: Wicked Sun Brooch "] = true
 
 	--Factions
 		--The Wyrmrest Accord
