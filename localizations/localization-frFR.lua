@@ -318,7 +318,7 @@ if LK then
 	LK["Spy Hunter"] = "À la chasse aux espions"
 	
 	LK["Thrusting Hodir's Spear"] = "Planter la lance de Hodir"
-	LK["Hodir's Spear"] = "Lance de Hodir"	--object Name
+	LK["Hodir's Spear"] = "Lance de Hodir "	--object Name
 
 		--Argent Crusade
 	LK["The Alchemist's Apprentice"] = "L'apprenti alchimiste"
