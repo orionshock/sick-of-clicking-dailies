@@ -306,7 +306,7 @@ if LK then
 	LK["Hodir's Horn"] = "Cor de Hodir"	--object Name
 	
 	LK["Feeding Arngrim"] = "Caler la dent creuse d'Arngrim"
-	LK["Arngrim the Insatiable"] = "Arngrim l'Insatiable"	--object Name
+	LK["Arngrim the Insatiable"] = "Arngrim l'Insatiable "	--object Name
 	
 	LK["Hot and Cold"] = "Chaud et froid"
 	LK["Fjorn's Anvil"] = "Enclume de Fjorn"	--object name
