@@ -271,7 +271,7 @@ if LK then
 	LK["Shipment: Glowing Ivory Figurine"] = "Livraison : Figurine luminescente en ivoire"
 	LK["Shipment: Intricate Bone Figurine"] = "Livraison : Figurine complexe en os"
 	LK["Shipment: Shifting Sun Curio"] = "Livraison : Bibelot du soleil changeant"
-	LK["Shipment: Wicked Sun Brooch"] = "Livraison : Broche du soleil pernicieux"
+	LK["Shipment: Wicked Sun Brooch "] = "Livraison : Broche du soleil pernicieux"
 
 	--Factions
 		--The Wyrmrest Accord
