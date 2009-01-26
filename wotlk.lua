@@ -46,6 +46,10 @@ module.defaults = {
 			--["*"] = 3,
 			--This section has to be manually set with the localized quest name and a default option of off
 			--not very many of these quests so it won't matter :D
+			[LQ["Timear Foresees Centrifuge Constructs in your Future!"]] = 5,
+			[LQ["Timear Foresees Infinite Agents in your Future!"]] = 5,
+			[LQ["Timear Foresees Titanium Vanguards in your Future!"]] = 5,
+			[LQ["Timear Foresees Ymirjar Berserkers in your Future!"]] = 5,
 		},
 	},
 }
