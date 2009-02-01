@@ -1,8 +1,9 @@
 --[[
-	Guild Craft - Locale file for enUS
+	Sick Of Clicking Dailies? - Locale file for enUS
 	Written By: @project-author@
-	Last Modified by @file-author@ on @file-date-iso@
-
+	
+	Please Visit: http://www.wowace.com/projects/sick-of-clicking-dailies/localization/
+	to contribute to localizations :)
 ]]--
 
 local debug = false
