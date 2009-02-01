@@ -15,14 +15,13 @@
 embeds.xml
 #@end-no-lib-strip@
 
-localizations\localization-enUS.lua
-localizations\localization-deDE.lua
-localizations\localization-frFR.lua
-localizations\localization-ruRU.lua
+localizations\localization.xml
 
 core.lua
 Classic.lua
 BC.lua
 wotlk.lua
 
-## namescanner.lua
+#@debug@
+namescanner.lua
+#@end-debug@

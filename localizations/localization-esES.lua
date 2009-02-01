@@ -1,8 +1,8 @@
 --[[
-	Sick Of Clicking Dailies? - Locale file for deDE
+	Sick Of Clicking Dailies? - Locale file for esES
 	Written By: @project-author@
 	
-	Please Visit: http://www.wowace.com/projects/sick-of-clicking-dailies/localization/deDE
+	Please Visit: http://www.wowace.com/projects/sick-of-clicking-dailies/localization/esES
 	to contribute to localizations :)
 ]]--
 
@@ -15,9 +15,10 @@
 --	General -- Used by all or most :)				  --
 ----------------------------------------------------------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_Core", "deDE", false)
+local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_Core", "esES", false)
 
 	if L then
+		print("SickofClickingDailies: esES / esMX Translation incomplete, addon may not function completely")
 --These are not importable to WoWAce/Curseforge Locale system, as these are pulled directly from the client.
 L["Battlegrounds"] = BATTLEFIELDS
 L["Netural"] = FACTION_STANDING_LABEL4
@@ -34,7 +35,7 @@ L["Cooking"] = (GetSpellInfo(2550))
 L["Fishing"] = (GetSpellInfo(7733))
 L["Jewelcrafting"] = (GetSpellInfo(25229))
 
---@localization(locale="deDE", format="lua_additive_table", same-key-is-true=true, namespace="Base_All", table-name="L")@
+--@localization(locale="esES", format="lua_additive_table", same-key-is-true=true, namespace="Base_All", table-name="L")@
 
 	end	
 
@@ -44,11 +45,11 @@ L["Jewelcrafting"] = (GetSpellInfo(25229))
 --	Classic, Populated by WoWAce-Curseforge Packager.		  --
 ----------------------------------------------------------------------------
 
-local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "deDE", false)
+local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "esES", false)
 
 	if C then
 
---@localization(locale="deDE", format="lua_additive_table", same-key-is-true=true, namespace="Classic", table-name="C")@
+--@localization(locale="esES", format="lua_additive_table", same-key-is-true=true, namespace="Classic", table-name="C")@
 
 	end
 
@@ -56,11 +57,11 @@ local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "deDE", false)
 --	TBC, Populated by WoWAce-Curseforge Packager.			  --
 ----------------------------------------------------------------------------	
 
-local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "deDE", false)
+local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "esES", false)
 
 	if BC then
 
---@localization(locale="deDE", format="lua_additive_table", same-key-is-true=true, namespace="BC", table-name="BC")@
+--@localization(locale="esES", format="lua_additive_table", same-key-is-true=true, namespace="BC", table-name="BC")@
 
 	end
 
@@ -68,10 +69,10 @@ local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "deDE", false)
 --	WOTLK, Populated by WoWAce-Curseforge Packager.			  --
 ----------------------------------------------------------------------------
 
-local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "deDE", false)
+local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "esES", false)
 
 	if LK then
 
---@localization(locale="deDE", format="lua_additive_table", same-key-is-true=true, namespace="Wrath", table-name="LK")@
+--@localization(locale="esES", format="lua_additive_table", same-key-is-true=true, namespace="Wrath", table-name="LK")@
 
 	end
