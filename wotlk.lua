@@ -58,6 +58,8 @@ do
 	for k,v in pairs(LQ) do
 		profile[v] = true
 	end
+	profile[ LQ["Hand of the Oracles"] ] = false		--Disabled on good authority by
+	profile[ LQ["Frenzyheart Champion"] ] = false		-- "Fisker-" in IRC
 end
 
 
