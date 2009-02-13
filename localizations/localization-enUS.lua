@@ -19,20 +19,21 @@ local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_Core", "enUS", true, debug)
 
 	if L then
 --These are not importable to WoWAce/Curseforge Locale system, as these are pulled directly from the client.
+L["Alliance"] = FACTION_ALLIANCE
 L["Battlegrounds"] = BATTLEFIELDS
-L["Netural"] = FACTION_STANDING_LABEL4
+L["Cooking"] = (GetSpellInfo(2550))
+L["Faction"] = FACTION
+L["Fishing"] = (GetSpellInfo(7733))
 L["Friendly"] = FACTION_STANDING_LABEL5
 L["Honored"] = FACTION_STANDING_LABEL6
-L["Revered"] = FACTION_STANDING_LABEL7
-L["Faction"] = FACTION
-L["None"] = LFG_TYPE_NONE
-L["Quests"] = QUESTS_LABEL
 L["Horde"] = FACTION_HORDE
-L["Alliance"] = FACTION_ALLIANCE
-L["Professions"] = TRADE_SKILLS
-L["Cooking"] = (GetSpellInfo(2550))
-L["Fishing"] = (GetSpellInfo(7733))
 L["Jewelcrafting"] = (GetSpellInfo(25229))
+L["None"] = LFG_TYPE_NONE
+L["Netural"] = FACTION_STANDING_LABEL4
+L["Professions"] = TRADE_SKILLS
+L["PvP"] = PVP
+L["Quests"] = QUESTS_LABEL
+L["Revered"] = FACTION_STANDING_LABEL7
 
 --@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, namespace="Base_All", table-name="L")@
 
