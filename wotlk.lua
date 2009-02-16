@@ -346,7 +346,7 @@ function module:GetWorldPvP()
 			wintergrasp = { name = L["Wintergrasp"], order = 1, type = "multiselect", width = "full",
 				values = { LQ["A Rare Herb"], LQ["Bones and Arrows"], LQ["Defend the Siege"], LQ["Fueling the Demolishers"], LQ["Healing with Roses"], 
 					LQ["Jinxing the Walls"], LQ["No Mercy for the Merciless"], LQ["Slay them all"], LQ["Stop the Siege"], LQ["Victory in Wintergrasp"], 
-					LQ["Warding the Walls"], LQ["Warding the Warriors"], 
+					LQ["Warding the Walls"], LQ["Warding the Warriors"], LQ["Southern Sabotage"],
 				},
 			},
 			iceCrown = { name = L["Icecrown"], order = 2, type = "group",
