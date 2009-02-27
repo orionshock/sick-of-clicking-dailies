@@ -5,5 +5,5 @@
 <Script file="localization-deDE.lua"/>
 <Script file="localization-ruRU.lua"/>
 <Script file="localization-esEs.lua"/>
-
+<Script file="localization-zhTW.lua"/>
 </Ui>
