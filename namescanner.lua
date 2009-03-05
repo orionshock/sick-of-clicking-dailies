@@ -11,16 +11,12 @@ Good Luck!
 
 ]]
 
-local function D(msg)
-	DEFAULT_CHAT_FRAME:AddMessage("|cff33cc66SOCD-Scanner:|r "..msg)
-
-end
-
 local SOCD = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
+local module = SOCD:NewModule("Quest Scanner")
 local dbo
 
-local function escape(s)
-    return (s:gsub("[\128-\255]", function (c) return ("\\%03d"):format(c:byte()) end))
+local function D(...)
+	print("SOCD: ", ...)
 end
 
 local qTable = {
@@ -232,19 +228,19 @@ local qTable = {
 local tt = CreateFrame("GameTooltip", "QuestScanTT", UIParent, "GameTooltipTemplate")
 
 
-function SOCD:CheckTTScan()
+function module:CheckTTScan()
 	local i = 1
 	for k, v in pairs(qTable) do
 		tt:SetOwner(UIParent, "ANCHOR_NONE")
 		tt:SetHyperlink("quest:"..k)
 		tt:Show()
-		DEFAULT_CHAT_FRAME:AddMessage("TT Text: "..i)
+		print( QuestScanTTTextLeft1:GetText() )
 		i = i +1
 	end
-	D("If The above number dosn't say 114 then Scan the Titles again")
+	D("Number Scanned:", i)	
 end
 
-function SOCD:ScanTTALL()
+function module:ScanTTALL()
 	for k, v in pairs(qTable) do
 		tt:SetOwner(UIParent, "ANCHOR_NONE")
 		tt:SetHyperlink("quest:"..k)
@@ -252,24 +248,24 @@ function SOCD:ScanTTALL()
 	end
 end
 
-function SOCD:ScanTooltips()
+function module:ScanTooltips()
 	self:ScanTTALL()
 	self:CheckTTScan()
 end
 
-local dbo
 
-function SOCD:CommitLocalizedNames()
-	self.db.profile.Scanner = {}
-	dbo = self.db.profile.Scanner
+function module:CommitLocalizedNames()
+	SOCD.db.profile.Scanner = {}
+	dbo = SOCD.db.profile.Scanner
 	local i = 1
 	for k, v in pairs(qTable) do
 		tt:SetOwner(UIParent, "ANCHOR_NONE")
 		tt:SetHyperlink("quest:"..k)
 		tt:Show()
 
-		dbo[v] = escape(QuestScanTTTextLeft1:GetText())
+		dbo[v] = QuestScanTTTextLeft1:GetText()
 		D("Count = "..i)
 		i = i + 1
 	end
 end
+print("Hi")
