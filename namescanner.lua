@@ -12,7 +12,7 @@ Good Luck!
 ]]
 
 local SOCD = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
-local module = SOCD:NewModule("Quest Scanner")
+local module = SOCD:NewModule("QuestScanner")
 local dbo
 
 local function D(...)

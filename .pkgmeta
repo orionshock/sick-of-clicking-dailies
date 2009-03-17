@@ -1,4 +1,6 @@
 package-as: SickOfClickingDailies
+license-output: LICENSE.txt
+
 
 externals:
 	libs/AceAddon-3.0:
