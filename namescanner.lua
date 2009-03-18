@@ -13,7 +13,6 @@ Good Luck!
 
 local SOCD = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
 local module = SOCD:NewModule("QuestScanner")
-local dbo
 
 local function D(...)
 	print("SOCD: ", ...)
@@ -256,7 +255,7 @@ end
 
 function module:CommitLocalizedNames()
 	SOCD.db.profile.Scanner = {}
-	dbo = SOCD.db.profile.Scanner
+	local dbo = SOCD.db.profile.Scanner
 	local i = 1
 	for k, v in pairs(qTable) do
 		tt:SetOwner(UIParent, "ANCHOR_NONE")
@@ -268,4 +267,18 @@ function module:CommitLocalizedNames()
 		i = i + 1
 	end
 end
-print("Hi")
+
+function module:GetOptionsTable()
+	local t = {
+		name = "Quest Name Scanner", type = "group", handler = module, order = -100,
+		args = {
+			cache = { type = "execute", name = "Cache Tooltips for Scanning", func = "ScannTTALL", order = 1, width = "full", },
+			check = { type = "execute", name = "Check Tooltip Cache", desc = "This will print out the quest names to chat frame to make sure you have everything", 
+				func = "CheckTTScan", order = 10, width = "full", },
+			export = { type = "execute", name = "Export to Copy paste Frame", func = "Export", order = 20, width = "full",},
+			commit = { type = "execute", name = "Commit Locale to SV", desc = "Commit names to SV file instead of exporting them", func = "CommitLocalizedNames", width = "full", },
+		},
+	}
+	return t
+end
+

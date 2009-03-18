@@ -201,7 +201,6 @@ end
 
 function addon:OnEnable()
 	self:RegisterEvent("GOSSIP_SHOW")
-	self:RegisterEvent("GOSSIP_CLOSED")
 	self:RegisterEvent("QUEST_DETAIL")
 	self:RegisterEvent("QUEST_PROGRESS")
 	self:RegisterEvent("QUEST_COMPLETE")
