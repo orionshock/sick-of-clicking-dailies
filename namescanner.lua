@@ -233,7 +233,7 @@ function module:CheckTTScan()
 		tt:SetOwner(UIParent, "ANCHOR_NONE")
 		tt:SetHyperlink("quest:"..k)
 		tt:Show()
-		print( QuestScanTTTextLeft1:GetText() )
+		D("QuestName:", QuestScanTTTextLeft1:GetText() )
 		i = i +1
 	end
 	D("Number Scanned:", i)	
@@ -263,16 +263,35 @@ function module:CommitLocalizedNames()
 		tt:Show()
 
 		dbo[v] = QuestScanTTTextLeft1:GetText()
-		D("Count = "..i)
 		i = i + 1
 	end
+	D("Count = "..i)
 end
+
+local locale_format = "L['%s'] = '%s'"
+
+function module:Export(info)
+	local t = {}
+	local i = 1
+	for k, v in pairs(qTable) do
+		tt:SetOwner(UIParent, "ANCHOR_NONE")
+		tt:SetHyperlink("quest:"..k)
+		tt:Show()
+		tinsert(t, locale_format:format(v, QuestScanTTTextLeft1:GetText()) )
+		i = i + 1
+	end
+	D("Quest Count = ", i)
+	table.sort(t)	
+	local str = table.concat(t, "\n")
+	self:SendToCopyFrame(str)
+end
+
 
 function module:GetOptionsTable()
 	local t = {
 		name = "Quest Name Scanner", type = "group", handler = module, order = -100,
 		args = {
-			cache = { type = "execute", name = "Cache Tooltips for Scanning", func = "ScannTTALL", order = 1, width = "full", },
+			cache = { type = "execute", name = "Cache Tooltips for Scanning", func = "ScanTTALL", order = 1, width = "full", },
 			check = { type = "execute", name = "Check Tooltip Cache", desc = "This will print out the quest names to chat frame to make sure you have everything", 
 				func = "CheckTTScan", order = 10, width = "full", },
 			export = { type = "execute", name = "Export to Copy paste Frame", func = "Export", order = 20, width = "full",},
@@ -280,5 +299,57 @@ function module:GetOptionsTable()
 		},
 	}
 	return t
+end
+
+do
+
+	local frame = nil
+	local editBox = nil
+	local f = nil
+
+	local function createFrames()
+		--[[		Create our frames on demand		]]--
+		frame = CreateFrame("Frame", "SOCD_LocaleExport", UIParent)
+		frame:SetBackdrop({bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+			edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+			tile = true, tileSize = 16, edgeSize = 16,
+			insets = {left = 3, right = 3, top = 5, bottom = 3}}
+		)
+		frame:SetBackdropColor(0,0,0,1)
+		frame:SetWidth(500)
+		frame:SetHeight(400)
+		frame:SetPoint("CENTER", UIParent, "CENTER")
+		frame:Hide()
+		frame:SetFrameStrata("DIALOG")
+
+		local scrollArea = CreateFrame("ScrollFrame", "SOCD_LocaleExport", frame, "UIPanelScrollFrameTemplate")
+		scrollArea:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -30)
+		scrollArea:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -30, 8)
+
+		editBox = CreateFrame("EditBox", "SOCD_LocaleExport_EditBox", frame)
+		editBox:SetMultiLine(true)
+		editBox:SetMaxLetters(99999)
+		editBox:EnableMouse(true)
+		editBox:SetAutoFocus(false)
+		editBox:SetFontObject(ChatFontNormal)
+		editBox:SetWidth(400)
+		editBox:SetHeight(270)
+		editBox:SetScript("OnEscapePressed", function() frame:Hide() end)
+
+		scrollArea:SetScrollChild(editBox)
+
+		local close = CreateFrame("Button", "SOCD_LocaleExport_CloseButton", frame, "UIPanelCloseButton")
+		close:SetPoint("TOPRIGHT", frame, "TOPRIGHT")
+
+		f = true
+	end
+
+
+	function module:SendToCopyFrame(str)
+		if not f then createFrames() end
+		frame:Show()
+		editBox:SetText(str)
+		editBox:HighlightText(0)
+	end
 end
 
