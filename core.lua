@@ -41,26 +41,19 @@ All other files are licenced under their respective terms.
 --
 --	Debug Func()
 --
-local D
-do
-	local temp = {}
-	function D(...)
-		local str
-		local arg = select(1, ...) or ""
-		if string.find(arg, "%%") then
-			str = (select(1, ...)):format(select(2,...))
-		else
-			for i = 1, select("#", ...) do
-				temp[i] = tostring(select(i, ...))
-			end
-			str = table.concat(temp, ", ")
-		end
-		ChatFrame1:AddMessage("SOCD: "..str)
-		for i = 1, #temp do
-			temp[i] = nil
-		end
+local function D(...)
+	local str
+	local arg = select(1, ...) or ""
+	if string.find(arg, "%%") then
+		str = (select(1, ...)):format(select(2,...))
+	else
+		str = string.join(", ", tostringall(...) )
+		str = str:gsub(":,", ":")
 	end
+	ChatFrame1:AddMessage("SOCD: "..str)
+	return str
 end
+
 
 
 --
@@ -71,14 +64,14 @@ local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
 SickOfClickingDailies = LibStub("AceAddon-3.0"):NewAddon("SickOfClickingDailies", "AceEvent-3.0", "AceConsole-3.0")
 local addon = SickOfClickingDailies
 addon.version = tostring("$Revision$")
-addon.author = "Orionshock, aka, Atradies of Nagrand - US"
+addon.author = "Orionshock"
 local moduleQLookup, moduleQOptions, questNPCs = {}, {}, {}
 addon.moduleQLookup = moduleQLookup
 addon.moduleQOptions = moduleQOptions
 addon.questNPCs = questNPCs
 
 --
---	Quest ID Hacks
+--	Quest Name lookup func's
 --
 
 local function qTable(k)
@@ -144,6 +137,7 @@ local function GetOptionsTable()
 		handler = addon,
 		childGroups = "tab",
 		args = {
+			questLoop = { type = "toggle", name = L["Enable Quest Looping"], desc = L["questLoop_Desc"], get = "QuestLoop", set = "QuestLoop" },
 			moduleControl = {
 				name = L["Module Control"],
 				type = "group", order = -1,
@@ -175,6 +169,16 @@ function addon:ToggleModule(info, value)
 	end
 end
 
+function addon:QuestLoop(info, value)
+	if value == nil then
+		--Get
+		return self.db.profile.questLoop
+	else
+		--Set
+		self.db.profile.questLoop = value
+	end
+end
+
 
 --
 --	Main Addon Functions
@@ -197,6 +201,7 @@ end
 
 function addon:OnEnable()
 	self:RegisterEvent("GOSSIP_SHOW")
+	self:RegisterEvent("GOSSIP_CLOSED")
 	self:RegisterEvent("QUEST_DETAIL")
 	self:RegisterEvent("QUEST_PROGRESS")
 	self:RegisterEvent("QUEST_COMPLETE")
@@ -204,7 +209,7 @@ function addon:OnEnable()
 end
 
 function addon:OnDisable()
-	self:UnregisterAllEvents()
+	--self:UnregisterAllEvents()
 end
 
 --
@@ -212,18 +217,18 @@ end
 --
 
 local npcBad, nextQuestFlag, questIndex = nil, false, 0
-local stopFlag, s_title, s_npc = false
+
+local stopFlag, s_title, s_npc = false	--Event Dispatching stuff..
 
 function addon:GOSSIP_SHOW(event)
 	local npc = addon.CheckNPC()
 	local stopFlag, s_title, s_npc = false, nil, nil
 	if (IsShiftKeyDown())then return end
 	if (not self.db.profile.questLoop) and npcBad then
-		return --D("GossipShow npc Bad Exit")
+		return
 	end
 
 	local sel, quest, status = addon.OpeningCheckQuest(npc)
---	D( event ,npc, quest, status)
 	if npc and quest then
 		if status == "Available" then
 			return SelectGossipAvailableQuest(sel)
@@ -237,25 +242,25 @@ function addon:QUEST_DETAIL(event)
 	if IsShiftKeyDown() then return end
 	local npc = addon.CheckNPC()
 	local quest = addon.TitleCheck(npc)
---	D(event, npc, quest)
 	if npc and quest then
-		return AcceptQuest()
+		AcceptQuest()
+		return 
 	end
 end
 
 
 function addon:QUEST_PROGRESS(event)
-    if IsShiftKeyDown() then return end
+   	if IsShiftKeyDown() then return end
 	local npc = addon.CheckNPC()
 	local quest = addon.TitleCheck(npc)
---	D(event, npc, quest)
 	if npc and quest then
 		if not IsQuestCompletable() then
 			nextQuestFlag = true
-			if self.db.profile.questLoop then
-				return DeclineQuest()
-			end
-			return
+			--if self.db.profile.questLoop then
+				DeclineQuest()
+				return 
+			--end
+			--return
 		else
 			nextQuestFlag = false
 		end
@@ -385,7 +390,3 @@ function addon.TitleCheck(npc)
 	end
 end
 
-
---function addon:GetQuestOption(quest)
---	return qOptions(quest)
---end
