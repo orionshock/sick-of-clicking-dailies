@@ -222,6 +222,15 @@ local qTable = {
 	[13424] = "Back to the Pit", --WotLK
 	[13425] = "The Aberrations Must Die", --WotLK
 	[13427] = "Call to Arms: Alterac Valley", --C
+	[12170]= "Blackriver Brawl", --WotLK
+	[13405]= "Call to Arms: Strand of the Ancients", --WotLK
+	[12315]= "Crush Captain Brightwater!", --WotLK
+	[13202]= "Jinxing the Walls", --WotLK
+	[12284]= "Keep 'Em on Their Heels", --WotLK
+	[13234]= "Make Them Pay!", --WotLK
+	[12270]= "Shred the Alliance", --WotLK
+	[13178]= "Slay them all!", --WotLK
+	[13192]= "Warding the Walls", --WotLK
 }
 
 local tt = CreateFrame("GameTooltip", "QuestScanTT", UIParent, "GameTooltipTemplate")
