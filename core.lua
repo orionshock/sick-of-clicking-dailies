@@ -234,7 +234,7 @@ local npcBad, nextQuestFlag, questIndex = nil, false, 0
 local stopFlag, s_title, s_npc = false	--Event Dispatching stuff..
 
 function addon:GOSSIP_SHOW(event)
-	D(event)
+	---D(event)
 	local npc = addon.CheckNPC()
 	local stopFlag, s_title, s_npc = false, nil, nil
 	if (IsShiftKeyDown())then return end
@@ -250,17 +250,17 @@ function addon:GOSSIP_SHOW(event)
 			end
 		end
 	end
-	D(event, "Gossip Time? do we got NPC?", npc)
+	--D(event, "Gossip Time? do we got NPC?", npc)
 	--Thinking about Dialouge Options too... like the Intestinal Fortitude and Alchy's Thing..
 	local hasGossip, index = self:AnalyzeGossipOptions( GetGossipOptions() )
 	if hasGossip and npc then
-		D("We have a Gossiper~", hasGossip, index)
+		--D("We have a Gossiper~", hasGossip, index)
 		SelectGossipOption(index)
 	end
 end
 
 function addon:QUEST_DETAIL(event)
-	D(event)
+	--D(event)
 	if IsShiftKeyDown() then return end
 	local npc = addon.CheckNPC()
 	local quest = addon.TitleCheck(npc)
@@ -358,31 +358,31 @@ end
 
 local function QuestItterateTurnIn(npc, ...)
 	if (...) == nil then return end
-	local numQuest = select("#", ...)
+	local numArgs = select("#", ...)
 	if nextQuestFlag then
 		nextQuestFlag = false
 		questIndex = questIndex + 1
-		if questIndex > (numQuest /3) then
+		if questIndex > (numArgs /3) then
 			npcBad = true
 			questIndex = 1
-			for i=1, numQuest , 3 do
+			for i=1, numArgs , 3 do
 				if qTable(select(i, ...)) then
 					questIndex = (i+2)/3
-					return (i+2)/3 , select(i, ...)
+					return (i+2)/3 , (select(i, ...))
 				end
 			end
 		else
-			for i = ((questIndex*3)-2) , numQuest  do
+			for i = ((questIndex*3)-2) , numArgs  do
 				if qTable(select(i, ...)) then
 					questIndex = (i+2)/3
 					--D("Quest Found:", (select(i, ...)) )
-					return (i+2)/3 , select(i, ...)
+					return (i+2)/3 , (select(i, ...))
 				end
 			end
 		end
 	end
-	if numQuest <= 3 then npcBad = true end
-	for i=1, numQuest , 3 do
+	if questIndex >= (numArgs/3)  then npcBad = true end
+	for i=1, numArgs , 3 do
 		if qTable(select(i, ...)) then
 			questIndex = (i+2)/3
 			--D("Quest Found:", (select(i, ...)) )

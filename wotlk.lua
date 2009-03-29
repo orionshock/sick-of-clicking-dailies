@@ -488,16 +488,16 @@ end
 
 function module:Multi_Get(info, value)
 	if type(value) == "number" then
-		return db.profile[info.option.values[value]]
+		return db.profile.quests[info.option.values[value]]
 	else
-		return db.profile[value]
+		return db.profile.quests[value]
 	end
 end
 
 function module:Multi_Set(info, value, state)
 	if type(value) == "number" then
-		db.profile[info.option.values[value]] = state
+		db.profile.quests[info.option.values[value]] = state
 	else
-		db.profile[value] = state
+		db.profile.quests[value] = state
 	end
 end
