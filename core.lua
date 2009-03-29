@@ -113,7 +113,7 @@ function addon:RegisterQuests(name, questTable, npcID, options, gossip)
 	if gossip then
 		assert(type(gossip) == "table")
 		moduleGossipOptions[name] = gossip
-		D("Gossip Options for %s registered", name)
+		--D("Gossip Options for %s registered", name)
 	end
 end
 
