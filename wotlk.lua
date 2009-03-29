@@ -51,10 +51,15 @@ module.defaults = {
 			[LQ["Timear Foresees Titanium Vanguards in your Future!"]] = 5,
 			[LQ["Timear Foresees Ymirjar Berserkers in your Future!"]] = 5,
 		},
+		quests = {},
+		gossip = {
+			--["Tell me of yourself, Xarantaur. Why are you called the Witness?"] = true
+			
+		}
 	},
 }
 do
-	local profile = module.defaults.profile
+	local profile = module.defaults.profile.quests
 	for k,v in pairs(LQ) do
 		profile[v] = true
 	end
@@ -71,7 +76,7 @@ end
 
 function module:OnEnable()
 	--D("OnEnable")
-	AddonParent:RegisterQuests("LK", db.profile, self.npcList, db.profile.qOptions)
+	AddonParent:RegisterQuests("LK", db.profile.quests, self.npcList, db.profile.qOptions, db.profile.gossip)
 	SetItemRef("item:43950", "item:43950")
 	SetItemRef("item:43950", "item:43950")
 	
@@ -242,7 +247,9 @@ module.npcList = table.concat({
 	27468, --Sergeant Hartsman Kick 
 	27451, --Commander Bargok Keep 
 	27783, --Scout Captain Carter 
-	27120, --Raider Captain Kronn 
+	27120, --Raider Captain Kronn
+	--Testing
+	--30381, --Xarantaur
 
 	}, ":")
 

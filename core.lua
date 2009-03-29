@@ -50,7 +50,7 @@ local function D(...)
 		str = string.join(", ", tostringall(...) )
 		str = str:gsub(":,", ":")
 	end
-	ChatFrame1:AddMessage("SOCD: "..str)
+	print("SOCD: "..str)
 	return str
 end
 
@@ -65,10 +65,11 @@ SickOfClickingDailies = LibStub("AceAddon-3.0"):NewAddon("SickOfClickingDailies"
 local addon = SickOfClickingDailies
 addon.version = tostring("$Revision$")
 addon.author = "Orionshock"
-local moduleQLookup, moduleQOptions, questNPCs = {}, {}, {}
+local moduleQLookup, moduleQOptions, questNPCs, moduleGossipOptions = {}, {}, {}, {}
 addon.moduleQLookup = moduleQLookup
 addon.moduleQOptions = moduleQOptions
 addon.questNPCs = questNPCs
+addon.moduleGossipOptions = moduleGossipOptions
 
 --
 --	Quest Name lookup func's
@@ -90,7 +91,15 @@ local function qOptions(k)
 	end
 end
 
-function addon:RegisterQuests(name, questTable, npcID, options)
+local function gossipOption(opt)
+	for _, gTable in pairs(moduleGossipOptions) do
+		if gTable[opt] then
+			return gTable[opt]
+		end
+	end
+end
+
+function addon:RegisterQuests(name, questTable, npcID, options, gossip)
 	--Quest Groupings
 	assert(type(questTable) == "table")
 	moduleQLookup[name] = questTable
@@ -101,6 +110,11 @@ function addon:RegisterQuests(name, questTable, npcID, options)
 	assert(type(options) == "table")
 	moduleQOptions[name] = options
 	--D("Quest Grouping %s registered", name)
+	if gossip then
+		assert(type(gossip) == "table")
+		moduleGossipOptions[name] = gossip
+		D("Gossip Options for %s registered", name)
+	end
 end
 
 function addon:UnRegisterQuests(name)
@@ -220,24 +234,33 @@ local npcBad, nextQuestFlag, questIndex = nil, false, 0
 local stopFlag, s_title, s_npc = false	--Event Dispatching stuff..
 
 function addon:GOSSIP_SHOW(event)
+	D(event)
 	local npc = addon.CheckNPC()
 	local stopFlag, s_title, s_npc = false, nil, nil
 	if (IsShiftKeyDown())then return end
 	if (not self.db.profile.questLoop) and npcBad then
-		return
-	end
-
-	local sel, quest, status = addon.OpeningCheckQuest(npc)
-	if npc and quest then
-		if status == "Available" then
-			return SelectGossipAvailableQuest(sel)
-	        elseif status == "Active" then
-			return SelectGossipActiveQuest(sel)
+		--Do nothing... go to gossip options?
+	else
+		local sel, quest, status = addon.OpeningCheckQuest(npc)
+		if npc and quest then
+			if status == "Available" then
+				return SelectGossipAvailableQuest(sel)
+			elseif status == "Active" then
+				return SelectGossipActiveQuest(sel)
+			end
 		end
+	end
+	D(event, "Gossip Time? do we got NPC?", npc)
+	--Thinking about Dialouge Options too... like the Intestinal Fortitude and Alchy's Thing..
+	local hasGossip, index = self:AnalyzeGossipOptions( GetGossipOptions() )
+	if hasGossip and npc then
+		D("We have a Gossiper~", hasGossip, index)
+		SelectGossipOption(index)
 	end
 end
 
 function addon:QUEST_DETAIL(event)
+	D(event)
 	if IsShiftKeyDown() then return end
 	local npc = addon.CheckNPC()
 	local quest = addon.TitleCheck(npc)
@@ -387,5 +410,22 @@ function addon.TitleCheck(npc)
 		--D("Title Check", GetTitleText())
 		return GetTitleText()
 	end
+end
+
+
+function addon:AnalyzeGossipOptions(...)
+	D("AnalyzeGossipOptions", ...)
+	local numArgs, count = select("#", ...), 0
+	D("AnalyzeGossipOptions, DIVE")
+	for i = 1, numArgs, 2 do
+		local element = select(i+1, ...) == "gossip" and select(i, ...)
+		count = count + 1
+		D("Found element:", element, count)
+		if gossipOption(element) then
+			D("Is one of ours")
+			return element, count
+		end
+	end
+	return false
 end
 
