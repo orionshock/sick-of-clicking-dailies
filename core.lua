@@ -38,12 +38,18 @@ All other files are licenced under their respective terms.
 =====================================================================================================
 ]]--
 
+local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
+
+SickOfClickingDailies = LibStub("AceAddon-3.0"):NewAddon("SickOfClickingDailies", "AceEvent-3.0", "AceConsole-3.0")
+local addon = SickOfClickingDailies
+
 --
 --	Debug Func()
 --
 local debug = function() end
 --@debug@
 function D(...)
+	if not addon.db.profile.debug then return end
 	local str
 	local arg = select(1, ...) or ""
 	if string.find(arg, "%%") then
@@ -61,10 +67,7 @@ end
 --
 --	Addon Decleration & File Wide locals
 --
-local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
 
-SickOfClickingDailies = LibStub("AceAddon-3.0"):NewAddon("SickOfClickingDailies", "AceEvent-3.0", "AceConsole-3.0")
-local addon = SickOfClickingDailies
 addon.version = tostring("$Revision$")
 addon.author = "Orionshock"
 local moduleQLookup, moduleQOptions, questNPCs, moduleGossipOptions = {}, {}, {}, {}
@@ -135,6 +138,7 @@ local defaults = {
 	profile = {
 		questLoop = true,
 		modules = {},
+		debug = false,
 	},
 }
 
@@ -158,6 +162,9 @@ local function GetOptionsTable()
 				name = L["Module Control"],
 				type = "group", order = -1,
 				args = {
+					--@debug@
+					debug = { type = "toggle", name = "Enable Debug", get = function() return addon.db.profile.debug end, set = function(_, val) addon.db.profile.debug = val end },
+					--@end-debug@
 				},
 			},
 		},
