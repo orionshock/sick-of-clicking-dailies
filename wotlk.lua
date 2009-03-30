@@ -54,7 +54,7 @@ module.defaults = {
 		quests = {},
 		gossip = {
 			--["Tell me of yourself, Xarantaur. Why are you called the Witness?"] = true
-			
+			["I'm ready to begin. What is the first ingredient you require?"] = true
 		}
 	},
 }

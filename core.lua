@@ -41,7 +41,9 @@ All other files are licenced under their respective terms.
 --
 --	Debug Func()
 --
-local function D(...)
+local debug = function() end
+--@debug@
+function D(...)
 	local str
 	local arg = select(1, ...) or ""
 	if string.find(arg, "%%") then
@@ -50,10 +52,10 @@ local function D(...)
 		str = string.join(", ", tostringall(...) )
 		str = str:gsub(":,", ":")
 	end
-	print("SOCD: "..str)
+	print("|cff9933FFSOCD:|r "..str)
 	return str
 end
-
+--@end-debug@
 
 
 --
@@ -229,32 +231,50 @@ end
 --	Quest Handlers
 --
 
-local npcBad, nextQuestFlag, questIndex = nil, false, 0
+local npcBad, nextQuestFlag, questIndex, gossipPop = nil, false, 1, false
 
 local stopFlag, s_title, s_npc = false	--Event Dispatching stuff..
 
 function addon:GOSSIP_SHOW(event)
-	---D(event)
-	local npc = addon.CheckNPC()
+	D(event)
 	local stopFlag, s_title, s_npc = false, nil, nil
+	local npc = self:CheckNPC(event)
+	if not npc then return end
 	if (IsShiftKeyDown())then return end
-	if (not self.db.profile.questLoop) and npcBad then
-		--Do nothing... go to gossip options?
-	else
-		local sel, quest, status = addon.OpeningCheckQuest(npc)
-		if npc and quest then
+	local sel, quest, status = self.OpeningCheckQuest(npc)
+	D(event, "logic batterie")
+	if sel then
+		D("we have quest selection", sel, quest, status, "BadNPC?", npcBad)
+		if npcBad then
+			D("badNPC, gossipDive")
+			self:DoGossipOptions( (event.."~quest~"..(sel or "")) )
+			if not self.db.profile.questLoop then
+				D("No QuestLooping, exit Func")
+				return
+			end
+		else
+			D("not BadNpc, interacting with NPC", status, sel, quest)
 			if status == "Available" then
 				return SelectGossipAvailableQuest(sel)
 			elseif status == "Active" then
 				return SelectGossipActiveQuest(sel)
 			end
 		end
+	elseif not sel then
+		D(event, "No quests?? just gossip")
+		self:DoGossipOptions(event.."~notSel")
 	end
-	--D(event, "Gossip Time? do we got NPC?", npc)
-	--Thinking about Dialouge Options too... like the Intestinal Fortitude and Alchy's Thing..
+end
+
+function addon:DoGossipOptions(traceEvent)
+	traceEvent = "GosOpt~"..(traceEvent or "")
+	D(traceEvent)
 	local hasGossip, index = self:AnalyzeGossipOptions( GetGossipOptions() )
-	if hasGossip and npc then
-		--D("We have a Gossiper~", hasGossip, index)
+	D(traceEvent, hasGossip, index)
+	if hasGossip then
+		D(traceEvent, hasGossip, index)
+		npcBad =  false
+		D(traceEvent, "selectingOpt", index)
 		SelectGossipOption(index)
 	end
 end
@@ -262,7 +282,7 @@ end
 function addon:QUEST_DETAIL(event)
 	--D(event)
 	if IsShiftKeyDown() then return end
-	local npc = addon.CheckNPC()
+	local npc = self:CheckNPC(event)
 	local quest = addon.TitleCheck(npc)
 	if npc and quest then
 		AcceptQuest()
@@ -272,11 +292,15 @@ end
 
 
 function addon:QUEST_PROGRESS(event)
+	D(event)
    	if IsShiftKeyDown() then return end
-	local npc = addon.CheckNPC()
+	local npc = self:CheckNPC(event)
+	D(event, "NPC:", npc)
 	local quest = addon.TitleCheck(npc)
+	D(event, "Q:", quest)
 	if npc and quest then
 		if not IsQuestCompletable() then
+			D("QuestNotCompleteable, set flag and DeclineQuest()")
 			nextQuestFlag = true
 			--if self.db.profile.questLoop then
 				DeclineQuest()
@@ -284,6 +308,7 @@ function addon:QUEST_PROGRESS(event)
 			--end
 			--return
 		else
+			D(event, "set nextQuestFlag to false")
 			nextQuestFlag = false
 		end
 		return CompleteQuest() --HERE
@@ -293,9 +318,10 @@ end
 do
 	function addon:QUEST_COMPLETE(event)
 		stopFlag = false
+		D(event, "nextQuestFlag to false")
 		nextQuestFlag = false
 		if IsShiftKeyDown() then return end
-		local npc = addon.CheckNPC()
+		local npc = self:CheckNPC(event)
 		local quest = addon.TitleCheck(npc)
 		if npc and quest then
 			local opt = qOptions(quest)
@@ -324,26 +350,35 @@ do
 end
 
 function addon:PLAYER_TARGET_CHANGED(event)
+	D(event, "Set nextQuestFlag to false")
 	npcBad, nextQuestFlag, questIndex = false, false, 0
 end
 
-function addon.CheckNPC()
+function addon:CheckNPC(traceEvent)
+	traceEvent = "CkNPC~"..(traceEvent or "?")
+	D(traceEvent)
 	local npcID = UnitGUID("target") and tonumber( strsub( UnitGUID("target"), -12, -7), 16)
---	if npcID then
---		D("CheckNPC: type = GUID")
---	end
+	if npcID then
+		D(traceEvent, "type = GUID")
+	end
 	if not npcID then
 		npcID = (GossipFrameNpcNameText:GetParent():IsVisible() and GossipFrameNpcNameText:GetText()) or (QuestFrameNpcNameText:GetParent():IsVisible() and QuestFrameNpcNameText:GetText())
-		--D("CheckNPC: type =", ( GossipFrameNpcNameText:GetText() and "Gossip Frame") or ( QuestFrameNpcNameText:GetText() and "QuestFrame" ) )
+		D(traceEvent, "type =", ( GossipFrameNpcNameText:GetText() and "Gossip Frame") or ( QuestFrameNpcNameText:GetText() and "QuestFrame" ) )
 	end
 	if not npcID then return end
+	local f = false
 	for i,v in pairs(questNPCs) do
 		if v:find(npcID) then
-			--D("CheckNPC - found", npcID)
-			return npcID
-		else
-			nextQuestFlag, questIndex = false, 0
+			f = npcID
 		end
+	end
+	if not f then
+		D(traceEvent, "set nextQuestFlag false")
+		nextQuestFlag, questIndex = false, 0
+		return
+	else
+		D(traceEvent, "found npc", f)
+		return f
 	end
 end
 
@@ -355,11 +390,72 @@ local function QuestItteratePickUp(npc, ...)
 		end
 	end
 end
+--[[
+	logic:
+		function is fed the varg arg with everything from GetGossipActiveQuests() looks like this.
+		"Troll Patrol: The Alchemist's Apprentice", 76, nil, "QuestTitle", "QuestLvl", "Trivaial" =  GetGossipActiveQuests()
+]]--
+
+function scrubQuests(title, lvl, triv, ...)
+	if not (...) then return title end
+	return title, scrubQuests(...)
+end
 
 local function QuestItterateTurnIn(npc, ...)
+	local e = "QiTi"
+	D(e, ...)
+	if not (...) then return end
+	local numQuests = select("#", ...)
+	D(e, "nextQuestFlag:", nextQuestFlag)
+	if nextQuestFlag then	--Means we've been here before and we're moving on...
+		nextQuestFlag = false	--don't want to fk with things
+		questIndex = questIndex +1	--push the index up one so we can move on
+		D(e, "NextQuest, newIndex:",  questIndex)
+		if questIndex > numQuests then	--if our new index is greater than the available quests, flag it and return the first quest for looping
+			D(e, "Index is grater than Number, index:", questIndex, "total:", numQuests)
+			npcBad = true		--flag the NPC bad
+			questIndex = 1		--reset the index to 1
+			D(e, "set flag true and index to 1")
+			for i = 1, numQuests do	--itterate the vars though
+				if qTable(select(i,...)) then	--test quest
+					questIndex = i	--if found set the index
+					D(e, "found quest", i, (select(i, ...)))
+					return questIndex, (select(i, ...))	--return the index and questName for debugging
+				end
+			end
+		else		--means that we're still in the first round or we havn't hit the end yet
+			D(e, "index less than total, inner round, push next index for quest")
+			for i = questIndex, numQuests do		--start at our index, as we've allready bumpted it up to the next one in sequence
+				if qTable(select(i,...)) then	--test quest
+					questIndex = i	--if found set the index
+					D(e, "found quest", i, (select(i, ...)))
+					return questIndex, (select(i, ...))	--return the index and questName for debugging
+				end
+			end
+		end
+	else		-- Weee first quest - this is the likely senerio.
+		D(e, "First timers")
+		questIndex = 1
+		for i = questIndex, numQuests do		--start at our index, as we've allready bumpted it up to the next one in sequence
+			if qTable(select(i,...)) then	--test quest
+				questIndex = i	--if found set the index
+				D(e, "found quest", i, (select(i, ...)))
+				return questIndex, (select(i, ...))	--return the index and questName for debugging
+			end
+		end
+	end
+end
+				
+
+
+local function old_QuestItterateTurnIn(npc, ...)
+	local e = "QuestItterateTurnIn"
+	D(e, ...)
 	if (...) == nil then return end
 	local numArgs = select("#", ...)
+	D(e, "numArgs:", numArgs)
 	if nextQuestFlag then
+		D(e, "hasNextQuestFlag, questIndex:", questIndex)
 		nextQuestFlag = false
 		questIndex = questIndex + 1
 		if questIndex > (numArgs /3) then
@@ -397,7 +493,7 @@ function addon.OpeningCheckQuest(npc)
 	if quest then
 			return selection, quest, "Available"
 	else
-		selection, quest = QuestItterateTurnIn(npc, GetGossipActiveQuests())
+		selection, quest = QuestItterateTurnIn(npc, scrubQuests(GetGossipActiveQuests()))
 		if quest then
 			return selection, quest, "Active"
 		end
