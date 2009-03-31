@@ -251,21 +251,21 @@ function addon:GOSSIP_SHOW(event)
 	local sel, quest, status = self.OpeningCheckQuest(npc)
 	D(event, "logic batterie")
 	if sel then
-		D("we have quest selection", sel, quest, status, "BadNPC?", npcBad)
+		D("We have quest selection", sel, quest, status, "BadNPC?", npcBad)
 		if npcBad then
 			D("badNPC, gossipDive")
-			self:DoGossipOptions( (event.."~quest~"..(sel or "")) )
+			self:DoGossipOptions((event or "").."~quest" )
 			if not self.db.profile.questLoop then
 				D("No QuestLooping, exit Func")
 				return
 			end
-		else
-			D("not BadNpc, interacting with NPC", status, sel, quest)
-			if status == "Available" then
-				return SelectGossipAvailableQuest(sel)
-			elseif status == "Active" then
-				return SelectGossipActiveQuest(sel)
-			end
+		end
+		D( npcBad and "QuestLoopingEnabled" )
+		D("Interacting with NPC", status, sel, quest)
+		if status == "Available" then
+			return SelectGossipAvailableQuest(sel)
+		elseif status == "Active" then
+			return SelectGossipActiveQuest(sel)
 		end
 	elseif not sel then
 		D(event, "No quests?? just gossip")
@@ -529,6 +529,6 @@ function addon:AnalyzeGossipOptions(...)
 			return element, count
 		end
 	end
-	return false
+	return false, 0
 end
 

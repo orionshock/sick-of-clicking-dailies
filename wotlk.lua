@@ -54,7 +54,7 @@ module.defaults = {
 		quests = {},
 		gossip = {
 			--["Tell me of yourself, Xarantaur. Why are you called the Witness?"] = true
-			["I'm ready to begin. What is the first ingredient you require?"] = true
+			[LQ["I'm ready to begin. What is the first ingredient you require?"]] = true
 		}
 	},
 }
@@ -303,6 +303,11 @@ function module:GetOptionsTable()
 									[LQ["Congratulations!"]] = LQ["Congratulations!"], 
 								},
 							},
+							crusade_gossip = { name = L["Argent Crusade Gossip Options"], type = "multiselect", order = 2, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
+								values = {
+									[LQ["I'm ready to begin. What is the first ingredient you require?"]] = LQ["Troll Patrol: The Alchemist's Apprentice"]:gsub(L["Troll Patrol: "], ""),
+								},
+							},
 						},
 					},
 					ebonWrap = { name = L["Knights of the Ebon Blade"], type = "group", order = 5,
@@ -500,4 +505,22 @@ function module:Multi_Set(info, value, state)
 	else
 		db.profile.quests[value] = state
 	end
+end
+----
+function module:GossipMulitGet(info, value, state)
+	if type(value) == "number" then
+		return db.profile.gossip[info.option.values[value]]
+	else
+		return db.profile.gossip[value]
+	end
+
+end
+
+function module:GossipMulitSet(info, value, state)
+	if type(value) == "number" then
+		db.profile.gossip[info.option.values[value]] = state
+	else
+		db.profile.gossip[value] = state
+	end
+
 end
