@@ -46,8 +46,8 @@ local addon = SickOfClickingDailies
 --
 --	Debug Func()
 --
-local debug = function() end
---@debug@
+local D = function() end
+--@alpha@
 function D(...)
 	if not addon.db.profile.debug then return end
 	local str
@@ -61,7 +61,7 @@ function D(...)
 	print("|cff9933FFSOCD:|r "..str)
 	return str
 end
---@end-debug@
+--@end-alpha@
 
 
 --
