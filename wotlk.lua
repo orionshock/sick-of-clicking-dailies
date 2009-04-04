@@ -53,8 +53,9 @@ module.defaults = {
 		},
 		quests = {},
 		gossip = {
-			--["Tell me of yourself, Xarantaur. Why are you called the Witness?"] = true
-			[LQ["I'm ready to begin. What is the first ingredient you require?"]] = true
+			--["Tell me of yourself, Xarantaur. Why are you called the Witness?"] = true,
+			[LQ["I'm ready to begin. What is the first ingredient you require?"]] = true,
+			[LQ["Get out there and make those Scourge wish they were never reborn!"]] = true,
 		}
 	},
 }
@@ -157,6 +158,7 @@ module.npcList = table.concat({
 	28042, --Captain Brandon
 	28044, --Captain Rupert
 	28205, --Alchemist Finklestein
+	28090, --Crusade Recruit
 
 		---Knights of the Ebon Blade---
 	29456, --Aurochs Grimbane
@@ -305,7 +307,8 @@ function module:GetOptionsTable()
 							},
 							crusade_gossip = { name = L["Argent Crusade Gossip Options"], type = "multiselect", order = 2, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
 								values = {
-									[LQ["I'm ready to begin. What is the first ingredient you require?"]] = LQ["Troll Patrol: The Alchemist's Apprentice"]:gsub(L["Troll Patrol: "], ""),
+									[LQ["I'm ready to begin. What is the first ingredient you require?"]] = LQ["Troll Patrol: The Alchemist's Apprentice"]:gsub(L["Troll Patrol: "], ""),		
+									[LQ["Get out there and make those Scourge wish they were never reborn!"]] = LQ["Troll Patrol: Intestinal Fortitude"]:gsub(L["Troll Patrol: "], ""),
 								},
 							},
 						},
