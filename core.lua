@@ -249,7 +249,7 @@ function addon:GOSSIP_SHOW(event)
 	if not npc then return end
 	if (IsShiftKeyDown())then return end
 	local sel, quest, status = self.OpeningCheckQuest(npc)
-	D(event, "logic batterie")
+	D(event, "logic batterie sel:", sel, "quest:", quest, "status:", status)
 	if sel then
 		D("We have quest selection", sel, quest, status, "BadNPC?", npcBad)
 		if npcBad then
