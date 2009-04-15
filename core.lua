@@ -126,6 +126,8 @@ function addon:UnRegisterQuests(name)
 	if moduleQLookup[name] then
 		moduleQLookup[name] = nil
 		moduleQOptions[name] = nil
+		questNPCs[name] = nil
+		moduleGossipOptions[name] = nil
 		--D("Quest Grouping %s unregistered", name)
 	end
 end
@@ -247,7 +249,7 @@ function addon:GOSSIP_SHOW(event)
 	local stopFlag, s_title, s_npc = false, nil, nil
 	local npc = self:CheckNPC(event)
 	if not npc then return end
-	if (IsShiftKeyDown())then return end
+	if (IsShiftKeyDown()) then return end
 	local sel, quest, status = self.OpeningCheckQuest(npc)
 	D(event, "logic batterie sel:", sel, "quest:", quest, "status:", status)
 	if sel then
@@ -287,11 +289,12 @@ function addon:DoGossipOptions(traceEvent)
 end
 
 function addon:QUEST_DETAIL(event)
-	--D(event)
+	D(event)
 	if IsShiftKeyDown() then return end
 	local npc = self:CheckNPC(event)
 	local quest = addon.TitleCheck(npc)
 	if npc and quest then
+		D("Accepting Quest", quest, npc)
 		AcceptQuest()
 		return 
 	end
