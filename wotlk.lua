@@ -194,7 +194,12 @@ module.npcList = table.concat({
 	30825, --Chief Engineer Copperclaw 
 	30344, --High Captain Justin Bartlett 
 	30824, --Sky-Reaver Korm Blackscar 
-
+			--IceCrown - Argent Crusade Torny
+	33435,	--Bozzle Blastbolt
+	33434,	--Bezzle Blastbolt
+	33658,	--Amariel Sunsworn
+	33659, 	--Galathia Brightdawn
+	
 		---Grizzly Hills---
 	27484, --Rheanna 
 	27464, --Aumana 
@@ -252,6 +257,7 @@ module.npcList = table.concat({
 	27120, --Raider Captain Kronn
 	--Testing
 	--30381, --Xarantaur
+
 
 	}, ":")
 
@@ -334,13 +340,24 @@ function module:GetOptionsTable()
 			},
 			shared = { name = L["Shared Faction Quests"], type = "group", order = 2,
 				args = {
-					ice = {	name = L["Icecrown"], type = "multiselect", order = 1, width = "full",
-						values = { LQ["King of the Mountain"], LQ["Blood of the Chosen"], LQ["Drag and Drop"], LQ["Neutralizing the Plague"], 
-							LQ["No Rest For The Wicked"], LQ["Not a Bug"], LQ["Retest Now"], LQ["Slaves to Saronite"], LQ["That's Abominable!"], 
-							LQ["Total Ohmage: The Valley of Lost Hope!"], LQ["Volatility"], LQ["Keeping the Alliance Blind"], 
-							LQ["Riding the Wavelength: The Bombardment"], LQ["Static Shock Troops: the Bombardment"], 
-							LQ["The Solution Solution"], LQ["Capture More Dispatches"], LQ["Putting the Hertz: The Valley of Lost Hope"], },
+					iceZone = { type = "group", name = L["Icecrown"], order = 1,
+						args = {
+							PvE = {	name = L["Icecrown"], type = "multiselect", order = 2, width = "full",
+								values = { LQ["King of the Mountain"], LQ["Blood of the Chosen"], LQ["Drag and Drop"], LQ["Neutralizing the Plague"], 
+									LQ["No Rest For The Wicked"], LQ["Not a Bug"], LQ["Retest Now"], LQ["Slaves to Saronite"], LQ["That's Abominable!"], 
+									LQ["Total Ohmage: The Valley of Lost Hope!"], LQ["Volatility"], LQ["Keeping the Alliance Blind"], 
+									LQ["Riding the Wavelength: The Bombardment"], LQ["Static Shock Troops: the Bombardment"], 
+									LQ["The Solution Solution"], LQ["Capture More Dispatches"], LQ["Putting the Hertz: The Valley of Lost Hope"],
+									 },
+							},
+							torurny = { name = "AC Tourny", type = "multiselect", order = 1, width = "full",
+								values = { LQ["A Chip Off the Uldar Block"], LQ["Jack Me Some Lumber"],	--generics?
+									LQ["Training In The Field"], LQ["Learning The Reins"], LQ["The Edge Of Winter"],
+								},
+							},
+						},
 					},
+							
 					hills = { name = L["Grizzly Hills"], type = "multiselect", order = 2, width = "full",
 						values = { LQ["Life or Death"], LQ["Overwhelmed!"], LQ["Making Repairs"], LQ["Pieces Parts"], 
 							LQ["Keep Them at Bay"], LQ["Riding the Red Rocket"], LQ["Seared Scourge"], LQ["Smoke 'Em Out"], }

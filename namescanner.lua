@@ -231,6 +231,15 @@ local qTable = {
 	[12270]= "Shred the Alliance", --WotLK
 	[13178]= "Slay them all!", --WotLK
 	[13192]= "Warding the Walls", --WotLK
+	
+
+	[13627] = "Jack Me Some Lumber",	--WotLK
+	[13675] = "The Edge Of Winter",	--WotLK
+	[13676] = "Training In The Field",	--WotLK
+	[13677] = "Learning The Reins",	--WotLK
+	[13681] = "A Chip Off the Ulduar Block",	--WotLK
+
+
 }
 
 local tt = CreateFrame("GameTooltip", "QuestScanTT", UIParent, "GameTooltipTemplate")
