@@ -22,6 +22,6 @@ Classic.lua
 BC.lua
 wotlk.lua
 
-#@debug@
+#@alpha@
 namescanner.lua
-#@end-debug@
+#@end-alpha@
