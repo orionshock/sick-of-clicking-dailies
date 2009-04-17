@@ -1,7 +1,7 @@
 --[[
 	Sick Of Clicking Dailies? - Locale file for frFR
 	Written By: @project-author@
-	
+
 	Please Visit: http://www.wowace.com/projects/sick-of-clicking-dailies/localization/frFR
 	to contribute to localizations :)
 ]]--
@@ -37,7 +37,7 @@ L["Revered"] = FACTION_STANDING_LABEL7
 
 --@localization(locale="frFR", format="lua_additive_table", same-key-is-true=true, namespace="Base_All", table-name="L")@
 
-	end	
+	end
 
 --All Quests Classified by orgin / content location
 
@@ -55,7 +55,7 @@ local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "frFR", false)
 
 ----------------------------------------------------------------------------
 --	TBC, Populated by WoWAce-Curseforge Packager.			  --
-----------------------------------------------------------------------------	
+----------------------------------------------------------------------------
 
 local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "frFR", false)
 
@@ -75,4 +75,6 @@ local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "frFR", false)
 
 --@localization(locale="frFR", format="lua_additive_table", same-key-is-true=true, namespace="Wrath", table-name="LK")@
 
+		local LK_R = LibStub("AceLocale-3.0"):GetLocale("SOCD_LK")
+		LK["I'm ready to begin. What is the first ingredient you require?"] = ( UnitSex("player") == 2 and LK_R["I'm ready to begin. What is the first ingredient you require?(M)"] or LK_R["I'm ready to begin. What is the first ingredient you require?(F)"] ):gsub("%([MF]%)$", "")
 	end

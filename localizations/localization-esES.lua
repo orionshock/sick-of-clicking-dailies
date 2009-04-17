@@ -76,4 +76,6 @@ local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "esES", false)
 
 --@localization(locale="esES", format="lua_additive_table", same-key-is-true=true, namespace="Wrath", table-name="LK")@
 
+		local LK_R = LibStub("AceLocale-3.0"):GetLocale("SOCD_LK")
+		LK["I'm ready to begin. What is the first ingredient you require?"] = ( UnitSex("player") == 2 and LK_R["I'm ready to begin. What is the first ingredient you require?(M)"] or LK_R["I'm ready to begin. What is the first ingredient you require?(F)"] ):gsub("%([MF]%)$", "")
 	end
