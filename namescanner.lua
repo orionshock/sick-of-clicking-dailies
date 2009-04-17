@@ -238,6 +238,7 @@ local qTable = {
 	[13676] = "Training In The Field",	--WotLK
 	[13677] = "Learning The Reins",	--WotLK
 	[13681] = "A Chip Off the Ulduar Block",	--WotLK
+	[13674] = "A Worthy Weapon" 	--WotLK
 
 
 }

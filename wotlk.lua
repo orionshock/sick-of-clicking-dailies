@@ -351,8 +351,9 @@ function module:GetOptionsTable()
 									 },
 							},
 							torurny = { name = "AC Tourny", type = "multiselect", order = 1, width = "full",
-								values = { LQ["A Chip Off the Uldar Block"], LQ["Jack Me Some Lumber"],	--generics?
+								values = { LQ["A Chip Off the Ulduar Block"], LQ["Jack Me Some Lumber"],	--generics?
 									LQ["Training In The Field"], LQ["Learning The Reins"], LQ["The Edge Of Winter"],
+									LQ["A Worthy Weapon"],
 								},
 							},
 						},
