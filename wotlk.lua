@@ -195,11 +195,37 @@ module.npcList = table.concat({
 	30344, --High Captain Justin Bartlett 
 	30824, --Sky-Reaver Korm Blackscar 
 			--IceCrown - Argent Crusade Torny
+
 	33435,	--Bozzle Blastbolt
 	33434,	--Bezzle Blastbolt
-	33658,	--Amariel Sunsworn
-	33659, 	--Galathia Brightdawn
+	-----Tourny NPCS	--I hate this...
+	--Sunreavers
+	33542, 	--Magister Edien Sunhollow"
+	33658, 	--Amariel Sunsworn"
+	33659, 	--Galathia Brightdawn"
+	--SilverWing
+	33379, 	--Eressea Dawnsinger"
+	33538, 	--Kethiel Sunlance"
+	33548, 	--Aneera Thuron"
+	--Undercity
+	33373, 	--Deathstalker Visceri"
+	33541, 	--Sarah Chalke"
+	33547, 	--Handler Dretch"
+	--Orgrimar
+	33361, 	--Mokra the Skullcrusher"
+	33405, 	--Akinos"
+	33544, 	--Morah Worgsister"
+	--Thunder Bluff
+	33403, 	--Runok Wildmane"
+	33539, 	--Dern Ragetotem"
+	33549, 	--Anka Clawhoof"
+	--Sen'Jin (Trolls)
+	33372, 	--Zul'tore"
+	33540, 	--Shadow Hunter Mezil-kree"
+	33545, 	--Gahju"
 	
+	
+-------------------------------------------
 		---Grizzly Hills---
 	27484, --Rheanna 
 	27464, --Aumana 
@@ -350,12 +376,7 @@ function module:GetOptionsTable()
 									LQ["The Solution Solution"], LQ["Capture More Dispatches"], LQ["Putting the Hertz: The Valley of Lost Hope"],
 									 },
 							},
-							torurny = { name = "AC Tourny", type = "multiselect", order = 1, width = "full",
-								values = { LQ["A Chip Off the Ulduar Block"], LQ["Jack Me Some Lumber"],	--generics?
-									LQ["Training In The Field"], LQ["Learning The Reins"], LQ["The Edge Of Winter"],
-									LQ["A Worthy Weapon"],
-								},
-							},
+							torurny = module:GetACTourny(),
 						},
 					},
 							
@@ -484,6 +505,28 @@ function module:GetInstanceOptions()
 	return t
 end
 
+function module:GetACTourny()
+	local t = { name = L["Argent Tournament"], type = "group", order = 1, inline = true,
+		args = {
+			shard = { type = "multiselect", name = L["Shared Quests"], width = "full", order = 1,
+				values = { LQ["A Chip Off the Ulduar Block"], LQ["Jack Me Some Lumber"],
+					LQ["The Edge Of Winter"], LQ["A Worthy Weapon"], LQ["A Blade Fit For A Champion"]
+				},
+			},
+			aspirant = {type = "multiselect", name = L["Aspirant Class"], width = "full", order = 10,
+				values = { LQ["Training In The Field"], LQ["Learning The Reins"] },
+			},
+			valiant = {type = "multiselect", name = L["Valiant Class"], width = "full", order = 20,
+				values = { LQ["At The Enemy's Gates"], LQ["The Grand Melee"], LQ["A Valiant's Field Training"] },
+			},
+			champ = { type = "multiselect", name = L["Champion Class"], width = "full", order = 30,
+				values = {},
+			},
+		},
+	}
+	return t
+end
+
 function module:FactionTokenGet(info)
 	return db.profile.qOptions[LQ["Timear Foresees Centrifuge Constructs in your Future!"]]
 end
@@ -494,15 +537,6 @@ function module:FactionTokenSet(info, val)
 	db.profile.qOptions[LQ["Timear Foresees Titanium Vanguards in your Future!"]] = val
 	db.profile.qOptions[LQ["Timear Foresees Ymirjar Berserkers in your Future!"]] = val
 end
-
---Included for sake of Completeness for single edged quests.
---function module:GetQuestEnabled(info)
---	return db.profile[info.option.name]
---end
-
---function module:SetQuestEnabled(info, val)
---	db.profile[info.option.name] = val
---end
 
 function module:GetQuestOption(info)
 	return db.profile.qOptions[info.option.name]
