@@ -14,8 +14,17 @@ Good Luck!
 local SOCD = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
 local module = SOCD:NewModule("QuestScanner")
 
-local function D(...)
-	print("SOCD: ", ...)
+function D(arg, ...)
+	local str
+	if string.find(tostring(arg), "%%") then
+		str = arg:format(...)
+	else
+		str = string.join(", ", tostringall(arg, ...) )
+		str = str:gsub(":,", ":"):gsub("=,", "=")
+	end
+
+	print("|cff9933FFSOCD:|r "..str)
+	return str
 end
 
 local qTable = {
@@ -231,8 +240,6 @@ local qTable = {
 	[12270]= "Shred the Alliance", --WotLK
 	[13178]= "Slay them all!", --WotLK
 	[13192]= "Warding the Walls", --WotLK
-	
-
 	[13627] = "Jack Me Some Lumber",	--WotLK
 	[13675] = "The Edge Of Winter",	--WotLK
 	[13676] = "Training In The Field",	--WotLK
@@ -242,12 +249,13 @@ local qTable = {
 
 
 }
+module.qTable = qTable
 
 local tt = CreateFrame("GameTooltip", "QuestScanTT", UIParent, "GameTooltipTemplate")
 
 
 function module:CheckTTScan()
-	local i = 1
+	local i = 0
 	for k, v in pairs(qTable) do
 		tt:SetOwner(UIParent, "ANCHOR_NONE")
 		tt:SetHyperlink("quest:"..k)
@@ -275,7 +283,7 @@ end
 function module:CommitLocalizedNames()
 	SOCD.db.profile.Scanner = {}
 	local dbo = SOCD.db.profile.Scanner
-	local i = 1
+	local i = 0
 	for k, v in pairs(qTable) do
 		tt:SetOwner(UIParent, "ANCHOR_NONE")
 		tt:SetHyperlink("quest:"..k)
@@ -284,14 +292,14 @@ function module:CommitLocalizedNames()
 		dbo[v] = QuestScanTTTextLeft1:GetText()
 		i = i + 1
 	end
-	D("Count = "..i)
+	D("Localized Names Commited to SV. Count = ", i)
 end
 
-local locale_format = "L['%s'] = '%s'"
-
+local locale_format = [[L["%s"] = "%s"]]
+local t = {}
 function module:Export(info)
-	local t = {}
-	local i = 1
+	t = wipe(t)
+	local i = 0
 	for k, v in pairs(qTable) do
 		tt:SetOwner(UIParent, "ANCHOR_NONE")
 		tt:SetHyperlink("quest:"..k)
@@ -299,7 +307,7 @@ function module:Export(info)
 		tinsert(t, locale_format:format(v, QuestScanTTTextLeft1:GetText()) )
 		i = i + 1
 	end
-	D("Quest Count = ", i)
+	D("Number of Quests Exported =", i)
 	table.sort(t)	
 	local str = table.concat(t, "\n")
 	self:SendToCopyFrame(str)

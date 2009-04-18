@@ -48,17 +48,17 @@ local addon = SickOfClickingDailies
 --
 local D = function() end
 --@alpha@
-function D(...)
-	if not addon.db.profile.debug then return end
+function D(arg, ...)
 	local str
-	local arg = select(1, ...) or ""
-	if string.find(arg, "%%") then
-		str = (select(1, ...)):format(select(2,...))
+	if string.find(tostring(arg), "%%") then
+		str = arg:format(...)
 	else
-		str = string.join(", ", tostringall(...) )
-		str = str:gsub(":,", ":")
+		str = string.join(", ", tostringall(arg, ...) )
+		str = str:gsub(":,", ":"):gsub("=,", "=")
 	end
-	print("|cff9933FFSOCD:|r "..str)
+	if addon.db.profile.debug then
+		print("|cff9933FFSOCD:|r "..str)
+	end
 	return str
 end
 --@end-alpha@
