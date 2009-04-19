@@ -240,6 +240,8 @@ local qTable = {
 	[12270]= "Shred the Alliance", --WotLK
 	[13178]= "Slay them all!", --WotLK
 	[13192]= "Warding the Walls", --WotLK
+	[13284] = "Assault by Ground", --WotLK
+	[13309] = "Assault by Air", --WotLK
 
 --Shared
 	[13627] = "Jack Me Some Lumber",	--WotLK
