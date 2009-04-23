@@ -259,7 +259,12 @@ local qTable = {
 --Chimpmonk
 	
 
-
+--Fishing:
+	[13833] = "Blood Is Thicker",
+	[13834] = "Dangerously Delicious",
+	[13832] = "Jewel Of The Sewers",
+	[13836] = "Monsterbelly Appetite",
+	[13830] = "The Ghostfish",
 	
 
 
