@@ -193,7 +193,11 @@ module.npcList = table.concat({
 	30345, --Chief Engineer Boltwrench 
 	30825, --Chief Engineer Copperclaw 
 	30344, --High Captain Justin Bartlett 
-	30824, --Sky-Reaver Korm Blackscar 
+	30824, --Sky-Reaver Korm Blackscar
+	31833, --Kor'kon Squad Leader
+	31834, --Ground Commander Xutjja
+	31808, --Ground Commander Koup
+	31737, --Skybreaker Squad Leader
 			--IceCrown - Argent Crusade Torny
 
 	33435,	--Bozzle Blastbolt
@@ -374,6 +378,7 @@ function module:GetOptionsTable()
 									LQ["Total Ohmage: The Valley of Lost Hope!"], LQ["Volatility"], LQ["Keeping the Alliance Blind"], 
 									LQ["Riding the Wavelength: The Bombardment"], LQ["Static Shock Troops: the Bombardment"], 
 									LQ["The Solution Solution"], LQ["Capture More Dispatches"], LQ["Putting the Hertz: The Valley of Lost Hope"],
+									LQ["Assault by Ground"], LQ["Assault by Air"],
 									 },
 							},
 							torurny = module:GetACTourny(),
@@ -453,6 +458,9 @@ function module:GetProfessionsOptions()
 					[LQ["Shipment: Shifting Sun Curio"]] = LQ["Shipment: Shifting Sun Curio"]:gsub(L["Shipment: "], ""),
 					[LQ["Shipment: Wicked Sun Brooch"]] = LQ["Shipment: Wicked Sun Brooch"]:gsub(L["Shipment: "], ""),
 				},
+			},
+			fishing = { name = L["Fishing"], type = "multiselect", order = 3, width = "full",
+				values = { LQ["Blood Is Thicker"], LQ["Dangerously Delicious"], LQ["Jewel Of The Sewers"], LQ["Monsterbelly Appetite"], LQ["The Ghostfish"], },
 			},
 		},
 	}
