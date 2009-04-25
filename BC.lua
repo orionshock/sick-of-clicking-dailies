@@ -10,22 +10,19 @@
 
 local D		--Basic Debug
 do
-	local temp = {}
-	function D(...)
-		local str
-		local arg = select(1, ...) or ""
+	local str = ""
+	function D(arg, ...)
+		str = ""
 		if type(arg) == "string" and string.find(arg, "%%") then
-			str = (select(1, ...)):format(select(2,...))
+			str = arg:format(...)
 		else
-			for i = 1, select("#", ...) do
-				temp[i] = tostring(select(i, ...))
-			end
-			str = table.concat(temp, ", ")
+			str = string.join(", ", tostringall(arg, ...) )
+			str = str:gsub(":,", ":"):gsub("=,", "=")
 		end
-		ChatFrame1:AddMessage("SOCD-BC: "..str)
-		for i = 1, #temp do
-			temp[i] = nil
+		if AddonParent.db and AddonParent.db.profile.debug then		
+			print("SOCD-BC: "..str)
 		end
+		return str
 	end
 end
 
@@ -79,12 +76,23 @@ end
 
 function module:OnEnable()
 	--D("OnEnable")
-	GameTooltip:SetHyperlink("item:30809")	--Aldor Mark
-	GameTooltip:SetHyperlink("item:30810")	--Scryer Mark
-	GameTooltip:SetHyperlink("item:34538")	--Melee weapon
-	GameTooltip:SetHyperlink("item:34539")	--caster weapon
-	GameTooltip:SetHyperlink("item:33844")	--Barrel of Fish
-	GameTooltip:SetHyperlink("item:33857")	--Crate Of Meat
+	SetItemRef("item:30809","item:30809")	--Aldor Mark
+	SetItemRef("item:30809","item:30809")
+
+	SetItemRef("item:30810","item:30810")	--Scryer Mark
+	SetItemRef("item:30810","item:30810")
+
+	SetItemRef("item:34538","item:34538")	--Melee weapon
+	SetItemRef("item:34538","item:34538")
+
+	SetItemRef("item:34539","item:34539")	--Caster weapon
+	SetItemRef("item:34539","item:34539")
+
+	SetItemRef("item:33844","item:33844")	--Barrel of Fish
+	SetItemRef("item:33844","item:33844")
+
+	SetItemRef("item:33857","item:33857")	--Crate Of Meat
+	SetItemRef("item:33857","item:33857")
 	
 	cooking_values = { (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate Of Meat", L["None"]}
 

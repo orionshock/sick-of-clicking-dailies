@@ -259,7 +259,7 @@ function addon:GOSSIP_SHOW(event)
 		D(event, "We have quest selection", sel, quest, status, "| BadNPC:", npcBad)
 		if npcBad then
 			D(event, "badNPC, gossipDive")
-			self:DoGossipOptions(event.."~quest" )
+			self:DoGossipOptions(event.."~EoQ" )
 			if not self.db.profile.questLoop then
 				D(event,"No QuestLooping, exit Func")
 				return
@@ -274,17 +274,17 @@ function addon:GOSSIP_SHOW(event)
 		end
 	elseif not sel then
 		D(event, "No quests?? just gossip")
-		self:DoGossipOptions(event.."~notSel")
+		self:DoGossipOptions(event.."~NoQ")
 	end
 end
 
 function addon:DoGossipOptions(te)
-	traceEvent = "GosOpt~"..te
+	te = "GosOpt~"..te
 	D(te)
 	local hasGossip, index = self:AnalyzeGossipOptions(te, GetGossipOptions() )
 	D(te, hasGossip, index)
 	if hasGossip then
-		D(te, hasGossip, index)
+		D(te, hasGossip:sub(1,8), index)
 		npcBad =  false
 		D(te, "selectingOpt", index)
 		SelectGossipOption(index)
@@ -421,7 +421,7 @@ function scrubQuests(title, lvl, triv, ...)
 end
 
 local function QuestItterateTurnIn(te, ...)
-	te = "QiTi"..te
+	te = "QiTi~"..te
 	D(te, ...)
 	if not (...) then return end
 	local numQuests = select("#", ...)
@@ -489,15 +489,14 @@ end
 
 function addon:AnalyzeGossipOptions(te, ...)
 	te = "EvalGossip~"..te
-	D("AnalyzeGossipOptions", ...)
+	D(te, "evaluating" )
 	local numArgs, count = select("#", ...), 0
-	D("AnalyzeGossipOptions, DIVE")
 	for i = 1, numArgs, 2 do
 		local element = select(i+1, ...) == "gossip" and select(i, ...)
 		count = count + 1
-		D("Found element:", element, count)
+		D(te, "Found element:", element:sub(1,8), count)
 		if gossipOption(element) then
-			D("Is one of ours")
+			D(te, "Is one of ours")
 			return element, count
 		end
 	end

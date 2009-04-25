@@ -6,22 +6,19 @@
 
 local D		--Basic Debug
 do
-	local temp = {}
-	function D(...)
-		local str
-		local arg = select(1, ...) or ""
+	local str = ""
+	function D(arg, ...)
+		str = ""
 		if type(arg) == "string" and string.find(arg, "%%") then
-			str = (select(1, ...)):format(select(2,...))
+			str = arg:format(...)
 		else
-			for i = 1, select("#", ...) do
-				temp[i] = tostring(select(i, ...))
-			end
-			str = table.concat(temp, ", ")
+			str = string.join(", ", tostringall(arg, ...) )
+			str = str:gsub(":,", ":"):gsub("=,", "=")
 		end
-		ChatFrame1:AddMessage("SOCD-Classic: "..str)
-		for i = 1, #temp do
-			temp[i] = nil
+		if AddonParent.db and AddonParent.db.profile.debug then		
+			print("SOCD-Classic: "..str)
 		end
+		return str
 	end
 end
 
