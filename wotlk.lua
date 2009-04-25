@@ -3,29 +3,26 @@
 --
 --
 --
+local AddonParent = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
 
 local D		--Basic Debug
 do
-	local LK = {}
-	function D(...)
-		local str
-		local arg = select(1, ...) or ""
+	local str = ""
+	function D(arg, ...)
+		str = ""
 		if type(arg) == "string" and string.find(arg, "%%") then
-			str = (select(1, ...)):format(select(2,...))
+			str = arg:format(...)
 		else
-			for i = 1, select("#", ...) do
-				LK[i] = tostring(select(i, ...))
-			end
-			str = table.concat(LK, ", ")
+			str = string.join(", ", tostringall(arg, ...) )
+			str = str:gsub(":,", ":"):gsub("=,", "=")
 		end
-		ChatFrame1:AddMessage("SOCD-LK: "..str)
-		for i = 1, #LK do
-			LK[i] = nil
+		if AddonParent.db and AddonParent.db.profile.debug then		
+			print("SOCD-LK: "..str)
 		end
+		return str
 	end
 end
 
-local AddonParent = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
 do
 	local fr = ("$Rev$"):match("%d+") or 0
 	local cr = (AddonParent.version):match("%d+") or 1
@@ -203,6 +200,7 @@ module.npcList = table.concat({
 	33435,	--Bozzle Blastbolt
 	33434,	--Bezzle Blastbolt
 	-----Tourny NPCS	--I hate this...
+	--Horde	
 	--Sunreavers
 	33542, 	--Magister Edien Sunhollow"
 	33658, 	--Amariel Sunsworn"
@@ -227,7 +225,31 @@ module.npcList = table.concat({
 	33372, 	--Zul'tore"
 	33540, 	--Shadow Hunter Mezil-kree"
 	33545, 	--Gahju"
-	
+	--Alliance
+	--The Silver Covenant
+	33646, --Avareth Swiftstrike
+	33625, --Arcanist Taelis
+	33647, --Scout Shalyndria
+	--Exodar
+	33655, --Saandos
+	33593, --Colosos
+	33656, --Ranii
+	--Darnassus
+	33652, --Illestria Bladesinger
+	33592, --Jaelyne Evensong
+	33654, --Airae Starseeker
+	--Stormwind
+	33222, --Sir Marcus Barlowe
+	33225, --Marshal Jacob Alerius
+	33223, --Captain Joseph Holley
+	--Ironforge
+	33315, --Rollo Sureshot
+	33312, --Lana Stouthammer
+	33309, --Clara Tumblebrew
+	--Gnomeregan Exiles
+	33648, --Tickin Gearspanner
+	33335, --Ambrose Boltspark
+	33649, --Flickin Gearspanner
 	
 -------------------------------------------
 		---Grizzly Hills---
