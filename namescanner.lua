@@ -253,7 +253,7 @@ local qTable = {
 	[13676] = "Training In The Field",	--WotLK
 	[13677] = "Learning The Reins",	--WotLK
 --Vergin
-	[13857] = "At The Enem's Gates",
+	[13857] = "At The Enemy's Gates",
 	[13772] = "The Grand Melee",
 	[13771] = "A Valiant's Field Training",
 --Chimpmonk
