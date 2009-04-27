@@ -250,6 +250,14 @@ module.npcList = table.concat({
 	33648, --Tickin Gearspanner
 	33335, --Ambrose Boltspark
 	33649, --Flickin Gearspanner
+	--Ebon Hold
+	33770, 	--"Illyrie Nightfall"
+	33762,	--"Crok Scourgebane"
+	33769,	--"Zor'be the Bloodletter"
+	--Argent Crusade
+	33771, 	--"Luuri"
+	33759, 	--"Eadric the Pure", nil
+	33763, 	--"Cellian Daybreak", nil
 	
 -------------------------------------------
 		---Grizzly Hills---
@@ -550,7 +558,7 @@ function module:GetACTourny()
 				values = { LQ["At The Enemy's Gates"], LQ["The Grand Melee"], LQ["A Valiant's Field Training"] },
 			},
 			champ = { type = "multiselect", name = L["Champion Class"], width = "full", order = 30,
-				values = {},
+				values = { LQ["Among the Champions"], LQ["Battle Before The Citadel"], LQ["Taking Battle To The Enemy"], },
 			},
 		},
 	}
