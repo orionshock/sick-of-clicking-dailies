@@ -43,10 +43,16 @@ module.defaults = {
 			--["*"] = 3,
 			--This section has to be manually set with the localized quest name and a default option of off
 			--not very many of these quests so it won't matter :D
+			--Instance non-Heroic
 			[LQ["Timear Foresees Centrifuge Constructs in your Future!"]] = 5,
 			[LQ["Timear Foresees Infinite Agents in your Future!"]] = 5,
 			[LQ["Timear Foresees Titanium Vanguards in your Future!"]] = 5,
 			[LQ["Timear Foresees Ymirjar Berserkers in your Future!"]] = 5,
+			--Argent Tournament
+			[LQ["Among the Champions"]] = 5,
+			[LQ["Battle Before The Citadel"]] = 5,
+			[LQ["Taking Battle To The Enemy"]] = 5,
+
 		},
 		quests = {},
 		gossip = {
@@ -75,17 +81,23 @@ end
 function module:OnEnable()
 	--D("OnEnable")
 	AddonParent:RegisterQuests("LK", db.profile.quests, self.npcList, db.profile.qOptions, db.profile.gossip)
-	SetItemRef("item:43950", "item:43950")
+	SetItemRef("item:43950", "item:43950")	--Kirin Tor Faction Token
 	SetItemRef("item:43950", "item:43950")
 	
-	SetItemRef("item:44711", "item:44711")
+	SetItemRef("item:44711", "item:44711")	--Argetn Crusade Toeken
 	SetItemRef("item:44711", "item:44711")
 
-	SetItemRef("item:44713", "item:44713")
+	SetItemRef("item:44713", "item:44713")	--Ebobn Blade
 	SetItemRef("item:44713", "item:44713")
 
+	SetItemRef("item:44710", "item:44710")	--wyrmrest
 	SetItemRef("item:44710", "item:44710")
-	SetItemRef("item:44710", "item:44710")
+
+	SetItemRef("item:46114", "item:46114")	--Champion's Writ
+	SetItemRef("item:46114", "item:46114")
+
+	SetItemRef("item:45724", "item:45724")	--Champion's Purse
+	SetItemRef("item:45724", "item:45724")
 end
 
 function module:OnDisable()
@@ -560,6 +572,9 @@ function module:GetACTourny()
 			champ = { type = "multiselect", name = L["Champion Class"], width = "full", order = 30,
 				values = { LQ["Among the Champions"], LQ["Battle Before The Citadel"], LQ["Taking Battle To The Enemy"], },
 			},
+			campOpt = { type = "select", name = L["Champion Quest Rewards"], order = 35, get = "ACTGet", set = "ACTSet",
+				values = { (GetItemInfo(46114)), (GetItemInfo(45724)), nil, nil, L["None"]},
+			},
 		},
 	}
 	return t
@@ -570,10 +585,24 @@ function module:FactionTokenGet(info)
 end
 
 function module:FactionTokenSet(info, val)
-	db.profile.qOptions[LQ["Timear Foresees Centrifuge Constructs in your Future!"]] = val
-	db.profile.qOptions[LQ["Timear Foresees Infinite Agents in your Future!"]] = val
-	db.profile.qOptions[LQ["Timear Foresees Titanium Vanguards in your Future!"]] = val
-	db.profile.qOptions[LQ["Timear Foresees Ymirjar Berserkers in your Future!"]] = val
+	local qOpt = db.profile.qOptions
+	qOpt[LQ["Timear Foresees Centrifuge Constructs in your Future!"]] = val
+	qOpt[LQ["Timear Foresees Infinite Agents in your Future!"]] = val
+	qOpt[LQ["Timear Foresees Titanium Vanguards in your Future!"]] = val
+	qOpt[LQ["Timear Foresees Ymirjar Berserkers in your Future!"]] = val
+end
+
+function module:ACTGet(info)
+	return db.profile.qOptions[LQ["Among the Champions"]]
+end
+
+function module:ACTSet(info, val)
+	local qOpt = db.profile.qOptions
+	qOpt[ LQ["Among the Champions"] ] = val
+	qOpt[ LQ["Battle Before The Citadel"] ] = val
+	qOpt[ LQ["Taking Battle To The Enemy"] ] = val
+
+	
 end
 
 function module:GetQuestOption(info)
