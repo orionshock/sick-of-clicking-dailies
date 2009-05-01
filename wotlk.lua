@@ -52,6 +52,7 @@ module.defaults = {
 			[LQ["Among the Champions"]] = 5,
 			[LQ["Battle Before The Citadel"]] = 5,
 			[LQ["Taking Battle To The Enemy"]] = 5,
+			[LQ["Threat From Above"]] = 5,
 
 		},
 		quests = {},
@@ -605,8 +606,7 @@ function module:ACTSet(info, val)
 	qOpt[ LQ["Among the Champions"] ] = val
 	qOpt[ LQ["Battle Before The Citadel"] ] = val
 	qOpt[ LQ["Taking Battle To The Enemy"] ] = val
-
-	
+	qOpt[ LQ["Threat From Above"] ] = val
 end
 
 function module:GetQuestOption(info)
