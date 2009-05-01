@@ -226,6 +226,7 @@ end
 
 function addon:OnEnable()
 	self:RegisterEvent("GOSSIP_SHOW")
+	self:RegisterEvent("QUEST_GREETING")
 	self:RegisterEvent("QUEST_DETAIL")
 	self:RegisterEvent("QUEST_PROGRESS")
 	self:RegisterEvent("QUEST_COMPLETE")
@@ -253,7 +254,7 @@ function addon:GOSSIP_SHOW(event)
 		return
 	end
 	if (IsShiftKeyDown()) then return end
-	local sel, quest, status = self.OpeningCheckQuest(event)
+	local sel, quest, status = self:OpeningCheckQuest(event)
 	D(event, "logic batterie sel:", sel, "quest:", quest, "status:", status)
 	if sel then
 		D(event, "We have quest selection", sel, quest, status, "| BadNPC:", npcBad)
@@ -291,11 +292,41 @@ function addon:DoGossipOptions(te)
 	end
 end
 
+function addon:QUEST_GREETING(event, ...)
+	local stopFlag, s_title, s_npc = false, nil, nil
+	local npc = self:CheckNPC(event)
+	if not npc then
+		D(event, "no known npc")
+		return
+	end
+	if (IsShiftKeyDown()) then return end
+	local numActiveQuests = GetNumActiveQuests();
+	local numAvailableQuests = GetNumAvailableQuests();
+
+	if numAvailableQuests > 0 then
+		local selection, quest = self:QuestItteratePickUp(event, GetAvailableTitle(1), GetAvailableTitle(2), GetAvailableTitle(3), GetAvailableTitle(4), GetAvailableTitle(5), GetAvailableTitle(6) )
+		if selection and quest then
+			SelectAvailableQuest(selection)
+			return
+		end
+	end
+
+	if numActiveQuests > 0 then
+		local selection, quest = self:QuestItterateTurnIn(event, GetActiveTitle(1), GetActiveTitle(2), GetActiveTitle(3), GetActiveTitle(4), GetActiveTitle(5), GetActiveTitle(6) )
+		if selection and quest then
+			SelectActiveQuest(selection)
+			return
+		end
+	end
+
+
+end
+
 function addon:QUEST_DETAIL(event)
 	D(event)
 	if IsShiftKeyDown() then return end
 	local npc = self:CheckNPC(event)
-	local quest = addon.TitleCheck(event)
+	local quest = self:TitleCheck(event)
 	D(event, "found:", npc, quest)
 	if npc and quest then
 		D(event,"Accepting Quest", quest, npc)
@@ -309,7 +340,7 @@ function addon:QUEST_PROGRESS(event)
 	D(event)
    	if IsShiftKeyDown() then return end
 	local npc = self:CheckNPC(event)
-	local quest = addon.TitleCheck(event)
+	local quest = self:TitleCheck(event)
 	D(event, "found:", npc, quest)		
 	if npc and quest then
 		if not IsQuestCompletable() then
@@ -333,7 +364,7 @@ do
 		nextQuestFlag = false
 		if IsShiftKeyDown() then return end
 		local npc = self:CheckNPC(event)
-		local quest = addon.TitleCheck(event)
+		local quest = self:TitleCheck(event)
 		if npc and quest then
 			local opt = qOptions(quest)
 			if (opt and (opt == 5)) then
@@ -394,17 +425,22 @@ function addon:CheckNPC(te)
 	end
 end
 
-local function QuestItteratePickUp(te, ...)
+local function scrubQuests(title, lvl, triv, ...)
+	if not (...) then return title end
+	return title, scrubQuests(...)
+end
+
+function addon:QuestItteratePickUp(te, ...)
 	te = "QuPickUp~"..te
 	if (...) == nil then
 		D(te, "nil opening on the vargArg")
 		return
 	end
-	for i=1, select("#", ...), 3 do
+	for i=1, select("#", ...) do
 		local element = select(i, ...)
 		if qTable(element) then
-			D(te, "found quest, index:", (i+2)/3 , "Quest:", element )
-			return (i+2)/3 , element
+			D(te, "found quest, index:", i , "Quest:", element )
+			return i , element
 		end
 	end
 end
@@ -415,12 +451,7 @@ end
 		format: "QuestTitle", "QuestLvl", "Trivaial" =  GetGossipActiveQuests()
 ]]--
 
-function scrubQuests(title, lvl, triv, ...)
-	if not (...) then return title end
-	return title, scrubQuests(...)
-end
-
-local function QuestItterateTurnIn(te, ...)
+function addon:QuestItterateTurnIn(te, ...)
 	te = "QiTi~"..te
 	D(te, ...)
 	if not (...) then return end
@@ -465,20 +496,20 @@ local function QuestItterateTurnIn(te, ...)
 	end
 end
 				
-function addon.OpeningCheckQuest(te)
+function addon:OpeningCheckQuest(te)
 	te = "OpQu~"..te
-	local selection, quest = QuestItteratePickUp(te, GetGossipAvailableQuests())
+	local selection, quest = self:QuestItteratePickUp(te, scrubQuests(GetGossipAvailableQuests()))
 	if quest then
 			return selection, quest, "Available"
 	else
-		selection, quest = QuestItterateTurnIn(te, scrubQuests(GetGossipActiveQuests()))
+		selection, quest = self:QuestItterateTurnIn(te, scrubQuests(GetGossipActiveQuests()))
 		if quest then
 			return selection, quest, "Active"
 		end
 	end
 end
 
-function addon.TitleCheck(te)
+function addon:TitleCheck(te)
 	te = "TitleCk~"..te
 	if qTable(GetTitleText()) then
 		D(te, GetTitleText())
