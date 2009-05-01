@@ -69,6 +69,7 @@ do
 	end
 	profile[ LQ["Hand of the Oracles"] ] = false		--Disabled on good authority by
 	profile[ LQ["Frenzyheart Champion"] ] = false		-- "Fisker-" in IRC
+	profile[ LQ["Contributin' To The Cause"] ] = false
 end
 
 
@@ -270,6 +271,7 @@ module.npcList = table.concat({
 	33771, 	--"Luuri"
 	33759, 	--"Eadric the Pure", nil
 	33763, 	--"Cellian Daybreak", nil
+	34210, --Squire Artie
 	
 -------------------------------------------
 		---Grizzly Hills---
@@ -570,7 +572,7 @@ function module:GetACTourny()
 				values = { LQ["At The Enemy's Gates"], LQ["The Grand Melee"], LQ["A Valiant's Field Training"] },
 			},
 			champ = { type = "multiselect", name = L["Champion Class"], width = "full", order = 30,
-				values = { LQ["Among the Champions"], LQ["Battle Before The Citadel"], LQ["Taking Battle To The Enemy"], },
+				values = { LQ["Battle Before The Citadel"], LQ["Threat From Above"], LQ["Among the Champions"], LQ["Taking Battle To The Enemy"], LQ["Contributin' To The Cause"] },
 			},
 			campOpt = { type = "select", name = L["Champion Quest Rewards"], order = 35, get = "ACTGet", set = "ACTSet",
 				values = { (GetItemInfo(46114)), (GetItemInfo(45724)), nil, nil, L["None"]},
