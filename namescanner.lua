@@ -257,9 +257,11 @@ local qTable = {
 	[13772] = "The Grand Melee",
 	[13771] = "A Valiant's Field Training",
 --Chimpmonk
-	[13814] = "Among the Champions",
-	[13864] = "Battle Before The Citadel",
-	[13813] = "Taking Battle To The Enemy",
+	[13861] = "Battle Before The Citadel",	--WotLK
+	[13682] = "Threat From Above",	--WotLK
+	[13790] = "Among Champions",	--WotLK
+	[13789] = "Taking Battle To The Enemy",	--WotLK
+	[13846] = "Contributin' To The Cause", --WotLK
 
 
 --Fishing:
