@@ -126,6 +126,8 @@ module.npcList = table.concat({
 
 		---Jewlcrafting----
 	28701, --Timothy Jones
+		---Fishing---
+	28742, --Marcia Chase
 
 	-------FACTIONS-----
 		---The, --Wyrmrest Accord---

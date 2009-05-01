@@ -259,7 +259,7 @@ local qTable = {
 --Chimpmonk
 	[13861] = "Battle Before The Citadel",	--WotLK
 	[13682] = "Threat From Above",	--WotLK
-	[13790] = "Among Champions",	--WotLK
+	[13790] = "Among the Champions",	--WotLK
 	[13789] = "Taking Battle To The Enemy",	--WotLK
 	[13846] = "Contributin' To The Cause", --WotLK
 
