@@ -25,7 +25,8 @@ end
 
 local module = AddonParent:NewModule("RRQ")
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
-local LQ = LibStub("AceLocale-3.0"):GetLocale("SOCD_RRQ")
+--local LQ = LibStub("AceLocale-3.0"):GetLocale("SOCD_RRQ")
+local LQ = {}
 local db
 
 
@@ -55,6 +56,7 @@ function module:OnInitialize()
 	db = AddonParent.db:RegisterNamespace("RRQ", module.defaults)
 	self.db = db
 	self.npcList = db.profile.npcList
+	self:CreateInteractionFrame()
 end
 
 function module:OnEnable()
@@ -65,10 +67,13 @@ end
 function module:OnDisable()
 	--D("OnDisable")
 	AddonParent:UnRegisterQuests("RRQ")
+	db.profile.npcList = self.npcList
 end
 
 function module:AddNPCID(id)
 	D("addNCP?")
+	if not tostring(id) then return end
+	id = tostring(id)
 	if self.npcList:find(id) then
 		D("npc Added already")
 		return false
@@ -79,6 +84,71 @@ function module:AddNPCID(id)
 	return true		
 end
 
+local backdrop = {
+	bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+	edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+	edgeSize = 32,
+	tileSize = 32,
+	tile = true,
+	insets = { left = 11, right = 12, top = 12, bottom = 11 },
+}
+
+local function CheckButton_OnClick(self, button)
+	local checked, quest = self:GetChecked(), GetTitleText()
+	if quest then
+		if checked then
+			--We are going to Auto Exclude Quests that have choice Reqards from being eligibale in the auto turn in proccess.
+			db[quest] = true
+			module:AddNPCID( tonumber( strsub( UnitGUID("target"), -12, -7), 16) )
+		end
+	end
+end
+
+
+local function frame_OnEvnet(self, event, ...)
+	if event ~= "QUEST_COMPLETE" then return self:Hide() end
+	local quest = GetTitleText()
+	self.check:SetChecked(db[quest])
+end
+
+function module:CreateInteractionFrame()
+	--BaseFrame
+	local frame = CreateFrame("frame", "SOCD_tFrame", QuestFrame)
+	frame:SetPoint("TOPLEFT", QuestFrame, "TOPRIGHT")
+	frame:SetWidth(200)
+	frame:SetHeight(50)
+	--frame:SetPoint("LEFT", QuestFrame, "RIGHT")
+	frame:SetBackdrop(backdrop)
+
+	--CheckBox
+	local check = CreateFrame("CheckButton", "SOCD_cButton", frame)
+	check:SetWidth(35)
+	check:SetHeight(35)
+	check:SetPoint("LEFT", frame, "LEFT", 10, 0)
+	check:SetNormalTexture("Interface\\Buttons\\UI-CheckBox-Up");
+	check:SetPushedTexture("Interface\\Buttons\\UI-CheckBox-Down"); 
+	check:SetHighlightTexture("Interface\\Buttons\\UI-CheckBox-Highlight", "ADD");
+	check:SetCheckedTexture("Interface\\Buttons\\UI-CheckBox-Check");
+
+	--FontString
+	local text = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	text:SetPoint("LEFT", check, "RIGHT", 5, 0)
+	text:SetText(L["Enable AutoTurn In for this Quest?"])
+	frame:SetWidth( text:GetWidth() + 70 )
+
+	--reference on frame
+	frame.check = check
+	frame.text = text
+	frame.addon = self
+
+	frame:RegisterEvent("QUEST_DETAIL")
+	frame:RegisterEvent("QUEST_COMPLETE")
+	frame:RegisterEvent("QUEST_FINISHED")
+	frame:SetScript("OnEvent", frame_OnEvnet)
+	check:SetScript("OnClick", CheckButton_OnClick)
+
+	self.frame = frame
+end
 
 function module:GetOptionsTable()
 	local options = {
@@ -89,6 +159,7 @@ function module:GetOptionsTable()
 		set = "Multi_Set",
 		order = 1,
 		args = {
+			hi = { type = "description", name = "Hi", order = 1},
 			}, --Top Lvl Args
 		}--Top lvl options
 	return options

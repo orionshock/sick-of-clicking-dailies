@@ -21,6 +21,7 @@ core.lua
 Classic.lua
 BC.lua
 wotlk.lua
+non-dailies.lua
 
 #@alpha@
 namescanner.lua
