@@ -3,6 +3,7 @@
 --	Wintersaber Quests
 --	Battleground PvP
 --
+local AddonParent = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
 
 local D		--Basic Debug
 do
@@ -22,7 +23,7 @@ do
 	end
 end
 
-local AddonParent = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
+
 do
 	local fr = ("$Rev$"):match("%d+") or 0
 	local cr = (AddonParent.version):match("%d+") or 1

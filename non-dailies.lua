@@ -1,5 +1,5 @@
 --
---	Template Module
+--	Repeatable Reputation Quests Module
 --
 --
 --
@@ -17,16 +17,17 @@ do
 			str = str:gsub(":,", ":"):gsub("=,", "=")
 		end
 		if AddonParent.db and AddonParent.db.profile.debug then		
-			print("|cff9933FFSOCD-TEMP:|r "..str)
+			print("|cff9933FFSOCD-RRQ:|r "..str)
 		end
 		return str
 	end
 end
 
-local module = AddonParent:NewModule("TEMP")
+local module = AddonParent:NewModule("RRQ")
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
-local LQ = LibStub("AceLocale-3.0"):GetLocale("SOCD_TEMP")
+local LQ = LibStub("AceLocale-3.0"):GetLocale("SOCD_RRQ")
 local db
+
 
 module.defaults = {
 	profile = {
@@ -35,10 +36,12 @@ module.defaults = {
 			--["*"] = 3,
 			--This section has to be manually set with the localized quest name and a default option of off
 			--not very many of these quests so it won't matter :D
-		gossip = {},
 		},
+		gossip = {},
+		npcList = "",
 	},
 }
+
 do
 	local profile = module.defaults.profile
 	for k,v in pairs(LQ) do
@@ -49,28 +52,37 @@ end
 
 function module:OnInitialize()
 	--D("OnInit")
-	db = AddonParent.db:RegisterNamespace("TEMP", module.defaults)
+	db = AddonParent.db:RegisterNamespace("RRQ", module.defaults)
 	self.db = db
+	self.npcList = db.profile.npcList
 end
 
 function module:OnEnable()
 	--D("OnEnable")
-	AddonParent:RegisterQuests("TEMP", db.profile, self.npcList, db.profile.qOptions, db.profile.gossip )
+	AddonParent:RegisterQuests("RRQ", db.profile, self.npcList, db.profile.qOptions, db.profile.gossip )
 end
 
 function module:OnDisable()
 	--D("OnDisable")
-	AddonParent:UnRegisterQuests("TEMP")
+	AddonParent:UnRegisterQuests("RRQ")
 end
 
-module.npcList = table.concat({
-	"00000"		--Don't forget to replace this
+function module:AddNPCID(id)
+	D("addNCP?")
+	if self.npcList:find(id) then
+		D("npc Added already")
+		return false
+	else
+		self.npcList = self.npcList..":"..(tostring(id) or "")
+		D("added", id, "to npcID list for", self:GetName())
+	end
+	return true		
+end
 
-	}, ":")
 
 function module:GetOptionsTable()
 	local options = {
-		name = L["TEMP"],
+		name = L["RRQ"],
 		type = "group",
 		handler = module,
 		get = "Multi_Get",
