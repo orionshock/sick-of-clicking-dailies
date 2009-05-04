@@ -228,7 +228,7 @@ function module:GetOptionsTable()
 		handler = module,
 		get = "Multi_Get",
 		set = "Multi_Set",
-		order = 1,
+		order =4 ,
 		args = {
 			hi = { type = "description", name = "Hi", order = 1},
 			}, --Top Lvl Args

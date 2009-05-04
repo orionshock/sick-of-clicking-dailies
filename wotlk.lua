@@ -460,6 +460,9 @@ function module:GetWorldPvP()
 					LQ["Warding the Walls"], LQ["Warding the Warriors"], LQ["Southern Sabotage"],
 				},
 			},
+			battleground = {name = L["Battlegrounds"], order = 2, type = "multiselect", width = "full",
+				values = { LQ["Call to Arms: Strand of the Ancients"], },
+			},
 			iceCrown = { name = L["Icecrown"], order = 2, type = "group",
 				args = {
 					Netural = {name = L["Icecrown Netural Quests"], type = "multiselect", order = 1, width = "full", values = {}, hidden = true},
