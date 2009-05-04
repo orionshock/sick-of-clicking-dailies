@@ -166,10 +166,10 @@ end
 
 
 local function SOCD_OnEvnet(frame, event, ...)
-	if event ~= "QUEST_COMPLETE" then
-		D("Event not QuestCOMPLETE hiding", event)
-		return frame:Hide()
-	end	--
+	--if event ~= "QUEST_COMPLETE" or "QUEST_DETAIL" then
+	--	D("Event not QuestCOMPLETE hiding", event)
+	--	return frame:Hide()
+	--end	--
 	if GetQuestItemInfo("choice",1) ~= "" then
 		D("Quest has choices, exiting")
 		return frame:Hide()
