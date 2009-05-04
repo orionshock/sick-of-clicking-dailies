@@ -69,6 +69,29 @@ function module:OnDisable()
 	AddonParent:UnRegisterQuests("RRQ")
 	db.profile.npcList = self.npcList
 end
+function module:AddQuest(name)
+	local e = "AddQuest"
+	print(e, "AddQuest()", name)
+	local found = false
+	for pack, list in pairs(AddonParent.moduleQLookup) do
+		local s = list[name] or list[name] == false
+		print(e, "Pack:", pack, "isListed?:", s)
+		if list[name] or list[name] == false then
+			print(e, "Found quest", name, "in pack", pack)
+			if pack ~= "RRQ" then
+				print(e, "Not RRQ Pack, set found = true")
+				found = true
+			end
+		end
+	end
+	if not found then
+		print(e, "quest not found in other packs, adding")
+		db.profile[name] = true
+		return true
+	end
+	print(e, "returning false")
+	return false
+end
 
 function module:AddNPCID(id)
 	D("addNCP?")
@@ -78,7 +101,8 @@ function module:AddNPCID(id)
 		D("npc Added already")
 		return false
 	else
-		self.npcList = self.npcList..":"..(tostring(id) or "")
+		self.npcList = self.npcList..":"..tostring(id)
+		AddonParent:RegisterQuests("RRQ", db.profile, self.npcList, db.profile.qOptions, db.profile.gossip )
 		D("added", id, "to npcID list for", self:GetName())
 	end
 	return true		
@@ -94,21 +118,65 @@ local backdrop = {
 }
 
 local function CheckButton_OnClick(self, button)
-	local checked, quest = self:GetChecked(), GetTitleText()
+	local e = "CB~OC"
+	local checked, quest, guid = self:GetChecked(), GetTitleText(), UnitGUID("target")
+	print(e, "inital Standing", checked, quest, guid)
 	if quest then
-		if checked then
-			--We are going to Auto Exclude Quests that have choice Reqards from being eligibale in the auto turn in proccess.
-			db[quest] = true
-			module:AddNPCID( tonumber( strsub( UnitGUID("target"), -12, -7), 16) )
+		print(e, "have quest:", quest)
+		if checked and guid then
+			print(e, "It is checked, and has a GUID", checked, guid)
+			if db.profile[quest] or db.profile[quest] == false then
+				print(e, "Quest has been set before, as we're checked, toggle true")
+				db.profile[quest] = true
+
+			elseif db.profile[quest] == nil then
+				print(e, "Quest not seen before, quiry to add quest")
+				if module:AddQuest(quest) then
+					print(e, "Quest not in other db's, add it's NPCID too")
+					module:AddNPCID( tonumber( strsub( guid, -12, -7), 16) )
+
+				else
+					print(e, "quest found elsewhere, returning")
+					self:SetChecked(false)
+					return
+				end
+			end
+		else
+			print(e, "No quest:", quest, "or no GUID:", guid)
+			self:SetChecked(false)
+		end
+		if not checked then
+			print(e, "not checked, disabling it")
+			db.profile[quest] = false
 		end
 	end
 end
+local GameTooltip = GameTooltip
+local function CheckButton_OnEnter(self)
+	GameTooltip:ClearAllPoints()
+	GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT")
+	GameTooltip:AddLine(L["Quests that have no NPC or have quest choice rewards will automatically be ignored"])
+	GameTooltip:Show()
+end
+
+local function CheckButton_OnLeave(self)
+	GameTooltip:Hide()
+end
 
 
-local function frame_OnEvnet(self, event, ...)
-	if event ~= "QUEST_COMPLETE" then return self:Hide() end
+local function SOCD_OnEvnet(frame, event, ...)
+	if event ~= "QUEST_COMPLETE" then
+		D("Event not QuestCOMPLETE hiding", event)
+		return frame:Hide()
+	end	--
+	if GetQuestItemInfo("choice",1) ~= "" then
+		D("Quest has choices, exiting")
+		return frame:Hide()
+	end	--if there is a reward choice then not eligible
 	local quest = GetTitleText()
-	self.check:SetChecked(db[quest])
+	frame:Show()
+	frame.check:SetChecked(db.profile[quest])
+	D("OnEvent", "EoC", quest, "shown:", frame:IsShown(), "checked:", frame.check:GetChecked())
 end
 
 function module:CreateInteractionFrame()
@@ -144,8 +212,10 @@ function module:CreateInteractionFrame()
 	frame:RegisterEvent("QUEST_DETAIL")
 	frame:RegisterEvent("QUEST_COMPLETE")
 	frame:RegisterEvent("QUEST_FINISHED")
-	frame:SetScript("OnEvent", frame_OnEvnet)
+	frame:SetScript("OnEvent", SOCD_OnEvnet)
 	check:SetScript("OnClick", CheckButton_OnClick)
+	check:SetScript("OnEnter", CheckButton_OnEnter)
+	check:SetScript("OnLeave", CheckButton_OnLeave)
 
 	self.frame = frame
 end
