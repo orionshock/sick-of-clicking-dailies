@@ -58,8 +58,9 @@ module.defaults = {
 		quests = {},
 		gossip = {
 			--["Tell me of yourself, Xarantaur. Why are you called the Witness?"] = true,
-			[LQ["I'm ready to begin. What is the first ingredient you require?"]] = true,
-			[LQ["Get out there and make those Scourge wish they were never reborn!"]] = true,
+			[LQ["I'm ready to begin. What is the first ingredient you require?"]] = true,	--Alchy Dailie from Argent crusade in Drak'Tharon
+			[LQ["Get out there and make those Scourge wish they were never reborn!"]] = true,	--Troll patrol quest
+			[LQ["Let's do this, sister."] ] = true,	--Defending your Title in Storm peaks
 		}
 	},
 }
@@ -288,6 +289,7 @@ module.npcList = table.concat({
 
 		---The, --Storm Peaks--- --Faction Netural--
 	29796, --Gretta the Arbiter
+	30012,	--Victorious Challenger, "Defending your title"
 	29428, --Ricket
 
 		---Howling, --Fjord--- (Alliance Only)
@@ -388,7 +390,7 @@ function module:GetOptionsTable()
 									[LQ["Congratulations!"]] = LQ["Congratulations!"], 
 								},
 							},
-							crusade_gossip = { name = L["Argent Crusade Gossip Options"], type = "multiselect", order = 2, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
+							crusade_gossip = { name = L["Argent Crusade"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 2, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
 								values = {
 									[LQ["I'm ready to begin. What is the first ingredient you require?"]] = LQ["Troll Patrol: The Alchemist's Apprentice"]:gsub(L["Troll Patrol: "], ""),		
 									[LQ["Get out there and make those Scourge wish they were never reborn!"]] = LQ["Troll Patrol: Intestinal Fortitude"]:gsub(L["Troll Patrol: "], ""),
@@ -409,6 +411,9 @@ function module:GetOptionsTable()
 					},
 					peaks = { name = L["The Storm Peaks"], type = "multiselect", order = 7, width = "full",
 						values = { LQ["Back to the Pit"], LQ["Defending Your Title"], LQ["Overstock"], LQ["Maintaining Discipline"], LQ["The Aberrations Must Die"], },
+					},
+					peaksGossip = { name = L["The Storm Peaks"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 8, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
+						values = { [LQ["Let's do this, sister."]] = LQ["Defending Your Title"] },
 					},
 					frostborn = { name = L["The Frostborn"], type = "multiselect", order = 7, width = "full",
 						values = { LQ["Pushed Too Far"] },
