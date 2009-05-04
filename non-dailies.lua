@@ -71,25 +71,25 @@ function module:OnDisable()
 end
 function module:AddQuest(name)
 	local e = "AddQuest"
-	print(e, "AddQuest()", name)
+	--print(e, "AddQuest()", name)
 	local found = false
 	for pack, list in pairs(AddonParent.moduleQLookup) do
 		local s = list[name] or list[name] == false
-		print(e, "Pack:", pack, "isListed?:", s)
+		--print(e, "Pack:", pack, "isListed?:", s)
 		if list[name] or list[name] == false then
-			print(e, "Found quest", name, "in pack", pack)
+			--print(e, "Found quest", name, "in pack", pack)
 			if pack ~= "RRQ" then
-				print(e, "Not RRQ Pack, set found = true")
+				--print(e, "Not RRQ Pack, set found = true")
 				found = true
 			end
 		end
 	end
 	if not found then
-		print(e, "quest not found in other packs, adding")
+		--print(e, "quest not found in other packs, adding")
 		db.profile[name] = true
 		return true
 	end
-	print(e, "returning false")
+	--print(e, "returning false")
 	return false
 end
 
@@ -120,33 +120,33 @@ local backdrop = {
 local function CheckButton_OnClick(self, button)
 	local e = "CB~OC"
 	local checked, quest, guid = self:GetChecked(), GetTitleText(), UnitGUID("target")
-	print(e, "inital Standing", checked, quest, guid)
+	--print(e, "inital Standing", checked, quest, guid)
 	if quest then
-		print(e, "have quest:", quest)
+		--print(e, "have quest:", quest)
 		if checked and guid then
-			print(e, "It is checked, and has a GUID", checked, guid)
+			--print(e, "It is checked, and has a GUID", checked, guid)
 			if db.profile[quest] or db.profile[quest] == false then
-				print(e, "Quest has been set before, as we're checked, toggle true")
+				--print(e, "Quest has been set before, as we're checked, toggle true")
 				db.profile[quest] = true
 
 			elseif db.profile[quest] == nil then
-				print(e, "Quest not seen before, quiry to add quest")
+				--print(e, "Quest not seen before, quiry to add quest")
 				if module:AddQuest(quest) then
-					print(e, "Quest not in other db's, add it's NPCID too")
+					--print(e, "Quest not in other db's, add it's NPCID too")
 					module:AddNPCID( tonumber( strsub( guid, -12, -7), 16) )
 
 				else
-					print(e, "quest found elsewhere, returning")
+					--print(e, "quest found elsewhere, returning")
 					self:SetChecked(false)
 					return
 				end
 			end
 		else
-			print(e, "No quest:", quest, "or no GUID:", guid)
+			--print(e, "No quest:", quest, "or no GUID:", guid)
 			self:SetChecked(false)
 		end
 		if not checked then
-			print(e, "not checked, disabling it")
+			--print(e, "not checked, disabling it")
 			db.profile[quest] = false
 		end
 	end
@@ -156,6 +156,7 @@ local function CheckButton_OnEnter(self)
 	GameTooltip:ClearAllPoints()
 	GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT")
 	GameTooltip:AddLine(L["Quests that have no NPC or have quest choice rewards will automatically be ignored"])
+	GameTooltip:AddLine(L["This Option is also not retroactive"])
 	GameTooltip:Show()
 end
 
