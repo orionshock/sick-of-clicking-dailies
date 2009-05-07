@@ -81,7 +81,7 @@ module.npcList = table.concat({
 
 function module:GetOptionsTable()
 	local options = {
-		name = L["Classic WoW"],
+		name = L["Classic"],
 		type = "group",
 		handler = module,
 		order = 1,
