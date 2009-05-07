@@ -156,7 +156,7 @@ local function CheckButton_OnEnter(self)
 	GameTooltip:ClearAllPoints()
 	GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT")
 	GameTooltip:AddLine(L["Quests that have no NPC or have quest choice rewards will automatically be ignored"])
-	GameTooltip:AddLine(L["This Option is also not retroactive"])
+	GameTooltip:AddLine(L["This option is also not retroactive"])
 	GameTooltip:Show()
 end
 
