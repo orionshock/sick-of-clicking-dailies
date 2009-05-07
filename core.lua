@@ -1,39 +1,14 @@
 --[[
 Major 6,  MinorSVN:  $Revision$
 
-Sick Of Clicking Dailys is a simple addon designed to pick up and turn in Dailiy Quests for WoW.
+Sick Of Clicking Dailies is a simple addon designed to pick up and turn in Dailiy Quests for WoW.
 
 This version comes with a built in config system made with Ace3's Config GUI Libs.
 
 =====================================================================================================
  Copyright (c) 2007 by Orionshock
 
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-The rights to the Software's "Name", official version of the Software
-as well as the right to host and distribute the official version
-are reserved by the copyright holder.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-
-
-All other files are licenced under their respective terms.
+	see included "LICENSE.txt" file with zip for details on copyright.
 
 =====================================================================================================
 ]]--
@@ -148,8 +123,8 @@ local defaults = {
 --	Options Table & Module Methods for getting options tables
 --
 
-local function GetModuleOptions(name, order)
-	return { name = name, type = "toggle", get = "GetModuleState", set = "ToggleModule", order = order}
+local function GetModuleOptions(Lname, mName)
+	return { name = Lname, type = "toggle", get = "GetModuleState", set = "ToggleModule", arg = mName}
 end
 
 local function GetOptionsTable()
@@ -174,17 +149,17 @@ local function GetOptionsTable()
 	local i = 1
 	for name, module in addon:IterateModules() do
 		options.args[name] = (type(module.GetOptionsTable) == 'function' and module:GetOptionsTable()) or nil
-		options.args.moduleControl.args[name] = GetModuleOptions(name, i)
+		options.args.moduleControl.args[name] = GetModuleOptions(L[name], name)
 		i = i + 1
 	end
 	return options
 end
 
 function addon:GetModuleState(info)
-	return self.db.profile.modules[info.option.name]
+	return self.db.profile.modules[info.option.arg]
 end
 function addon:ToggleModule(info, value)
-	local option = info.option.name
+	local option = info.option.arg
 	if value then
 		self:EnableModule(option)
 		self.db.profile.modules[option] = true
