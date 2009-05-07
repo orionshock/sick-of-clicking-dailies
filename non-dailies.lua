@@ -61,6 +61,7 @@ end
 
 function module:OnEnable()
 	--D("OnEnable")
+	self.npcList = db.profile.npcList
 	AddonParent:RegisterQuests("RRQ", db.profile, self.npcList, db.profile.qOptions, db.profile.gossip )
 end
 
@@ -71,39 +72,31 @@ function module:OnDisable()
 end
 function module:AddQuest(name)
 	local e = "AddQuest"
-	--print(e, "AddQuest()", name)
 	local found = false
 	for pack, list in pairs(AddonParent.moduleQLookup) do
 		local s = list[name] or list[name] == false
-		--print(e, "Pack:", pack, "isListed?:", s)
 		if list[name] or list[name] == false then
-			--print(e, "Found quest", name, "in pack", pack)
 			if pack ~= "RRQ" then
-				--print(e, "Not RRQ Pack, set found = true")
 				found = true
 			end
 		end
 	end
 	if not found then
-		--print(e, "quest not found in other packs, adding")
+
 		db.profile[name] = true
 		return true
 	end
-	--print(e, "returning false")
 	return false
 end
 
 function module:AddNPCID(id)
-	D("addNCP?")
 	if not tostring(id) then return end
 	id = tostring(id)
 	if self.npcList:find(id) then
-		D("npc Added already")
 		return false
 	else
 		self.npcList = self.npcList..":"..tostring(id)
 		AddonParent:RegisterQuests("RRQ", db.profile, self.npcList, db.profile.qOptions, db.profile.gossip )
-		D("added", id, "to npcID list for", self:GetName())
 	end
 	return true		
 end
@@ -120,33 +113,22 @@ local backdrop = {
 local function CheckButton_OnClick(self, button)
 	local e = "CB~OC"
 	local checked, quest, guid = self:GetChecked(), GetTitleText(), UnitGUID("target")
-	--print(e, "inital Standing", checked, quest, guid)
 	if quest then
-		--print(e, "have quest:", quest)
 		if checked and guid then
-			--print(e, "It is checked, and has a GUID", checked, guid)
 			if db.profile[quest] or db.profile[quest] == false then
-				--print(e, "Quest has been set before, as we're checked, toggle true")
 				db.profile[quest] = true
-
 			elseif db.profile[quest] == nil then
-				--print(e, "Quest not seen before, quiry to add quest")
 				if module:AddQuest(quest) then
-					--print(e, "Quest not in other db's, add it's NPCID too")
 					module:AddNPCID( tonumber( strsub( guid, -12, -7), 16) )
-
 				else
-					--print(e, "quest found elsewhere, returning")
 					self:SetChecked(false)
 					return
 				end
 			end
 		else
-			--print(e, "No quest:", quest, "or no GUID:", guid)
 			self:SetChecked(false)
 		end
 		if not checked then
-			--print(e, "not checked, disabling it")
 			db.profile[quest] = false
 		end
 	end
@@ -166,18 +148,16 @@ end
 
 
 local function SOCD_OnEvnet(frame, event, ...)
-	--if event ~= "QUEST_COMPLETE" or "QUEST_DETAIL" then
-	--	D("Event not QuestCOMPLETE hiding", event)
-	--	return frame:Hide()
-	--end	--
-	if GetQuestItemInfo("choice",1) ~= "" then
-		D("Quest has choices, exiting")
+	if not module:IsEnabled() then 
+		frame:Hide()
+		return
+	end
+	if GetQuestItemInfo("choice",1) ~= "" then --if there is a reward choice then not eligible
 		return frame:Hide()
-	end	--if there is a reward choice then not eligible
+	end	
 	local quest = GetTitleText()
 	frame:Show()
 	frame.check:SetChecked(db.profile[quest])
-	D("OnEvent", "EoC", quest, "shown:", frame:IsShown(), "checked:", frame.check:GetChecked())
 end
 
 function module:CreateInteractionFrame()
@@ -230,9 +210,11 @@ function module:GetOptionsTable()
 		set = "Multi_Set",
 		order =4 ,
 		args = {
-			hi = { type = "description", name = "Hi", order = 1},
-			}, --Top Lvl Args
-		}--Top lvl options
+			quests = {type = "multiselect", name = L["RRQ"].." "..L["Listed Quests"], order = 1,
+				values = "GetRRQListing",
+			},
+		}, --Top Lvl Args
+	}--Top lvl options
 	return options
 end
 
@@ -244,6 +226,18 @@ end
 --function module:SetQuestEnabled(info, val)
 --	db.profile[info.option.name] = val
 --end
+
+local tmpTbl = {}
+function module:GetRRQListing(info)
+	wipe(tmpTbl)
+	for k,v in pairs(db.profile) do
+		if type(v) == "boolean" then
+			tinsert(tmpTbl, k)
+		end
+	end
+	table.sort(tmpTbl)
+	return tmpTbl
+end
 
 function module:GetQuestOption(info)
 	return db.profile.qOptions[info.option.name]
