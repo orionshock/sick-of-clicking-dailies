@@ -26,9 +26,7 @@ end
 local module = AddonParent:NewModule("RRQ")
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
 --local LQ = LibStub("AceLocale-3.0"):GetLocale("SOCD_RRQ")
-local LQ = {}
 local db
-
 
 module.defaults = {
 	profile = {
@@ -42,13 +40,6 @@ module.defaults = {
 		npcList = "",
 	},
 }
-
-do
-	local profile = module.defaults.profile
-	for k,v in pairs(LQ) do
-		profile[v] = true
-	end
-end
 
 
 function module:OnInitialize()
@@ -247,18 +238,12 @@ function module:SetQuestOption(info, val)
 	db.profile.qOptions[info.option.name] = val
 end
 
-function module:Multi_Get(info, value)
-	if type(value) == "number" then
-		return db.profile[info.option.values[value]]
-	else
-		return db.profile[value]
-	end
+function module:Multi_Get(info,value, ...)
+	value = tmpTbl[value]
+	return db.profile[value]
 end
 
-function module:Multi_Set(info, value, state)
-	if type(value) == "number" then
-		db.profile[info.option.values[value]] = state
-	else
-		db.profile[value] = state
-	end
+function module:Multi_Set(info, value, state, ...)
+	value = tmpTbl[value]
+	db.profile[value] = state
 end
