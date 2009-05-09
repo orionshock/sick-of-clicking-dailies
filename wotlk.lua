@@ -130,6 +130,7 @@ module.npcList = table.concat({
 	28701, --Timothy Jones
 		---Fishing---
 	28742, --Marcia Chase
+	28706, --Olisarra the Kind
 
 	-------FACTIONS-----
 		---The, --Wyrmrest Accord---
