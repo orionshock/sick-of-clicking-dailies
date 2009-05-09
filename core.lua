@@ -89,11 +89,11 @@ function addon:RegisterQuests(name, questTable, npcID, options, gossip)
 	--Quest Options
 	assert(type(options) == "table")
 	moduleQOptions[name] = options
-	--D("Quest Grouping %s registered", name)
+	D("Quest Grouping %s registered", name)
 	if gossip then
 		assert(type(gossip) == "table")
 		moduleGossipOptions[name] = gossip
-		--D("Gossip Options for %s registered", name)
+		D("Gossip Options for %s registered", name)
 	end
 end
 
@@ -103,7 +103,7 @@ function addon:UnRegisterQuests(name)
 		moduleQOptions[name] = nil
 		questNPCs[name] = nil
 		moduleGossipOptions[name] = nil
-		--D("Quest Grouping %s unregistered", name)
+		D("Quest Grouping %s unregistered", name)
 	end
 end
 

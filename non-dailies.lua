@@ -114,27 +114,35 @@ local function CheckButton_OnClick(self, button)
 			if db.profile[quest] or db.profile[quest] == false then
 				db.profile[quest] = true
 				D(e,"Set", quest, "true")
+				D(e, "RETURN END")
+				return
 			elseif db.profile[quest] == nil then
 				D(e, "QuestNotListed, Adding...")
 				if module:AddQuest(e, quest) then
 					D(e, "QuestAdded, adding ID", tonumber( strsub( guid, -12, -7), 16))
 					module:AddNPCID(e, tonumber( strsub( guid, -12, -7), 16) )
 					D(e, "ID Added")
+					D(e, "RETURN END")
+					return
 				else
 					D("Can't Add Quest, set unChecked")
 					self:SetChecked(false)
+					D(e, "RETURN END")
 					return
 				end
 			end
 		else
 			D(e, "Not Checked or No GUID, Quest Not eligibale")
 			self:SetChecked(false)
+			D(e, "RETURN END")
+			return
 		end
 		if (not checked) and (db.profile[quest]) then
 			D(e, "Quest In DB, and was enabled, disabling it")
 			db.profile[quest] = false
 		end
 	end
+	D(e, "END")
 end
 local GameTooltip = GameTooltip
 local function CheckButton_OnEnter(self)
@@ -167,6 +175,7 @@ local function SOCD_OnEvnet(frame, event, ...)
 		frame:Show()
 		frame.check:SetChecked(db.profile[quest])
 	end
+	D(e, "END")
 end
 
 function module:CreateInteractionFrame()
