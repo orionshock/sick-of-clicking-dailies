@@ -43,7 +43,6 @@ module.defaults = {
 
 
 function module:OnInitialize()
-	--D("OnInit")
 	db = AddonParent.db:RegisterNamespace("RRQ", module.defaults)
 	self.db = db
 	self.npcList = db.profile.npcList
@@ -51,41 +50,44 @@ function module:OnInitialize()
 end
 
 function module:OnEnable()
-	--D("OnEnable")
+	D("OnEnable")
 	self.npcList = db.profile.npcList
 	AddonParent:RegisterQuests("RRQ", db.profile, self.npcList, db.profile.qOptions, db.profile.gossip )
 end
 
 function module:OnDisable()
-	--D("OnDisable")
+	D("OnDisable")
 	AddonParent:UnRegisterQuests("RRQ")
 	db.profile.npcList = self.npcList
 end
-function module:AddQuest(name)
-	local e = "AddQuest"
-	local found = false
+function module:AddQuest(e, name)
+	e = e.."~AddQuest"
+--	local found = false
+	D(e, "parsing parent db for quest handled by other module")
 	for pack, list in pairs(AddonParent.moduleQLookup) do
-		local s = list[name] or list[name] == false
-		if list[name] or list[name] == false then
+		D(e, "Checking:", pack)
+		local s = (list[name] == true) or (list[name] == false)
+		if s then
 			if pack ~= "RRQ" then
-				found = true
+				D(e, "Found Quest handled by other module:", pack, "Returning false on AddQuest")
+				return false
 			end
 		end
 	end
-	if not found then
-
-		db.profile[name] = true
-		return true
-	end
-	return false
+	D(e, "Quest not handled by other modules, add quest, returning true")
+	db.profile[name] = true
+	return true
 end
 
-function module:AddNPCID(id)
-	if not tostring(id) then return end
+function module:AddNPCID(e, id)
+	e = e.."~AddNPC"
 	id = tostring(id)
+	D(e, "ID:", id)
 	if self.npcList:find(id) then
+		D(e, "ID found in list, return false, Happens when 1 npc has many quests.")
 		return false
 	else
+		D(e, "ID not found already, adding")
 		self.npcList = self.npcList..":"..tostring(id)
 		AddonParent:RegisterQuests("RRQ", db.profile, self.npcList, db.profile.qOptions, db.profile.gossip )
 	end
@@ -102,24 +104,34 @@ local backdrop = {
 }
 
 local function CheckButton_OnClick(self, button)
-	local e = "CB~OC"
+	local e = "OnClick"
 	local checked, quest, guid = self:GetChecked(), GetTitleText(), UnitGUID("target")
+	D(e, "Status:", checked, "Quest:", quest, "ID:", guid)
 	if quest then
+		D(e, "Has Quest:", quest)
 		if checked and guid then
+			D(e, "IsChecked:", checked, "ID:", guid, "QuestStatus:", db.profile[quest])
 			if db.profile[quest] or db.profile[quest] == false then
 				db.profile[quest] = true
+				D(e,"Set", quest, "true")
 			elseif db.profile[quest] == nil then
-				if module:AddQuest(quest) then
-					module:AddNPCID( tonumber( strsub( guid, -12, -7), 16) )
+				D(e, "QuestNotListed, Adding...")
+				if module:AddQuest(e, quest) then
+					D(e, "QuestAdded, adding ID", tonumber( strsub( guid, -12, -7), 16))
+					module:AddNPCID(e, tonumber( strsub( guid, -12, -7), 16) )
+					D(e, "ID Added")
 				else
+					D("Can't Add Quest, set unChecked")
 					self:SetChecked(false)
 					return
 				end
 			end
 		else
+			D(e, "Not Checked or No GUID, Quest Not eligibale")
 			self:SetChecked(false)
 		end
-		if not checked then
+		if (not checked) and (db.profile[quest]) then
+			D(e, "Quest In DB, and was enabled, disabling it")
 			db.profile[quest] = false
 		end
 	end
@@ -137,18 +149,24 @@ local function CheckButton_OnLeave(self)
 	GameTooltip:Hide()
 end
 
-
+local fe = "fe!"
 local function SOCD_OnEvnet(frame, event, ...)
-	if not module:IsEnabled() then 
+	local e = fe..event
+	if not module:IsEnabled() then
+		D(e, "module off, hiding frame")
 		frame:Hide()
 		return
 	end
 	if GetQuestItemInfo("choice",1) ~= "" then --if there is a reward choice then not eligible
+		D(e, "Quest has turn in choices, hide frame")
 		return frame:Hide()
 	end	
 	local quest = GetTitleText()
-	frame:Show()
-	frame.check:SetChecked(db.profile[quest])
+	if quest then
+		D(e, "Has Quest? show frame & set option")
+		frame:Show()
+		frame.check:SetChecked(db.profile[quest])
+	end
 end
 
 function module:CreateInteractionFrame()
