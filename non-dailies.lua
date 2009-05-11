@@ -228,7 +228,7 @@ function module:GetOptionsTable()
 		set = "Multi_Set",
 		order =4 ,
 		args = {
-			quests = {type = "multiselect", name = L["RRQ"].." "..L["Listed Quests"], order = 1,
+			quests = {type = "multiselect", name = L["RRQ Listed Quests"], order = 1,
 				values = "GetRRQListing",
 			},
 		}, --Top Lvl Args
