@@ -197,6 +197,7 @@ function addon:OnInitialize()
 		module:SetEnabledState(self.db.profile.modules[name])
 
 	end
+	self:CreateLDB()
 end
 
 function addon:OnEnable()
@@ -508,3 +509,56 @@ function addon:AnalyzeGossipOptions(te, ...)
 	return false, 0
 end
 
+do
+	local ldbObj, SecondsToTime, GetQuestResetTime = nil, SecondsToTime, GetQuestResetTime
+	local prefix = QUEST_LOG_DAILY_TOOLTIP:match( "\n(.+)" )
+	local function OnTooltipShow(self)
+	    self:AddLine( prefix:format( SecondsToTime(GetQuestResetTime()) ) )
+	end
+
+	local function OnEnter(self)
+	    GameTooltip:SetOwner(self, "ANCHOR_NONE")
+	    GameTooltip:SetPoint("TOPLEFT", self, "BOTTOMLEFT")
+	    GameTooltip:ClearLines()
+	    OnTooltipShow(GameTooltip)
+	    GameTooltip:Show()
+	end
+
+	local function OnLeave(self)
+	    GameTooltip:Hide()
+	end
+
+	function addon:CreateLDB()
+		local ldb = LibStub("LibDataBroker-1.1", true)
+		if not ldb then
+			self.ldb = false
+			return
+		end
+		local dailyTTL = {
+			type = "data source",
+			icon = "Interface\\Icons\\Achievement_Quests_Completed_Daily_08",
+			lable = L["Dailies reset in"]..": ",
+			value = SecondsToTime(GetQuestResetTime()),
+			OnEnter = OnEnter,
+			OnLeave = OnLeave,
+			OnTooltipShow = OnTooltipShow,
+		}
+		dailyTTL.text = (dailyTTL.lable)..(dailyTTL.value)
+		self.ldb = ldb:NewDataObject("SOCD Dailies Reset Timmer", dailyTTL)
+		ldbObj = self.ldb
+	end
+
+	local frame = CreateFrame("frame")
+	local delay, interval = 0, 60
+	local SecondsToTime, GetQuestResetTime = SecondsToTime, GetQuestResetTime
+	frame:SetScript("OnUpdate", function(frame, elapsed)
+		delay = delay + elapsed
+		if delay > interval then
+			ldbObj.value = SecondsToTime(GetQuestResetTime())
+			ldbObj.text = (ldbObj.lable)..(ldbObj.value)
+			delay = 0
+		end
+	end)
+
+	
+end
