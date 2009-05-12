@@ -549,7 +549,7 @@ do
 	end
 
 	local frame = CreateFrame("frame")
-	local delay, interval = 0, 60
+	local delay, interval = 50, 60
 	local SecondsToTime, GetQuestResetTime = SecondsToTime, GetQuestResetTime
 	frame:SetScript("OnUpdate", function(frame, elapsed)
 		delay = delay + elapsed
