@@ -537,13 +537,13 @@ do
 		local dailyTTL = {
 			type = "data source",
 			icon = "Interface\\Icons\\Achievement_Quests_Completed_Daily_08",
-			lable = L["Dailies reset in"]..": ",
-			value = SecondsToTime(GetQuestResetTime()),
+			label = L["Dailies reset in"]..": ",
+			value = SecondsToTime(GetQuestResetTime()) or "~Updating~",
 			OnEnter = OnEnter,
 			OnLeave = OnLeave,
 			OnTooltipShow = OnTooltipShow,
 		}
-		dailyTTL.text = (dailyTTL.lable)..(dailyTTL.value)
+		dailyTTL.text = (dailyTTL.label)..(dailyTTL.value)
 		self.ldb = ldb:NewDataObject("SOCD Dailies Reset Timmer", dailyTTL)
 		ldbObj = self.ldb
 	end
@@ -555,7 +555,7 @@ do
 		delay = delay + elapsed
 		if delay > interval then
 			ldbObj.value = SecondsToTime(GetQuestResetTime())
-			ldbObj.text = (ldbObj.lable)..(ldbObj.value)
+			ldbObj.text = (ldbObj.label)..(ldbObj.value)
 			delay = 0
 		end
 	end)

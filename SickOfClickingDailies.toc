@@ -4,7 +4,6 @@
 ## Notes: AutoMagicly clicks though Daily Quests, and Turns them In.
 ## Credits: Sinxia/kunda (deDE Translation), Cinedelle (frFR Translation), Crafty/Vyacheslav (ruRU Translation)
 ## Version: 6
-## X-License: WTFPL
 ## X-Email: Orionshock@gmail.com
 ## SavedVariables: SOCD_SIX
 ## X-Embeds: Ace3
