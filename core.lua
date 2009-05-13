@@ -513,19 +513,20 @@ do
 	local ldbObj, SecondsToTime, GetQuestResetTime = nil, SecondsToTime, GetQuestResetTime
 	local prefix = QUEST_LOG_DAILY_TOOLTIP:match( "\n(.+)" )
 	local function OnTooltipShow(self)
-	    self:AddLine( prefix:format( SecondsToTime(GetQuestResetTime()) ) )
+		self:AddLine( prefix:format( SecondsToTime(GetQuestResetTime()) ) )
+		self:AddLine( QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests()) )
 	end
 
 	local function OnEnter(self)
-	    GameTooltip:SetOwner(self, "ANCHOR_NONE")
-	    GameTooltip:SetPoint("TOPLEFT", self, "BOTTOMLEFT")
-	    GameTooltip:ClearLines()
-	    OnTooltipShow(GameTooltip)
-	    GameTooltip:Show()
+		GameTooltip:SetOwner(self, "ANCHOR_NONE")
+		GameTooltip:SetPoint("TOPLEFT", self, "BOTTOMLEFT")
+		GameTooltip:ClearLines()
+		OnTooltipShow(GameTooltip)
+		GameTooltip:Show()
 	end
 
 	local function OnLeave(self)
-	    GameTooltip:Hide()
+		GameTooltip:Hide()
 	end
 
 	function addon:CreateLDB()
