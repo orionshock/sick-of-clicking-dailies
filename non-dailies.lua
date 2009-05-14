@@ -127,6 +127,7 @@ local function CheckButton_OnClick(self, button)
 				else
 					D("Can't Add Quest, set unChecked")
 					self:SetChecked(false)
+					print("|cff9933FFSickOfClickingDailies:|r Quest: ", quest, " is already handeld by another module")
 					D(e, "RETURN END")
 					return
 				end
@@ -160,6 +161,7 @@ end
 local fe = "fe!"
 local function SOCD_OnEvnet(frame, event, ...)
 	local e = fe..event
+	local quest = GetTitleText()
 	if not module:IsEnabled() then
 		D(e, "module off, hiding frame")
 		frame:Hide()
@@ -169,7 +171,6 @@ local function SOCD_OnEvnet(frame, event, ...)
 		D(e, "Quest has turn in choices, hide frame")
 		return frame:Hide()
 	end	
-	local quest = GetTitleText()
 	if quest then
 		D(e, "Has Quest? show frame & set option")
 		frame:Show()
