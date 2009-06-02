@@ -45,20 +45,20 @@ module.defaults = {
 function module:OnInitialize()
 	db = AddonParent.db:RegisterNamespace("RRQ", module.defaults)
 	self.db = db
-	self.npcList = db.profile.npcList
+	db.profile.npcList = db.profile.npcList
 	self:CreateInteractionFrame()
 end
 
 function module:OnEnable()
 	D("OnEnable")
-	self.npcList = db.profile.npcList
-	AddonParent:RegisterQuests("RRQ", db.profile, self.npcList, db.profile.qOptions, db.profile.gossip )
+	db.profile.npcList = db.profile.npcList
+	AddonParent:RegisterQuests("RRQ", db.profile, db.profile.npcList, db.profile.qOptions, db.profile.gossip )
 end
 
 function module:OnDisable()
 	D("OnDisable")
 	AddonParent:UnRegisterQuests("RRQ")
-	db.profile.npcList = self.npcList
+	db.profile.npcList = db.profile.npcList
 end
 function module:AddQuest(e, name)
 	e = e.."~AddQuest"
@@ -83,13 +83,13 @@ function module:AddNPCID(e, id)
 	e = e.."~AddNPC"
 	id = tostring(id)
 	D(e, "ID:", id)
-	if self.npcList:find(id) then
+	if db.profile.npcList:find(id) then
 		D(e, "ID found in list, return false, Happens when 1 npc has many quests.")
 		return false
 	else
 		D(e, "ID not found already, adding")
-		self.npcList = self.npcList..":"..tostring(id)
-		AddonParent:RegisterQuests("RRQ", db.profile, self.npcList, db.profile.qOptions, db.profile.gossip )
+		db.profile.npcList = db.profile.npcList..":"..tostring(id)
+		AddonParent:RegisterQuests("RRQ", db.profile, db.profile.npcList, db.profile.qOptions, db.profile.gossip )
 	end
 	return true		
 end
