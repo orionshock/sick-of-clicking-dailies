@@ -135,8 +135,6 @@ local function CheckButton_OnClick(self, button)
 		else
 			D(e, "Not Checked or No GUID, Quest Not eligibale")
 			self:SetChecked(false)
-			D(e, "RETURN END")
-			return
 		end
 		if (not checked) and (db.profile[quest]) then
 			D(e, "Quest In DB, and was enabled, disabling it")
