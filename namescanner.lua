@@ -2,17 +2,22 @@
  $Rev$
 This file is used to update locale information by automagically generating it from the client
 
-/dump SickOfClickingDailies:ScanTooltips()
-/dump SickOfClickingDailies:CommitLocalizedNames()
+This module now has a gui interface and an ingame export option.
 
-In the SV file of the profile you will find the names of the quests in "enUS" = "locale", format
 
 Good Luck!
 
 ]]
 
 local SOCD = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
-local module = SOCD:NewModule("QuestScanner")
+local module = SOCD:NewModule("QuestScanner", "AceEvent-3.0")
+
+local tempQuestTable = {}
+function module:OnEnable()
+	self.tempQuestTable = tempQuestTable
+	self:RegisterEvent("QUEST_DETAIL")
+	self:RegisterEvent("QUEST_LOG_UPDATE")
+end
 
 function D(arg, ...)
 	local str
@@ -342,13 +347,18 @@ end
 function module:GetOptionsTable()
 	local t = {
 		name = "Quest Name Scanner", type = "group", handler = module, order = -100,
-		args = {
-			cache = { type = "execute", name = "Cache Tooltips for Scanning", func = "ScanTTALL", order = 1, width = "full", },
-			check = { type = "execute", name = "Check Tooltip Cache", desc = "This will print out the quest names to chat frame to make sure you have everything", 
-				func = "CheckTTScan", order = 10, width = "full", },
-			export = { type = "execute", name = "Export to Copy paste Frame", func = "Export", order = 20, width = "full",},
-			commit = { type = "execute", name = "Commit Locale to SV", desc = "Commit names to SV file instead of exporting them", func = "CommitLocalizedNames", width = "full", },
-		},
+			args = {
+				cache = { type = "execute", name = "Cache Tooltips for Scanning", func = "ScanTTALL", order = 1, width = "full", },
+				check = { type = "execute", name = "Check Tooltip Cache", desc = "This will print out the quest names to chat frame to make sure you have everything", 
+					func = "CheckTTScan", order = 10, width = "full", },
+				export = { type = "execute", name = "Export to Copy paste Frame", func = "Export", order = 20, width = "full",},
+				commit = { type = "execute", name = "Commit Locale to SV", desc = "Commit names to SV file instead of exporting them", func = "CommitLocalizedNames", width = "full", order = 30 },
+				liveScan = { type = "group", name = "Live Scan", order = 40, inline = true,
+					args = {
+						box = { name = "Live Scan Export", type = "input", multiline = 10, get = "GetLiveScanText", width = "full" }
+					},
+				},
+		}
 	}
 	return t
 end
@@ -405,3 +415,40 @@ do
 	end
 end
 
+
+
+function module:QUEST_DETAIL(event, ...)
+	local npcID = UnitGUID("target") and tonumber( strsub( UnitGUID("target"), -12, -7), 16) 
+	local questTitle = GetTitleText()
+	print(event, npcID, questTitle)
+	self.npcID = npcID
+	self.questTitle = questTitle
+	self.event = "Pickup"
+end
+
+
+local specailFormat = [[ [%s] [%d] [%d] [%s] ]]
+
+function module:QUEST_LOG_UPDATE(event, ...)
+	if not self.npcID then print("no ID?") return end
+	local num = GetNumQuestLogEntries()
+	if num == 0 then return end
+	for i  = 1, num do
+		local link = GetQuestLink(i) or "<title>"
+		if link and link:find(self.questTitle) then
+			local id = link:match("\124cff%x+\124Hquest:(%d+):%d+\124h")
+			if id then
+				tinsert( tempQuestTable, specailFormat:format(self.event or "", id,  self.npcID or 0, self.questTitle or "") )
+				self.tnpcID = nil
+				self.tquestTitle = nil
+				self.event = nil
+				break
+			end
+		end
+	end
+end
+
+function module:GetLiveScanText(info, ...)
+	local t = table.concat(tempQuestTable, "\n")
+	return t
+end
