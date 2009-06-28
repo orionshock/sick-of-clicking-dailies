@@ -45,20 +45,17 @@ module.defaults = {
 function module:OnInitialize()
 	db = AddonParent.db:RegisterNamespace("RRQ", module.defaults)
 	self.db = db
-	db.profile.npcList = db.profile.npcList
 	self:CreateInteractionFrame()
 end
 
 function module:OnEnable()
 	D("OnEnable")
-	db.profile.npcList = db.profile.npcList
 	AddonParent:RegisterQuests("RRQ", db.profile, db.profile.npcList, db.profile.qOptions, db.profile.gossip )
 end
 
 function module:OnDisable()
 	D("OnDisable")
 	AddonParent:UnRegisterQuests("RRQ")
-	db.profile.npcList = db.profile.npcList
 end
 function module:AddQuest(e, name)
 	e = e.."~AddQuest"
@@ -157,14 +154,21 @@ local function CheckButton_OnLeave(self)
 end
 
 local fe = "fe!"
+local showEvents = {
+	["QUEST_DETAIL"] = true,
+	["QUEST_COMPLETE"] = true,
+	["QUEST_FINISHED"] = true,
+}
+
 local function SOCD_OnEvnet(frame, event, ...)
-	local e = fe..event
-	local quest = GetTitleText()
+	if not showEvents[event] then D("Not Show Event", event) self:Hide() return end
 	if not module:IsEnabled() then
 		D(e, "module off, hiding frame")
 		frame:Hide()
 		return
 	end
+	local e = fe..event
+	local quest = GetTitleText()
 	if GetQuestItemInfo("choice",1) ~= "" then --if there is a reward choice then not eligible
 		D(e, "Quest has turn in choices, hide frame")
 		return frame:Hide()
@@ -206,6 +210,7 @@ function module:CreateInteractionFrame()
 	frame.check = check
 	frame.text = text
 	frame.addon = self
+
 
 	frame:RegisterEvent("QUEST_DETAIL")
 	frame:RegisterEvent("QUEST_COMPLETE")

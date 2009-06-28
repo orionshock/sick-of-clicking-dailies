@@ -420,7 +420,6 @@ end
 function module:QUEST_DETAIL(event, ...)
 	local npcID = UnitGUID("target") and tonumber( strsub( UnitGUID("target"), -12, -7), 16) 
 	local questTitle = GetTitleText()
-	print(event, npcID, questTitle)
 	self.npcID = npcID
 	self.questTitle = questTitle
 	self.event = "Pickup"
