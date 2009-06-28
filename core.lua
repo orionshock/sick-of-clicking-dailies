@@ -13,10 +13,16 @@ This version comes with a built in config system made with Ace3's Config GUI Lib
 =====================================================================================================
 ]]--
 
+local projectVersion = "@project-version@"
+local projectRevision = "@project-revision@"
+local fileRevision = "@file-revision@"
+
+
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
 
 SickOfClickingDailies = LibStub("AceAddon-3.0"):NewAddon("SickOfClickingDailies", "AceEvent-3.0", "AceConsole-3.0")
 local addon = SickOfClickingDailies
+addon.Version = projectVersion..projectRevision
 
 --
 --	Debug Func()
@@ -43,8 +49,6 @@ end
 --	Addon Decleration & File Wide locals
 --
 
-addon.version = tostring("$Revision$")
-addon.author = "Orionshock"
 local moduleQLookup, moduleQOptions, questNPCs, moduleGossipOptions = {}, {}, {}, {}
 addon.moduleQLookup = moduleQLookup
 addon.moduleQOptions = moduleQOptions

@@ -23,14 +23,7 @@ do
 	end
 end
 
-do
-	local fr = ("$Rev$"):match("%d+") or 0
-	local cr = (AddonParent.version):match("%d+") or 1
-	if fr > cr then
-		AddonParent.version = ("$Rev$")
-	end
 
-end
 local module = AddonParent:NewModule("LK")
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
 local LQ = LibStub("AceLocale-3.0"):GetLocale("SOCD_LK")

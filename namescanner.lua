@@ -430,7 +430,7 @@ end
 local specailFormat = [[ [%s] [%d] [%d] [%s] ]]
 
 function module:QUEST_LOG_UPDATE(event, ...)
-	if not self.npcID then print("no ID?") return end
+	if not self.npcID then return end
 	local num = GetNumQuestLogEntries()
 	if num == 0 then return end
 	for i  = 1, num do
