@@ -1,3 +1,5 @@
+﻿## Interface: 30100
+
 #@non-debug@
 ## Title: @localization(locale="enUS", key="Title", namespace="ToC")@
 ## Title-frFR: @localization(locale="frFR", key="Title", namespace="ToC")@
@@ -25,7 +27,7 @@
 #@end-debug@
 
 
-﻿## Interface: 30100
+
 ## Author: OrionShock
 
 ## Credits: Sinxia/kunda (deDE Translation), Cinedelle (frFR Translation), Crafty/Vyacheslav (ruRU Translation)
