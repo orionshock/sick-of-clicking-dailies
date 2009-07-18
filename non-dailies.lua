@@ -51,11 +51,20 @@ end
 function module:OnEnable()
 	D("OnEnable")
 	AddonParent:RegisterQuests("RRQ", db.profile, db.profile.npcList, db.profile.qOptions, db.profile.gossip )
+	self.frame:RegisterEvent("QUEST_DETAIL")
+	self.frame:RegisterEvent("QUEST_COMPLETE")
+	self.frame:RegisterEvent("QUEST_FINISHED")
+	self.frame:SetScript("OnShow", nil)
 end
 
 function module:OnDisable()
 	D("OnDisable")
 	AddonParent:UnRegisterQuests("RRQ")
+	self.frame:UnregisterEvent("QUEST_DETAIL")
+	self.frame:UnregisterEvent("QUEST_COMPLETE")
+	self.frame:UnregisterEvent("QUEST_FINISHED")
+	self.frame:Hide()
+	self.frame:SetScript("OnShow", self.frame.Hide)
 end
 function module:AddQuest(e, name)
 	e = e.."~AddQuest"
@@ -160,23 +169,23 @@ local showEvents = {
 	["QUEST_FINISHED"] = true,
 }
 
-local function SOCD_OnEvnet(frame, event, ...)
+local function SOCD_OnEvnet(self, event, ...)
 	if not showEvents[event] then D("Not Show Event", event) self:Hide() return end
 	if not module:IsEnabled() then
 		D(e, "module off, hiding frame")
-		frame:Hide()
+		self:Hide()
 		return
 	end
 	local e = fe..event
 	local quest = GetTitleText()
 	if GetQuestItemInfo("choice",1) ~= "" then --if there is a reward choice then not eligible
 		D(e, "Quest has turn in choices, hide frame")
-		return frame:Hide()
+		return self:Hide()
 	end	
 	if quest then
 		D(e, "Has Quest? show frame & set option")
-		frame:Show()
-		frame.check:SetChecked(db.profile[quest])
+		self:Show()
+		self.check:SetChecked(db.profile[quest])
 	end
 	D(e, "END")
 end
@@ -212,9 +221,6 @@ function module:CreateInteractionFrame()
 	frame.addon = self
 
 
-	frame:RegisterEvent("QUEST_DETAIL")
-	frame:RegisterEvent("QUEST_COMPLETE")
-	frame:RegisterEvent("QUEST_FINISHED")
 	frame:SetScript("OnEvent", SOCD_OnEvnet)
 	check:SetScript("OnClick", CheckButton_OnClick)
 	check:SetScript("OnEnter", CheckButton_OnEnter)
