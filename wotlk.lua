@@ -78,19 +78,19 @@ function module:OnEnable()
 	--D("OnEnable")
 	AddonParent:RegisterQuests("LK", db.profile.quests, self.npcList, db.profile.qOptions, db.profile.gossip)
 	SetItemRef("item:43950", "item:43950")	--Kirin Tor Faction Token
-	SetItemRef("item:43950", "item:43950")
+--	SetItemRef("item:43950", "item:43950")
 	
 	SetItemRef("item:44711", "item:44711")	--Argetn Crusade Toeken
-	SetItemRef("item:44711", "item:44711")
+--	SetItemRef("item:44711", "item:44711")
 
 	SetItemRef("item:44713", "item:44713")	--Ebobn Blade
-	SetItemRef("item:44713", "item:44713")
+--	SetItemRef("item:44713", "item:44713")
 
 	SetItemRef("item:44710", "item:44710")	--wyrmrest
-	SetItemRef("item:44710", "item:44710")
+--	SetItemRef("item:44710", "item:44710")
 
 	SetItemRef("item:46114", "item:46114")	--Champion's Writ
-	SetItemRef("item:46114", "item:46114")
+--	SetItemRef("item:46114", "item:46114")
 
 	SetItemRef("item:45724", "item:45724")	--Champion's Purse
 	SetItemRef("item:45724", "item:45724")
