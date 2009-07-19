@@ -46,6 +46,7 @@ function module:OnInitialize()
 	db = AddonParent.db:RegisterNamespace("RRQ", module.defaults)
 	self.db = db
 	self:CreateInteractionFrame()
+	self.frame:SetScript("OnShow", self.frame.Hide)
 end
 
 function module:OnEnable()
@@ -193,9 +194,9 @@ end
 function module:CreateInteractionFrame()
 	--BaseFrame
 	local frame = CreateFrame("frame", "SOCD_tFrame", QuestFrame)
-	frame:SetPoint("TOPLEFT", QuestFrame, "TOPRIGHT")
 	frame:SetWidth(200)
 	frame:SetHeight(50)
+	frame:SetPoint("TOPLEFT", QuestFrame, "TOPRIGHT", -25, -15)
 	--frame:SetPoint("LEFT", QuestFrame, "RIGHT")
 	frame:SetBackdrop(backdrop)
 
