@@ -275,6 +275,9 @@ local qTable = {
 	[13832] = "Jewel Of The Sewers",
 	[13836] = "Monsterbelly Appetite",
 	[13830] = "The Ghostfish",
+
+--Patch 3.2 Additions:
+
 	
 
 
@@ -420,29 +423,32 @@ end
 function module:QUEST_DETAIL(event, ...)
 	local npcID = UnitGUID("target") and tonumber( strsub( UnitGUID("target"), -12, -7), 16) 
 	local questTitle = GetTitleText()
-	self.npcID = npcID
+	self.npcID = tonumber(npcID)
+        self.npcName = UnitName("target") or ""
 	self.questTitle = questTitle
-	self.event = "Pickup"
+	--self.event = "Pickup"
 end
 
 
-local specailFormat = [[ [%s] [%d] [%d] [%s] ]]
+local specailFormat = [[ [%d] = "%s",
+%d, -- %s 
+----------]]
 
 function module:QUEST_LOG_UPDATE(event, ...)
 	if not self.npcID then return end
 	local num = GetNumQuestLogEntries()
 	if num == 0 then return end
 	for i  = 1, num do
-		local link = GetQuestLink(i) or "<title>"
-		if link and link:find(self.questTitle) then
-			local id = link:match("\124cff%x+\124Hquest:(%d+):%d+\124h")
-			if id then
-				tinsert( tempQuestTable, specailFormat:format(self.event or "", id,  self.npcID or 0, self.questTitle or "") )
-				self.tnpcID = nil
-				self.tquestTitle = nil
-				self.event = nil
-				break
-			end
+                local questTitle, level, questTag, suggestedGroup, isHeader, isCollapsed, isComplete, isDaily, questID = GetQuestLogTitle(i)
+                if not questID then
+                        questID = (GetQuestLink(i) or "<title>"):match("\124cff%x+\124Hquest:(%d+):%d+\124h")
+                end
+		if questID and questTitle:find(self.questTitle) then
+		        tinsert( tempQuestTable, specailFormat:format(questID, self.questTitle or "", self.npcID or 0, self.npcName or "" ) )
+		        self.tnpcID = nil
+		        self.tquestTitle = nil
+		        self.event = nil
+		        break
 		end
 	end
 end
