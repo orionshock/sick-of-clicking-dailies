@@ -16,7 +16,7 @@ local tempQuestTable = {}
 function module:OnEnable()
 	self.tempQuestTable = tempQuestTable
 	self:RegisterEvent("QUEST_DETAIL")
-	self:RegisterEvent("QUEST_LOG_UPDATE")
+
 end
 
 function D(arg, ...)
@@ -427,6 +427,7 @@ function module:QUEST_DETAIL(event, ...)
         self.npcName = UnitName("target") or ""
 	self.questTitle = questTitle
 	--self.event = "Pickup"
+	self:RegisterEvent("QUEST_LOG_UPDATE")
 end
 
 
@@ -435,6 +436,7 @@ local specailFormat = [[ [%d] = "%s",
 ----------]]
 
 function module:QUEST_LOG_UPDATE(event, ...)
+       	self:UnregisterEvent("QUEST_LOG_UPDATE")
 	if not self.npcID then return end
 	local num = GetNumQuestLogEntries()
 	if num == 0 then return end
