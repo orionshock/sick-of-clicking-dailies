@@ -335,90 +335,171 @@ module.npcList = table.concat({
 	}, ":")
 
 
+
 function module:GetOptionsTable()
-	local options = {
+        local t = {
 		name = L["LK"],
 		type = "group",
 		handler = module,
 		get = "Multi_Get",
 		set = "Multi_Set",
 		order = 3,
+		childGroups = "tab",
 		args = {
-			faction = { name = "Factions", type = "group", order = 1,
+			world = self:WorldQuests(),
+			instance = self:InstanceQuests(),
+			pvp = self:PlayerVsPlayerQuests(),
+			professions = self:ProfessionsQuests(),
+		},
+
+        }
+        return t
+end
+
+local trol_patrol_sub_Text = L["Troll Patrol: "]
+local function tpScrub(text)
+	return (tostring(text):gsub(trol_patrol_sub_Text, ""))
+end
+
+function module:WorldQuests()
+	local t = { 
+		type = "group", 
+		name = CHANNEL_CATEGORY_WORLD, 
+		order = 1,
+		args = {
+			faction = { type = "group", name = L["Faction Quests"], order = 1, 
 				args = {
-					wyrmrestAccord = { name = L["The Wyrmrest Accord"], type = "multiselect", order = 1, width = "full",
-						values = { LQ["Aces High!"], LQ["Drake Hunt"], LQ["Defending Wyrmrest Temple"] },
-					},
-					sholizar = { name = L["Sholazar Basin"], type = "group", order = 2,
+					Kalu = { type = "group", name = L["The Kalu'ak"], 
 						args = {
-							Oracles = { name = L["The Oracles"], type = "multiselect", order = 1, width = "full",
+							kaluSub = { name = L["The Kalu'ak"], type = "multiselect", width = "full",
+								values = { LQ["Planning for the Future"], LQ["Preparing for the Worst"], LQ["The Way to His Heart..."], },
+							},
+						},
+					},
+					Frostborn = { type = "group", name = L["The Frostborn"],
+						args = {
+							frostSub = { name = L["The Frostborn"], type = "multiselect", width = "full",
+								values = { LQ["Pushed Too Far"] },
+							},
+						},
+					},
+					Wyrmreset = { type = "group", name = L["The Wyrmrest Accord"],
+						args = {
+							wyrmwrestSub = { name = L["The Wyrmrest Accord"], type = "multiselect", order = 1, width = "full",
+								values = { LQ["Aces High!"], LQ["Drake Hunt"], LQ["Defending Wyrmrest Temple"] },
+							},
+						},
+					},
+					hodir = { type = "group", name = L["The Sons of Hodir"],
+						args = {
+							hodirSub = { name = L["The Sons of Hodir"], type = "multiselect", width = "full",
+								values = { LQ["Blowing Hodir's Horn"], LQ["Feeding Arngrim"], LQ["Hot and Cold"], LQ["Polishing the Helm"], LQ["Spy Hunter"], 
+									LQ["Thrusting Hodir's Spear"],  },
+							},
+						},
+					},
+					Oracles = { type = "group", name = L["The Oracles"],
+						args = {
+							oraclesSub = { name = L["The Oracles"], type = "multiselect", order = 1, width = "full",
 								values = { LQ["A Cleansing Song"], LQ["Appeasing the Great Rain Stone"], LQ["Hand of the Oracles"], 
 									LQ["Mastery of the Crystals"], LQ["Power of the Great Ones"], LQ["Song of Fecundity"], LQ["Song of Reflection"],
 									LQ["Song of Wind and Water"], LQ["Will of the Titans"], },
 							},
-							Frenzyheart = { name = L["Frenzyheart Tribe"], type = "multiselect", order = 2, width = "full",
+						},
+					},
+					Frenzyheart = { type = "group", name = L["Frenzyheart Tribe"],
+						args = {
+							frenzySub = { name = "Frenzyheart", type = "multiselect", order = 1, width = "full",
 								values = { LQ["A Hero's Headgear"], LQ["Chicken Party!"], LQ["Frenzyheart Champion"], LQ["Kartak's Rampage"], LQ["Rejek: First Blood"],
 									LQ["Secret Strength of the Frenzyheart"], LQ["Strength of the Tempest"], LQ["The Heartblood's Strength"], LQ["Tools of War"], },
 							},
 						},
 					},
-					Hodir = { name = L["The Sons of Hodir"], type = "multiselect", order = 3, width = "full",
-						values = { LQ["Blowing Hodir's Horn"], LQ["Feeding Arngrim"], LQ["Hot and Cold"], LQ["Polishing the Helm"], LQ["Spy Hunter"], 
-							LQ["Thrusting Hodir's Spear"],  },
-					},
-					crusadeWrap = { name = L["Argent Crusade"], type = "group", order = 4, args = {
-							Crusade = { name = L["Argent Crusade"], type = "multiselect", order = 1, width = "full",
-								values = { 
-									[LQ["The Alchemist's Apprentice"]] = LQ["The Alchemist's Apprentice"], 
-									[LQ["Troll Patrol"]] = LQ["Troll Patrol"], 
-									[LQ["Troll Patrol: Can You Dig It?"]] = LQ["Troll Patrol: Can You Dig It?"]:gsub(L["Troll Patrol: "], ""), 
-									[LQ["Troll Patrol: Couldn't Care Less"]] = LQ["Troll Patrol: Couldn't Care Less"]:gsub(L["Troll Patrol: "], ""), 
-									[LQ["Troll Patrol: Creature Comforts"]] = LQ["Troll Patrol: Creature Comforts"]:gsub(L["Troll Patrol: "], ""), 
-									[LQ["Troll Patrol: Done to Death"]] =  LQ["Troll Patrol: Done to Death"]:gsub(L["Troll Patrol: "], ""), 
-									[LQ["Troll Patrol: High Standards"]] = LQ["Troll Patrol: High Standards"]:gsub(L["Troll Patrol: "], ""), 
-									[LQ["Troll Patrol: Intestinal Fortitude"]] = LQ["Troll Patrol: Intestinal Fortitude"]:gsub(L["Troll Patrol: "], ""), 
-									[LQ["Troll Patrol: Something for the Pain"]] = LQ["Troll Patrol: Something for the Pain"]:gsub(L["Troll Patrol: "], ""), 
-									[LQ["Troll Patrol: The Alchemist's Apprentice"]] = LQ["Troll Patrol: The Alchemist's Apprentice"]:gsub(L["Troll Patrol: "], ""), 
-									[LQ["Troll Patrol: Throwing Down"]] =  LQ["Troll Patrol: Throwing Down"]:gsub(L["Troll Patrol: "], ""), 
-									[LQ["Troll Patrol: Whatdya Want, a Medal?"]] = LQ["Troll Patrol: Whatdya Want, a Medal?"]:gsub(L["Troll Patrol: "], ""), 
-									[LQ["Congratulations!"]] = LQ["Congratulations!"], 
+					Argent = { type = "group", name = L["Argent Crusade"], order = 8,
+						args = {
+							patrol = { type = "group", name = LQ["Troll Patrol"], order = 1,
+								args = {
+									patrolSub = { name = LQ["Troll Patrol"], type = "multiselect", order = 1, width = "full",
+										values = { 
+									[ LQ["The Alchemist's Apprentice"] ] = LQ["The Alchemist's Apprentice"], 
+									[ LQ["Troll Patrol"] ] = LQ["Troll Patrol"], 
+									[ LQ["Troll Patrol: Can You Dig It?"] ] = tpScrub(LQ["Troll Patrol: Can You Dig It?"]),
+									[ LQ["Troll Patrol: Couldn't Care Less"] ] = tpScrub(LQ["Troll Patrol: Couldn't Care Less"]),
+									[ LQ["Troll Patrol: Creature Comforts"] ] = tpScrub(LQ["Troll Patrol: Creature Comforts"]), 
+									[ LQ["Troll Patrol: Done to Death"] ] =  tpScrub(LQ["Troll Patrol: Done to Death"]), 
+									[ LQ["Troll Patrol: High Standards"] ] = tpScrub(LQ["Troll Patrol: High Standards"]), 
+									[ LQ["Troll Patrol: Intestinal Fortitude"] ] = tpScrub(LQ["Troll Patrol: Intestinal Fortitude"]), 
+									[ LQ["Troll Patrol: Something for the Pain"] ] = tpScrub(LQ["Troll Patrol: Something for the Pain"]), 
+									[ LQ["Troll Patrol: The Alchemist's Apprentice"] ] = tpScrub(LQ["Troll Patrol: The Alchemist's Apprentice"]), 
+									[ LQ["Troll Patrol: Throwing Down"] ] = tpScrub(LQ["Troll Patrol: Throwing Down"]), 
+									[ LQ["Troll Patrol: Whatdya Want, a Medal?"] ] = tpScrub(LQ["Troll Patrol: Whatdya Want, a Medal?"]), 
+									[ LQ["Congratulations!"] ] = LQ["Congratulations!"], 
+										}
+									},
+									patrol_Opts = { name = L["Argent Crusade"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 2, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
+										values = {
+									[ LQ["I'm ready to begin. What is the first ingredient you require?"] ] = tpScrub(LQ["Troll Patrol: The Alchemist's Apprentice"]),
+									[ LQ["Get out there and make those Scourge wish they were never reborn!"] ] = tpScrub(LQ["Troll Patrol: Intestinal Fortitude"]),
+										},
+									}
 								},
 							},
-							crusade_gossip = { name = L["Argent Crusade"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 2, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
-								values = {
-									[LQ["I'm ready to begin. What is the first ingredient you require?"]] = LQ["Troll Patrol: The Alchemist's Apprentice"]:gsub(L["Troll Patrol: "], ""),		
-									[LQ["Get out there and make those Scourge wish they were never reborn!"]] = LQ["Troll Patrol: Intestinal Fortitude"]:gsub(L["Troll Patrol: "], ""),
+							preQual = { type = "group", name = L["Tournament Preliminaries"], order = 2, 
+								args = {
+									head1 = { type = "header", name = L["The Argent Tournament - Preliminaries"], order = 1, },
+									shared = { type = "multiselect", name = L["Shared Quests"], width = "full", order = 5,
+										values = { LQ["A Chip Off the Ulduar Block"], LQ["Jack Me Some Lumber"],	
+											--These 2 quests are being removed in patch 3.2 ^^^^^^^
+											LQ["The Edge Of Winter"], LQ["A Worthy Weapon"], LQ["A Blade Fit For A Champion"]
+										},
+									},
+									aspirant = {type = "multiselect", name = L["Aspirant Class"], width = "full", order = 10,
+										values = { LQ["Training In The Field"], LQ["Learning The Reins"] },
+									},
+									valiant = {type = "multiselect", name = L["Valiant Class"], width = "full", order = 20,
+										values = { LQ["At The Enemy's Gates"], LQ["The Grand Melee"], LQ["A Valiant's Field Training"] },
+									},
+									champ = { type = "multiselect", name = L["Champion Class"], width = "full", order = 30,
+										values = { LQ["Battle Before The Citadel"], LQ["Threat From Above"], LQ["Among the Champions"], LQ["Taking Battle To The Enemy"], LQ["Contributin' To The Cause"] },
+									},
+									campOpt = { type = "select", name = L["Champion Quest Rewards"], order = 35, get = "ACTGet", set = "ACTSet",
+										values = { (GetItemInfo(46114)), (GetItemInfo(45724)), nil, nil, L["None"]},
+									},
 								},
 							},
+							finale = { type = "group", name = L["Tournament Finale"], order = 3, hidden = true,
+								args = {
+									head1 = { type = "header", name = L["The Argent Tournament - Finale"], order = 1, },
+								},
+							}
 						},
 					},
-					ebonWrap = { name = L["Knights of the Ebon Blade"], type = "group", order = 5,
+					Knights = { type = "group", name = L["Knights of the Ebon Blade"],
 						args = {
-							Ebon = { name = L["Knights of the Ebon Blade"], type = "multiselect", order = 5, width = "full",
+							knightsSub = { name = L["Knights of the Ebon Blade"], type = "multiselect", width = "full",
 								values = { LQ["Intelligence Gathering"], LQ["Leave Our Mark"], LQ["No Fly Zone"], 
 									LQ["From Their Corpses, Rise!"], LQ["Shoot 'Em Up"], LQ["Vile Like Fire!"],  },
 							},
 						},
 					},
-					Kalu = { name = L["The Kalu'ak"], type = "multiselect", order = 6, width = "full",
-						values = { LQ["Planning for the Future"], LQ["Preparing for the Worst"], LQ["The Way to His Heart..."], },
-					},
-					peaks = { name = L["The Storm Peaks"], type = "multiselect", order = 7, width = "full",
-						values = { LQ["Back to the Pit"], LQ["Defending Your Title"], LQ["Overstock"], LQ["Maintaining Discipline"], LQ["The Aberrations Must Die"], },
-					},
-					peaksGossip = { name = L["The Storm Peaks"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 8, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
-						values = { [LQ["Let's do this, sister."]] = LQ["Defending Your Title"] },
-					},
-					frostborn = { name = L["The Frostborn"], type = "multiselect", order = 7, width = "full",
-						values = { LQ["Pushed Too Far"] },
-					},
 				},
 			},
-			shared = { name = L["Shared Faction Quests"], type = "group", order = 2,
+			zone = { type = "group", name = L["Zone Generic"], order = 2,
 				args = {
-					iceZone = { type = "group", name = L["Icecrown"], order = 1,
+					peaks = { type = "group", name =  L["The Storm Peaks"],
 						args = {
-							PvE = {	name = L["Icecrown"], type = "multiselect", order = 2, width = "full",
+							peaksSub = { name =  L["The Storm Peaks"], type = "multiselect", order = 1, width = "full",
+								values = { LQ["Back to the Pit"], LQ["Defending Your Title"], LQ["Overstock"], 
+								LQ["Maintaining Discipline"], LQ["The Aberrations Must Die"], },
+							},
+							peaksGossip = { name = L["The Storm Peaks"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 8, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
+								values = { [ LQ["Let's do this, sister."] ] = LQ["Defending Your Title"] },
+							},
+						},
+					},
+					Icecrown = { type = "group", name = L["Icecrown"], 
+						args = {
+							shared = { name = L["Icecrown"], type = "multiselect", order = 1, width = "full",
 								values = { LQ["King of the Mountain"], LQ["Blood of the Chosen"], LQ["Drag and Drop"], LQ["Neutralizing the Plague"], 
 									LQ["No Rest For The Wicked"], LQ["Not a Bug"], LQ["Retest Now"], LQ["Slaves to Saronite"], LQ["That's Abominable!"], 
 									LQ["Total Ohmage: The Valley of Lost Hope!"], LQ["Volatility"], LQ["Keeping the Alliance Blind"], 
@@ -427,63 +508,21 @@ function module:GetOptionsTable()
 									LQ["Assault by Ground"], LQ["Assault by Air"],
 									 },
 							},
-							torurny = module:GetACTourny(),
 						},
 					},
-							
-					hills = { name = L["Grizzly Hills"], type = "multiselect", order = 2, width = "full",
-						values = { LQ["Life or Death"], LQ["Overwhelmed!"], LQ["Making Repairs"], LQ["Pieces Parts"], 
-							LQ["Keep Them at Bay"], LQ["Riding the Red Rocket"], LQ["Seared Scourge"], LQ["Smoke 'Em Out"], }
-					},
-				},
-			},
-			world_pvp = module:GetWorldPvP(),
-			professions = module:GetProfessionsOptions(),
-			instance = module:GetInstanceOptions(),
-		}, --Top Lvl Args
-	}--Top lvl options
-	return options
-end
-
-function module:GetWorldPvP()
-	local t = { name = L["World PvP"], type = "group", order = 3,
-		args = {
-			wintergrasp = { name = L["Wintergrasp"], order = 1, type = "multiselect", width = "full",
-				values = { LQ["A Rare Herb"], LQ["Bones and Arrows"], LQ["Defend the Siege"], LQ["Fueling the Demolishers"], LQ["Healing with Roses"], 
-					LQ["Jinxing the Walls"], LQ["No Mercy for the Merciless"], LQ["Slay them all!"], LQ["Stop the Siege"], LQ["Victory in Wintergrasp"], 
-					LQ["Warding the Walls"], LQ["Warding the Warriors"], LQ["Southern Sabotage"],
-				},
-			},
-			battleground = {name = L["Battlegrounds"], order = 2, type = "multiselect", width = "full",
-				values = { LQ["Call to Arms: Strand of the Ancients"], },
-			},
-			iceCrown = { name = L["Icecrown"], order = 2, type = "group",
-				args = {
-					Netural = {name = L["Icecrown Netural Quests"], type = "multiselect", order = 1, width = "full", values = {}, hidden = true},
-					--Icrown might not have any pvp quests that are netural...
-					IceHorde = { name = L["Horde"], type = "multiselect", order = 2, width = "full",
-						values = { LQ["Make Them Pay!"], LQ["Shred the Alliance"] },
-						hidden = function(info) return select(2, UnitFactionGroup("player")) == "Alliance" end
-
-					},
-					IceAlliance = { name = L["Alliance"], type = "multiselect", order = 2, width = "full",
-						values = { LQ["No Mercy!"], LQ["Shredder Repair"] },
-						hidden = function(info) return select(2, UnitFactionGroup("player")) == "Horde" end
-					},
-				},
-			},
-			hills = { name = L["Grizzly Hills"], type = "group", order = 3,
-				args = {
-					netural = { name = L["Shared Quests"], type = "multiselect", order = 1, width = "full",
-						values = { LQ["Keep Them at Bay"], LQ["Riding the Red Rocket"], LQ["Seared Scourge"], LQ["Smoke 'Em Out"], },
-					},
-					horde = {name = L["Horde"], type = "multiselect", order = 2, width = "full",
-						values = { LQ["Crush Captain Brightwater!"], LQ["Keep 'Em on Their Heels"], LQ["Blackriver Brawl"], },
-						hidden = function(info) return select(2, UnitFactionGroup("player")) == "Alliance" end
-					},
-					alliance = { name = L["Alliance"], type = "multiselect", order = 3, width = "full",
-						values = { LQ["Down With Captain Zorna!"], LQ["Kick 'Em While They're Down"], LQ["Blackriver Skirmish"], },
-						hidden = function(info) return select(2, UnitFactionGroup("player")) == "Horde" end
+--					Fyord = { type = "group", name = "Howling Fyord", 
+--						args = {
+--							shared = { name = "Fyord", type = "multiselect", order = 1, width = "full",
+--								values = { "test" },
+--							},
+--						},
+--					},		--There is 1 alliance daily quest in HF... maybe put it in later??
+					Hills = { type = "group", name = L["Grizzly Hills"],
+						args = {
+							shared = { name = L["Grizzly Hills"], type = "multiselect", order = 1, width = "full",
+								values = {  LQ["Seared Scourge"] },
+							},
+						},
 					},
 				},
 			},
@@ -492,95 +531,160 @@ function module:GetWorldPvP()
 	return t
 end
 
-function module:GetProfessionsOptions()
-	local t = { name = L["Professions"], type = "group", order = 4,
-		args = {
-			cooking = { name = L["Cooking"], type = "multiselect", order = 1, width = "full",
-				values = { LQ["Cheese for Glowergold"], LQ["Convention at the Legerdemain"], LQ["Infused Mushroom Meatloaf"], LQ["Mustard Dogs!"], LQ["Sewer Stew"] },
-			},
-			JC = { name = L["Jewelcrafting"], type = "multiselect", order = 2, width = "full",
-				values = {
-					[LQ["Shipment: Blood Jade Amulet"]] = LQ["Shipment: Blood Jade Amulet"]:gsub(L["Shipment: "], ""),
-					[LQ["Shipment: Bright Armor Relic"]] = LQ["Shipment: Bright Armor Relic"]:gsub(L["Shipment: "], ""),
-					[LQ["Shipment: Glowing Ivory Figurine"]] = LQ["Shipment: Glowing Ivory Figurine"]:gsub(L["Shipment: "], ""),
-					[LQ["Shipment: Intricate Bone Figurine"]] = LQ["Shipment: Intricate Bone Figurine"]:gsub(L["Shipment: "], ""),
-					[LQ["Shipment: Shifting Sun Curio"]] = LQ["Shipment: Shifting Sun Curio"]:gsub(L["Shipment: "], ""),
-					[LQ["Shipment: Wicked Sun Brooch"]] = LQ["Shipment: Wicked Sun Brooch"]:gsub(L["Shipment: "], ""),
-				},
-			},
-			fishing = { name = L["Fishing"], type = "multiselect", order = 3, width = "full",
-				values = { LQ["Blood Is Thicker"], LQ["Dangerously Delicious"], LQ["Jewel Of The Sewers"], LQ["Monsterbelly Appetite"], LQ["The Ghostfish"], },
-			},
-		},
-	}
-	return t
+local normal_instance_sub_Text = L["Timear Foresees (.+) in your Future!"]
+local function norInstScrub(text)
+	return ( text:match(normal_instance_sub_Text) )
 end
-
-function module:GetInstanceOptions()
-
-	local t = { name = L["Instances"], type = "group", order = 5,
+local heroic_instance_sub_Text = L["Proof of Demise: "]
+local function herInstScrub(text)
+	return ( text:gsub(heroic_instance_sub_Text, "") )
+end
+function module:InstanceQuests()
+	local t = {
+		type = "group",
+		name = L["Instances"],
+		order = 2, 
 		args = {
-			heroicWrap = { type = "group", order = 1, name = L["Heroic Instances"],
+			normal  = { type = "group", name = L["Instances"], order = 1,		--Note to self, search _G again for some client localizations, they changed alot in 3.2
 				args = {
-					Heroics = { name = L["Heroic Instances"], type = "multiselect", width = "full",
+					normalSub = { name = L["Instances"], type = "multiselect", order = 1, width = "full",
 						values = {
-							[LQ["Proof of Demise: Anub'arak"]] = LQ["Proof of Demise: Anub'arak"]:gsub(L["Proof of Demise: "], ""),
-							[LQ["Proof of Demise: Cyanigosa"]] = LQ["Proof of Demise: Cyanigosa"]:gsub(L["Proof of Demise: "], ""),
-							[LQ["Proof of Demise: Gal'darah"]] = LQ["Proof of Demise: Gal'darah"]:gsub(L["Proof of Demise: "], ""),
-							[LQ["Proof of Demise: Herald Volazj"]] = LQ["Proof of Demise: Herald Volazj"]:gsub(L["Proof of Demise: "], ""),
-							[LQ["Proof of Demise: Ingvar the Plunderer"]] = LQ["Proof of Demise: Ingvar the Plunderer"]:gsub(L["Proof of Demise: "], ""),
-							[LQ["Proof of Demise: Keristrasza"]] = LQ["Proof of Demise: Keristrasza"]:gsub(L["Proof of Demise: "], ""),
-							[LQ["Proof of Demise: King Ymiron"]] = LQ["Proof of Demise: King Ymiron"]:gsub(L["Proof of Demise: "], ""),
-							[LQ["Proof of Demise: Ley-Guardian Eregos"]] = LQ["Proof of Demise: Ley-Guardian Eregos"]:gsub(L["Proof of Demise: "], ""),
-							[LQ["Proof of Demise: Loken"]] = LQ["Proof of Demise: Loken"]:gsub(L["Proof of Demise: "], ""),
-							[LQ["Proof of Demise: Mal'Ganis"]] = LQ["Proof of Demise: Mal'Ganis"]:gsub(L["Proof of Demise: "], ""),
-							[LQ["Proof of Demise: Sjonnir The Ironshaper"]] = LQ["Proof of Demise: Sjonnir The Ironshaper"]:gsub(L["Proof of Demise: "], ""),
-							[LQ["Proof of Demise: The Prophet Tharon'ja"]] = LQ["Proof of Demise: The Prophet Tharon'ja"]:gsub(L["Proof of Demise: "], ""),
-						},
-					},
-				},
-
-			},	--end Heroic Wrap
-			nonHeroicWrap = { name = L["Instances"], type = "group", order = 2,
-				args = {
-					nonH = { name = L["Instances"], type = "multiselect", order = 1, width = "full",
-						values = {
-			[LQ["Timear Foresees Centrifuge Constructs in your Future!"]] = LQ["Timear Foresees Centrifuge Constructs in your Future!"]:match(L["Timear Foresees (.+) in your Future!"]),
-			[LQ["Timear Foresees Infinite Agents in your Future!"]] = LQ["Timear Foresees Infinite Agents in your Future!"]:match(L["Timear Foresees (.+) in your Future!"]),
-			[LQ["Timear Foresees Titanium Vanguards in your Future!"]] = LQ["Timear Foresees Titanium Vanguards in your Future!"]:match(L["Timear Foresees (.+) in your Future!"]),
-			[LQ["Timear Foresees Ymirjar Berserkers in your Future!"]] = LQ["Timear Foresees Ymirjar Berserkers in your Future!"]:match(L["Timear Foresees (.+) in your Future!"]),
-						},
+			[LQ["Timear Foresees Centrifuge Constructs in your Future!"] ] = norInstScrub(LQ["Timear Foresees Centrifuge Constructs in your Future!"]),
+			[LQ["Timear Foresees Infinite Agents in your Future!"] ] = norInstScrub(LQ["Timear Foresees Infinite Agents in your Future!"]),
+			[LQ["Timear Foresees Titanium Vanguards in your Future!"] ] = norInstScrub(LQ["Timear Foresees Titanium Vanguards in your Future!"]),
+			[LQ["Timear Foresees Ymirjar Berserkers in your Future!"] ] = norInstScrub(LQ["Timear Foresees Ymirjar Berserkers in your Future!"]),
+						}
 					},
 					option = { name = L["Faction Token"], type = "select", order = 2, get = "FactionTokenGet", set = "FactionTokenSet",
 						values = { (GetItemInfo(43950)) or "Kirin Tor", (GetItemInfo(44711)) or "Argent Crusade", 
 								(GetItemInfo(44713)) or "Ebon Blade", (GetItemInfo(44710)) or "Wyrmrest", L["None"]},
+					}
+				},
+			},
+			heroic = { type = "group", name =  L["Heroic Instances"], order = 2, 
+				args = {
+					heroicSub = { name =  L["Heroic Instances"], type = "multiselect", width = "full",
+						values = {
+							[LQ["Proof of Demise: Anub'arak"] ] = herInstScrub(LQ["Proof of Demise: Anub'arak"]),
+							[LQ["Proof of Demise: Cyanigosa"] ] = herInstScrub(LQ["Proof of Demise: Cyanigosa"]),
+							[LQ["Proof of Demise: Gal'darah"] ] = herInstScrub(LQ["Proof of Demise: Gal'darah"]),
+							[LQ["Proof of Demise: Herald Volazj"] ] = herInstScrub(LQ["Proof of Demise: Herald Volazj"]),
+							[LQ["Proof of Demise: Ingvar the Plunderer"] ] = herInstScrub(LQ["Proof of Demise: Ingvar the Plunderer"]),
+							[LQ["Proof of Demise: Keristrasza"] ] = herInstScrub(LQ["Proof of Demise: Keristrasza"]),
+							[LQ["Proof of Demise: King Ymiron"] ] = herInstScrub(LQ["Proof of Demise: King Ymiron"]),
+							[LQ["Proof of Demise: Ley-Guardian Eregos"] ] = herInstScrub(LQ["Proof of Demise: Ley-Guardian Eregos"]),
+							[LQ["Proof of Demise: Loken"] ] = herInstScrub(LQ["Proof of Demise: Loken"]),
+							[LQ["Proof of Demise: Mal'Ganis"] ] = herInstScrub(LQ["Proof of Demise: Mal'Ganis"]),
+							[LQ["Proof of Demise: Sjonnir The Ironshaper"] ] = herInstScrub(LQ["Proof of Demise: Sjonnir The Ironshaper"]),
+							[LQ["Proof of Demise: The Prophet Tharon'ja"] ] = herInstScrub(LQ["Proof of Demise: The Prophet Tharon'ja"]),
+						}
 					},
 				},
 			},
 		},
 	}
+
 	return t
 end
 
-function module:GetACTourny()
-	local t = { name = L["Argent Tournament"], type = "group", order = 1, inline = true,
+function module:PlayerVsPlayerQuests()
+	local t = { 
+		type = "group",
+		name = L["World PvP"],
+		order = 3,
 		args = {
-			shard = { type = "multiselect", name = L["Shared Quests"], width = "full", order = 1,
-				values = { LQ["A Chip Off the Ulduar Block"], LQ["Jack Me Some Lumber"],
-					LQ["The Edge Of Winter"], LQ["A Worthy Weapon"], LQ["A Blade Fit For A Champion"]
+			bg  = { type = "group", name = L["Battlegrounds"],
+				args = {
+					bgSub = { name = L["Battlegrounds"], type = "multiselect", width = "full",
+						values = { LQ["Call to Arms: Strand of the Ancients"], },
+					},
 				},
 			},
-			aspirant = {type = "multiselect", name = L["Aspirant Class"], width = "full", order = 10,
-				values = { LQ["Training In The Field"], LQ["Learning The Reins"] },
+			wg  = { type = "group", name = L["Wintergrasp"],	--Don't care too much to break the horde and alliance ones up here...
+				args = {
+					wgSub = { name = L["Wintergrasp"], type = "multiselect", width = "full",
+						values = { LQ["A Rare Herb"], LQ["Bones and Arrows"], LQ["Defend the Siege"], LQ["Fueling the Demolishers"], LQ["Healing with Roses"], 
+					LQ["Jinxing the Walls"], LQ["No Mercy for the Merciless"], LQ["Slay them all!"], LQ["Stop the Siege"], LQ["Victory in Wintergrasp"], 
+					LQ["Warding the Walls"], LQ["Warding the Warriors"], LQ["Southern Sabotage"],
+				},
+					},
+				},
 			},
-			valiant = {type = "multiselect", name = L["Valiant Class"], width = "full", order = 20,
-				values = { LQ["At The Enemy's Gates"], LQ["The Grand Melee"], LQ["A Valiant's Field Training"] },
+			Grizzly  = { type = "group", name = L["Grizzly Hills"],		--These are all classified as PvP Quests, even though it might not take pvp, as dictated by Acheivemnt
+				args = {
+					shared = { name = L["Shared Quests"], type = "multiselect", order = 1, width = "full",
+						values = { LQ["Keep Them at Bay"], LQ["Riding the Red Rocket"], LQ["Smoke 'Em Out"] },
+					},
+					horde = { name = "Horde", type = "multiselect", order = 10, width = "full",
+						values = { LQ["Blackriver Brawl"], LQ["Making Repairs"], LQ["Overwhelmed!"], LQ["Crush Captain Brightwater!"], 
+							LQ["Shred the Alliance"], LQ["Keep 'Em on Their Heels"] },
+
+						hidden = function(info) return select(2, UnitFactionGroup("player")) == "Alliance" end
+					},
+					alliance = { name = "Alliance", type = "multiselect", order = 20, width = "full",
+						values = { LQ["Blackriver Skirmish"], LQ["Life or Death"], LQ["Kick 'Em While They're Down"], LQ["Down With Captain Zorna!"],
+							LQ["Pieces Parts"], LQ["Shredder Repair"] },
+						hidden = function(info) return select(2, UnitFactionGroup("player")) == "Horde" end
+					},
+				},
 			},
-			champ = { type = "multiselect", name = L["Champion Class"], width = "full", order = 30,
-				values = { LQ["Battle Before The Citadel"], LQ["Threat From Above"], LQ["Among the Champions"], LQ["Taking Battle To The Enemy"], LQ["Contributin' To The Cause"] },
+			Icecrown  = { type = "group", name = "Icecrown PvP", 		--I know, not a whole lot eh?
+				args = {
+--					shared = { name = L["Shared Quests"], type = "multiselect", order = 1, width = "full", 
+--						values = {  },
+--					},
+					horde = { name = "Horde", type = "multiselect", order = 10, width = "full",
+						values = { LQ["Make Them Pay!"] },
+						hidden = function(info) return select(2, UnitFactionGroup("player")) == "Alliance" end
+					},
+					alliance = { name = "Alliance", type = "multiselect", order = 20, width = "full",
+						values = { LQ["No Mercy!"] },
+						hidden = function(info) return select(2, UnitFactionGroup("player")) == "Horde" end
+					},
+				},
 			},
-			campOpt = { type = "select", name = L["Champion Quest Rewards"], order = 35, get = "ACTGet", set = "ACTSet",
-				values = { (GetItemInfo(46114)), (GetItemInfo(45724)), nil, nil, L["None"]},
+		},
+	}
+
+	return t
+end
+local jc_sub_Text = LQ["Shipment: Blood Jade Amulet"]
+local function jcScrub(text)
+	return (tostring(text):gsub(jc_sub_Text, ""))
+end
+function module:ProfessionsQuests()
+	local t = { 
+		type = "group",
+		name = L["Professions"],
+		order = 4, 
+		args = {
+			jc  = { type = "group", name = L["Jewelcrafting"],
+				args = {
+					jc_Sub = { name = "Jewlcrafting", type = "multiselect", width = "full",
+						values = {
+							[LQ["Shipment: Blood Jade Amulet"] ] = jcScrub(LQ["Shipment: Blood Jade Amulet"]),
+							[LQ["Shipment: Bright Armor Relic"] ] = jcScrub(LQ["Shipment: Bright Armor Relic"]),
+							[LQ["Shipment: Glowing Ivory Figurine"] ] = jcScrub(LQ["Shipment: Glowing Ivory Figurine"]),
+							[LQ["Shipment: Intricate Bone Figurine"] ] = jcScrub(LQ["Shipment: Intricate Bone Figurine"]),
+							[LQ["Shipment: Shifting Sun Curio"] ] = jcScrub(LQ["Shipment: Shifting Sun Curio"]),
+							[LQ["Shipment: Wicked Sun Brooch"] ] = jcScrub(LQ["Shipment: Wicked Sun Brooch"]),
+						},
+					},
+				},
+			},
+			cook = { type = "group", name = L["Cooking"],
+				args = {
+					cookSub = { name = L["Cooking"], type = "multiselect", order = 1, width = "full",
+						values = { LQ["Cheese for Glowergold"], LQ["Convention at the Legerdemain"], LQ["Infused Mushroom Meatloaf"], LQ["Mustard Dogs!"], LQ["Sewer Stew"] },
+					},
+				},
+			},
+			fish = { type = "group", name = L["Fishing"],
+				args = {
+					shared = { name = L["Fishing"], type = "multiselect", order = 1, width = "full",
+						values = { LQ["Blood Is Thicker"], LQ["Dangerously Delicious"], LQ["Jewel Of The Sewers"], LQ["Monsterbelly Appetite"], LQ["The Ghostfish"], },
+					},
+				},
 			},
 		},
 	}
@@ -588,19 +692,19 @@ function module:GetACTourny()
 end
 
 function module:FactionTokenGet(info)
-	return db.profile.qOptions[LQ["Timear Foresees Centrifuge Constructs in your Future!"]]
+	return db.profile.qOptions[LQ["Timear Foresees Centrifuge Constructs in your Future!"] ]
 end
 
 function module:FactionTokenSet(info, val)
 	local qOpt = db.profile.qOptions
-	qOpt[LQ["Timear Foresees Centrifuge Constructs in your Future!"]] = val
-	qOpt[LQ["Timear Foresees Infinite Agents in your Future!"]] = val
-	qOpt[LQ["Timear Foresees Titanium Vanguards in your Future!"]] = val
-	qOpt[LQ["Timear Foresees Ymirjar Berserkers in your Future!"]] = val
+	qOpt[LQ["Timear Foresees Centrifuge Constructs in your Future!"] ] = val
+	qOpt[LQ["Timear Foresees Infinite Agents in your Future!"] ] = val
+	qOpt[LQ["Timear Foresees Titanium Vanguards in your Future!"] ] = val
+	qOpt[LQ["Timear Foresees Ymirjar Berserkers in your Future!"] ] = val
 end
 
 function module:ACTGet(info)
-	return db.profile.qOptions[LQ["Among the Champions"]]
+	return db.profile.qOptions[LQ["Among the Champions"] ]
 end
 
 function module:ACTSet(info, val)
@@ -621,7 +725,7 @@ end
 
 function module:Multi_Get(info, value)
 	if type(value) == "number" then
-		return db.profile.quests[info.option.values[value]]
+		return db.profile.quests[info.option.values[value] ]
 	else
 		return db.profile.quests[value]
 	end
@@ -629,7 +733,7 @@ end
 
 function module:Multi_Set(info, value, state)
 	if type(value) == "number" then
-		db.profile.quests[info.option.values[value]] = state
+		db.profile.quests[info.option.values[value] ] = state
 	else
 		db.profile.quests[value] = state
 	end
@@ -637,7 +741,7 @@ end
 ----
 function module:GossipMulitGet(info, value, state)
 	if type(value) == "number" then
-		return db.profile.gossip[info.option.values[value]]
+		return db.profile.gossip[info.option.values[value] ]
 	else
 		return db.profile.gossip[value]
 	end
@@ -646,7 +750,7 @@ end
 
 function module:GossipMulitSet(info, value, state)
 	if type(value) == "number" then
-		db.profile.gossip[info.option.values[value]] = state
+		db.profile.gossip[info.option.values[value] ] = state
 	else
 		db.profile.gossip[value] = state
 	end
