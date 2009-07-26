@@ -54,6 +54,8 @@ module.defaults = {
 			[LQ["I'm ready to begin. What is the first ingredient you require?"]] = true,	--Alchy Dailie from Argent crusade in Drak'Tharon
 			[LQ["Get out there and make those Scourge wish they were never reborn!"]] = true,	--Troll patrol quest
 			[LQ["Let's do this, sister."] ] = true,	--Defending your Title in Storm peaks
+			[LQ["Go on, you're free.  Get out of here!"] ] = true,	--"Slaves to Saronite
+			[LQ["Give me a bomber!"] ] = true,	--Bombing quests in icecrown
 		}
 	},
 }
@@ -206,8 +208,10 @@ module.npcList = table.concat({
 	31834, --Ground Commander Xutjja
 	31808, --Ground Commander Koup
 	31737, --Skybreaker Squad Leader
-			--IceCrown - Argent Crusade Torny
+	31397, --Saronite Slave
+	31839, --Rizzy Ratchwiggle	--Bomber Quests Gossip
 
+			--IceCrown - Argent Crusade Torny	--Peliminary Rounds
 	33435,	--Bozzle Blastbolt
 	33434,	--Bezzle Blastbolt
 	-----Tourny NPCS	--I hate this...
@@ -314,6 +318,7 @@ module.npcList = table.concat({
 	---IceCrown---
 	30824, --Sky-Reaver Korm Blackscar
 	30344, --High Captain Justin Bartlett
+
 
 	---Grizzly, --Hills----
 	27562, --Lieutenant Stuart 
@@ -507,6 +512,11 @@ function module:WorldQuests()
 									LQ["The Solution Solution"], LQ["Capture More Dispatches"], LQ["Putting the Hertz: The Valley of Lost Hope"],
 									LQ["Assault by Ground"], LQ["Assault by Air"],
 									 },
+							},
+							gossip = { name = L["Icecrown"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 2, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
+								values = { [LQ["Go on, you're free.  Get out of here!"] ] = LQ["Slaves to Saronite"],
+									[ LQ["Give me a bomber!"] ] = L["Bombing Quests in Icecrown"], 
+									},
 							},
 						},
 					},
