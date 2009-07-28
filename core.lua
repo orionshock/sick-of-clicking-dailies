@@ -21,6 +21,7 @@ local fileRevision = "@file-revision@"
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
 
 SickOfClickingDailies = LibStub("AceAddon-3.0"):NewAddon("SickOfClickingDailies", "AceEvent-3.0", "AceConsole-3.0")
+local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 local addon = SickOfClickingDailies
 addon.Version = projectVersion..projectRevision
 
@@ -195,7 +196,14 @@ function addon:OnInitialize()
 
 	addon.db = LibStub("AceDB-3.0"):New("SOCD_SIX", defaults)
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("SickOfClickingDailies", GetOptionsTable)
-	self:RegisterChatCommand("socd", function() LibStub("AceConfigDialog-3.0"):Open("SickOfClickingDailies") end )
+	self:RegisterChatCommand("socd", function()
+			if  AceConfigDialog.OpenFrames["SickOfClickingDailies"] then
+				AceConfigDialog:Close("SickOfClickingDailies")
+			else
+				AceConfigDialog:Open("SickOfClickingDailies")
+			end
+
+		end )
 
 	for name, module in self:IterateModules() do
 		module:SetEnabledState(self.db.profile.modules[name])
@@ -519,6 +527,8 @@ do
 	local function OnTooltipShow(self)
 		self:AddLine( prefix:format( SecondsToTime(GetQuestResetTime()) ) )
 		self:AddLine( QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests()) )
+		self:AddLine( L["Left Click to Toggle Quest Log"] )
+		self:Addline( L["Right Click to Toggle SOCD Options"] )
 	end
 
 	local function OnEnter(self)
@@ -531,6 +541,18 @@ do
 
 	local function OnLeave(self)
 		GameTooltip:Hide()
+	end
+
+	local function OnClick(frame, button)
+		if button == "LeftButton" then
+			ToggleFrame(QuestLogFrame)
+		elseif button == "RightButton" then
+			if  AceConfigDialog.OpenFrames["SickOfClickingDailies"] then
+				AceConfigDialog:Close("SickOfClickingDailies")
+			else
+				AceConfigDialog:Open("SickOfClickingDailies")
+			end
+		end			
 	end
 
 	function addon:CreateLDB()
@@ -547,6 +569,7 @@ do
 			OnEnter = OnEnter,
 			OnLeave = OnLeave,
 			OnTooltipShow = OnTooltipShow,
+			OnClick = OnClick,
 		}
 		dailyTTL.text = (dailyTTL.label)..(dailyTTL.value)
 		self.ldb = ldb:NewDataObject("SOCD Dailies Reset Timmer", dailyTTL)
