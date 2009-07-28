@@ -528,7 +528,7 @@ do
 		self:AddLine( prefix:format( SecondsToTime(GetQuestResetTime()) ) )
 		self:AddLine( QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests()) )
 		self:AddLine( L["Left Click to Toggle Quest Log"] )
-		self:Addline( L["Right Click to Toggle SOCD Options"] )
+		self:AddLine( L["Right Click to Toggle SOCD Options"] )
 	end
 
 	local function OnEnter(self)
