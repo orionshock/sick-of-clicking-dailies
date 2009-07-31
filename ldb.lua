@@ -126,9 +126,12 @@ end)
 
 
 function module:PruneHistory()
+	--print("pruning history")
 	for quest, ttl in pairs(completedQuests) do
+		--print("checking", quest, ttl )
 		if time() > ttl then
-			db[quest] = nil
+			--print(quest, "expired, exired on:", date("%c", ttl), "current", date("%c", time() ) )
+			completedQuests[quest] = nil
 		end
 	end
 end
