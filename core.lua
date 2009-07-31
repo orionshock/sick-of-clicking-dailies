@@ -118,6 +118,8 @@ end
 
 local defaults = {
 	char = {
+		completedQuests = {},
+		showExTT = false,
 	},
 	profile = {
 		questLoop = true,

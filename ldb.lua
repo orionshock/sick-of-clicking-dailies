@@ -21,37 +21,46 @@ end
 
 local module = AddonParent:NewModule("LDB")
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
-local db
+local db, completedQuests
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
+module.sortedQuestTable = {}
 
 function module:OnInitialize()
 	self:CreateLDB()
 	db = AddonParent.db.char
+	completedQuests = db.completedQuests
 	LibStub("AceEvent-3.0").RegisterMessage(self, "SOCD_DAILIY_QUEST_COMPLETE")
 	self:PruneHistory()
+	module:SortQuestCompleTable()
 end
 
 function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, npc, opt)
-	db[quest] = time()+ GetQuestResetTime()
-	print(event,"Q:",quest, "TTL", db[quest], "//", date(db[quest]) )
-
+	completedQuests[quest] = time()+ GetQuestResetTime()
+	module:SortQuestCompleTable()
 end
 
 
 local ldbObj, SecondsToTime, GetQuestResetTime = nil, SecondsToTime, GetQuestResetTime
 local prefix = QUEST_LOG_DAILY_TOOLTIP:match( "\n(.+)" )
 local function OnTooltipShow(self)
-	self:AddLine( prefix:format( SecondsToTime(GetQuestResetTime()) ) )
-	self:AddLine( QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests()) )
+	self:AddDoubleLine( prefix:format( SecondsToTime(GetQuestResetTime()) ),  QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests())  )
 	self:AddLine(" ")
 	self:AddDoubleLine( L["Left Click to Toggle Quest Log"], L["Right Click to Toggle SOCD Options"] )
-	if next(db) then	
+	if next(completedQuests) and db.showExTT then	
 		self:AddLine(" ")
-		self:AddDoubleLine("Quest", "Reset Time")
-		for quest, eta in pairs(db) do
-			self:AddDoubleLine(quest, date("%c", eta) )
+		self:AddDoubleLine(QUESTS_COLON, "Reset Time")
+		for i, quest in pairs(module.sortedQuestTable) do
+			self:AddDoubleLine(quest, date("%c", completedQuests[quest]) )
 		end
 	end	
+end
+
+function module:SortQuestCompleTable()
+	wipe(self.sortedQuestTable)
+	for k, v in pairs(completedQuests) do
+		tinsert( self.sortedQuestTable, k)
+	end
+	table.sort(self.sortedQuestTable)
 end
 
 local function OnEnter(self)
@@ -117,9 +126,25 @@ end)
 
 
 function module:PruneHistory()
-	for quest, ttl in pairs(db) do
+	for quest, ttl in pairs(completedQuests) do
 		if time() > ttl then
 			db[quest] = nil
 		end
 	end
+end
+
+
+
+------------
+
+
+function module:GetOptionsTable()
+	local t = {
+		name = L["LDB Options"],
+		type = "group",
+		args = {
+			showExTT = {type = "toggle", name = L["Show Extended Tooltip"], get = function(info) return db.showExTT end, set = function(info, val) db.showExTT = val end, }, 
+		},
+	}
+	return t
 end
