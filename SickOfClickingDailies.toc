@@ -58,6 +58,7 @@ Classic.lua
 BC.lua
 wotlk.lua
 non-dailies.lua
+ldb.lua
 
 #@alpha@
 namescanner.lua

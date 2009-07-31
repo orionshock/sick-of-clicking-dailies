@@ -117,6 +117,8 @@ end
 --
 
 local defaults = {
+	char = {
+	},
 	profile = {
 		questLoop = true,
 		modules = {},
@@ -209,7 +211,6 @@ function addon:OnInitialize()
 		module:SetEnabledState(self.db.profile.modules[name])
 
 	end
-	self:CreateLDB()
 end
 
 function addon:OnEnable()
@@ -519,73 +520,4 @@ function addon:AnalyzeGossipOptions(te, ...)
 		end
 	end
 	return false, 0
-end
-
-do
-	local ldbObj, SecondsToTime, GetQuestResetTime = nil, SecondsToTime, GetQuestResetTime
-	local prefix = QUEST_LOG_DAILY_TOOLTIP:match( "\n(.+)" )
-	local function OnTooltipShow(self)
-		self:AddLine( prefix:format( SecondsToTime(GetQuestResetTime()) ) )
-		self:AddLine( QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests()) )
-		self:AddLine( L["Left Click to Toggle Quest Log"] )
-		self:AddLine( L["Right Click to Toggle SOCD Options"] )
-	end
-
-	local function OnEnter(self)
-		GameTooltip:SetOwner(self, "ANCHOR_NONE")
-		GameTooltip:SetPoint("TOPLEFT", self, "BOTTOMLEFT")
-		GameTooltip:ClearLines()
-		OnTooltipShow(GameTooltip)
-		GameTooltip:Show()
-	end
-
-	local function OnLeave(self)
-		GameTooltip:Hide()
-	end
-
-	local function OnClick(frame, button)
-		if button == "LeftButton" then
-			ToggleFrame(QuestLogFrame)
-		elseif button == "RightButton" then
-			if  AceConfigDialog.OpenFrames["SickOfClickingDailies"] then
-				AceConfigDialog:Close("SickOfClickingDailies")
-			else
-				AceConfigDialog:Open("SickOfClickingDailies")
-			end
-		end			
-	end
-
-	function addon:CreateLDB()
-		local ldb = LibStub("LibDataBroker-1.1", true)
-		if not ldb then
-			self.ldb = false
-			return
-		end
-		local dailyTTL = {
-			type = "data source",
-			icon = "Interface\\Icons\\Achievement_Quests_Completed_Daily_08",
-			label = L["Dailies reset in"]..": ",
-			value = SecondsToTime(GetQuestResetTime()) or "~Updating~",
-			OnEnter = OnEnter,
-			OnLeave = OnLeave,
-			OnTooltipShow = OnTooltipShow,
-			OnClick = OnClick,
-		}
-		dailyTTL.text = (dailyTTL.label)..(dailyTTL.value)
-		self.ldb = ldb:NewDataObject("SOCD Dailies Reset Timmer", dailyTTL)
-		ldbObj = self.ldb
-	end
-
-	local frame = CreateFrame("frame")
-	local delay, interval = 50, 60
-	frame:SetScript("OnUpdate", function(frame, elapsed)
-		delay = delay + elapsed
-		if delay > interval then
-			ldbObj.value = SecondsToTime(GetQuestResetTime())
-			ldbObj.text = (ldbObj.label)..(ldbObj.value)
-			delay = 0
-		end
-	end)
-
-	
 end
