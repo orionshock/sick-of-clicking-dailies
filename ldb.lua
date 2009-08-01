@@ -45,10 +45,10 @@ local prefix = QUEST_LOG_DAILY_TOOLTIP:match( "\n(.+)" )
 local function OnTooltipShow(self)
 	self:AddDoubleLine( prefix:format( SecondsToTime(GetQuestResetTime()) ),  QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests())  )
 	self:AddLine(" ")
-	self:AddDoubleLine( L["Left Click to Toggle Quest Log"], L["Right Click to Toggle SOCD Options"] )
+	self:AddDoubleLine( L["Click: Left for Quest Log"], L["Right for SOCD Options"] )
 	if next(completedQuests) and db.showExTT then	
 		self:AddLine(" ")
-		self:AddDoubleLine(QUESTS_COLON, "Reset Time")
+		self:AddDoubleLine(QUESTS_COLON)
 		for i, quest in pairs(module.sortedQuestTable) do
 			self:AddDoubleLine(quest, date("%c", completedQuests[quest]) )
 		end
@@ -126,11 +126,8 @@ end)
 
 
 function module:PruneHistory()
-	--print("pruning history")
 	for quest, ttl in pairs(completedQuests) do
-		--print("checking", quest, ttl )
 		if time() > ttl then
-			--print(quest, "expired, exired on:", date("%c", ttl), "current", date("%c", time() ) )
 			completedQuests[quest] = nil
 		end
 	end
