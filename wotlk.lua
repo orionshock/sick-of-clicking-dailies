@@ -274,6 +274,10 @@ module.npcList = table.concat({
 	33759, 	--"Eadric the Pure", nil
 	33763, 	--"Cellian Daybreak", nil
 	34210, --Squire Artie
+
+-------------------------------------------
+	--IceCrown - Argent Crusade Torny	--Tournament Finale
+
 	
 -------------------------------------------
 		---Grizzly Hills---
@@ -452,6 +456,7 @@ function module:WorldQuests()
 							preQual = { type = "group", name = L["Tournament Preliminaries"], order = 2, 
 								args = {
 									head1 = { type = "header", name = L["The Argent Tournament - Preliminaries"], order = 1, },
+									about = { type = "description", name = L["ArgentTournamentPreQual_Desc"], order = 2, },
 									shared = { type = "multiselect", name = L["Shared Quests"], width = "full", order = 5,
 										values = { LQ["A Chip Off the Ulduar Block"], LQ["Jack Me Some Lumber"],	
 											--These 2 quests are being removed in patch 3.2 ^^^^^^^
@@ -475,6 +480,7 @@ function module:WorldQuests()
 							finale = { type = "group", name = L["Tournament Finale"], order = 3, hidden = true,
 								args = {
 									head1 = { type = "header", name = L["The Argent Tournament - Finale"], order = 1, },
+									about = { type = "description", name = L["ArgentTournamentFinale_Desc"], order = 2, },
 								},
 							}
 						},
