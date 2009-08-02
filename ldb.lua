@@ -11,7 +11,7 @@ do
 			str = string.join(", ", tostringall(arg, ...) )
 			str = str:gsub(":,", ":"):gsub("=,", "=")
 		end
-		if AddonParent.db and AddonParent.db.profile.debug then		
+		if AddonParent.db and AddonParent.db.profile.debug then
 			print("SOCD-LDB: "..str)
 		end
 		return str
@@ -44,15 +44,15 @@ local ldbObj, SecondsToTime, GetQuestResetTime = nil, SecondsToTime, GetQuestRes
 local prefix = QUEST_LOG_DAILY_TOOLTIP:match( "\n(.+)" )
 local function OnTooltipShow(self)
 	self:AddDoubleLine( prefix:format( SecondsToTime(GetQuestResetTime()) ),  QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests())  )
-	self:AddLine(" ")
-	self:AddDoubleLine( L["Click: Left for Quest Log"], L["Right for SOCD Options"] )
-	if next(completedQuests) and db.showExTT then	
+	if next(completedQuests) and db.showExTT then
 		self:AddLine(" ")
 		self:AddDoubleLine(QUESTS_COLON)
 		for i, quest in pairs(module.sortedQuestTable) do
-			self:AddDoubleLine(quest, date("%c", completedQuests[quest]) )
+			self:AddDoubleLine(quest, date("%x", completedQuests[quest]) )
 		end
-	end	
+	end
+	self:AddLine(" ")
+	self:AddDoubleLine( L["Click: Left for Quest Log"], L["Right for SOCD Options"] )
 end
 
 function module:SortQuestCompleTable()
@@ -84,7 +84,7 @@ local function OnClick(frame, button)
 		else
 			AceConfigDialog:Open("SickOfClickingDailies")
 		end
-	end			
+	end
 end
 
 function module:CreateLDB()
@@ -143,7 +143,7 @@ function module:GetOptionsTable()
 		name = L["LDB Options"],
 		type = "group",
 		args = {
-			showExTT = {type = "toggle", name = L["Show Extended Tooltip"], get = function(info) return db.showExTT end, set = function(info, val) db.showExTT = val end, }, 
+			showExTT = {type = "toggle", name = L["Show Extended Tooltip"], get = function(info) return db.showExTT end, set = function(info, val) db.showExTT = val end, },
 		},
 	}
 	return t
