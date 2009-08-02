@@ -477,7 +477,7 @@ function module:WorldQuests()
 									},
 								},
 							},
-							finale = { type = "group", name = L["Tournament Finale"], order = 3, hidden = true,
+							finale = { type = "group", name = L["Tournament Finale"], order = 3, hidden = true, 
 								args = {
 									head1 = { type = "header", name = L["The Argent Tournament - Finale"], order = 1, },
 									about = { type = "description", name = L["ArgentTournamentFinale_Desc"], order = 2, },

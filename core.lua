@@ -17,7 +17,6 @@ local projectVersion = "@project-version@"
 local projectRevision = "@project-revision@"
 local fileRevision = "@file-revision@"
 
-
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
 
 SickOfClickingDailies = LibStub("AceAddon-3.0"):NewAddon("SickOfClickingDailies", "AceEvent-3.0", "AceConsole-3.0")
@@ -138,7 +137,7 @@ end
 
 local function GetOptionsTable()
 	local options = {
-		name = L["Sick Of Clicking Dailies"],
+		name = L["Sick of Clicking Dailies"],
 		type = "group",
 		handler = addon,
 		childGroups = "tab",
