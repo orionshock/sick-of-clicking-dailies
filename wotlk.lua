@@ -16,7 +16,7 @@ do
 			str = string.join(", ", tostringall(arg, ...) )
 			str = str:gsub(":,", ":"):gsub("=,", "=")
 		end
-		if AddonParent.db and AddonParent.db.profile.debug then		
+		if AddonParent.db and AddonParent.db.profile.debug then
 			print("SOCD-LK: "..str)
 		end
 		return str
@@ -81,7 +81,7 @@ function module:OnEnable()
 	AddonParent:RegisterQuests("LK", db.profile.quests, self.npcList, db.profile.qOptions, db.profile.gossip)
 	SetItemRef("item:43950", "item:43950")	--Kirin Tor Faction Token
 	SetItemRef("item:43950", "item:43950")
-	
+
 	SetItemRef("item:44711", "item:44711")	--Argetn Crusade Toeken
 	SetItemRef("item:44711", "item:44711")
 
@@ -147,7 +147,7 @@ module.npcList = table.concat({
 	29146, --Vekgar
 	28106, --Shaman Jakjek
 
-		---The Sons of Hodir 
+		---The Sons of Hodir
 	--Ok these quest might not be so automagic, unless you can target the object..
 	--o:192078, --Hodir's Horn
 	LQ["Hodir's Horn"],
@@ -184,7 +184,7 @@ module.npcList = table.concat({
 	24810, --Anuniaq
 
 		---The Frostborn---
-	29732, --Fjorlin Frostbrow 
+	29732, --Fjorlin Frostbrow
 
 	-------ZONE QUESTS-----
 		---IceCrown---
@@ -194,15 +194,15 @@ module.npcList = table.concat({
 	32301, --Warbringer Davos
 	29795, --Koltira Deathweaver
 	29799, --Thassarian
-	30825, --Chief Engineer Copperclaw 
-	30345, --Chief Engineer Boltwrench 
-	31261, --Brother Keltan 
-	31259, --Absalan the Pious 
-	32444, --Kibli Killohertz 
-	32430, --Fringe Engineer Tezzla 
-	30345, --Chief Engineer Boltwrench 
-	30825, --Chief Engineer Copperclaw 
-	30344, --High Captain Justin Bartlett 
+	30825, --Chief Engineer Copperclaw
+	30345, --Chief Engineer Boltwrench
+	31261, --Brother Keltan
+	31259, --Absalan the Pious
+	32444, --Kibli Killohertz
+	32430, --Fringe Engineer Tezzla
+	30345, --Chief Engineer Boltwrench
+	30825, --Chief Engineer Copperclaw
+	30344, --High Captain Justin Bartlett
 	30824, --Sky-Reaver Korm Blackscar
 	31833, --Kor'kon Squad Leader
 	31834, --Ground Commander Xutjja
@@ -215,7 +215,7 @@ module.npcList = table.concat({
 	33435,	--Bozzle Blastbolt
 	33434,	--Bezzle Blastbolt
 	-----Tourny NPCS	--I hate this...
-	--Horde	
+	--Horde
 	--Sunreavers
 	33542, 	--Magister Edien Sunhollow"
 	33658, 	--Amariel Sunsworn"
@@ -278,15 +278,15 @@ module.npcList = table.concat({
 -------------------------------------------
 	--IceCrown - Argent Crusade Torny	--Tournament Finale
 
-	
+
 -------------------------------------------
 		---Grizzly Hills---
-	27484, --Rheanna 
-	27464, --Aumana 
-	27416, --Pipthwack 
-	27422, --Lurz 
-	27423, --Grekk 
-	27371, --Synipus 
+	27484, --Rheanna
+	27464, --Aumana
+	27416, --Pipthwack
+	27422, --Lurz
+	27423, --Grekk
+	27371, --Synipus
 	26604, --Mack Fearsen
 
 		---The, --Storm Peaks--- --Faction Netural--
@@ -295,28 +295,28 @@ module.npcList = table.concat({
 	29428, --Ricket
 
 		---Howling, --Fjord--- (Alliance Only)
-	23895, --Bombardier Petrov 
-	24399, --Steel Gate Chief Archaeologist 
+	23895, --Bombardier Petrov
+	24399, --Steel Gate Chief Archaeologist
 
-	-------PvP----- 
+	-------PvP-----
 		---Wintergrasp Fortress---
-	31054, --Anchorite Tessa 
-	31053, --Primalist Mulfort 
-	31052, --Bowyer Randolph 
-	31102, --Vieron Blazefeather  
-	31109, --Senior Demolitionist Legoso 
-	31107, --Lieutenant Murp  
-	31108, --Siege Master Stouthandle  
-	31036, --Commander Zanneth  
-	31091, --Commander Dardosh  
-	31106, --Siegesmith Stronghoof  
-	31153, --Tactical Officer Ahbramis 
-	31151, --Tactical Officer Kilrath 
-	31051, --Sorceress Kaylana 
-	31101, --Hoodoo Master Fu'jin 
+	31054, --Anchorite Tessa
+	31053, --Primalist Mulfort
+	31052, --Bowyer Randolph
+	31102, --Vieron Blazefeather
+	31109, --Senior Demolitionist Legoso
+	31107, --Lieutenant Murp
+	31108, --Siege Master Stouthandle
+	31036, --Commander Zanneth
+	31091, --Commander Dardosh
+	31106, --Siegesmith Stronghoof
+	31153, --Tactical Officer Ahbramis
+	31151, --Tactical Officer Kilrath
+	31051, --Sorceress Kaylana
+	31101, --Hoodoo Master Fu'jin
 
 		---BattleGround---
-	15351, --Alliance Brigadier General 
+	15351, --Alliance Brigadier General
 	15350, --Horde Warbringer
 
 	---IceCrown---
@@ -325,17 +325,17 @@ module.npcList = table.concat({
 
 
 	---Grizzly, --Hills----
-	27562, --Lieutenant Stuart 
-	27563, --Centurion Kaggrum 
-	27759, --Commander Howser 
-	27708, --General Gorlok 
-	27602, --Sergeant Downey 
-	27606, --Stone Guard Ragetotem 
-	27520, --Baron Freeman 
-	27532, --General Khazgar 
-	27468, --Sergeant Hartsman Kick 
-	27451, --Commander Bargok Keep 
-	27783, --Scout Captain Carter 
+	27562, --Lieutenant Stuart
+	27563, --Centurion Kaggrum
+	27759, --Commander Howser
+	27708, --General Gorlok
+	27602, --Sergeant Downey
+	27606, --Stone Guard Ragetotem
+	27520, --Baron Freeman
+	27532, --General Khazgar
+	27468, --Sergeant Hartsman Kick
+	27451, --Commander Bargok Keep
+	27783, --Scout Captain Carter
 	27120, --Raider Captain Kronn
 	--Testing
 	--30381, --Xarantaur
@@ -371,14 +371,14 @@ local function tpScrub(text)
 end
 
 function module:WorldQuests()
-	local t = { 
-		type = "group", 
-		name = CHANNEL_CATEGORY_WORLD, 
+	local t = {
+		type = "group",
+		name = CHANNEL_CATEGORY_WORLD,
 		order = 1,
 		args = {
-			faction = { type = "group", name = L["Faction Quests"], order = 1, 
+			faction = { type = "group", name = L["Faction Quests"], order = 1,
 				args = {
-					Kalu = { type = "group", name = L["The Kalu'ak"], 
+					Kalu = { type = "group", name = L["The Kalu'ak"],
 						args = {
 							kaluSub = { name = L["The Kalu'ak"], type = "multiselect", width = "full",
 								values = { LQ["Planning for the Future"], LQ["Preparing for the Worst"], LQ["The Way to His Heart..."], },
@@ -402,7 +402,7 @@ function module:WorldQuests()
 					hodir = { type = "group", name = L["The Sons of Hodir"],
 						args = {
 							hodirSub = { name = L["The Sons of Hodir"], type = "multiselect", width = "full",
-								values = { LQ["Blowing Hodir's Horn"], LQ["Feeding Arngrim"], LQ["Hot and Cold"], LQ["Polishing the Helm"], LQ["Spy Hunter"], 
+								values = { LQ["Blowing Hodir's Horn"], LQ["Feeding Arngrim"], LQ["Hot and Cold"], LQ["Polishing the Helm"], LQ["Spy Hunter"],
 									LQ["Thrusting Hodir's Spear"],  },
 							},
 						},
@@ -410,7 +410,7 @@ function module:WorldQuests()
 					Oracles = { type = "group", name = L["The Oracles"],
 						args = {
 							oraclesSub = { name = L["The Oracles"], type = "multiselect", order = 1, width = "full",
-								values = { LQ["A Cleansing Song"], LQ["Appeasing the Great Rain Stone"], LQ["Hand of the Oracles"], 
+								values = { LQ["A Cleansing Song"], LQ["Appeasing the Great Rain Stone"], LQ["Hand of the Oracles"],
 									LQ["Mastery of the Crystals"], LQ["Power of the Great Ones"], LQ["Song of Fecundity"], LQ["Song of Reflection"],
 									LQ["Song of Wind and Water"], LQ["Will of the Titans"], },
 							},
@@ -429,20 +429,20 @@ function module:WorldQuests()
 							patrol = { type = "group", name = LQ["Troll Patrol"], order = 1,
 								args = {
 									patrolSub = { name = LQ["Troll Patrol"], type = "multiselect", order = 1, width = "full",
-										values = { 
-									[ LQ["The Alchemist's Apprentice"] ] = LQ["The Alchemist's Apprentice"], 
-									[ LQ["Troll Patrol"] ] = LQ["Troll Patrol"], 
+										values = {
+									[ LQ["The Alchemist's Apprentice"] ] = LQ["The Alchemist's Apprentice"],
+									[ LQ["Troll Patrol"] ] = LQ["Troll Patrol"],
 									[ LQ["Troll Patrol: Can You Dig It?"] ] = tpScrub(LQ["Troll Patrol: Can You Dig It?"]),
 									[ LQ["Troll Patrol: Couldn't Care Less"] ] = tpScrub(LQ["Troll Patrol: Couldn't Care Less"]),
-									[ LQ["Troll Patrol: Creature Comforts"] ] = tpScrub(LQ["Troll Patrol: Creature Comforts"]), 
-									[ LQ["Troll Patrol: Done to Death"] ] =  tpScrub(LQ["Troll Patrol: Done to Death"]), 
-									[ LQ["Troll Patrol: High Standards"] ] = tpScrub(LQ["Troll Patrol: High Standards"]), 
-									[ LQ["Troll Patrol: Intestinal Fortitude"] ] = tpScrub(LQ["Troll Patrol: Intestinal Fortitude"]), 
-									[ LQ["Troll Patrol: Something for the Pain"] ] = tpScrub(LQ["Troll Patrol: Something for the Pain"]), 
-									[ LQ["Troll Patrol: The Alchemist's Apprentice"] ] = tpScrub(LQ["Troll Patrol: The Alchemist's Apprentice"]), 
-									[ LQ["Troll Patrol: Throwing Down"] ] = tpScrub(LQ["Troll Patrol: Throwing Down"]), 
-									[ LQ["Troll Patrol: Whatdya Want, a Medal?"] ] = tpScrub(LQ["Troll Patrol: Whatdya Want, a Medal?"]), 
-									[ LQ["Congratulations!"] ] = LQ["Congratulations!"], 
+									[ LQ["Troll Patrol: Creature Comforts"] ] = tpScrub(LQ["Troll Patrol: Creature Comforts"]),
+									[ LQ["Troll Patrol: Done to Death"] ] =  tpScrub(LQ["Troll Patrol: Done to Death"]),
+									[ LQ["Troll Patrol: High Standards"] ] = tpScrub(LQ["Troll Patrol: High Standards"]),
+									[ LQ["Troll Patrol: Intestinal Fortitude"] ] = tpScrub(LQ["Troll Patrol: Intestinal Fortitude"]),
+									[ LQ["Troll Patrol: Something for the Pain"] ] = tpScrub(LQ["Troll Patrol: Something for the Pain"]),
+									[ LQ["Troll Patrol: The Alchemist's Apprentice"] ] = tpScrub(LQ["Troll Patrol: The Alchemist's Apprentice"]),
+									[ LQ["Troll Patrol: Throwing Down"] ] = tpScrub(LQ["Troll Patrol: Throwing Down"]),
+									[ LQ["Troll Patrol: Whatdya Want, a Medal?"] ] = tpScrub(LQ["Troll Patrol: Whatdya Want, a Medal?"]),
+									[ LQ["Congratulations!"] ] = LQ["Congratulations!"],
 										}
 									},
 									patrol_Opts = { name = L["Argent Crusade"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 2, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
@@ -453,12 +453,12 @@ function module:WorldQuests()
 									}
 								},
 							},
-							preQual = { type = "group", name = L["Tournament Preliminaries"], order = 2, 
+							preQual = { type = "group", name = L["Tournament Preliminaries"], order = 2,
 								args = {
 									head1 = { type = "header", name = L["The Argent Tournament - Preliminaries"], order = 1, },
 									about = { type = "description", name = L["ArgentTournamentPreQual_Desc"], order = 2, },
 									shared = { type = "multiselect", name = L["Shared Quests"], width = "full", order = 5,
-										values = { LQ["A Chip Off the Ulduar Block"], LQ["Jack Me Some Lumber"],	
+										values = { LQ["A Chip Off the Ulduar Block"], LQ["Jack Me Some Lumber"],
 											--These 2 quests are being removed in patch 3.2 ^^^^^^^
 											LQ["The Edge Of Winter"], LQ["A Worthy Weapon"], LQ["A Blade Fit For A Champion"]
 										},
@@ -477,7 +477,7 @@ function module:WorldQuests()
 									},
 								},
 							},
-							finale = { type = "group", name = L["Tournament Finale"], order = 3, hidden = true, 
+							finale = { type = "group", name = L["Tournament Finale"], order = 3, hidden = true,
 								args = {
 									head1 = { type = "header", name = L["The Argent Tournament - Finale"], order = 1, },
 									about = { type = "description", name = L["ArgentTournamentFinale_Desc"], order = 2, },
@@ -488,7 +488,7 @@ function module:WorldQuests()
 					Knights = { type = "group", name = L["Knights of the Ebon Blade"],
 						args = {
 							knightsSub = { name = L["Knights of the Ebon Blade"], type = "multiselect", width = "full",
-								values = { LQ["Intelligence Gathering"], LQ["Leave Our Mark"], LQ["No Fly Zone"], 
+								values = { LQ["Intelligence Gathering"], LQ["Leave Our Mark"], LQ["No Fly Zone"],
 									LQ["From Their Corpses, Rise!"], LQ["Shoot 'Em Up"], LQ["Vile Like Fire!"],  },
 							},
 						},
@@ -500,7 +500,7 @@ function module:WorldQuests()
 					peaks = { type = "group", name =  L["The Storm Peaks"],
 						args = {
 							peaksSub = { name =  L["The Storm Peaks"], type = "multiselect", order = 1, width = "full",
-								values = { LQ["Back to the Pit"], LQ["Defending Your Title"], LQ["Overstock"], 
+								values = { LQ["Back to the Pit"], LQ["Defending Your Title"], LQ["Overstock"],
 								LQ["Maintaining Discipline"], LQ["The Aberrations Must Die"], },
 							},
 							peaksGossip = { name = L["The Storm Peaks"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 8, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
@@ -508,25 +508,25 @@ function module:WorldQuests()
 							},
 						},
 					},
-					Icecrown = { type = "group", name = L["Icecrown"], 
+					Icecrown = { type = "group", name = L["Icecrown"],
 						args = {
 							shared = { name = L["Icecrown"], type = "multiselect", order = 1, width = "full",
-								values = { LQ["King of the Mountain"], LQ["Blood of the Chosen"], LQ["Drag and Drop"], LQ["Neutralizing the Plague"], 
-									LQ["No Rest For The Wicked"], LQ["Not a Bug"], LQ["Retest Now"], LQ["Slaves to Saronite"], LQ["That's Abominable!"], 
-									LQ["Total Ohmage: The Valley of Lost Hope!"], LQ["Volatility"], LQ["Keeping the Alliance Blind"], 
-									LQ["Riding the Wavelength: The Bombardment"], LQ["Static Shock Troops: the Bombardment"], 
+								values = { LQ["King of the Mountain"], LQ["Blood of the Chosen"], LQ["Drag and Drop"], LQ["Neutralizing the Plague"],
+									LQ["No Rest For The Wicked"], LQ["Not a Bug"], LQ["Retest Now"], LQ["Slaves to Saronite"], LQ["That's Abominable!"],
+									LQ["Total Ohmage: The Valley of Lost Hope!"], LQ["Volatility"], LQ["Keeping the Alliance Blind"],
+									LQ["Riding the Wavelength: The Bombardment"], LQ["Static Shock Troops: the Bombardment"],
 									LQ["The Solution Solution"], LQ["Capture More Dispatches"], LQ["Putting the Hertz: The Valley of Lost Hope"],
 									LQ["Assault by Ground"], LQ["Assault by Air"],
 									 },
 							},
 							gossip = { name = L["Icecrown"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 2, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
 								values = { [LQ["Go on, you're free.  Get out of here!"] ] = LQ["Slaves to Saronite"],
-									[ LQ["Give me a bomber!"] ] = L["Bombing Quests in Icecrown"], 
+									[ LQ["Give me a bomber!"] ] = L["Bombing Quests in Icecrown"],
 									},
 							},
 						},
 					},
---					Fyord = { type = "group", name = "Howling Fyord", 
+--					Fyord = { type = "group", name = "Howling Fyord",
 --						args = {
 --							shared = { name = "Fyord", type = "multiselect", order = 1, width = "full",
 --								values = { "test" },
@@ -559,7 +559,7 @@ function module:InstanceQuests()
 	local t = {
 		type = "group",
 		name = L["Instances"],
-		order = 2, 
+		order = 2,
 		args = {
 			normal  = { type = "group", name = L["Instances"], order = 1,		--Note to self, search _G again for some client localizations, they changed alot in 3.2
 				args = {
@@ -572,12 +572,12 @@ function module:InstanceQuests()
 						}
 					},
 					option = { name = L["Faction Token"], type = "select", order = 2, get = "FactionTokenGet", set = "FactionTokenSet",
-						values = { (GetItemInfo(43950)) or "Kirin Tor", (GetItemInfo(44711)) or "Argent Crusade", 
+						values = { (GetItemInfo(43950)) or "Kirin Tor", (GetItemInfo(44711)) or "Argent Crusade",
 								(GetItemInfo(44713)) or "Ebon Blade", (GetItemInfo(44710)) or "Wyrmrest", L["None"]},
 					}
 				},
 			},
-			heroic = { type = "group", name =  L["Heroic Instances"], order = 2, 
+			heroic = { type = "group", name =  L["Heroic Instances"], order = 2,
 				args = {
 					heroicSub = { name =  L["Heroic Instances"], type = "multiselect", width = "full",
 						values = {
@@ -604,7 +604,7 @@ function module:InstanceQuests()
 end
 
 function module:PlayerVsPlayerQuests()
-	local t = { 
+	local t = {
 		type = "group",
 		name = L["World PvP"],
 		order = 3,
@@ -619,8 +619,8 @@ function module:PlayerVsPlayerQuests()
 			wg  = { type = "group", name = L["Wintergrasp"],	--Don't care too much to break the horde and alliance ones up here...
 				args = {
 					wgSub = { name = L["Wintergrasp"], type = "multiselect", width = "full",
-						values = { LQ["A Rare Herb"], LQ["Bones and Arrows"], LQ["Defend the Siege"], LQ["Fueling the Demolishers"], LQ["Healing with Roses"], 
-					LQ["Jinxing the Walls"], LQ["No Mercy for the Merciless"], LQ["Slay them all!"], LQ["Stop the Siege"], LQ["Victory in Wintergrasp"], 
+						values = { LQ["A Rare Herb"], LQ["Bones and Arrows"], LQ["Defend the Siege"], LQ["Fueling the Demolishers"], LQ["Healing with Roses"],
+					LQ["Jinxing the Walls"], LQ["No Mercy for the Merciless"], LQ["Slay them all!"], LQ["Stop the Siege"], LQ["Victory in Wintergrasp"],
 					LQ["Warding the Walls"], LQ["Warding the Warriors"], LQ["Southern Sabotage"],
 				},
 					},
@@ -632,7 +632,7 @@ function module:PlayerVsPlayerQuests()
 						values = { LQ["Keep Them at Bay"], LQ["Riding the Red Rocket"], LQ["Smoke 'Em Out"] },
 					},
 					horde = { name = "Horde", type = "multiselect", order = 10, width = "full",
-						values = { LQ["Blackriver Brawl"], LQ["Making Repairs"], LQ["Overwhelmed!"], LQ["Crush Captain Brightwater!"], 
+						values = { LQ["Blackriver Brawl"], LQ["Making Repairs"], LQ["Overwhelmed!"], LQ["Crush Captain Brightwater!"],
 							LQ["Shred the Alliance"], LQ["Keep 'Em on Their Heels"] },
 
 						hidden = function(info) return select(2, UnitFactionGroup("player")) == "Alliance" end
@@ -646,7 +646,7 @@ function module:PlayerVsPlayerQuests()
 			},
 			Icecrown  = { type = "group", name = "Icecrown PvP", 		--I know, not a whole lot eh?
 				args = {
---					shared = { name = L["Shared Quests"], type = "multiselect", order = 1, width = "full", 
+--					shared = { name = L["Shared Quests"], type = "multiselect", order = 1, width = "full",
 --						values = {  },
 --					},
 					horde = { name = "Horde", type = "multiselect", order = 10, width = "full",
@@ -669,10 +669,10 @@ local function jcScrub(text)
 	return (tostring(text):gsub(jc_sub_Text, ""))
 end
 function module:ProfessionsQuests()
-	local t = { 
+	local t = {
 		type = "group",
 		name = L["Professions"],
-		order = 4, 
+		order = 4,
 		args = {
 			jc  = { type = "group", name = L["Jewelcrafting"],
 				args = {
@@ -748,6 +748,7 @@ function module:Multi_Get(info, value)
 end
 
 function module:Multi_Set(info, value, state)
+
 	if type(value) == "number" then
 		db.profile.quests[info.option.values[value] ] = state
 	else
