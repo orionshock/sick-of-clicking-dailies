@@ -277,7 +277,12 @@ module.npcList = table.concat({
 
 -------------------------------------------
 	--IceCrown - Argent Crusade Torny	--Tournament Finale
-
+	34912, -- Savinia Loresong
+	34880, -- Narasi Snowdawn
+	34771, -- Girana the Blooded
+	34914 , -- Tylos Dawnrunner
+	34882, -- High Crusader Adelard
+	35094, -- Crusader Silverdawn
 
 -------------------------------------------
 		---Grizzly Hills---
@@ -477,10 +482,17 @@ function module:WorldQuests()
 									},
 								},
 							},
-							finale = { type = "group", name = L["Tournament Finale"], order = 3, hidden = true,
+							finale = { type = "group", name = L["Tournament Finale"], order = 3,
 								args = {
 									head1 = { type = "header", name = L["The Argent Tournament - Finale"], order = 1, },
 									about = { type = "description", name = L["ArgentTournamentFinale_Desc"], order = 2, },
+									part = { type = "multiselect", name = L["Shared Quests"], order = 10, width = "full",
+										values = { LQ["You've Really Done It This Time, Kul"], LQ["Rescue at Sea"], LQ["A Leg Up"], LQ["The Light's Mercy"],
+											LQ["Stop The Aggressors"], LQ["Breakfast Of Champions"], LQ["Gormok Wants His Snobolds"], LQ["What Do You Feed a Yeti, Anyway?"],
+											LQ["The Fate Of The Fallen"], LQ["Get Kraken!"], LQ["Drottinn Hrothgar"],LQ["Mistcaller Yngvar"],
+											LQ["Ornolf The Scarred"], LQ["Deathspeaker Kharos"],
+}
+									},
 								},
 							}
 						},

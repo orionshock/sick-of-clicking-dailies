@@ -277,11 +277,25 @@ local qTable = {
 	[13830] = "The Ghostfish",
 
 --Patch 3.2 Additions:
+	[14096] = "You've Really Done It This Time, Kul",
+	[14152] = "Rescue at Sea",
+	[14074] = "A Leg Up",
+	[14077] = "The Light's Mercy",
+	[14080] = "Stop The Aggressors",
+	[14076] = "Breakfast Of Champions",
+	[14090] = "Gormok Wants His Snobolds",
+	[14112] = "What Do You Feed a Yeti, Anyway?",
 
-	
+	[14107] = "The Fate Of The Fallen",
+	[14108] = "Get Kraken!",
+	[14101] = "Drottinn Hrothgar",
+	[14102] = "Mistcaller Yngvar",
+	[14104] = "Ornolf The Scarred",
+	[14105] = "Deathspeaker Kharos",
 
 
-}
+}	--End of name Scanner Master Table
+
 module.qTable = qTable
 
 local tt = CreateFrame("GameTooltip", "QuestScanTT", UIParent, "GameTooltipTemplate")
