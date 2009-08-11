@@ -62,7 +62,7 @@ local function qTable(k)
 	local f
 	for _, questTable in pairs(moduleQLookup) do
 		if questTable[k] then
-			return questTable[k]
+			return questTable[k], k
 		elseif questTable[k] ~= nil then
 			f = k
 		end
@@ -363,32 +363,33 @@ do
 			local opt = qOptions(quest)
 			if (opt and (opt == 5)) then
 				stopFlag = true
-				s_title, s_npc = quest, npc
+				--s_title, s_npc = quest, npc
 				D(event, "Has Option and time to stop", quest, opt)
 				return
 			elseif opt and (opt >= 1 and opt <= 4 ) then
 				stopFlag = false
 				D(event, "Getting Money!", opt)
 				GetQuestReward( opt )
-				self:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", quest, npc, opt)
+				--self:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", quest, npc, opt)
 				return
 			end
 			D(event, "Getting Money!")
 			GetQuestReward(0)
-			self:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", quest, npc)
+			--self:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", quest, npc)
 			return
 	    end
 	end
 
 	local function SOCD_GetQuestRewardHook(opt)
-		if stopFlag then
-			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", s_title, s_npc, opt)
-			stopFlag = false
-			return
-		end
+--		if stopFlag then
+--			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", s_title, s_npc, opt)
+--			stopFlag = false
+--			return
+--		end
+--		print("GQRH:: ", GetTitleText(), qTable(GetTitleText()) )
 		local enabled, present =  qTable(GetTitleText())
 		local npcID = addon:CheckNPC("hook")
-		if (not enabled) and (present and npcID) then
+		if present and npcID then
 			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", present, npcID, opt)
 		end
 	end

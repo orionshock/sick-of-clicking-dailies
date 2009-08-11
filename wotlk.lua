@@ -673,7 +673,7 @@ function module:PlayerVsPlayerQuests()
 			},
 		},
 	}
-
+--	AddonParentw.wgQuests = t.args.wg.args.wgsub.values
 	return t
 end
 local jc_sub_Text = LQ["Shipment: Blood Jade Amulet"]
