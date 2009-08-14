@@ -633,7 +633,7 @@ function module:PlayerVsPlayerQuests()
 					wgSub = { name = L["Wintergrasp"], type = "multiselect", width = "full",
 						values = { LQ["A Rare Herb"], LQ["Bones and Arrows"], LQ["Defend the Siege"], LQ["Fueling the Demolishers"], LQ["Healing with Roses"],
 					LQ["Jinxing the Walls"], LQ["No Mercy for the Merciless"], LQ["Slay them all!"], LQ["Stop the Siege"], LQ["Victory in Wintergrasp"],
-					LQ["Warding the Walls"], LQ["Warding the Warriors"], LQ["Southern Sabotage"],
+					LQ["Warding the Walls"], LQ["Warding the Warriors"], LQ["Southern Sabotage"], LQ["Toppling the Towers"],
 				},
 					},
 				},
@@ -673,9 +673,17 @@ function module:PlayerVsPlayerQuests()
 			},
 		},
 	}
---	AddonParentw.wgQuests = t.args.wg.args.wgsub.values
 	return t
 end
+do
+	local specialResetQuests = {}
+	for k,v in ipairs(module:PlayerVsPlayerQuests().args.wg.args.wgSub.values) do
+		specialResetQuests[v] = true
+	end
+	AddonParent.specialResetQuests = specialResetQuests
+end
+	
+
 local jc_sub_Text = LQ["Shipment: Blood Jade Amulet"]
 local function jcScrub(text)
 	return (tostring(text):gsub(jc_sub_Text, ""))

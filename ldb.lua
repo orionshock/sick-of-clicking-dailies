@@ -58,7 +58,9 @@ end
 function module:SortQuestCompleTable()
 	wipe(self.sortedQuestTable)
 	for k, v in pairs(completedQuests) do
-		tinsert( self.sortedQuestTable, k)
+		if not AddonParent.specialResetQuests[k] then
+			tinsert( self.sortedQuestTable, k)
+		end
 	end
 	table.sort(self.sortedQuestTable)
 end
