@@ -1,8 +1,8 @@
 --[[
 	Sick Of Clicking Dailies? - Locale file for frFR
 	Written By: @project-author@
-
-	Please Visit: http://www.wowace.com/projects/sick-of-clicking-dailies/localization/frFR
+	
+	Please Visit: http://www.wowace.com/projects/sick-of-clicking-dailies/localization/
 	to contribute to localizations :)
 ]]--
 
@@ -23,6 +23,7 @@ L["Alliance"] = FACTION_ALLIANCE
 L["Battlegrounds"] = BATTLEFIELDS
 L["Cooking"] = (GetSpellInfo(2550))
 L["Dungeon"] = LFG_TYPE_DUNGEON
+L["Doungeons"] = BUG_CATEGORY3
 L["Faction"] = FACTION
 L["Fishing"] = (GetSpellInfo(63275))
 L["Friendly"] = FACTION_STANDING_LABEL5
@@ -40,7 +41,7 @@ L["Wintergrasp"] = PVPBATTLEGROUND_WINTERGRASPTIMER:match("(.+)|n")
 
 --@localization(locale="frFR", format="lua_additive_table", same-key-is-true=true, namespace="Base_All", table-name="L")@
 
-	end
+	end	
 
 --All Quests Classified by orgin / content location
 
@@ -58,7 +59,7 @@ local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "frFR", false)
 
 ----------------------------------------------------------------------------
 --	TBC, Populated by WoWAce-Curseforge Packager.			  --
-----------------------------------------------------------------------------
+----------------------------------------------------------------------------	
 
 local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "frFR", false)
 

@@ -23,6 +23,7 @@ L["Alliance"] = FACTION_ALLIANCE
 L["Battlegrounds"] = BATTLEFIELDS
 L["Cooking"] = (GetSpellInfo(2550))
 L["Dungeon"] = LFG_TYPE_DUNGEON
+L["Doungeons"] = BUG_CATEGORY3
 L["Faction"] = FACTION
 L["Fishing"] = (GetSpellInfo(63275))
 L["Friendly"] = FACTION_STANDING_LABEL5

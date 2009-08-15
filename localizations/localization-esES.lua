@@ -2,7 +2,7 @@
 	Sick Of Clicking Dailies? - Locale file for esES
 	Written By: @project-author@
 	
-	Please Visit: http://www.wowace.com/projects/sick-of-clicking-dailies/localization/esES
+	Please Visit: http://www.wowace.com/projects/sick-of-clicking-dailies/localization/
 	to contribute to localizations :)
 ]]--
 
@@ -18,12 +18,12 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_Core", "esES", false)
 
 	if L then
-		print("SickofClickingDailies: esES / esMX Translation incomplete, addon may not function completely")
 --These are not importable to WoWAce/Curseforge Locale system, as these are pulled directly from the client.
 L["Alliance"] = FACTION_ALLIANCE
 L["Battlegrounds"] = BATTLEFIELDS
 L["Cooking"] = (GetSpellInfo(2550))
 L["Dungeon"] = LFG_TYPE_DUNGEON
+L["Doungeons"] = BUG_CATEGORY3
 L["Faction"] = FACTION
 L["Fishing"] = (GetSpellInfo(63275))
 L["Friendly"] = FACTION_STANDING_LABEL5
