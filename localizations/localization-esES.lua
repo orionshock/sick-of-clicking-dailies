@@ -23,9 +23,11 @@ local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_Core", "esES", false)
 L["Alliance"] = FACTION_ALLIANCE
 L["Battlegrounds"] = BATTLEFIELDS
 L["Cooking"] = (GetSpellInfo(2550))
+L["Dungeon"] = LFG_TYPE_DUNGEON
 L["Faction"] = FACTION
 L["Fishing"] = (GetSpellInfo(63275))
 L["Friendly"] = FACTION_STANDING_LABEL5
+L["Heroic Dungeon"] = LFG_TYPE_HEROIC_DUNGEON
 L["Honored"] = FACTION_STANDING_LABEL6
 L["Horde"] = FACTION_HORDE
 L["Jewelcrafting"] = (GetSpellInfo(25229))
@@ -35,6 +37,7 @@ L["Professions"] = TRADE_SKILLS
 L["PvP"] = PVP
 L["Quests"] = QUESTS_LABEL
 L["Revered"] = FACTION_STANDING_LABEL7
+L["Wintergrasp"] = PVPBATTLEGROUND_WINTERGRASPTIMER:match("(.+)|n")
 
 --@localization(locale="esES", format="lua_additive_table", same-key-is-true=true, namespace="Base_All", table-name="L")@
 
