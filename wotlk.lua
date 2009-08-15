@@ -583,14 +583,16 @@ local function herInstScrub(text)
 	return ( text:gsub(heroic_instance_sub_Text, "") )
 end
 function module:InstanceQuests()
+	local str = [[
+	return function(L, LQ, module, norInstScrub, herInstScrub)
 	local t = {
 		type = "group",
-		name = L["Instances"],
+		name = L["Dungeon"],
 		order = 2,
 		args = {
-			normal  = { type = "group", name = L["Instances"], order = 1,		--Note to self, search _G again for some client localizations, they changed alot in 3.2
+			normal  = { type = "group", name = L["Dungeon"], order = 1,		--Note to self, search _G again for some client localizations, they changed alot in 3.2
 				args = {
-					normalSub = { name = L["Instances"], type = "multiselect", order = 1, width = "full",
+					normalSub = { name = L["Dungeon"], type = "multiselect", order = 1, width = "full",
 						values = {
 			[LQ["Timear Foresees Centrifuge Constructs in your Future!"] ] = norInstScrub(LQ["Timear Foresees Centrifuge Constructs in your Future!"]),
 			[LQ["Timear Foresees Infinite Agents in your Future!"] ] = norInstScrub(LQ["Timear Foresees Infinite Agents in your Future!"]),
@@ -604,9 +606,9 @@ function module:InstanceQuests()
 					}
 				},
 			},
-			heroic = { type = "group", name =  L["Heroic Instances"], order = 2,
+			heroic = { type = "group", name = L["Heroic Dungeon"], order = 2,
 				args = {
-					heroicSub = { name =  L["Heroic Instances"], type = "multiselect", width = "full",
+					heroicSub = { name =  L["Heroic Dungeon"], type = "multiselect", width = "full",
 						values = {
 							[LQ["Proof of Demise: Anub'arak"] ] = herInstScrub(LQ["Proof of Demise: Anub'arak"]),
 							[LQ["Proof of Demise: Cyanigosa"] ] = herInstScrub(LQ["Proof of Demise: Cyanigosa"]),
@@ -626,11 +628,16 @@ function module:InstanceQuests()
 			},
 		},
 	}
+	return t
+	end ]]
+	local t = loadstring(str)()(L, LQ, self, norInstScrub, herInstScrub)
 
 	return t
 end
 
 function module:PlayerVsPlayerQuests()
+	local str = [[
+	return function(L, LQ, module)
 	local t = {
 		type = "group",
 		name = L["World PvP"],
@@ -658,13 +665,13 @@ function module:PlayerVsPlayerQuests()
 					shared = { name = L["Shared Quests"], type = "multiselect", order = 1, width = "full",
 						values = { LQ["Keep Them at Bay"], LQ["Riding the Red Rocket"], LQ["Smoke 'Em Out"] },
 					},
-					horde = { name = "Horde", type = "multiselect", order = 10, width = "full",
+					horde = { name = L["Horde"], type = "multiselect", order = 10, width = "full",
 						values = { LQ["Blackriver Brawl"], LQ["Making Repairs"], LQ["Overwhelmed!"], LQ["Crush Captain Brightwater!"],
 							LQ["Shred the Alliance"], LQ["Keep 'Em on Their Heels"] },
 
 						hidden = function(info) return select(2, UnitFactionGroup("player")) == "Alliance" end
 					},
-					alliance = { name = "Alliance", type = "multiselect", order = 20, width = "full",
+					alliance = { name = L["Alliance"], type = "multiselect", order = 20, width = "full",
 						values = { LQ["Blackriver Skirmish"], LQ["Life or Death"], LQ["Kick 'Em While They're Down"], LQ["Down With Captain Zorna!"],
 							LQ["Pieces Parts"], LQ["Shredder Repair"] },
 						hidden = function(info) return select(2, UnitFactionGroup("player")) == "Horde" end
@@ -676,11 +683,11 @@ function module:PlayerVsPlayerQuests()
 --					shared = { name = L["Shared Quests"], type = "multiselect", order = 1, width = "full",
 --						values = {  },
 --					},
-					horde = { name = "Horde", type = "multiselect", order = 10, width = "full",
+					horde = { name = L["Horde"], type = "multiselect", order = 10, width = "full",
 						values = { LQ["Make Them Pay!"] },
 						hidden = function(info) return select(2, UnitFactionGroup("player")) == "Alliance" end
 					},
-					alliance = { name = "Alliance", type = "multiselect", order = 20, width = "full",
+					alliance = { name = L["Alliance"], type = "multiselect", order = 20, width = "full",
 						values = { LQ["No Mercy!"] },
 						hidden = function(info) return select(2, UnitFactionGroup("player")) == "Horde" end
 					},
@@ -688,6 +695,9 @@ function module:PlayerVsPlayerQuests()
 			},
 		},
 	}
+	return t
+	end]]
+	local t = loadstring(str)()(L, LQ, self)
 	return t
 end
 do
@@ -699,11 +709,13 @@ do
 end
 	
 
-local jc_sub_Text = LQ["Shipment: Blood Jade Amulet"]
+local jc_sub_Text = L["Shipment: "]
 local function jcScrub(text)
 	return (tostring(text):gsub(jc_sub_Text, ""))
 end
 function module:ProfessionsQuests()
+	local str = [[
+	return function(L, LQ, module, jcScrub)
 	local t = {
 		type = "group",
 		name = L["Professions"],
@@ -739,6 +751,9 @@ function module:ProfessionsQuests()
 			},
 		},
 	}
+	return t
+	end]]
+	local t = loadstring(str)()(L, LQ, module, jcScrub)
 	return t
 end
 

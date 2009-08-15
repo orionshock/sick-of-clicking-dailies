@@ -228,7 +228,7 @@ function module:GetOptionsTable()
 				name = L["Instances"], type = "group", order = 4,
 				args = {
 					normal = {
-						name = L["Instances"], type = "multiselect", width = "full",
+						name = L["Dungeon"], type = "multiselect", width = "full",
 						values = { 
 							[LQ["Wanted: Arcatraz Sentinels"]] = LQ["Wanted: Arcatraz Sentinels"]:gsub(L["Wanted: "], ""),
 							[LQ["Wanted: Coilfang Myrmidons"]] = LQ["Wanted: Coilfang Myrmidons"]:gsub(L["Wanted: "], ""),
@@ -241,7 +241,7 @@ function module:GetOptionsTable()
 							},
 					},
 					heroic = {
-						name = L["Heroic Instances"], type = "multiselect", width = "full",
+						name = L["Heroic Dungeon"], type = "multiselect", width = "full",
 						values = {
 							[LQ["Wanted: A Black Stalker Egg"]] = LQ["Wanted: A Black Stalker Egg"]:gsub(L["Wanted: "], ""),
 							[LQ["Wanted: A Warp Splinter Clipping"]] = LQ["Wanted: A Warp Splinter Clipping"]:gsub(L["Wanted: "], ""),
