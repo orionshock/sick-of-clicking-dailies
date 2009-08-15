@@ -345,6 +345,8 @@ module.npcList = table.concat({
 	--Testing
 	--30381, --Xarantaur
 
+	--Ravasaur Trainers---
+	34320, --Venomhide Hatchling
 
 	}, ":")
 
@@ -502,6 +504,13 @@ function module:WorldQuests()
 							knightsSub = { name = L["Knights of the Ebon Blade"], type = "multiselect", width = "full",
 								values = { LQ["Intelligence Gathering"], LQ["Leave Our Mark"], LQ["No Fly Zone"],
 									LQ["From Their Corpses, Rise!"], LQ["Shoot 'Em Up"], LQ["Vile Like Fire!"],  },
+							},
+						},
+					},
+					Ravasaur = { type = "group", name = L["Ravasaur Trainers"],
+						args = {
+							raveSub = { name = L["Ravasaur Trainers"], type = "multiselect", width = "full",
+								values = { LQ["Gorishi Grub"], LQ["Hungry, Hungry Hatchling"], LQ["Poached, Scrambled, Or Raw?"], LQ["Searing Roc Feathers"], },
 							},
 						},
 					},
