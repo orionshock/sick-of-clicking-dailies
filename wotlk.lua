@@ -587,7 +587,7 @@ function module:InstanceQuests()
 	return function(L, LQ, module, norInstScrub, herInstScrub)
 	local t = {
 		type = "group",
-		name = L["Dungeon"],
+		name = L["Doungeons"],
 		order = 2,
 		args = {
 			normal  = { type = "group", name = L["Dungeon"], order = 1,		--Note to self, search _G again for some client localizations, they changed alot in 3.2

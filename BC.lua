@@ -225,7 +225,7 @@ function module:GetOptionsTable()
 				},
 			},
 			instances = {
-				name = L["Instances"], type = "group", order = 4,
+				name = L["Doungeons"], type = "group", order = 4,
 				args = {
 					normal = {
 						name = L["Dungeon"], type = "multiselect", width = "full",
