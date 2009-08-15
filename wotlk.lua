@@ -378,7 +378,9 @@ local function tpScrub(text)
 end
 
 function module:WorldQuests()
-	local t = {
+	local str = [[
+	return function(L, LQ, module, tpScrub)
+		local t = {
 		type = "group",
 		name = CHANNEL_CATEGORY_WORLD,
 		order = 1,
@@ -565,6 +567,10 @@ function module:WorldQuests()
 			},
 		},
 	}
+		return t
+	end
+]]
+	local t = loadstring(str)()(L, LQ, self, tpScrub)
 	return t
 end
 
