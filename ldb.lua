@@ -89,6 +89,18 @@ local function OnClick(frame, button)
 	end
 end
 
+
+
+
+local frame = CreateFrame("frame")
+local Group = frame:CreateAnimationGroup()
+local Ani = Group:CreateAnimation("Animation")
+Ani:SetDuration(60)
+Ani:SetOrder(1)
+Group:SetLooping("REPEAT")
+
+
+
 function module:CreateLDB()
 	local ldb = LibStub("LibDataBroker-1.1", true)
 	if not ldb then
@@ -108,24 +120,24 @@ function module:CreateLDB()
 	dailyTTL.text = (dailyTTL.label)..(dailyTTL.value)
 	self.ldb = ldb:NewDataObject("SOCD Dailies Reset Timmer", dailyTTL)
 	ldbObj = self.ldb
+	Group:Play()
 end
 
-local frame = CreateFrame("frame")
-local delay, interval = 50, 60
-local lastttl
-frame:SetScript("OnUpdate", function(frame, elapsed)
-	delay = delay + elapsed
+local function UpdateLDB_Object(frame, elapsed)
+--	delay = delay + elapsed
 	local ttl = GetQuestResetTime()
-	if delay > interval then
+--	if delay > interval then
 		ldbObj.value = SecondsToTime(ttl)
 		ldbObj.text = (ldbObj.label)..(ldbObj.value)
-		delay = 0
-	end
+--		delay = 0
+--	end
 	if ttl > 86390 then
 		module:PruneHistory()
 	end
-end)
+--	print("|cff9933FFSOCD:|r SOCD On Loop for Update LDB")
+end
 
+Group:SetScript("OnLoop", UpdateLDB_Object)
 
 function module:PruneHistory()
 	for quest, ttl in pairs(completedQuests) do
