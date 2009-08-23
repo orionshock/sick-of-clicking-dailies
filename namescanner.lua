@@ -292,6 +292,7 @@ local qTable = {
 	[14102] = "Mistcaller Yngvar",
 	[14104] = "Ornolf The Scarred",
 	[14105] = "Deathspeaker Kharos",
+	[14199] = "Proof of Demise: The Black Knight",
 
 
 }	--End of name Scanner Master Table

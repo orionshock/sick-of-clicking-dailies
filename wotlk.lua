@@ -622,6 +622,7 @@ function module:InstanceQuests()
 							[LQ["Proof of Demise: Mal'Ganis"] ] = herInstScrub(LQ["Proof of Demise: Mal'Ganis"]),
 							[LQ["Proof of Demise: Sjonnir The Ironshaper"] ] = herInstScrub(LQ["Proof of Demise: Sjonnir The Ironshaper"]),
 							[LQ["Proof of Demise: The Prophet Tharon'ja"] ] = herInstScrub(LQ["Proof of Demise: The Prophet Tharon'ja"]),
+							[LQ["Proof of Demise: The Black Knight"] ] = herInstScrub(LQ["Proof of Demise: The Black Knight"]),
 						}
 					},
 				},
