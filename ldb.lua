@@ -4,13 +4,8 @@ local D		--Basic Debug
 do
 	local str = ""
 	function D(arg, ...)
-		str = ""
-		if type(arg) == "string" and string.find(arg, "%%") then
-			str = arg:format(...)
-		else
-			str = string.join(", ", tostringall(arg, ...) )
-			str = str:gsub(":,", ":"):gsub("=,", "=")
-		end
+		str = string.join(", ", tostringall(arg, ...) )
+		str = str:gsub("([:=]),", "%1")
 		if AddonParent.db and AddonParent.db.profile.debug then
 			print("SOCD-LDB: "..str)
 		end
@@ -35,8 +30,12 @@ function module:OnInitialize()
 end
 
 function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, npc, opt)
-	completedQuests[quest] = time()+ GetQuestResetTime()
-	module:SortQuestCompleTable()
+	if AddonParent.specialResetQuests[quest] then
+		completedQuests[quest] = self:GetNextTuesday()
+	else
+		completedQuests[quest] = time()+ GetQuestResetTime()
+		module:SortQuestCompleTable()
+	end
 end
 
 
@@ -58,9 +57,9 @@ end
 function module:SortQuestCompleTable()
 	wipe(self.sortedQuestTable)
 	for k, v in pairs(completedQuests) do
-		if not AddonParent.specialResetQuests[k] then
+	--	if not AddonParent.specialResetQuests[k] then
 			tinsert( self.sortedQuestTable, k)
-		end
+	--	end
 	end
 	table.sort(self.sortedQuestTable)
 end
@@ -95,7 +94,7 @@ end
 local frame = CreateFrame("frame")
 local Group = frame:CreateAnimationGroup()
 local Ani = Group:CreateAnimation("Animation")
-Ani:SetDuration(60)
+Ani:SetDuration(10)
 Ani:SetOrder(1)
 Group:SetLooping("REPEAT")
 
@@ -124,17 +123,12 @@ function module:CreateLDB()
 end
 
 local function UpdateLDB_Object(frame, elapsed)
---	delay = delay + elapsed
 	local ttl = GetQuestResetTime()
---	if delay > interval then
-		ldbObj.value = SecondsToTime(ttl)
-		ldbObj.text = (ldbObj.label)..(ldbObj.value)
---		delay = 0
---	end
-	if ttl > 86390 then
+	ldbObj.value = SecondsToTime(ttl)
+	ldbObj.text = (ldbObj.label)..(ldbObj.value)
+	if ttl > 86390 or tonumber(date("%H%M")) < 359 then	--86390 is early in the day & 259 is 2:59am
 		module:PruneHistory()
 	end
---	print("|cff9933FFSOCD:|r SOCD On Loop for Update LDB")
 end
 
 Group:SetScript("OnLoop", UpdateLDB_Object)
@@ -161,4 +155,60 @@ function module:GetOptionsTable()
 		},
 	}
 	return t
+end
+
+
+local diff_To_Tuesday = {
+	[1] = 2,		--sunday
+	[2] = 1,		--monday
+	[3] = 7,		--tuesday
+	[4] = 6,		--wed
+	[5] = 5,		--thur
+	[6] = 4,		--fri
+	[7] = 3,		--sat
+}
+
+local diff = {}
+function module:GetNextTuesday()
+	print("trying to get next tuesday")
+	local dt = date("*t")
+	diff = wipe(diff)
+--	{
+--		day = 23,
+--		hour = 20,
+--		isdst = false,
+--		min = 16,
+--		month = 8,
+--		sec = 25,
+--		wday = 1,
+--		yday = 235,
+--		year = 2009
+--	}
+	local monthNumDay = select(3, CalendarGetMonth(0))
+	print("Num Days in month", monthNumDay)
+	local newDay = dt.day + diff_To_Tuesday[dt.wday]
+	print("newDay Raw = ", newDay)
+	if newDay > monthNumDay then
+		print("newDay > monthNumDay")
+		newDay = monthNumDay - newDay
+		diff.day = newDay
+		print("so, newDay = ", newDay )
+		if dt.month +1 > 12 then
+			diff.month = 1
+			diff.year = diff.year + 1
+			print("month + 1 > 12, reseting to jan, newYear", diff.year)
+		else
+			diff.month = diff.month +1
+			print("newMonth = ", diff.month)
+		end
+	else
+		print("new day < monthNumDay, set new day")
+		diff.day = newDay
+		diff.year = dt.year
+		diff.month = dt.month
+		diff.hour = 3
+		diff.min = 0
+		diff.sec = 0
+	end
+	return time(diff)
 end
