@@ -6,9 +6,9 @@ do
 	function D(arg, ...)
 		str = string.join(", ", tostringall(arg, ...) )
 		str = str:gsub("([:=]),", "%1")
-		if AddonParent.db and AddonParent.db.profile.debug then
-			print("SOCD-LDB: "..str)
-		end
+--		if AddonParent.db and AddonParent.db.profile.debug then
+			print("|cff9933FFSOCD-LDB:|r "..str)
+--		end
 		return str
 	end
 end
@@ -29,9 +29,10 @@ function module:OnInitialize()
 	module:SortQuestCompleTable()
 end
 
-function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, npc, opt)
+function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, npc, opt, id)
+	D(event, quest, npc, opt, id)
 	if AddonParent.specialResetQuests[quest] then
-		completedQuests[quest] = self:GetNextTuesday()
+		completedQuests[quest:sub(1,9).." "..date().." / "..id] = self:GetNextTuesday()
 	else
 		completedQuests[quest] = time()+ GetQuestResetTime()
 		module:SortQuestCompleTable()
@@ -47,7 +48,7 @@ local function OnTooltipShow(self)
 		self:AddLine(" ")
 		self:AddDoubleLine(QUESTS_COLON)
 		for i, quest in pairs(module.sortedQuestTable) do
-			self:AddDoubleLine(quest, date("%x", completedQuests[quest]) )
+			self:AddDoubleLine(quest, date("%c", completedQuests[quest]) )
 		end
 	end
 	self:AddLine(" ")
@@ -94,7 +95,7 @@ end
 local frame = CreateFrame("frame")
 local Group = frame:CreateAnimationGroup()
 local Ani = Group:CreateAnimation("Animation")
-Ani:SetDuration(10)
+Ani:SetDuration(60)
 Ani:SetOrder(1)
 Group:SetLooping("REPEAT")
 
@@ -126,7 +127,7 @@ local function UpdateLDB_Object(frame, elapsed)
 	local ttl = GetQuestResetTime()
 	ldbObj.value = SecondsToTime(ttl)
 	ldbObj.text = (ldbObj.label)..(ldbObj.value)
-	if ttl > 86390 or tonumber(date("%H%M")) < 359 then	--86390 is early in the day & 259 is 2:59am
+	if ttl > 86300 or tonumber(date("%H%M")) < 359 then	--86390 is early in the day & 259 is 2:59am
 		module:PruneHistory()
 	end
 end
@@ -139,6 +140,7 @@ function module:PruneHistory()
 			completedQuests[quest] = nil
 		end
 	end
+	self:SortQuestCompleTable()
 end
 
 
@@ -190,15 +192,16 @@ function module:GetNextTuesday()
 	print("newDay Raw = ", newDay)
 	if newDay > monthNumDay then
 		print("newDay > monthNumDay")
-		newDay = monthNumDay - newDay
-		diff.day = newDay
+		newDay = newDay - monthNumDay
+		diff.day = math.abs(newDay)
 		print("so, newDay = ", newDay )
 		if dt.month +1 > 12 then
 			diff.month = 1
-			diff.year = diff.year + 1
+			diff.year = dt.year + 1
 			print("month + 1 > 12, reseting to jan, newYear", diff.year)
 		else
-			diff.month = diff.month +1
+			diff.month = dt.month +1
+			diff.year = dt.year
 			print("newMonth = ", diff.month)
 		end
 	else
@@ -206,9 +209,16 @@ function module:GetNextTuesday()
 		diff.day = newDay
 		diff.year = dt.year
 		diff.month = dt.month
-		diff.hour = 3
-		diff.min = 0
-		diff.sec = 0
+		
 	end
+	diff.hour = 3
+	diff.min = 0
+	diff.sec = 0
 	return time(diff)
 end
+
+
+
+local wg_id_A_D = {
+
+}

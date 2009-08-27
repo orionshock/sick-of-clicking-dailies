@@ -217,6 +217,7 @@ function addon:OnInitialize()
 		module:SetEnabledState(self.db.profile.modules[name])
 
 	end
+	self.QuestLogCache = {}
 end
 
 function addon:OnEnable()
@@ -226,6 +227,7 @@ function addon:OnEnable()
 	self:RegisterEvent("QUEST_PROGRESS")
 	self:RegisterEvent("QUEST_COMPLETE")
 	self:RegisterEvent("PLAYER_TARGET_CHANGED")
+	self:RegisterEvent("QUEST_LOG_UPDATE")
 end
 
 function addon:OnDisable()
@@ -380,7 +382,7 @@ do
 	    end
 	end
 
-	local function SOCD_GetQuestRewardHook(opt)
+	function SOCD_GetQuestRewardHook(opt)
 --		if stopFlag then
 --			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", s_title, s_npc, opt)
 --			stopFlag = false
@@ -390,11 +392,22 @@ do
 		local enabled, present =  qTable(GetTitleText())
 		local npcID = addon:CheckNPC("hook")
 		if present and npcID then
-			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", present, npcID, opt)
+			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", present, npcID, opt, addon.QuestLogCache[present])
 		end
 	end
 	hooksecurefunc("GetQuestReward", SOCD_GetQuestRewardHook )
 
+end
+
+function addon:QUEST_LOG_UPDATE(event)
+	self:UnregisterEvent(event)
+	D(event)
+	for i  = 1, GetNumQuestLogEntries() do
+               	local questTitle, level, questTag, suggestedGroup, isHeader , isCollapsed, isComplete, isDaily, questID = GetQuestLogTitle(i)
+		self.QuestLogCache[questTitle] = (not isHeader) and questID
+	end
+			
+	self:RegisterEvent(event)
 end
 
 function addon:PLAYER_TARGET_CHANGED(event)
