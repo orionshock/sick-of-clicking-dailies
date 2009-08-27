@@ -31,12 +31,13 @@ end
 
 function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, npc, opt, id)
 	D(event, quest, npc, opt, id)
+	id = id or "??"
 	if AddonParent.specialResetQuests[quest] then
 		completedQuests[quest:sub(1,9).." "..date().." / "..id] = self:GetNextTuesday()
 	else
 		completedQuests[quest] = time()+ GetQuestResetTime()
-		module:SortQuestCompleTable()
 	end
+	module:SortQuestCompleTable()
 end
 
 
@@ -137,6 +138,7 @@ Group:SetScript("OnLoop", UpdateLDB_Object)
 function module:PruneHistory()
 	for quest, ttl in pairs(completedQuests) do
 		if time() > ttl then
+			D("Pruning", quest, "Exired on:", date("%c", ttl), "current Time:", date() )
 			completedQuests[quest] = nil
 		end
 	end
@@ -172,7 +174,7 @@ local diff_To_Tuesday = {
 
 local diff = {}
 function module:GetNextTuesday()
-	print("trying to get next tuesday")
+--	print("trying to get next tuesday")
 	local dt = date("*t")
 	diff = wipe(diff)
 --	{
@@ -187,25 +189,25 @@ function module:GetNextTuesday()
 --		year = 2009
 --	}
 	local monthNumDay = select(3, CalendarGetMonth(0))
-	print("Num Days in month", monthNumDay)
+--	print("Num Days in month", monthNumDay)
 	local newDay = dt.day + diff_To_Tuesday[dt.wday]
-	print("newDay Raw = ", newDay)
+--	print("newDay Raw = ", newDay)
 	if newDay > monthNumDay then
-		print("newDay > monthNumDay")
+--		print("newDay > monthNumDay")
 		newDay = newDay - monthNumDay
 		diff.day = math.abs(newDay)
-		print("so, newDay = ", newDay )
+--		print("so, newDay = ", newDay )
 		if dt.month +1 > 12 then
 			diff.month = 1
 			diff.year = dt.year + 1
-			print("month + 1 > 12, reseting to jan, newYear", diff.year)
+--			print("month + 1 > 12, reseting to jan, newYear", diff.year)
 		else
 			diff.month = dt.month +1
 			diff.year = dt.year
-			print("newMonth = ", diff.month)
+--			print("newMonth = ", diff.month)
 		end
 	else
-		print("new day < monthNumDay, set new day")
+--		print("new day < monthNumDay, set new day")
 		diff.day = newDay
 		diff.year = dt.year
 		diff.month = dt.month
