@@ -176,6 +176,8 @@ local diff = {}
 function module:GetNextTuesday()
 --	print("trying to get next tuesday")
 	local dt = date("*t")
+	local cur_day, cur_month, cur_year = tonumber(date("%d")), tonumber(date("%m")), tonumber(date("%Y"))
+	local cur_wDay = tonumber(date("%w")) + 1
 	diff = wipe(diff)
 --	{
 --		day = 23,
@@ -190,27 +192,27 @@ function module:GetNextTuesday()
 --	}
 	local monthNumDay = select(3, CalendarGetMonth(0))
 --	print("Num Days in month", monthNumDay)
-	local newDay = dt.day + diff_To_Tuesday[dt.wday]
+	local newDay = cur_day + diff_To_Tuesday[cur_wDay]
 --	print("newDay Raw = ", newDay)
 	if newDay > monthNumDay then
 --		print("newDay > monthNumDay")
 		newDay = newDay - monthNumDay
-		diff.day = math.abs(newDay)
+		diff.day = newDay
 --		print("so, newDay = ", newDay )
-		if dt.month +1 > 12 then
+		if cur_month +1 > 12 then
 			diff.month = 1
-			diff.year = dt.year + 1
+			diff.year = cur_year + 1
 --			print("month + 1 > 12, reseting to jan, newYear", diff.year)
 		else
-			diff.month = dt.month +1
-			diff.year = dt.year
+			diff.month = cur_month +1
+			diff.year = cur_year
 --			print("newMonth = ", diff.month)
 		end
 	else
 --		print("new day < monthNumDay, set new day")
 		diff.day = newDay
-		diff.year = dt.year
-		diff.month = dt.month
+		diff.year = cur_year
+		diff.month = cur_month
 		
 	end
 	diff.hour = 3
