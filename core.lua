@@ -383,13 +383,9 @@ do
 	end
 
 	function SOCD_GetQuestRewardHook(opt)
-		print("GetQuestRewardHook, opt:", opt)
 		local enabled, present =  qTable(GetTitleText())
-		print("enabled = ", enabled, "present = ", present)
 		local npcID = addon:CheckNPC("hook")
-		print("npcID = ", npcID)
 		if present then
-			print("has NPCID and is present")
 			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", present, npcID, opt, addon.QuestLogCache[present])
 		end
 	end
