@@ -383,15 +383,13 @@ do
 	end
 
 	function SOCD_GetQuestRewardHook(opt)
---		if stopFlag then
---			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", s_title, s_npc, opt)
---			stopFlag = false
---			return
---		end
---		print("GQRH:: ", GetTitleText(), qTable(GetTitleText()) )
+		print("GetQuestRewardHook, opt:", opt)
 		local enabled, present =  qTable(GetTitleText())
+		print("enabled = ", enabled, "present = ", present)
 		local npcID = addon:CheckNPC("hook")
-		if present and npcID then
+		print("npcID = ", npcID)
+		if present then
+			print("has NPCID and is present")
 			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", present, npcID, opt, addon.QuestLogCache[present])
 		end
 	end
