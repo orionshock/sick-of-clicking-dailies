@@ -53,6 +53,7 @@ addon.moduleQLookup = moduleQLookup
 addon.moduleQOptions = moduleQOptions
 addon.questNPCs = questNPCs
 addon.moduleGossipOptions = moduleGossipOptions
+addon.D = D
 
 --
 --	Quest Name lookup func's

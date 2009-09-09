@@ -1,16 +1,6 @@
 local AddonParent = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
 
-do
-	local str = ""
-	function D(arg, ...)
-		str = string.join(", ", tostringall(arg, ...) )
-		str = str:gsub("([:=]),", "%1")
-		if AddonParent.db and AddonParent.db.profile.debug then
-			print("|cff9933FFSOCD-LDB:|r "..str)
-		end
-		return str
-	end
-end
+local D = AddonParent.D
 
 local module = AddonParent:NewModule("LDB")
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
