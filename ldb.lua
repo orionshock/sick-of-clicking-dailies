@@ -1,18 +1,16 @@
 local AddonParent = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
 
-local D		--Basic Debug
 do
 	local str = ""
 	function D(arg, ...)
 		str = string.join(", ", tostringall(arg, ...) )
 		str = str:gsub("([:=]),", "%1")
---		if AddonParent.db and AddonParent.db.profile.debug then
+		if AddonParent.db and AddonParent.db.profile.debug then
 			print("|cff9933FFSOCD-LDB:|r "..str)
---		end
+		end
 		return str
 	end
 end
-
 
 local module = AddonParent:NewModule("LDB")
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
@@ -33,7 +31,7 @@ function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, npc, opt, id)
 	D(event, quest, npc, opt, id)
 	id = id or "??"
 	if AddonParent.specialResetQuests[quest] then
-		completedQuests[quest:sub(1,9).." "..date().." / "..id] = self:GetNextTuesday()
+		completedQuests[quest.." ~ "..date()] = self:GetNextTuesday()
 	else
 		completedQuests[quest] = time()+ GetQuestResetTime()
 	end
@@ -59,9 +57,7 @@ end
 function module:SortQuestCompleTable()
 	wipe(self.sortedQuestTable)
 	for k, v in pairs(completedQuests) do
-	--	if not AddonParent.specialResetQuests[k] then
-			tinsert( self.sortedQuestTable, k)
-	--	end
+		tinsert( self.sortedQuestTable, k)
 	end
 	table.sort(self.sortedQuestTable)
 end
@@ -174,7 +170,6 @@ local diff_To_Tuesday = {
 
 local diff = {}
 function module:GetNextTuesday()
---	print("trying to get next tuesday")
 	local dt = date("*t")
 	local cur_day, cur_month, cur_year = tonumber(date("%d")), tonumber(date("%m")), tonumber(date("%Y"))
 	local cur_wDay = tonumber(date("%w")) + 1
@@ -191,25 +186,18 @@ function module:GetNextTuesday()
 --		year = 2009
 --	}
 	local monthNumDay = select(3, CalendarGetMonth(0))
---	print("Num Days in month", monthNumDay)
 	local newDay = cur_day + diff_To_Tuesday[cur_wDay]
---	print("newDay Raw = ", newDay)
 	if newDay > monthNumDay then
---		print("newDay > monthNumDay")
 		newDay = newDay - monthNumDay
 		diff.day = newDay
---		print("so, newDay = ", newDay )
 		if cur_month +1 > 12 then
 			diff.month = 1
 			diff.year = cur_year + 1
---			print("month + 1 > 12, reseting to jan, newYear", diff.year)
 		else
 			diff.month = cur_month +1
 			diff.year = cur_year
---			print("newMonth = ", diff.month)
 		end
 	else
---		print("new day < monthNumDay, set new day")
 		diff.day = newDay
 		diff.year = cur_year
 		diff.month = cur_month
@@ -218,6 +206,7 @@ function module:GetNextTuesday()
 	diff.hour = 3
 	diff.min = 0
 	diff.sec = 0
+	D("Found next tuesday on:", date("%c", time(diff) ) )
 	return time(diff)
 end
 

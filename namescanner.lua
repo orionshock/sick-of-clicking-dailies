@@ -463,7 +463,7 @@ function module:QUEST_LOG_UPDATE(event, ...)
 		if questID and questTitle:find(self.questTitle) then
 		        tinsert( tempQuestTable, specailFormat:format(questID, self.questTitle or "", self.npcID or 0, self.npcName or "" ) )
 			if SOCD.specialResetQuests[questTitle] then
-				print("WG: QID:", questID, "Title:", self.questTitle)
+--				print("WG: QID:", questID, "Title:", self.questTitle)
 			end
 		        self.tnpcID = nil
 		        self.tquestTitle = nil
