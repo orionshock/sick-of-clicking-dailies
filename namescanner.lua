@@ -294,6 +294,11 @@ local qTable = {
 	[14105] = "Deathspeaker Kharos",
 	[14199] = "Proof of Demise: The Black Knight",
 
+	[13903] = "Gorishi Grub",
+	[13915] = "Hungry, Hungry Hatchling",
+	[13904] = "Poached, Scrambled, Or Raw?",
+	[13905] = "Searing Roc Feathers",
+
 
 }	--End of name Scanner Master Table
 
