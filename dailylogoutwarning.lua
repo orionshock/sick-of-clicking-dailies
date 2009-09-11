@@ -3,7 +3,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
 local module = AddonParent:NewModule("DailyLogoutWarning")
 module.noModuleControl = true
 
-local titleText = ("|cff9933FF%s:|r "):format(L["Sick Of Clicking Dailies"])
+local titleText = ("|cff9933FF%s:|r "):format(L["Sick of Clicking Dailies"])
 local hasWarnedLogout, hasWarnedQuit, orgi_Logout, orgi_Quit, orgi_CancelLogout = nil, nil, Logout, Quit, CancelLogout
 local function printCompleteDailyQuests()
 	local f = false
