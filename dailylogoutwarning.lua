@@ -6,23 +6,27 @@ module.noModuleControl = true
 local titleText = ("|cff9933FF%s:|r "):format(L["Sick Of Clicking Dailies"])
 local hasWarnedLogout, hasWarnedQuit, orgi_Logout, orgi_Quit, orgi_CancelLogout = nil, nil, Logout, Quit, CancelLogout
 local function printCompleteDailyQuests()
+	local f = false
 	for i  = 1, GetNumQuestLogEntries() do
 		local questTitle, _, _, _, _, _, isComplete, isDaily= GetQuestLogTitle(i)
 		if isDaily and isComplete then
-			print(titleText, L["Daily Quest '%s' completed but not turned in"]:format(questTitle))
+			print(titleText, L["Daily Quest '%s' completed but not turned in"]:format(questTitle)); f = true
 		end
-	end
+	end	
+	return f
 end
 function SOCD_Logout()
 	if hasWarnedLogout then hasWarned = false; orgi_Logout()
 	else
-		printCompleteDailyQuests(); hasWarnedLogout = true
+		hasWarnedLogout = true
+		return printCompleteDailyQuests() or orgi_Logout(); 
 	end
 end
 function SOCD_Quit()
 	if hasWarnedQuit then hasWarnedQuit = false; orgi_Quit()
 	else
-		printCompleteDailyQuests(); hasWarnedQuit = true
+		hasWarnedQuit = true
+		return printCompleteDailyQuests() or orgi_Quit()
 	end
 end
 function SOCD_CancelLogout()
