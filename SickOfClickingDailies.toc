@@ -59,6 +59,7 @@ BC.lua
 wotlk.lua
 non-dailies.lua
 ldb.lua
+dailylogoutwarning.lua
 
 #@alpha@
 namescanner.lua

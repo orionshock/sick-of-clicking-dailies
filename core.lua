@@ -128,7 +128,9 @@ local defaults = {
 	},
 	profile = {
 		questLoop = true,
-		modules = {},
+		modules = {
+			["DailyLogoutWarning"] = false,
+		},
 		debug = false,
 	},
 }
@@ -149,21 +151,24 @@ local function GetOptionsTable()
 		childGroups = "tab",
 		args = {
 			questLoop = { type = "toggle", name = L["Enable Quest Looping"], desc = L["questLoop_Desc"], get = "QuestLoop", set = "QuestLoop" },
+			MiscOpt = {type = "group", name = L["Misc Options"], order = -2, args = {}, plugins = {} },
 			moduleControl = {
 				name = L["Module Control"],
 				type = "group", order = -1,
 				args = {
-					
+					--@alpha@
 					debug = { type = "toggle", name = "Enable Debug", get = function() return addon.db.profile.debug end, set = function(_, val) addon.db.profile.debug = val end },
-					
+					--@end-alpha@
 				},
 			},
 		},
 	}
 	local i = 1
 	for name, module in addon:IterateModules() do
-		options.args[name] = (type(module.GetOptionsTable) == 'function' and module:GetOptionsTable()) or nil
-		options.args.moduleControl.args[name] = GetModuleOptions(L[name], name)
+		options.args[name] = (type(module.GetOptionsTable) == 'function' and module:GetOptionsTable(options)) or nil
+		if not module.noModuleControl then
+			options.args.moduleControl.args[name] = GetModuleOptions(L[name], name)
+		end
 		i = i + 1
 	end
 	return options

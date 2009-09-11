@@ -136,15 +136,14 @@ end
 ------------
 
 
-function module:GetOptionsTable()
-	local t = {
-		name = L["LDB Options"],
-		type = "group",
-		args = {
-			showExTT = {type = "toggle", name = L["Show Extended Tooltip"], get = function(info) return db.showExTT end, set = function(info, val) db.showExTT = val end, },
+function module:GetOptionsTable(rootTable)
+	local ldb_Options = {
+		showExTT = { type = "toggle", name = L["Show Extended Daily Quest Info in LDB Tooltip"], width = "full",
+		get = function(info) return db.showExTT end, set = function(info, val) db.showExTT = val end, 
 		},
 	}
-	return t
+	rootTable.args.MiscOpt.plugins.LDB = ldb_Options
+	return nil
 end
 
 
@@ -199,9 +198,3 @@ function module:GetNextTuesday()
 	D("Found next tuesday on:", date("%c", time(diff) ) )
 	return time(diff)
 end
-
-
-
-local wg_id_A_D = {
-
-}
