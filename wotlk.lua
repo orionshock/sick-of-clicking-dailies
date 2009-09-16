@@ -74,7 +74,19 @@ function module:OnInitialize()
 	--D("OnInit")
 	db = AddonParent.db:RegisterNamespace("LK", module.defaults)
 	self.db = db
+	AddonParent.db.RegisterCallback(self, "OnProfileChanged", "RefreshConfig")
+	AddonParent.db.RegisterCallback(self, "OnProfileCopied", "RefreshConfig")
+	AddonParent.db.RegisterCallback(self, "OnProfileReset", "RefreshConfig")
 end
+
+function module:RefreshConfig(event, db, newProfile)
+	D(self:GetName(), event, newProfile)
+	if self:IsEnabled() then
+		AddonParent:UnRegisterQuests("LK")
+		AddonParent:RegisterQuests("LK", self.db.profile.quests, self.npcList, self.db.profile.qOptions, self.db.profile.gossip)
+	end
+end
+
 
 function module:OnEnable()
 	--D("OnEnable")

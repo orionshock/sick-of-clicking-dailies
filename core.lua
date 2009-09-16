@@ -37,7 +37,7 @@ function D(arg, ...)
 		str = string.join(", ", tostringall(arg, ...) )
 		str = str:gsub(":,", ":"):gsub("=,", "=")
 	end
-	if addon.db.profile.debug then
+	if addon.db and addon.db.global.debug then
 		print("|cff9933FFSOCD:|r "..str)
 	end
 	return str
@@ -97,11 +97,11 @@ function addon:RegisterQuests(name, questTable, npcID, options, gossip)
 	--Quest Options
 	assert(type(options) == "table")
 	moduleQOptions[name] = options
-	D("Quest Grouping %s registered", name)
+--	D("Quest Grouping %s registered", name)
 	if gossip then
 		assert(type(gossip) == "table")
 		moduleGossipOptions[name] = gossip
-		D("Gossip Options for %s registered", name)
+--		D("Gossip Options for %s registered", name)
 	end
 end
 
@@ -112,7 +112,7 @@ function addon:UnRegisterQuests(name)
 		questNPCs[name] = nil
 		moduleGossipOptions[name] = nil
 
-		D("Quest Grouping %s unregistered", name)
+--		D("Quest Grouping %s unregistered", name)
 
 	end
 end
@@ -131,6 +131,8 @@ local defaults = {
 		modules = {
 			["DailyLogoutWarning"] = false,
 		},
+	},
+	global = {
 		debug = false,
 	},
 }
@@ -157,7 +159,7 @@ local function GetOptionsTable()
 				type = "group", order = -1,
 				args = {
 					--@alpha@
-					debug = { type = "toggle", name = "Enable Debug", get = function() return addon.db.profile.debug end, set = function(_, val) addon.db.profile.debug = val end },
+					debug = { type = "toggle", name = "Enable Debug", get = function() return addon.db.global.debug end, set = function(_, val) addon.db.global.debug = val end },
 					--@end-alpha@
 				},
 			},
@@ -171,6 +173,10 @@ local function GetOptionsTable()
 		end
 		i = i + 1
 	end
+	local profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(addon.db)
+	profile.inline = true
+	profile.order = 30
+	options.args.MiscOpt.args.profile = profile
 	return options
 end
 
@@ -205,7 +211,9 @@ end
 
 function addon:OnInitialize()
 	for name, _ in self:IterateModules() do
-		defaults.profile.modules[name] = true
+		if defaults.profile.modules[name] == nil then
+			defaults.profile.modules[name] = true
+		end
 	end
 
 	addon.db = LibStub("AceDB-3.0"):New("SOCD_SIX", defaults)

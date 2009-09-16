@@ -51,12 +51,22 @@ function module:OnInitialize()
 	--D("OnInit")
 	db = AddonParent.db:RegisterNamespace("Classic", module.defaults)
 	self.db = db
+	AddonParent.db.RegisterCallback(self, "OnProfileChanged", "RefreshConfig")
+	AddonParent.db.RegisterCallback(self, "OnProfileCopied", "RefreshConfig")
+	AddonParent.db.RegisterCallback(self, "OnProfileReset", "RefreshConfig")
+end
+
+function module:RefreshConfig(event, db, newProfile)
+	D(self:GetName(), event, newProfile)
+	if self:IsEnabled() then
+		AddonParent:UnRegisterQuests("Classic")
+		AddonParent:RegisterQuests("Classic", self.db.profile, self.npcList, self.db.profile.qOptions)
+	end
 end
 
 function module:OnEnable()
 	--D("OnEnable")
 	AddonParent:RegisterQuests("Classic", db.profile, self.npcList, db.profile.qOptions)
-	--assert(db.profile == AddonParent.moduleQLookup["Classic"])
 end
 
 function module:OnDisable()

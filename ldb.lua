@@ -9,13 +9,22 @@ local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 module.sortedQuestTable = {}
 
 function module:OnInitialize()
-	self:CreateLDB()
-	db = AddonParent.db.char
-	completedQuests = db.completedQuests
+	db = AddonParent.db
+	completedQuests = db.char.completedQuests
 	LibStub("AceEvent-3.0").RegisterMessage(self, "SOCD_DAILIY_QUEST_COMPLETE")
 	self:PruneHistory()
 	module:SortQuestCompleTable()
 	specialResetQuests = AddonParent.specialResetQuests
+	self:CreateLDB()
+
+	db.RegisterCallback(self, "OnProfileChanged", "RefreshConfig")
+	db.RegisterCallback(self, "OnProfileCopied", "RefreshConfig")
+	db.RegisterCallback(self, "OnProfileReset", "RefreshConfig")
+end
+
+function module:RefreshConfig(event, f_db, profileName)
+	completedQuests = db.char.completedQuests
+	D(self:GetName(), event, profileName)
 end
 
 function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, npc, opt, id)
@@ -34,7 +43,7 @@ local ldbObj, SecondsToTime, GetQuestResetTime = nil, SecondsToTime, GetQuestRes
 local prefix = QUEST_LOG_DAILY_TOOLTIP:match( "\n(.+)" )
 local function OnTooltipShow(self)
 	self:AddDoubleLine( prefix:format( SecondsToTime(GetQuestResetTime()) ),  QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests())  )
-	if next(completedQuests) and db.showExTT then
+	if next(completedQuests) and db.char.showExTT then
 		self:AddLine(" ")
 		self:AddDoubleLine(QUESTS_COLON)
 		for i, quest in pairs(module.sortedQuestTable) do
@@ -140,7 +149,7 @@ end
 function module:GetOptionsTable(rootTable)
 	local ldb_Options = {
 		showExTT = { type = "toggle", name = L["Show Extended Daily Quest Info in LDB Tooltip"], width = "full",
-		get = function(info) return db.showExTT end, set = function(info, val) db.showExTT = val end, 
+		get = function(info) return db.showExTT end, set = function(info, val) db.showExTT = val end, order = 1,
 		},
 	}
 	rootTable.args.MiscOpt.plugins.LDB = ldb_Options

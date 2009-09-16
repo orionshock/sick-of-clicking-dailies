@@ -1,4 +1,5 @@
 local AddonParent = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
+local db, D = nil, AddonParent.D
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
 local module = AddonParent:NewModule("DailyLogoutWarning")
 module.noModuleControl = true
@@ -34,6 +35,21 @@ function SOCD_CancelLogout()
 	orgi_CancelLogout(); StaticPopup_Hide("CAMP"); StaticPopup_Hide("QUIT")
 end
 
+function module:OnInitialize()
+	db = AddonParent.db
+	db.RegisterCallback(self, "OnProfileChanged", "RefreshConfig")
+	db.RegisterCallback(self, "OnProfileCopied", "RefreshConfig")
+	db.RegisterCallback(self, "OnProfileReset", "RefreshConfig")
+end
+
+function module:RefreshConfig(event, db, newProf)
+	D(self:GetName(), event, newProf)
+	if db.profile.modules.DailyLogoutWarning then
+		self:Enable()
+	else
+		self:Disable()
+	end
+end
 
 function module:OnEnable()
 	Logout, Quit, CancelLogout = SOCD_Logout, SOCD_Quit, SOCD_CancelLogout
@@ -46,7 +62,7 @@ end
 
 function module:GetOptionsTable(rootTable)
 	local t = {
-		DLW = { name = L["Warn when loging out with completed daily quests that are not turned in."],
+		DLW = { name = L["Warn when loging out with completed daily quests that are not turned in."], order = 20,
 			type = "toggle", width = "full", get = "GetModuleState", set = "ToggleModule", arg = "DailyLogoutWarning",
 		},
 	}

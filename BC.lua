@@ -8,26 +8,9 @@
 	fishing
 ]]--
 
-local D		--Basic Debug
-do
-	local str = ""
-	function D(arg, ...)
-		str = ""
-		if type(arg) == "string" and string.find(arg, "%%") then
-			str = arg:format(...)
-		else
-			str = string.join(", ", tostringall(arg, ...) )
-			str = str:gsub(":,", ":"):gsub("=,", "=")
-		end
-		if AddonParent.db and AddonParent.db.profile.debug then		
-			print("SOCD-BC: "..str)
-		end
-		return str
-	end
-end
 
 local AddonParent = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
-
+local D = AddonParent.D
 local module = AddonParent:NewModule("BC")
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
 local LQ = LibStub("AceLocale-3.0"):GetLocale("SOCD_BC")
@@ -65,10 +48,20 @@ function module:OnInitialize()
 	--D("OnInit")
 	db = AddonParent.db:RegisterNamespace("BC", module.defaults)
 	self.db = db
+	AddonParent.db.RegisterCallback(self, "OnProfileChanged", "RefreshConfig")
+	AddonParent.db.RegisterCallback(self, "OnProfileCopied", "RefreshConfig")
+	AddonParent.db.RegisterCallback(self, "OnProfileReset", "RefreshConfig")
+end
+
+function module:RefreshConfig(event, db, newProfile)
+	D(self:GetName(), event, newProfile)
+	if self:IsEnabled() then
+		AddonParent:UnRegisterQuests("BC")
+		AddonParent:RegisterQuests("BC", self.db.profile, self.npcList, self.db.profile.qOptions)
+	end
 end
 
 function module:OnEnable()
-	--D("OnEnable")
 	SetItemRef("item:30809","item:30809")	--Aldor Mark
 	SetItemRef("item:30809","item:30809")
 
@@ -93,7 +86,7 @@ function module:OnEnable()
 end
 
 function module:OnDisable()
-	--D("OnDisable")
+	D("OnDisable")
 	AddonParent:UnRegisterQuests("BC")
 end
 

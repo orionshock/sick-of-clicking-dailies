@@ -56,6 +56,23 @@ function module:OnEnable()
 	self.frame:RegisterEvent("QUEST_COMPLETE")
 	self.frame:RegisterEvent("QUEST_FINISHED")
 	self.frame:SetScript("OnShow", nil)
+	AddonParent.db.RegisterCallback(self, "OnProfileChanged", "RefreshConfig")
+	AddonParent.db.RegisterCallback(self, "OnProfileCopied", "RefreshConfig")
+	AddonParent.db.RegisterCallback(self, "OnProfileReset", "RefreshConfig")
+
+end
+
+function module:RefreshConfig(event, db, newProfile)
+	D(self:GetName(), event, newProfile)
+	if db.profile.modules.RRQ then
+		self:Enable()
+	else
+		self:Disable()
+	end
+	if self:IsEnabled() then
+		AddonParent:UnRegisterQuests("RRQ")
+		AddonParent:RegisterQuests("RRQ", self.db.profile, self.db.profile.npcList, self.db.profile.qOptions, self.db.profile.gossip )
+	end
 end
 
 function module:OnDisable()
