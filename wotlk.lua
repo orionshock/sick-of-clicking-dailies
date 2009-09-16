@@ -702,9 +702,9 @@ function module:PlayerVsPlayerQuests()
 	return t
 end
 do
-	local specialResetQuests = {}
+	local specialResetQuests = AddonParent.specialResetQuests or {}
 	for k,v in ipairs(module:PlayerVsPlayerQuests().args.wg.args.wgSub.values) do
-		specialResetQuests[v] = true
+		specialResetQuests[v] = "GetNextWGReset"
 	end
 	AddonParent.specialResetQuests = specialResetQuests
 end

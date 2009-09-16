@@ -4,7 +4,7 @@ local D = AddonParent.D
 
 local module = AddonParent:NewModule("LDB")
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
-local db, completedQuests
+local db, completedQuests, specialResetQuests
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 module.sortedQuestTable = {}
 
@@ -15,13 +15,14 @@ function module:OnInitialize()
 	LibStub("AceEvent-3.0").RegisterMessage(self, "SOCD_DAILIY_QUEST_COMPLETE")
 	self:PruneHistory()
 	module:SortQuestCompleTable()
+	specialResetQuests = AddonParent.specialResetQuests
 end
 
 function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, npc, opt, id)
 	D(event, quest, npc, opt, id)
 	id = id or "??"
-	if AddonParent.specialResetQuests[quest] then
-		completedQuests[quest.." ~ "..date()] = self:GetNextTuesday()
+	if specialResetQuests[quest] then
+		completedQuests[quest.." ~ "..date()] = self[ specialResetQuests[quest] ](self)
 	else
 		completedQuests[quest] = time()+ GetQuestResetTime()
 	end
@@ -150,19 +151,19 @@ end
 local diff_To_Tuesday = {
 	[1] = 2,		--sunday
 	[2] = 1,		--monday
-	[3] = 7,		--tuesday
-	[4] = 6,		--wed
-	[5] = 5,		--thur
-	[6] = 4,		--fri
-	[7] = 3,		--sat
+	[3] = 4,		--tuesday*
+	[4] = 3,		--wed	
+	[5] = 2,		--thur
+	[6] = 1,		--fri
+	[7] = 3,		--sat	*
 }
 
 local diff = {}
-function module:GetNextTuesday()
-	local dt = date("*t")
+function module:GetNextWGReset()
+
 	local cur_day, cur_month, cur_year = tonumber(date("%d")), tonumber(date("%m")), tonumber(date("%Y"))
 	local cur_wDay = tonumber(date("%w")) + 1
-	diff = wipe(diff)
+	for k, _ in pairs(diff) do diff[k] = nil end
 --	{
 --		day = 23,
 --		hour = 20,
@@ -192,9 +193,8 @@ function module:GetNextTuesday()
 		diff.month = cur_month
 		
 	end
-	diff.hour = 3
-	diff.min = 0
-	diff.sec = 0
+	diff.hour = date("%H", time() + GetQuestResetTime())
+	diff.min = date("%M", time() + GetQuestResetTime())
 	D("Found next tuesday on:", date("%c", time(diff) ) )
 	return time(diff)
 end
