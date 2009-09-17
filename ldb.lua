@@ -149,7 +149,7 @@ end
 function module:GetOptionsTable(rootTable)
 	local ldb_Options = {
 		showExTT = { type = "toggle", name = L["Show Extended Daily Quest Info in LDB Tooltip"], width = "full",
-		get = function(info) return db.showExTT end, set = function(info, val) db.showExTT = val end, order = 1,
+		get = function(info) return db.char.showExTT end, set = function(info, val) db.char.showExTT = val end, order = 1,
 		},
 	}
 	rootTable.args.MiscOpt.plugins.LDB = ldb_Options
