@@ -1,4 +1,5 @@
 ﻿## Interface: 30200
+## X-WoWI-ID: 1234
 
 #@non-debug@
 ## Title: @localization(locale="enUS", key="Title", namespace="ToC")@
@@ -31,7 +32,7 @@
 ## Author: OrionShock
 
 ## Credits: Sinxia/kunda (deDE Translation), Cinedelle (frFR Translation), Crafty/Vyacheslav (ruRU Translation)
-## Version: 6
+## Version: @project-version@
 ## X-Email: Orionshock@gmail.com
 ## SavedVariables: SOCD_SIX
 ## X-Embeds: Ace3
