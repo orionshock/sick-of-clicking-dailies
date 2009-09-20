@@ -18,30 +18,36 @@ local db, cooking_values
 
 module.defaults = {
 	profile = {
-		--This Table will get auto gened by the next block from the locale data
+		quests = {
+			--This Table will get auto gened by the next block from the locale data
+		},
 		qOptions = {
-			--["*"] = 3,
-			--This section has to be manually set with the localized quest name and a default option of off
-			--not very many of these quests so it won't matter :D
+				--This section has to be manually set with the localized quest name and a default option of off
+				--not very many of these quests so it won't matter :D
+			--Cooking
+			[ LQ["Super Hot Stew"] ] = 5,
+			[ LQ["Soup for the Soul"] ] = 5,
+			[ LQ["Revenge is Tasty"] ] = 5,
+			[ LQ["Manalicious"] ] = 5,
+			--SSO-Misc
+			[ LQ["Blood for Blood"] ] = 5,
+			[ LQ["Ata'mal Armaments"] ] = 5,
+		},
+		gossip = {
+			[ L["Do you still need some help moving kegs from the crash site near Razor Hill?"] ] = true,
+			[ L["I'm ready to work for you today!  Give me that ram!"] ] = true,
+			[ L["Do you still need some help shipping kegs from Kharanos?"] ] = true,
+			[ L["I'm ready to work for you today!  Give me the good stuff!"] ] = true,
 		},
 	},
 }
 do
 	local profile = module.defaults.profile
 	for k,v in pairs(LQ) do
-		profile[v] = true
+		profile.quests[v] = true
 	end
 	profile[LQ["A Charitable Donation"]] = false
 	profile[LQ["Your Continued Support"]] = false
-
-	--Cooking
-	profile.qOptions[LQ["Super Hot Stew"]] = 5
-	profile.qOptions[LQ["Soup for the Soul"]] = 5
-	profile.qOptions[LQ["Revenge is Tasty"]] = 5
-	profile.qOptions[LQ["Manalicious"]] = 5
-	--SSO-Misc
-	profile.qOptions[LQ["Blood for Blood"]] = 5
-	profile.qOptions[LQ["Ata'mal Armaments"]] = 5
 end
 
 function module:OnInitialize()
@@ -57,7 +63,7 @@ function module:RefreshConfig(event, db, newProfile)
 	D(self:GetName(), event, newProfile)
 	if self:IsEnabled() then
 		AddonParent:UnRegisterQuests("BC")
-		AddonParent:RegisterQuests("BC", self.db.profile, self.npcList, self.db.profile.qOptions)
+		AddonParent:RegisterQuests("BC", self.db.profile.quests, self.npcList, self.db.profile.qOptions, self.db.profile.gossip)
 	end
 end
 
@@ -81,8 +87,8 @@ function module:OnEnable()
 	SetItemRef("item:33857","item:33857")
 	
 	cooking_values = { (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate Of Meat", nil, nil,  L["None"]}
-
-	AddonParent:RegisterQuests("BC", db.profile, self.npcList, db.profile.qOptions)
+			--RegisterQuests(name, questTable, npcID, options, gossip)
+	AddonParent:RegisterQuests("BC", self.db.profile.quests, self.npcList, self.db.profile.qOptions, self.db.profile.gossip)
 end
 
 function module:OnDisable()
@@ -132,6 +138,19 @@ module.npcList = table.concat({
 	--Instance
 	24369,		--Wind Trader Zhareem
 	24370,		--Nether-Stalker Mah'duun
+
+	--Brewfest
+	24499,	--Ja'ron
+	24498,	--Cort Gorestein
+	23627,	--Becan Barleybrew
+	23628,	--Daran Thunderbrew
+	26719,	--Brewfest Spy
+	23872,	--Coren Direbrew
+	27215,	--Boxey Boltspinner
+	27216,	--Bizzle Quicklift
+	L["Dark Iron Mole Machine Wreckage"],	--An object based Daily Quest
+	23558,	--Neill Ramstein
+	24497,	--Ram Master Ray
 
 	}, ":")
 
@@ -199,7 +218,21 @@ function module:GetWorldQuests()
 			sso = module:GenerateSSOOptions(),
 			events = { type = "group", name = "World Events",
 				args = {
-					hold = { type = "description", name = "Place Holder for World Events Sub Group"},
+					brewfest = { name = L["Brewfest"], type = "group",
+						args = {
+							help = { type = "description", name = L["Please See http://www.wowwiki.com/Brewfest for more details about Brewfest"], order = 1, },
+							gen = { type = "multiselect", width = "full", name = L["Brewfest"],
+								values = { LQ["Bark for T'chali's Voodoo Brewery!"], LQ["Bark for Drohn's Distillery!"],
+										LQ["Bark for the Barleybrews!"], LQ["Bark for the Thunderbrews!"],
+										LQ["Insult Coren Direbrew"], LQ["This One Time, When I Was Drunk..."],
+								},
+							},
+							gossip = { type = "toggle", width = "full", name = L["Brewfewst Racing 'Daily' Gossip"],
+								get = "Brewfest_Racing_Gossip", set = "Brewfest_Racing_Gossip",
+								desc = L["Gossip selections for the <Ram Racing Master> to allow you to repeat 'There and Back Again' every 12 or 18 hrs"]
+							},
+						},						
+					},					
 				},
 			},
 		},
@@ -390,6 +423,18 @@ function module:FishingSet(info, val)
 	qOpt[ LQ["Manalicious"] ] = val
 end
 
+function module:Brewfest_Racing_Gossip(info, value)
+	if value == nil then	--get
+		return db.profile.gossip[ L["I'm ready to work for you today!  Give me that ram!"] ]
+	else
+		db.profile.gossip[ L["Do you still need some help moving kegs from the crash site near Razor Hill?"] ] = value	--Horde
+		db.profile.gossip[ L["I'm ready to work for you today!  Give me that ram!"] ] = value	--Horde
+		db.profile.gossip[ L["Do you still need some help shipping kegs from Kharanos?"] ] = value	--Alliance
+		db.profile.gossip[ L["I'm ready to work for you today!  Give me the good stuff!"] ] = value
+		
+	end	
+end
+
 function module:GetQuestOption(info)
 	return db.profile.qOptions[info.option.name]
 end
@@ -400,16 +445,16 @@ end
 
 function module:Multi_Get(info, value)
 	if type(value) == "number" then
-		return db.profile[info.option.values[value]]
+		return db.profile.quests[info.option.values[value]]
 	else
-		return db.profile[value]
+		return db.profile.quests[value]
 	end
 end
 
 function module:Multi_Set(info, value, state)
 	if type(value) == "number" then
-		db.profile[info.option.values[value]] = state
+		db.profile.quests[info.option.values[value]] = state
 	else
-		db.profile[value] = state
+		db.profile.quests[value] = state
 	end
 end

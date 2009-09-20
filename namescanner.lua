@@ -298,7 +298,14 @@ local qTable = {
 	[13915] = "Hungry, Hungry Hatchling",
 	[13904] = "Poached, Scrambled, Or Raw?",
 	[13905] = "Searing Roc Feathers",
-
+---Brewfest
+	[11408] = "Bark for T'chali's Voodoo Brewery!",	--BC
+	[11407] = "Bark for Drohn's Distillery!",
+	[11293] = "Bark for the Barleybrews!",
+	[11294] = "Bark for the Thunderbrews!",
+	[12062] = "Insult Coren Direbrew",
+	[12192] = "This One Time, When I Was Drunk..."
+				
 
 }	--End of name Scanner Master Table
 
