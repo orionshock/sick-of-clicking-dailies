@@ -141,128 +141,72 @@ function module:GetOptionsTable()
 		type = "group",
 		handler = module,
 		order = 2,
+		childGroups = "tab",
 		get = "Multi_Get", set = "Multi_Set",
 		args = {
-			faction = {
-				name = L["Faction"], type = "group", order = 1,
-				args = {
-					skettis = {
-						name = L["Sha'tari Skyguard"], type = "multiselect", order = 1,
-						values = { LQ["Fires Over Skettis"], LQ["Escape from Skettis"],	--Skettis
-							LQ["Wrangle More Aether Rays!"], LQ["Bomb Them Again!"] }, --Blade's Edge Mountains
-					},
-					ogrila = {
-						name = L["Og'rila"], type = "multiselect", order = 2,
-						values = { LQ["The Relic's Emanation"], LQ["Banish More Demons"] },
-					},
-					netherwing = {
-						name = L["Netherwing"], type = "group", order = 3,
-						args = {
-							Netrual = {
-								name = L["Netural"], type = "multiselect", order = 1, width = "full",
-								values = { LQ["Nethercite Ore"], LQ["Netherdust Pollen"], LQ["Nethermine Flayer Hide"],
-									LQ["Netherwing Crystals"], LQ["The Not-So-Friendly Skies..."], LQ["A Slow Death"] },
-							},
-							Friendly = {
-								name = L["Friendly"], type = "multiselect", order = 2, width = "full",
-								values = { LQ["Picking Up The Pieces..."], LQ["Dragons are the Least of Our Problems"],
-									LQ["The Booterang: A Cure For The Common Worthless Peon"] },
-							},
-							HonorRev = {
-								name = L["Honored"].." / "..L["Revered"], type = "multiselect", order = 3, width = "full",
-								values = { LQ["Disrupting the Twilight Portal"], LQ["The Deadliest Trap Ever Laid"] },
-							},
-						},
-					},
-					sso = module:GenerateSSOOptions(),
-				},
-			},	--End of Faction Table
-			professions = {name = L["Professions"], type = "group", order = 2,
-				args = {
-					cooking = {
-						name = L["Cooking"], type = "group", order = 1, inline = true,
-						args = {
-							questRewards = { 
-								name = L["Quest Rewards"], type = "group", order = 2, 
-								get = "GetQuestOption", set = "SetQuestOption", inline = true,
-								args = {
-									shs = { name = LQ["Super Hot Stew"], order = 1, type = "select", values = cooking_values },
-									s4s = { name = LQ["Soup for the Soul"], order = 2, type = "select", values = cooking_values },
-									rit = { name = LQ["Revenge is Tasty"] , order = 2, type = "select", values = cooking_values },
-									mal = { name = LQ["Manalicious"], order = 2, type = "select", values = cooking_values },
-								},
-							},
-							quests = {
-								name = L["Quests"], type = "multiselect", order = 1,
-								values = { LQ["Super Hot Stew"], LQ["Soup for the Soul"], LQ["Revenge is Tasty"], LQ["Manalicious"] },
-							},
-						},
-					},	--End of Cooking
-					fishing = {
-						name = L["Fishing"], type = "multiselect",
-						values = { LQ["Crocolisks in the City"], LQ["Bait Bandits"], LQ["Felblood Fillet"], LQ["Shrimpin' Ain't Easy"], LQ["The One That Got Away"] },
-					},
-				},
-			},	--end of professions table
-			pvp = {
-				name = L["PvP"], type = "group", order = 3,
-				args = {
-					battlegrounds = {
-						name = L["Battlegrounds"], type = "multiselect", order = 1, width = "full",
-						values = { LQ["Call to Arms: Eye of the Storm"] },
-					},
-					world = {
-						name = L["World PvP"], type = "multiselect", order = 2,
-						values = { LQ["Hellfire Fortifications"], LQ["Spirits of Auchindoun"], LQ["Enemies, Old and New"], LQ["In Defense of Halaa"] },
-					},
-				},
-			},
-			instances = {
-				name = L["Doungeons"], type = "group", order = 4,
-				args = {
-					normal = {
-						name = L["Dungeon"], type = "multiselect", width = "full",
-						values = { 
-							[LQ["Wanted: Arcatraz Sentinels"]] = LQ["Wanted: Arcatraz Sentinels"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: Coilfang Myrmidons"]] = LQ["Wanted: Coilfang Myrmidons"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: Malicious Instructors"]] = LQ["Wanted: Malicious Instructors"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: Rift Lords"]] = LQ["Wanted: Rift Lords"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: Shattered Hand Centurions"]] = LQ["Wanted: Shattered Hand Centurions"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: Sunseeker Channelers"]] = LQ["Wanted: Sunseeker Channelers"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: Tempest-Forge Destroyers"]] = LQ["Wanted: Tempest-Forge Destroyers"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: Sisters of Torment"]] = LQ["Wanted: Sisters of Torment"]:gsub(L["Wanted: "], ""),
-							},
-					},
-					heroic = {
-						name = L["Heroic Dungeon"], type = "multiselect", width = "full",
-						values = {
-							[LQ["Wanted: A Black Stalker Egg"]] = LQ["Wanted: A Black Stalker Egg"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: A Warp Splinter Clipping"]] = LQ["Wanted: A Warp Splinter Clipping"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: Aeonus's Hourglass"]] = LQ["Wanted: Aeonus's Hourglass"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: Bladefist's Seal"]] = LQ["Wanted: Bladefist's Seal"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: Keli'dan's Feathered Stave"]] = LQ["Wanted: Keli'dan's Feathered Stave"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: Murmur's Whisper"]] = LQ["Wanted: Murmur's Whisper"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: Nazan's Riding Crop"]] = LQ["Wanted: Nazan's Riding Crop"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: Pathaleon's Projector"]] = LQ["Wanted: Pathaleon's Projector"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: Shaffar's Wondrous Pendant"]] = LQ["Wanted: Shaffar's Wondrous Pendant"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: The Epoch Hunter's Head"]] = LQ["Wanted: The Epoch Hunter's Head"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: The Exarch's Soul Gem"]] = LQ["Wanted: The Exarch's Soul Gem"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: The Headfeathers of Ikiss"]] = LQ["Wanted: The Headfeathers of Ikiss"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: The Heart of Quagmirran"]] = LQ["Wanted: The Heart of Quagmirran"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: The Scroll of Skyriss"]] =  LQ["Wanted: The Scroll of Skyriss"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: The Warlord's Treatise"]] = LQ["Wanted: The Warlord's Treatise"]:gsub(L["Wanted: "], ""),
-							[LQ["Wanted: The Signet Ring of Prince Kael'thas"]] = LQ["Wanted: The Signet Ring of Prince Kael'thas"]:gsub(L["Wanted: "], ""),}
-					},
-				},
-			},
+			world = module:GetWorldQuests(),	--End of Faction Table
+			professions = module:GetProfessionQuests(),	--end of professions table
+			pvp = module:GetPvPQuests(),
+			instances = module:GetInstanceQuests(),
 		}, --Top Lvl Args
 	}--Top lvl options
 	return options
 end
 
+function module:GetWorldQuests()
+	local t = {
+		name = CHANNEL_CATEGORY_WORLD, type = "group", order = 1,
+		args = {
+			skettiswrap = { type = "group", name = L["Sha'tari Skyguard"],
+				args = {
+					skettis = {
+						name = L["Sha'tari Skyguard"], type = "multiselect", width = "full",
+						values = { LQ["Fires Over Skettis"], LQ["Escape from Skettis"],	--Skettis
+							LQ["Wrangle More Aether Rays!"], LQ["Bomb Them Again!"] }, --Blade's Edge Mountains
+					},
+				}
+			},
+			ogrilawrap = { type = "group", name = L["Og'rila"],
+				args = {
+					ogrila = {
+						name = L["Og'rila"], type = "multiselect", width = "full",
+						values = { LQ["The Relic's Emanation"], LQ["Banish More Demons"] },
+					},
+				},
+			},
+			netherwing = {
+				name = L["Netherwing"], type = "group",
+				args = {
+					Netrual = {
+						name = L["Netural"], type = "multiselect", order = 1, width = "full",
+						values = { LQ["Nethercite Ore"], LQ["Netherdust Pollen"], LQ["Nethermine Flayer Hide"],
+							LQ["Netherwing Crystals"], LQ["The Not-So-Friendly Skies..."], LQ["A Slow Death"] },
+					},
+					Friendly = {
+						name = L["Friendly"], type = "multiselect", order = 2, width = "full",
+						values = { LQ["Picking Up The Pieces..."], LQ["Dragons are the Least of Our Problems"],
+							LQ["The Booterang: A Cure For The Common Worthless Peon"] },
+					},
+					HonorRev = {
+						name = L["Honored"].." / "..L["Revered"], type = "multiselect", order = 3, width = "full",
+						values = { LQ["Disrupting the Twilight Portal"], LQ["The Deadliest Trap Ever Laid"] },
+					},
+				},
+			},
+			sso = module:GenerateSSOOptions(),
+			events = { type = "group", name = "World Events",
+				args = {
+					hold = { type = "description", name = "Place Holder for World Events Sub Group"},
+				},
+			},
+		},
+	}		
+	return t
+end
+
 function module:GenerateSSOOptions()
 	local table = {
-		name = L["Shattered Sun Offensive"], type = "group", order = 4,
+		name = L["Shattered Sun Offensive"], type = "group", 
 		args = {
 			p1 = {
 				name = L["SSO Phase 1"], type = "multiselect", order = 1, width = "full",
@@ -317,6 +261,108 @@ function module:GenerateSSOOptions()
 		},
 	}
 	return table
+end
+
+function module:GetProfessionQuests()
+	local t = {
+		name = L["Professions"], type = "group", order = 4,
+		args = {
+			cookWrap = {
+				name = L["Cooking"], type = "group",
+				args = {
+					quests = { name = L["Quests"], type = "multiselect", order = 1, 
+						values = { LQ["Super Hot Stew"], LQ["Soup for the Soul"], LQ["Revenge is Tasty"], LQ["Manalicious"] },
+						},
+					qRewards = { name = L["Quest Rewards"], type = "select", values = cooking_values, get = "FishingGet", set = "FishingSet", },
+				},
+			},	--End of Cooking
+			fishWrap = { type = "group", name = L["Fishing"], 
+				args = {
+					fishing = { name = L["Fishing"], type = "multiselect",
+						values = { LQ["Crocolisks in the City"], LQ["Bait Bandits"], LQ["Felblood Fillet"], 
+						LQ["Shrimpin' Ain't Easy"], LQ["The One That Got Away"] },
+					},
+				},
+			},
+		},
+	}
+	return t
+end
+function module:GetPvPQuests()
+	local t = {
+		name = L["PvP"], type = "group", order = 3,
+		args = {
+			battlegrounds = {
+				name = L["Battlegrounds"], type = "multiselect", width = "full",
+				values = { LQ["Call to Arms: Eye of the Storm"] },
+			},
+			world = {
+				name = L["World PvP"], type = "multiselect", width = "full",
+				values = { LQ["Hellfire Fortifications"], LQ["Spirits of Auchindoun"], LQ["Enemies, Old and New"], LQ["In Defense of Halaa"] },
+			},
+		},
+	}
+	return t
+end
+
+local function inScrub(txt)
+	return txt:gsub(L["Wanted: "], "")
+end
+function module:GetInstanceQuests()
+	local t = {
+		name = L["Doungeons"], type = "group", order = 2,
+		args = {
+			normal = {
+				name = L["Dungeon"], type = "multiselect", width = "full",
+				values = { 
+					[LQ["Wanted: Arcatraz Sentinels"]] = inScrub(LQ["Wanted: Arcatraz Sentinels"]),
+					[LQ["Wanted: Coilfang Myrmidons"]] = inScrub(LQ["Wanted: Coilfang Myrmidons"]),
+					[LQ["Wanted: Malicious Instructors"]] = inScrub(LQ["Wanted: Malicious Instructors"]),
+					[LQ["Wanted: Rift Lords"]] = inScrub(LQ["Wanted: Rift Lords"]),
+					[LQ["Wanted: Shattered Hand Centurions"]] = inScrub(LQ["Wanted: Shattered Hand Centurions"]),
+					[LQ["Wanted: Sunseeker Channelers"]] = inScrub(LQ["Wanted: Sunseeker Channelers"]),
+					[LQ["Wanted: Tempest-Forge Destroyers"]] = inScrub(LQ["Wanted: Tempest-Forge Destroyers"]),
+					[LQ["Wanted: Sisters of Torment"]] = inScrub(LQ["Wanted: Sisters of Torment"]),
+					},
+			},
+			heroic = {
+				name = L["Heroic Dungeon"], type = "multiselect", width = "full",
+				values = {
+					[LQ["Wanted: A Black Stalker Egg"]] = inScrub(LQ["Wanted: A Black Stalker Egg"]),
+					[LQ["Wanted: A Warp Splinter Clipping"]] = inScrub(LQ["Wanted: A Warp Splinter Clipping"]),
+					[LQ["Wanted: Aeonus's Hourglass"]] = inScrub(LQ["Wanted: Aeonus's Hourglass"]),
+					[LQ["Wanted: Bladefist's Seal"]] = inScrub(LQ["Wanted: Bladefist's Seal"]),
+					[LQ["Wanted: Keli'dan's Feathered Stave"]] = inScrub(LQ["Wanted: Keli'dan's Feathered Stave"]),
+					[LQ["Wanted: Murmur's Whisper"]] = inScrub(LQ["Wanted: Murmur's Whisper"]),
+					[LQ["Wanted: Nazan's Riding Crop"]] = inScrub(LQ["Wanted: Nazan's Riding Crop"]),
+					[LQ["Wanted: Pathaleon's Projector"]] = inScrub(LQ["Wanted: Pathaleon's Projector"]),
+					[LQ["Wanted: Shaffar's Wondrous Pendant"]] = inScrub(LQ["Wanted: Shaffar's Wondrous Pendant"]),
+					[LQ["Wanted: The Epoch Hunter's Head"]] = inScrub(LQ["Wanted: The Epoch Hunter's Head"]),
+					[LQ["Wanted: The Exarch's Soul Gem"]] = inScrub(LQ["Wanted: The Exarch's Soul Gem"]),
+					[LQ["Wanted: The Headfeathers of Ikiss"]] = inScrub(LQ["Wanted: The Headfeathers of Ikiss"]),
+					[LQ["Wanted: The Heart of Quagmirran"]] = inScrub(LQ["Wanted: The Heart of Quagmirran"]),
+					[LQ["Wanted: The Scroll of Skyriss"]] =  inScrub(LQ["Wanted: The Scroll of Skyriss"]),
+					[LQ["Wanted: The Warlord's Treatise"]] = inScrub(LQ["Wanted: The Warlord's Treatise"]),
+					[LQ["Wanted: The Signet Ring of Prince Kael'thas"]] = inScrub(LQ["Wanted: The Signet Ring of Prince Kael'thas"]),}
+			},
+		},
+	}
+	return t
+end
+
+
+function module:FishingGet(info)
+	D("fishing Get", db.profile.qOptions[ LQ["Super Hot Stew"] ])
+	return db.profile.qOptions[ LQ["Super Hot Stew"] ]
+end
+
+function module:FishingSet(info, val)
+	print("Fishing Set", val)
+	local qOpt = db.profile.qOptions
+	qOpt[ LQ["Super Hot Stew"] ] = val
+	qOpt[ LQ["Soup for the Soul"] ] = val
+	qOpt[ LQ["Revenge is Tasty"] ] = val
+	qOpt[ LQ["Manalicious"] ] = val
 end
 
 function module:GetQuestOption(info)
