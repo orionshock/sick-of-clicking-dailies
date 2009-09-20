@@ -83,4 +83,4 @@ local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "enUS", true, debug)
 		LK["I'm ready to begin. What is the first ingredient you require?"] = ( UnitSex("player") == 2 and LK_R["I'm ready to begin. What is the first ingredient you require?(M)"] or LK_R["I'm ready to begin. What is the first ingredient you require?(F)"] ):gsub("%([MF]%)$", "")
 	end
 
----Localization Counter-- Bump to generate new zip for locale changes = 5
+---Localization Counter-- Bump to generate new zip for locale changes = 6
