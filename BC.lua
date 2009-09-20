@@ -80,7 +80,7 @@ function module:OnEnable()
 	SetItemRef("item:33857","item:33857")	--Crate Of Meat
 	SetItemRef("item:33857","item:33857")
 	
-	cooking_values = { (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate Of Meat", L["None"]}
+	cooking_values = { (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate Of Meat", nil, nil,  L["None"]}
 
 	AddonParent:RegisterQuests("BC", db.profile, self.npcList, db.profile.qOptions)
 end
@@ -132,6 +132,7 @@ module.npcList = table.concat({
 	--Instance
 	24369,		--Wind Trader Zhareem
 	24370,		--Nether-Stalker Mah'duun
+
 	}, ":")
 
 function module:GetOptionsTable()
@@ -154,6 +155,8 @@ function module:GetOptionsTable()
 end
 
 function module:GetWorldQuests()
+	local str = [[
+	return function(L, LQ, module)
 	local t = {
 		name = CHANNEL_CATEGORY_WORLD, type = "group", order = 1,
 		args = {
@@ -202,10 +205,15 @@ function module:GetWorldQuests()
 		},
 	}		
 	return t
+	end ]]
+	local t = loadstring(str)()(L, LQ, self)
+	return t
 end
 
 function module:GenerateSSOOptions()
-	local table = {
+	local str = [[
+	return function(L, LQ, module)
+	local t = {
 		name = L["Shattered Sun Offensive"], type = "group", 
 		args = {
 			p1 = {
@@ -260,10 +268,15 @@ function module:GenerateSSOOptions()
 			},
 		},
 	}
-	return table
+	return t
+	end ]]
+	local t = loadstring(str)()(L, LQ, self)
+	return t
 end
 
 function module:GetProfessionQuests()
+	local str = [[
+	return function(L, LQ, module, cooking_values)
 	local t = {
 		name = L["Professions"], type = "group", order = 4,
 		args = {
@@ -287,8 +300,14 @@ function module:GetProfessionQuests()
 		},
 	}
 	return t
+	end ]]
+	local t = loadstring(str)()(L, LQ, self, cooking_values)
+	return t
 end
+
 function module:GetPvPQuests()
+	local str = [[
+	return function(L, LQ, module)
 	local t = {
 		name = L["PvP"], type = "group", order = 3,
 		args = {
@@ -303,61 +322,67 @@ function module:GetPvPQuests()
 		},
 	}
 	return t
+	end ]]
+	local t = loadstring(str)()(L, LQ, self)
+	return t
 end
 
 local function inScrub(txt)
 	return txt:gsub(L["Wanted: "], "")
 end
 function module:GetInstanceQuests()
+	local str = [[
+	return function(L, LQ, module, inScrub)
 	local t = {
 		name = L["Doungeons"], type = "group", order = 2,
 		args = {
 			normal = {
 				name = L["Dungeon"], type = "multiselect", width = "full",
 				values = { 
-					[LQ["Wanted: Arcatraz Sentinels"]] = inScrub(LQ["Wanted: Arcatraz Sentinels"]),
-					[LQ["Wanted: Coilfang Myrmidons"]] = inScrub(LQ["Wanted: Coilfang Myrmidons"]),
-					[LQ["Wanted: Malicious Instructors"]] = inScrub(LQ["Wanted: Malicious Instructors"]),
-					[LQ["Wanted: Rift Lords"]] = inScrub(LQ["Wanted: Rift Lords"]),
-					[LQ["Wanted: Shattered Hand Centurions"]] = inScrub(LQ["Wanted: Shattered Hand Centurions"]),
-					[LQ["Wanted: Sunseeker Channelers"]] = inScrub(LQ["Wanted: Sunseeker Channelers"]),
-					[LQ["Wanted: Tempest-Forge Destroyers"]] = inScrub(LQ["Wanted: Tempest-Forge Destroyers"]),
-					[LQ["Wanted: Sisters of Torment"]] = inScrub(LQ["Wanted: Sisters of Torment"]),
+					[ LQ["Wanted: Arcatraz Sentinels"] ] = inScrub(LQ["Wanted: Arcatraz Sentinels"]),
+					[ LQ["Wanted: Coilfang Myrmidons"] ] = inScrub(LQ["Wanted: Coilfang Myrmidons"]),
+					[ LQ["Wanted: Malicious Instructors"] ] = inScrub(LQ["Wanted: Malicious Instructors"]),
+					[ LQ["Wanted: Rift Lords"] ] = inScrub(LQ["Wanted: Rift Lords"]),
+					[ LQ["Wanted: Shattered Hand Centurions"] ] = inScrub(LQ["Wanted: Shattered Hand Centurions"]),
+					[ LQ["Wanted: Sunseeker Channelers"] ] = inScrub(LQ["Wanted: Sunseeker Channelers"]),
+					[ LQ["Wanted: Tempest-Forge Destroyers"] ] = inScrub(LQ["Wanted: Tempest-Forge Destroyers"]),
+					[ LQ["Wanted: Sisters of Torment"] ] = inScrub(LQ["Wanted: Sisters of Torment"]),
 					},
 			},
 			heroic = {
 				name = L["Heroic Dungeon"], type = "multiselect", width = "full",
 				values = {
-					[LQ["Wanted: A Black Stalker Egg"]] = inScrub(LQ["Wanted: A Black Stalker Egg"]),
-					[LQ["Wanted: A Warp Splinter Clipping"]] = inScrub(LQ["Wanted: A Warp Splinter Clipping"]),
-					[LQ["Wanted: Aeonus's Hourglass"]] = inScrub(LQ["Wanted: Aeonus's Hourglass"]),
-					[LQ["Wanted: Bladefist's Seal"]] = inScrub(LQ["Wanted: Bladefist's Seal"]),
-					[LQ["Wanted: Keli'dan's Feathered Stave"]] = inScrub(LQ["Wanted: Keli'dan's Feathered Stave"]),
-					[LQ["Wanted: Murmur's Whisper"]] = inScrub(LQ["Wanted: Murmur's Whisper"]),
-					[LQ["Wanted: Nazan's Riding Crop"]] = inScrub(LQ["Wanted: Nazan's Riding Crop"]),
-					[LQ["Wanted: Pathaleon's Projector"]] = inScrub(LQ["Wanted: Pathaleon's Projector"]),
-					[LQ["Wanted: Shaffar's Wondrous Pendant"]] = inScrub(LQ["Wanted: Shaffar's Wondrous Pendant"]),
-					[LQ["Wanted: The Epoch Hunter's Head"]] = inScrub(LQ["Wanted: The Epoch Hunter's Head"]),
-					[LQ["Wanted: The Exarch's Soul Gem"]] = inScrub(LQ["Wanted: The Exarch's Soul Gem"]),
-					[LQ["Wanted: The Headfeathers of Ikiss"]] = inScrub(LQ["Wanted: The Headfeathers of Ikiss"]),
-					[LQ["Wanted: The Heart of Quagmirran"]] = inScrub(LQ["Wanted: The Heart of Quagmirran"]),
-					[LQ["Wanted: The Scroll of Skyriss"]] =  inScrub(LQ["Wanted: The Scroll of Skyriss"]),
-					[LQ["Wanted: The Warlord's Treatise"]] = inScrub(LQ["Wanted: The Warlord's Treatise"]),
-					[LQ["Wanted: The Signet Ring of Prince Kael'thas"]] = inScrub(LQ["Wanted: The Signet Ring of Prince Kael'thas"]),}
+					[ LQ["Wanted: A Black Stalker Egg"] ] = inScrub(LQ["Wanted: A Black Stalker Egg"]),
+					[ LQ["Wanted: A Warp Splinter Clipping"] ] = inScrub(LQ["Wanted: A Warp Splinter Clipping"]),
+					[ LQ["Wanted: Aeonus's Hourglass"] ] = inScrub(LQ["Wanted: Aeonus's Hourglass"]),
+					[ LQ["Wanted: Bladefist's Seal"] ] = inScrub(LQ["Wanted: Bladefist's Seal"]),
+					[ LQ["Wanted: Keli'dan's Feathered Stave"] ] = inScrub(LQ["Wanted: Keli'dan's Feathered Stave"]),
+					[ LQ["Wanted: Murmur's Whisper"] ] = inScrub(LQ["Wanted: Murmur's Whisper"]),
+					[ LQ["Wanted: Nazan's Riding Crop"] ] = inScrub(LQ["Wanted: Nazan's Riding Crop"]),
+					[ LQ["Wanted: Pathaleon's Projector"] ] = inScrub(LQ["Wanted: Pathaleon's Projector"]),
+					[ LQ["Wanted: Shaffar's Wondrous Pendant"] ] = inScrub(LQ["Wanted: Shaffar's Wondrous Pendant"]),
+					[ LQ["Wanted: The Epoch Hunter's Head"] ] = inScrub(LQ["Wanted: The Epoch Hunter's Head"]),
+					[ LQ["Wanted: The Exarch's Soul Gem"] ] = inScrub(LQ["Wanted: The Exarch's Soul Gem"]),
+					[ LQ["Wanted: The Headfeathers of Ikiss"] ] = inScrub(LQ["Wanted: The Headfeathers of Ikiss"]),
+					[ LQ["Wanted: The Heart of Quagmirran"] ] = inScrub(LQ["Wanted: The Heart of Quagmirran"]),
+					[ LQ["Wanted: The Scroll of Skyriss"] ] = inScrub(LQ["Wanted: The Scroll of Skyriss"]),
+					[ LQ["Wanted: The Warlord's Treatise"] ] = inScrub(LQ["Wanted: The Warlord's Treatise"]),
+					[ LQ["Wanted: The Signet Ring of Prince Kael'thas"] ] = inScrub(LQ["Wanted: The Signet Ring of Prince Kael'thas"]),}
 			},
 		},
 	}
+	return t
+	end ]]
+	local t = loadstring(str)()(L, LQ, self, inScrub)
 	return t
 end
 
 
 function module:FishingGet(info)
-	D("fishing Get", db.profile.qOptions[ LQ["Super Hot Stew"] ])
 	return db.profile.qOptions[ LQ["Super Hot Stew"] ]
 end
 
 function module:FishingSet(info, val)
-	print("Fishing Set", val)
 	local qOpt = db.profile.qOptions
 	qOpt[ LQ["Super Hot Stew"] ] = val
 	qOpt[ LQ["Soup for the Soul"] ] = val
