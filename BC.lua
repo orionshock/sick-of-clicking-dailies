@@ -14,7 +14,7 @@ local D = AddonParent.D
 local module = AddonParent:NewModule("BC")
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
 local LQ = LibStub("AceLocale-3.0"):GetLocale("SOCD_BC")
-local db, cooking_values
+local db
 
 module.defaults = {
 	profile = {
@@ -86,8 +86,6 @@ function module:OnEnable()
 	SetItemRef("item:33857","item:33857")	--Crate Of Meat
 	SetItemRef("item:33857","item:33857")
 	
-	cooking_values = { (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate Of Meat", nil, nil,  L["None"]}
-			--RegisterQuests(name, questTable, npcID, options, gossip)
 	AddonParent:RegisterQuests("BC", self.db.profile.quests, self.npcList, self.db.profile.qOptions, self.db.profile.gossip)
 end
 
@@ -309,7 +307,7 @@ end
 
 function module:GetProfessionQuests()
 	local str = [[
-	return function(L, LQ, module, cooking_values)
+	return function(L, LQ, module)
 	local t = {
 		name = L["Professions"], type = "group", order = 4,
 		args = {
@@ -318,8 +316,11 @@ function module:GetProfessionQuests()
 				args = {
 					quests = { name = L["Quests"], type = "multiselect", order = 1, 
 						values = { LQ["Super Hot Stew"], LQ["Soup for the Soul"], LQ["Revenge is Tasty"], LQ["Manalicious"] },
-						},
-					qRewards = { name = L["Quest Rewards"], type = "select", values = cooking_values, get = "FishingGet", set = "FishingSet", },
+					},
+					qRewards = { name = L["Quest Rewards"], type = "select", 
+						values = { (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate Of Meat", nil, nil,  L["None"]},
+						get = "FishingGet", set = "FishingSet", 
+					},
 				},
 			},	--End of Cooking
 			fishWrap = { type = "group", name = L["Fishing"], 
