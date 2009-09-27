@@ -247,6 +247,7 @@ local qTable = {
 	[13192]= "Warding the Walls", --WotLK
 	[13284] = "Assault by Ground", --WotLK
 	[13309] = "Assault by Air", --WotLK
+	[14163] = "Call to Arms: Isle of Conquest",	--WotLK
 
 --Shared
 	[13627] = "Jack Me Some Lumber",	--WotLK

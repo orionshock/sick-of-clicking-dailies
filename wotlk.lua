@@ -659,7 +659,7 @@ function module:PlayerVsPlayerQuests()
 			bg  = { type = "group", name = L["Battlegrounds"],
 				args = {
 					bgSub = { name = L["Battlegrounds"], type = "multiselect", width = "full",
-						values = { LQ["Call to Arms: Strand of the Ancients"], },
+						values = { LQ["Call to Arms: Strand of the Ancients"], LQ["Call to Arms: Isle of Conquest"] },
 					},
 				},
 			},
