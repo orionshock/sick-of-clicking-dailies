@@ -426,12 +426,12 @@ end
 
 function module:Brewfest_Racing_Gossip(info, value)
 	if value == nil then	--get
-		return db.profile.gossip[ L["I'm ready to work for you today!  Give me that ram!"] ]
+		return db.profile.gossip[ BC["I'm ready to work for you today!  Give me that ram!"] ]
 	else
-		db.profile.gossip[ L["Do you still need some help moving kegs from the crash site near Razor Hill?"] ] = value	--Horde
-		db.profile.gossip[ L["I'm ready to work for you today!  Give me that ram!"] ] = value	--Horde
-		db.profile.gossip[ L["Do you still need some help shipping kegs from Kharanos?"] ] = value	--Alliance
-		db.profile.gossip[ L["I'm ready to work for you today!  Give me the good stuff!"] ] = value
+		db.profile.gossip[ BC["Do you still need some help moving kegs from the crash site near Razor Hill?"] ] = value	--Horde
+		db.profile.gossip[ BC["I'm ready to work for you today!  Give me that ram!"] ] = value	--Horde
+		db.profile.gossip[ BC["Do you still need some help shipping kegs from Kharanos?"] ] = value	--Alliance
+		db.profile.gossip[ BC["I'm ready to work for you today!  Give me the good stuff!"] ] = value
 		
 	end	
 end

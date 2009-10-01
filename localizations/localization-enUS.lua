@@ -2,7 +2,7 @@
 	Sick Of Clicking Dailies? - Locale file for enUS
 	Written By: @project-author@
 	
-	Please Visit: http://www.wowace.com/projects/sick-of-clicking-dailies/localization/
+	Please Visit: http://www.wowace.com/addons/sick-of-clicking-dailies/pages/how-to-add-localizations/
 	to contribute to localizations :)
 ]]--
 
@@ -10,6 +10,7 @@ local debug = false
 --@debug@
 debug = true
 --@end-debug@
+local genderMale = UnitSex("player") == 1
 
 ----------------------------------------------------------------------------
 --	General -- Used by all or most :)				  --
@@ -67,6 +68,10 @@ local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "enUS", true, debug)
 
 --@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, namespace="BC", table-name="BC")@
 
+---
+	local BC_R = LibStub("AceLocale-3.0"):GetLocale("SOCD_BC")
+	BC["I'm ready to work for you today! Give me that ram!"] = genderMale and BC_R["I'm ready to work for you today! Give me that ram!(M)"] or BC_R["I'm ready to work for you today! Give me that ram!(F)"]
+
 	end
 
 ----------------------------------------------------------------------------
@@ -79,8 +84,10 @@ local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "enUS", true, debug)
 
 --@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, namespace="Wrath", table-name="LK")@
 
-		local LK_R = LibStub("AceLocale-3.0"):GetLocale("SOCD_LK")
-		LK["I'm ready to begin. What is the first ingredient you require?"] = ( UnitSex("player") == 2 and LK_R["I'm ready to begin. What is the first ingredient you require?(M)"] or LK_R["I'm ready to begin. What is the first ingredient you require?(F)"] ):gsub("%([MF]%)$", "")
+---
+	local LK_R = LibStub("AceLocale-3.0"):GetLocale("SOCD_LK")
+	LK["I'm ready to begin. What is the first ingredient you require?"] = genderMale and LK_R["I'm ready to begin. What is the first ingredient you require?(M)"] or LK_R["I'm ready to begin. What is the first ingredient you require?(F)"]
+---
 	end
 
 ---Localization Counter-- Bump to generate new zip for locale changes = 10
