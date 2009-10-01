@@ -102,7 +102,7 @@ GT["I'm ready to begin. What is the first ingredient you require?"] = GT_R["I'm 
 		else			--Feminine Context
 
 GT["I'm ready to work for you today!  Give me the good stuff!"] = GT_R["I'm ready to work for you today!  Give me the good stuff!(F)"]
-GT["I'm ready to work for you today! Give me that ram!"] = GT_R["I'm ready to work for you today! Give me that ram!(F)"]
+GT["I'm ready to work for you today!  Give me that ram!"] = GT_R["I'm ready to work for you today!  Give me that ram!(F)"]
 GT["I'm ready to begin. What is the first ingredient you require?"] = GT_R["I'm ready to begin. What is the first ingredient you require?(F)"]
 
 		end
