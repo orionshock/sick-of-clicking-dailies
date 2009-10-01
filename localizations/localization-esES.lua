@@ -2,9 +2,10 @@
 	Sick Of Clicking Dailies? - Locale file for esES
 	Written By: @project-author@
 	
-	Please Visit: http://www.wowace.com/projects/sick-of-clicking-dailies/localization/
+	Please Visit: http://www.wowace.com/addons/sick-of-clicking-dailies/pages/how-to-add-localizations/
 	to contribute to localizations :)
 ]]--
+
 
 
 
@@ -49,7 +50,7 @@ L["Wintergrasp"] = PVPBATTLEGROUND_WINTERGRASPTIMER:match("(.+)|n")
 --	Classic, Populated by WoWAce-Curseforge Packager.		  --
 ----------------------------------------------------------------------------
 
-local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "esES", false)
+local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "esES", false, debug)
 
 	if C then
 
@@ -61,7 +62,7 @@ local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "esES", false)
 --	TBC, Populated by WoWAce-Curseforge Packager.			  --
 ----------------------------------------------------------------------------	
 
-local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "esES", false)
+local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "esES", false, debug)
 
 	if BC then
 
@@ -73,12 +74,38 @@ local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "esES", false)
 --	WOTLK, Populated by WoWAce-Curseforge Packager.			  --
 ----------------------------------------------------------------------------
 
-local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "esES", false)
+local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "esES", false, debug)
 
 	if LK then
 
 --@localization(locale="esES", format="lua_additive_table", same-key-is-true=true, namespace="Wrath", table-name="LK")@
 
-		local LK_R = LibStub("AceLocale-3.0"):GetLocale("SOCD_LK")
-		LK["I'm ready to begin. What is the first ingredient you require?"] = ( UnitSex("player") == 2 and LK_R["I'm ready to begin. What is the first ingredient you require?(M)"] or LK_R["I'm ready to begin. What is the first ingredient you require?(F)"] ):gsub("%([MF]%)$", "")
 	end
+
+----------------------------------------------------------------------------
+--	Gossip Texts, Populated by WoWAce-Curseforge Packager.			  --
+----------------------------------------------------------------------------
+
+local GT = LibStub("AceLocale-3.0"):NewLocale("SOCD_GossipText", "esES", false, debug)
+	if GT then
+
+--@localization(locale="esES", format="lua_additive_table", same-key-is-true=true, namespace="GossipTexts", table-name="GT")@
+
+
+		local GT_R = LibStub("AceLocale-3.0"):GetLocale("SOCD_GossipText")
+		if genderMale then	--Masculine Context
+
+GT["I'm ready to work for you today!  Give me the good stuff!"] = GT_R["I'm ready to work for you today!  Give me the good stuff!(M)"]
+GT["I'm ready to work for you today! Give me that ram!"] = GT_R["I'm ready to work for you today! Give me that ram!(M)"]
+GT["I'm ready to begin. What is the first ingredient you require?"] = GT_R["I'm ready to begin. What is the first ingredient you require?(M)"]
+
+		else			--Feminine Context
+
+GT["I'm ready to work for you today!  Give me the good stuff!"] = GT_R["I'm ready to work for you today!  Give me the good stuff!(F)"]
+GT["I'm ready to work for you today!  Give me that ram!"] = GT_R["I'm ready to work for you today!  Give me that ram!(F)"]
+GT["I'm ready to begin. What is the first ingredient you require?"] = GT_R["I'm ready to begin. What is the first ingredient you require?(F)"]
+
+		end
+	end
+
+
