@@ -26,6 +26,7 @@ end
 
 local module = AddonParent:NewModule("LK")
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
+local GT = LibStub("AceLocale-3.0"):GetLocale("SOCD_GossipText")
 local LQ = LibStub("AceLocale-3.0"):GetLocale("SOCD_LK")
 local db, qTable = nil, AddonParent.qTable
 
@@ -51,11 +52,11 @@ module.defaults = {
 		quests = {},
 		gossip = {
 			--["Tell me of yourself, Xarantaur. Why are you called the Witness?"] = true,
-			[LQ["I'm ready to begin. What is the first ingredient you require?"]] = true,	--Alchy Dailie from Argent crusade in Drak'Tharon
-			[LQ["Get out there and make those Scourge wish they were never reborn!"]] = true,	--Troll patrol quest
-			[LQ["Let's do this, sister."] ] = true,	--Defending your Title in Storm peaks
-			[LQ["Go on, you're free.  Get out of here!"] ] = true,	--"Slaves to Saronite
-			[LQ["Give me a bomber!"] ] = true,	--Bombing quests in icecrown
+			[GT["I'm ready to begin. What is the first ingredient you require?"]] = true,	--Alchy Dailie from Argent crusade in Drak'Tharon
+			[GT["Get out there and make those Scourge wish they were never reborn!"]] = true,	--Troll patrol quest
+			[GT["Let's do this, sister."] ] = true,	--Defending your Title in Storm peaks
+			[GT["Go on, you're free.  Get out of here!"] ] = true,	--"Slaves to Saronite
+			[GT["Give me a bomber!"] ] = true,	--Bombing quests in icecrown
 		}
 	},
 }
@@ -391,7 +392,7 @@ end
 
 function module:WorldQuests()
 	local str = [[
-	return function(L, LQ, module, tpScrub)
+	return function(L, LQ, module, tpScrub, GT)
 		local t = {
 		type = "group",
 		name = CHANNEL_CATEGORY_WORLD,
@@ -468,8 +469,8 @@ function module:WorldQuests()
 									},
 									patrol_Opts = { name = L["Argent Crusade"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 2, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
 										values = {
-									[ LQ["I'm ready to begin. What is the first ingredient you require?"] ] = tpScrub(LQ["Troll Patrol: The Alchemist's Apprentice"]),
-									[ LQ["Get out there and make those Scourge wish they were never reborn!"] ] = tpScrub(LQ["Troll Patrol: Intestinal Fortitude"]),
+									[ GT["I'm ready to begin. What is the first ingredient you require?"] ] = tpScrub(LQ["Troll Patrol: The Alchemist's Apprentice"]),
+									[ GT["Get out there and make those Scourge wish they were never reborn!"] ] = tpScrub(LQ["Troll Patrol: Intestinal Fortitude"]),
 										},
 									}
 								},
@@ -539,7 +540,7 @@ function module:WorldQuests()
 								LQ["Maintaining Discipline"], LQ["The Aberrations Must Die"], },
 							},
 							peaksGossip = { name = L["The Storm Peaks"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 8, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
-								values = { [ LQ["Let's do this, sister."] ] = LQ["Defending Your Title"] },
+								values = { [ GT["Let's do this, sister."] ] = LQ["Defending Your Title"] },
 							},
 						},
 					},
@@ -555,8 +556,8 @@ function module:WorldQuests()
 									 },
 							},
 							gossip = { name = L["Icecrown"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 2, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
-								values = { [LQ["Go on, you're free.  Get out of here!"] ] = LQ["Slaves to Saronite"],
-									[ LQ["Give me a bomber!"] ] = L["Bombing Quests in Icecrown"],
+								values = { [ GT["Go on, you're free.  Get out of here!"] ] = LQ["Slaves to Saronite"],
+									[ GT["Give me a bomber!"] ] = L["Bombing Quests in Icecrown"],
 									},
 							},
 						},
@@ -582,7 +583,7 @@ function module:WorldQuests()
 		return t
 	end
 ]]
-	local t = loadstring(str)()(L, LQ, self, tpScrub)
+	local t = loadstring(str)()(L, LQ, self, tpScrub, GT)
 	return t
 end
 

@@ -13,6 +13,7 @@ local AddonParent = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
 local D = AddonParent.D
 local module = AddonParent:NewModule("BC")
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
+local GT = LibStub("AceLocale-3.0"):GetLocale("SOCD_GossipText")
 local LQ = LibStub("AceLocale-3.0"):GetLocale("SOCD_BC")
 local db
 
@@ -34,10 +35,10 @@ module.defaults = {
 			[ LQ["Ata'mal Armaments"] ] = 5,
 		},
 		gossip = {
-			[ L["Do you still need some help moving kegs from the crash site near Razor Hill?"] ] = true,
-			[ L["I'm ready to work for you today!  Give me that ram!"] ] = true,
-			[ L["Do you still need some help shipping kegs from Kharanos?"] ] = true,
-			[ L["I'm ready to work for you today!  Give me the good stuff!"] ] = true,
+			[ GT["Do you still need some help moving kegs from the crash site near Razor Hill?"] ] = true,
+			[ GT["I'm ready to work for you today!  Give me that ram!"] ] = true,
+			[ GT["Do you still need some help shipping kegs from Kharanos?"] ] = true,
+			[ GT["I'm ready to work for you today!  Give me the good stuff!"] ] = true,
 		},
 	},
 }
@@ -426,12 +427,12 @@ end
 
 function module:Brewfest_Racing_Gossip(info, value)
 	if value == nil then	--get
-		return db.profile.gossip[ BC["I'm ready to work for you today!  Give me that ram!"] ]
+		return db.profile.gossip[ GT["I'm ready to work for you today!  Give me that ram!"] ]
 	else
-		db.profile.gossip[ BC["Do you still need some help moving kegs from the crash site near Razor Hill?"] ] = value	--Horde
-		db.profile.gossip[ BC["I'm ready to work for you today!  Give me that ram!"] ] = value	--Horde
-		db.profile.gossip[ BC["Do you still need some help shipping kegs from Kharanos?"] ] = value	--Alliance
-		db.profile.gossip[ BC["I'm ready to work for you today!  Give me the good stuff!"] ] = value
+		db.profile.gossip[ GT["Do you still need some help moving kegs from the crash site near Razor Hill?"] ] = value	--Horde
+		db.profile.gossip[ GT["I'm ready to work for you today!  Give me that ram!"] ] = value	--Horde
+		db.profile.gossip[ GT["Do you still need some help shipping kegs from Kharanos?"] ] = value	--Alliance
+		db.profile.gossip[ GT["I'm ready to work for you today!  Give me the good stuff!"] ] = value
 		
 	end	
 end

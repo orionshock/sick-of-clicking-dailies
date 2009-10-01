@@ -68,10 +68,6 @@ local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "enUS", true, debug)
 
 --@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, namespace="BC", table-name="BC")@
 
----
-	local BC_R = LibStub("AceLocale-3.0"):GetLocale("SOCD_BC")
-	BC["I'm ready to work for you today! Give me that ram!"] = genderMale and BC_R["I'm ready to work for you today! Give me that ram!(M)"] or BC_R["I'm ready to work for you today! Give me that ram!(F)"]
-
 	end
 
 ----------------------------------------------------------------------------
@@ -84,10 +80,32 @@ local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "enUS", true, debug)
 
 --@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, namespace="Wrath", table-name="LK")@
 
----
-	local LK_R = LibStub("AceLocale-3.0"):GetLocale("SOCD_LK")
-	LK["I'm ready to begin. What is the first ingredient you require?"] = genderMale and LK_R["I'm ready to begin. What is the first ingredient you require?(M)"] or LK_R["I'm ready to begin. What is the first ingredient you require?(F)"]
----
+	end
+
+----------------------------------------------------------------------------
+--	Gossip Texts, Populated by WoWAce-Curseforge Packager.			  --
+----------------------------------------------------------------------------
+
+local GT = LibStub("AceLocale-3.0"):NewLocale("SOCD_GossipText", "enUS", true, debug)
+	if GT then
+
+--@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, namespace="GossipTexts", table-name="GT")@
+
+
+		local GT_R = LibStub("AceLocale-3.0"):GetLocale("SOCD_GossipText")
+		if genderMale then	--Masculine Context
+
+GT["I'm ready to work for you today!  Give me the good stuff!"] = GT_R["I'm ready to work for you today!  Give me the good stuff!(M)"]
+GT["I'm ready to work for you today! Give me that ram!"] = GT_R["I'm ready to work for you today! Give me that ram!(M)"]
+GT["I'm ready to begin. What is the first ingredient you require?"] = GT_R["I'm ready to begin. What is the first ingredient you require?(M)"]
+
+		else			--Feminine Context
+
+GT["I'm ready to work for you today!  Give me the good stuff!"] = GT_R["I'm ready to work for you today!  Give me the good stuff!(F)"]
+GT["I'm ready to work for you today! Give me that ram!"] = GT_R["I'm ready to work for you today! Give me that ram!(F)"]
+GT["I'm ready to begin. What is the first ingredient you require?"] = GT_R["I'm ready to begin. What is the first ingredient you require?(F)"]
+
+		end
 	end
 
 ---Localization Counter-- Bump to generate new zip for locale changes = 10
