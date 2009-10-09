@@ -26,13 +26,13 @@ module.defaults = {
 				--This section has to be manually set with the localized quest name and a default option of off
 				--not very many of these quests so it won't matter :D
 			--Cooking
-			[ LQ["Super Hot Stew"] ] = 5,
-			[ LQ["Soup for the Soul"] ] = 5,
-			[ LQ["Revenge is Tasty"] ] = 5,
-			[ LQ["Manalicious"] ] = 5,
+			[ LQ["Super Hot Stew"] ] = -1,
+			[ LQ["Soup for the Soul"] ] = -1,
+			[ LQ["Revenge is Tasty"] ] = -1,
+			[ LQ["Manalicious"] ] = -1,
 			--SSO-Misc
-			[ LQ["Blood for Blood"] ] = 5,
-			[ LQ["Ata'mal Armaments"] ] = 5,
+			[ LQ["Blood for Blood"] ] = -1,
+			[ LQ["Ata'mal Armaments"] ] = -1,
 		},
 		gossip = {
 			[ GT["Do you still need some help moving kegs from the crash site near Razor Hill?"] ] = true,
@@ -43,9 +43,9 @@ module.defaults = {
 	},
 }
 do
-	local profile = module.defaults.profile
+	local profile = module.defaults.profile.quests
 	for k,v in pairs(LQ) do
-		profile.quests[v] = true
+		profile[v] = true
 	end
 	profile[LQ["A Charitable Donation"]] = false
 	profile[LQ["Your Continued Support"]] = false
@@ -291,12 +291,12 @@ function module:GenerateSSOOptions()
 			b4bQo = {
 				name = LQ["Blood for Blood"], type = "select", order = 10, 
 				values = { (GetItemInfo(30809)) or "Aldor Mark", (GetItemInfo(30810)) or "Scryer Mark", nil, nil, L["None"] },
-				get = "GetQuestOption", set = "SetQuestOption",
+				get = "GetQuestOption", set = "SetQuestOption", width = "double",
 			},
 			aaQo = {
 				name = LQ["Ata'mal Armaments"], type = "select", order = 11,
-				values = { (GetItemInfo(34538)) or "Melee Oil" , (GetItemInfo(34539)) or "Caster Oil", nil, nil, L["None"] },
-				get = "GetQuestOption", set = "SetQuestOption",
+				values = { [-1] = L["None"], (GetItemInfo(34538)) or "Melee Oil" , (GetItemInfo(34539)) or "Caster Oil" },
+				get = "GetQuestOption", set = "SetQuestOption", width = "double",
 			},
 		},
 	}
@@ -319,8 +319,8 @@ function module:GetProfessionQuests()
 						values = { LQ["Super Hot Stew"], LQ["Soup for the Soul"], LQ["Revenge is Tasty"], LQ["Manalicious"] },
 					},
 					qRewards = { name = L["Quest Rewards"], type = "select", 
-						values = { (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate Of Meat", nil, nil,  L["None"]},
-						get = "FishingGet", set = "FishingSet", 
+						values = { [-1] =  L["None"], (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate Of Meat"},
+						get = "FishingGet", set = "FishingSet", width = "double",
 					},
 				},
 			},	--End of Cooking

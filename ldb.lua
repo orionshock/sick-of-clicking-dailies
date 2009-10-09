@@ -156,54 +156,45 @@ function module:GetOptionsTable(rootTable)
 	return nil
 end
 
+do
+	local diff_to_next_wg_reset = {
+		[1] = 2,		--sunday
+		[2] = 1,		--monday
+		[3] = 4,		--tuesday*
+		[4] = 3,		--wed	
+		[5] = 2,		--thur
+		[6] = 1,		--fri
+		[7] = 3,		--sat	*
+	}
 
-local diff_To_Tuesday = {
-	[1] = 2,		--sunday
-	[2] = 1,		--monday
-	[3] = 4,		--tuesday*
-	[4] = 3,		--wed	
-	[5] = 2,		--thur
-	[6] = 1,		--fri
-	[7] = 3,		--sat	*
-}
+	local diff = {}
+	function module:GetNextWGReset()
 
-local diff = {}
-function module:GetNextWGReset()
+		local cur_day, cur_month, cur_year = tonumber(date("%d")), tonumber(date("%m")), tonumber(date("%Y"))
+		local cur_wDay = tonumber(date("%w")) + 1
+		for k, _ in pairs(diff) do diff[k] = nil end
 
-	local cur_day, cur_month, cur_year = tonumber(date("%d")), tonumber(date("%m")), tonumber(date("%Y"))
-	local cur_wDay = tonumber(date("%w")) + 1
-	for k, _ in pairs(diff) do diff[k] = nil end
---	{
---		day = 23,
---		hour = 20,
---		isdst = false,
---		min = 16,
---		month = 8,
---		sec = 25,
---		wday = 1,
---		yday = 235,
---		year = 2009
---	}
-	local monthNumDay = select(3, CalendarGetMonth(0))
-	local newDay = cur_day + diff_To_Tuesday[cur_wDay]
-	if newDay > monthNumDay then
-		newDay = newDay - monthNumDay
-		diff.day = newDay
-		if cur_month +1 > 12 then
-			diff.month = 1
-			diff.year = cur_year + 1
+		local monthNumDay = select(3, CalendarGetMonth(0))
+		local newDay = cur_day + diff_to_next_wg_reset[cur_wDay]
+		if newDay > monthNumDay then
+			newDay = newDay - monthNumDay
+			diff.day = newDay
+			if cur_month +1 > 12 then
+				diff.month = 1
+				diff.year = cur_year + 1
+			else
+				diff.month = cur_month +1
+				diff.year = cur_year
+			end
 		else
-			diff.month = cur_month +1
+			diff.day = newDay
 			diff.year = cur_year
-		end
-	else
-		diff.day = newDay
-		diff.year = cur_year
-		diff.month = cur_month
+			diff.month = cur_month
 		
+		end
+		diff.hour = date("%H", time() + GetQuestResetTime())
+		diff.min = date("%M", time() + GetQuestResetTime())
+		D("Found next tuesday on:", date("%c", time(diff) ) )
+		return time(diff)
 	end
-	diff.hour = date("%H", time() + GetQuestResetTime())
-	diff.min = date("%M", time() + GetQuestResetTime())
-	D("Found next tuesday on:", date("%c", time(diff) ) )
-	return time(diff)
 end

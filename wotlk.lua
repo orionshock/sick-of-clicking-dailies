@@ -38,15 +38,15 @@ module.defaults = {
 			--This section has to be manually set with the localized quest name and a default option of off
 			--not very many of these quests so it won't matter :D
 			--Instance non-Heroic
-			[LQ["Timear Foresees Centrifuge Constructs in your Future!"]] = 5,
-			[LQ["Timear Foresees Infinite Agents in your Future!"]] = 5,
-			[LQ["Timear Foresees Titanium Vanguards in your Future!"]] = 5,
-			[LQ["Timear Foresees Ymirjar Berserkers in your Future!"]] = 5,
+			[LQ["Timear Foresees Centrifuge Constructs in your Future!"]] = -1,
+			[LQ["Timear Foresees Infinite Agents in your Future!"]] = -1,
+			[LQ["Timear Foresees Titanium Vanguards in your Future!"]] = -1,
+			[LQ["Timear Foresees Ymirjar Berserkers in your Future!"]] = -1,
 			--Argent Tournament
-			[LQ["Among the Champions"]] = 5,
-			[LQ["Battle Before The Citadel"]] = 5,
-			[LQ["Taking Battle To The Enemy"]] = 5,
-			[LQ["Threat From Above"]] = 5,
+			[LQ["Among the Champions"]] = -1,
+			[LQ["Battle Before The Citadel"]] = -1,
+			[LQ["Taking Battle To The Enemy"]] = -1,
+			[LQ["Threat From Above"]] = -1,
 
 		},
 		quests = {},
@@ -65,9 +65,9 @@ do
 	for k,v in pairs(LQ) do
 		profile[v] = true
 	end
-	profile[ LQ["Hand of the Oracles"] ] = false		--Disabled on good authority by
-	profile[ LQ["Frenzyheart Champion"] ] = false		-- "Fisker-" in IRC
-	profile[ LQ["Contributin' To The Cause"] ] = false
+	profile[ LQ["Hand of the Oracles"] ] = false		--Disabled by request of "Fisker-" in IRC
+	profile[ LQ["Frenzyheart Champion"] ] = false		--These 2 quests switch faction
+	profile[ LQ["Contributin' To The Cause"] ] = false	--AC gold for rep quest
 end
 
 
@@ -103,6 +103,9 @@ function module:OnEnable()
 
 	SetItemRef("item:44710", "item:44710")	--wyrmrest
 	SetItemRef("item:44710", "item:44710")
+
+	SetItemRef("item:45724", "item:49702")	--Sons of Hodir
+	SetItemRef("item:45724", "item:49702")
 
 	SetItemRef("item:46114", "item:46114")	--Champion's Writ
 	SetItemRef("item:46114", "item:46114")
@@ -495,7 +498,7 @@ function module:WorldQuests()
 										values = { LQ["Battle Before The Citadel"], LQ["Threat From Above"], LQ["Among the Champions"], LQ["Taking Battle To The Enemy"], LQ["Contributin' To The Cause"] },
 									},
 									campOpt = { type = "select", name = L["Champion Quest Rewards"], order = 35, get = "ACTGet", set = "ACTSet",
-										values = { (GetItemInfo(46114)), (GetItemInfo(45724)), nil, nil, L["None"]},
+										values = { [-1] = L["None"], (GetItemInfo(46114)), (GetItemInfo(45724)),},
 									},
 								},
 							},
@@ -613,9 +616,9 @@ function module:InstanceQuests()
 			[LQ["Timear Foresees Ymirjar Berserkers in your Future!"] ] = norInstScrub(LQ["Timear Foresees Ymirjar Berserkers in your Future!"]),
 						}
 					},
-					option = { name = L["Faction Token"], type = "select", order = 2, get = "FactionTokenGet", set = "FactionTokenSet",
-						values = { (GetItemInfo(43950)) or "Kirin Tor", (GetItemInfo(44711)) or "Argent Crusade",
-								(GetItemInfo(44713)) or "Ebon Blade", (GetItemInfo(44710)) or "Wyrmrest", L["None"]},
+					option = { name = L["Faction Token"], type = "select", order = 2, get = "FactionTokenGet", set = "FactionTokenSet", width = "double",
+						values = { [-1] = L["None"],  (GetItemInfo(43950)) or "Kirin Tor", (GetItemInfo(44711)) or "Argent Crusade",
+								(GetItemInfo(44713)) or "Ebon Blade", (GetItemInfo(44710)) or "Wyrmrest", (GetItemInfo(49702)) or "Sons of Hodir" },
 					}
 				},
 			},
