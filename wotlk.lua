@@ -104,8 +104,8 @@ function module:OnEnable()
 	SetItemRef("item:44710", "item:44710")	--wyrmrest
 	SetItemRef("item:44710", "item:44710")
 
-	SetItemRef("item:45724", "item:49702")	--Sons of Hodir
-	SetItemRef("item:45724", "item:49702")
+	SetItemRef("item:49702", "item:49702")	--Sons of Hodir
+	SetItemRef("item:49702", "item:49702")
 
 	SetItemRef("item:46114", "item:46114")	--Champion's Writ
 	SetItemRef("item:46114", "item:46114")
