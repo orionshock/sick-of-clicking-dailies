@@ -377,21 +377,18 @@ do
 		local quest = self:TitleCheck(event)
 		if npc and quest then
 			local opt = qOptions(quest)
-			if (opt and (opt == 5)) then
+			if (opt and (opt == -1)) then
 				stopFlag = true
-				--s_title, s_npc = quest, npc
 				D(event, "Has Option and time to stop", quest, opt)
 				return
-			elseif opt and (opt >= 1 and opt <= 4 ) then
+			elseif opt then
 				stopFlag = false
-				D(event, "Getting Money!", opt)
+				D(event, "Getting Reward!", opt)
 				GetQuestReward( opt )
-				--self:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", quest, npc, opt)
 				return
 			end
 			D(event, "Getting Money!")
 			GetQuestReward(0)
-			--self:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", quest, npc)
 			return
 	    end
 	end
@@ -470,9 +467,9 @@ function addon:QuestItteratePickUp(te, ...)
 end
 --[[
 	logic:
-		function is fed the varg arg with everything from GetGossipActiveQuests() looks like this.
-		"Troll Patrol: The Alchemist's Apprentice", 76, nil,
-		format: "QuestTitle", "QuestLvl", "Trivaial" =  GetGossipActiveQuests()
+		function is fed the varg arg with the titles from GetGossipActiveQuests() looks like this.
+--		"Troll Patrol: The Alchemist's Apprentice", 76, nil,
+--		format: "QuestTitle", "QuestLvl", "Trivaial" =  GetGossipActiveQuests()
 ]]--
 
 function addon:QuestItterateTurnIn(te, ...)
