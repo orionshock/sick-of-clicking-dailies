@@ -11,26 +11,18 @@ Good Luck!
 
 local SOCD = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
 local module = SOCD:NewModule("QuestScanner", "AceEvent-3.0")
+local dbo
 
 local tempQuestTable = {}
 function module:OnEnable()
 	self.tempQuestTable = tempQuestTable
 	self:RegisterEvent("QUEST_DETAIL")
 
+	SOCD.db.global.Scanner = SOCD.db.global.Scanner or {}
+	dbo = SOCD.db.global.Scanner
 end
 
-function D(arg, ...)
-	local str
-	if string.find(tostring(arg), "%%") then
-		str = arg:format(...)
-	else
-		str = string.join(", ", tostringall(arg, ...) )
-		str = str:gsub(":,", ":"):gsub("=,", "=")
-	end
-
-	print("|cff9933FFSOCD:|r "..str)
-	return str
-end
+local D = SOCD.D
 
 local qTable = {
 	[4970] = "Frostsaber Provisions", --C
@@ -313,59 +305,61 @@ local qTable = {
 module.qTable = qTable
 
 local tt = CreateFrame("GameTooltip", "QuestScanTT", UIParent, "GameTooltipTemplate")
+local ttlt = QuestScanTTTextLeft1
+local ttScanFrame = CreateFrame("frame")
+ttScanFrame:Hide()
+do
+	tt:SetScript("OnTooltipSetQuest", function(self, ...)
+		if (not self.questId) or (not self.englishQuestTitle) then
+			print("|cff9933FFSOCD:|r Invalid Setup for SOCD Quest Scanning")
+			ttScanFrame:Hide()
+		end
+		dbo[self.englishQuestTitle] = ttlt:GetText()
+		D("Set: '"..self.englishQuestTitle.."' --> '"..dbo[self.englishQuestTitle].."'" )
+		local id, eName = next(qTable, self.questId)
+		if not id or not eName then
+			print("no id or eName Next")
+			print("|cff9933FFSOCD:|r Reached end of Quest table, You can now export the data")
+			ttScanFrame:Hide()
+			return
+		end
+--		print("    Next:", id, eName)
+		self.questId = id
+		self.englishQuestTitle = eName
+	end)
 
-
-function module:CheckTTScan()
-	local i = 0
-	for k, v in pairs(qTable) do
-		tt:SetOwner(UIParent, "ANCHOR_NONE")
-		tt:SetHyperlink("quest:"..k)
-		tt:Show()
-		D("QuestName:", QuestScanTTTextLeft1:GetText() )
-		i = i +1
-	end
-	D("Number Scanned:", i)	
+	local interval, delay = 1, 0
+	ttScanFrame:SetScript("OnUpdate", function(self, elapsed)
+		delay = delay + elapsed
+		if delay > interval then
+			tt:SetHyperlink("quest:"..tt.questId)
+			delay = 0
+		end
+	end)
 end
-
-function module:ScanTTALL()
-	for k, v in pairs(qTable) do
-		tt:SetOwner(UIParent, "ANCHOR_NONE")
-		tt:SetHyperlink("quest:"..k)
-		tt:Show()
-	end
+function module:StartTTScan(info)
+	print("|cff9933FFSOCD:|r Starting Localized Tooltip Scan")
+	local id, eName = next(qTable)
+--	print(id, eName)
+	tt.questId = id
+	tt.englishQuestTitle = eName
+	ttScanFrame:Show()
+	return tt:SetHyperlink( ("quest:%d"):format(id) )
 end
-
-function module:ScanTooltips()
-	self:ScanTTALL()
-	self:CheckTTScan()
-end
-
-
-function module:CommitLocalizedNames()
-	SOCD.db.profile.Scanner = {}
-	local dbo = SOCD.db.profile.Scanner
-	local i = 0
-	for k, v in pairs(qTable) do
-		tt:SetOwner(UIParent, "ANCHOR_NONE")
-		tt:SetHyperlink("quest:"..k)
-		tt:Show()
-
-		dbo[v] = QuestScanTTTextLeft1:GetText()
-		i = i + 1
-	end
-	D("Localized Names Commited to SV. Count = ", i)
+function module:StopTTScan(info)
+	print("|cff9933FFSOCD:|r Stopping Tooltip Scanning?")
+	ttScanFrame:Hide()
 end
 
 local locale_format = [[L["%s"] = "%s"]]
 local t = {}
 function module:Export(info)
+	D("Starting Quest Title Export")
 	t = wipe(t)
 	local i = 0
-	for k, v in pairs(qTable) do
-		tt:SetOwner(UIParent, "ANCHOR_NONE")
-		tt:SetHyperlink("quest:"..k)
-		tt:Show()
-		tinsert(t, locale_format:format(v, QuestScanTTTextLeft1:GetText()) )
+	for eName, lName in pairs(dbo) do
+		tinsert(t, locale_format:format(eName, lName ) )	
+		D(#t, "    ", t[#t])
 		i = i + 1
 	end
 	D("Number of Quests Exported =", i)
@@ -379,11 +373,12 @@ function module:GetOptionsTable()
 	local t = {
 		name = "Quest Name Scanner", type = "group", handler = module, order = -100,
 			args = {
-				cache = { type = "execute", name = "Cache Tooltips for Scanning", func = "ScanTTALL", order = 1, width = "full", },
-				check = { type = "execute", name = "Check Tooltip Cache", desc = "This will print out the quest names to chat frame to make sure you have everything", 
-					func = "CheckTTScan", order = 10, width = "full", },
+				startcache = { type = "execute", name = "Start Tooltip Scanning", func = "StartTTScan", order = 1, width = "full", },
+				stopcache = { type = "execute", name = "Stop Tooltip Scanning", func = "StopTTScan", order = 1, width = "full", },
+--				check = { type = "execute", name = "Check Tooltip Cache", desc = "This will print out the quest names to chat frame to make sure you have everything", 
+--					func = "CheckTTScan", order = 10, width = "full", },
 				export = { type = "execute", name = "Export to Copy paste Frame", func = "Export", order = 20, width = "full",},
-				commit = { type = "execute", name = "Commit Locale to SV", desc = "Commit names to SV file instead of exporting them", func = "CommitLocalizedNames", width = "full", order = 30 },
+--				commit = { type = "execute", name = "Commit Locale to SV", desc = "Commit names to SV file instead of exporting them", func = "CommitLocalizedNames", width = "full", order = 30 },
 				liveScan = { type = "group", name = "Live Scan", order = 40, inline = true,
 					args = {
 						box = { name = "Live Scan Export", type = "input", multiline = 10, get = "GetLiveScanText", width = "full" }
