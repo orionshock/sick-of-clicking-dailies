@@ -423,25 +423,19 @@ function module:Multi_Set(info, value, state)
 end
 
 function module:GossipMulitGet(info, value, state)
-	print("Gossip Get", info, value, state)
 	if type(value) == "number" then
-		print("return", db.profile.gossip[info.option.values[value] ] )
 		return db.profile.gossip[info.option.values[value] ]
 	else
-		print("return", db.profile.gossip[value])
 		return db.profile.gossip[value]
 	end
 
 end
 
 function module:GossipMulitSet(info, value, state)
-	print("Gossip Set", info, value, state)
 	if type(value) == "number" then
 		db.profile.gossip[info.option.values[value] ] = state
-		print("Set", db.profile.gossip[info.option.values[value] ] )
 	else
 		db.profile.gossip[value] = state
-		print("Set", db.profile.gossip[value] )
 	end
 
 end
