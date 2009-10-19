@@ -183,12 +183,12 @@ function module:GetWorldQuests()
 					},
 					hallowsEnd = { name = L["Hallow's End"], type = "group",
 						args = {
-							gen = { type = "multiselect", name = L["Hallow's End"], width = "full",
+							gen = { type = "multiselect", name = L["Hallow's End"], width = "full", order = 1,
 								values = { L["Candy Bucket"] },
 							},
-							gossip = { type = "multiselect", width = "full", name = GOSSIP_OPTIONS,
+							gossip = { type = "multiselect", width = "full", name = GOSSIP_OPTIONS, order = 2,
 								get = "GossipMulitGet" , set = "GossipMulitSet",
-								values = { [ GT["Trick or Treat!"] ]= L["Inkeeper Trick or treating"], },
+								values = { [ GT["Trick or Treat!"] ]= L["Innkeeper Trick or treating"], },
 
 							},
 						},
