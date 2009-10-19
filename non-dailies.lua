@@ -51,7 +51,7 @@ end
 
 function module:OnEnable()
 	D("OnEnable")
-	AddonParent:RegisterQuests("RRQ", db.profile, db.profile.npcList, db.profile.qOptions, db.profile.gossip )
+	AddonParent:RegisterQuests("RRQ", db.profile, db.profile.qOptions, db.profile.gossip )
 	self.frame:RegisterEvent("QUEST_DETAIL")
 	self.frame:RegisterEvent("QUEST_COMPLETE")
 	self.frame:RegisterEvent("QUEST_FINISHED")
