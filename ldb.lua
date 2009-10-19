@@ -156,7 +156,17 @@ function module:GetOptionsTable(rootTable)
 	return nil
 end
 
+---------------------------------------------
+-- Reset Functions
+---------------------------------------------
 do
+	function module:Exclude()
+		return nil
+	end
+end
+
+
+do		-- === Wintergrasp Reset Function ===
 	local diff_to_next_wg_reset = {
 		[1] = 2,		--sunday
 		[2] = 1,		--monday
@@ -198,3 +208,5 @@ do
 		return time(diff)
 	end
 end
+
+

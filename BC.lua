@@ -49,6 +49,13 @@ do
 	end
 	profile[LQ["A Charitable Donation"]] = false
 	profile[LQ["Your Continued Support"]] = false
+	
+	local module_specialQuests = {
+		[ L["Candy Bucket"] ] = "Exclude",
+	}
+	for k,v in pairs(module_specialQuests) do
+		AddonParent.specialResetQuests[k] = v
+	end
 end
 
 function module:OnInitialize()

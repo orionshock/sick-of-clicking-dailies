@@ -48,6 +48,12 @@ do
 	for k,v in pairs(LQ) do
 		profile[v] = true
 	end
+--	local module_specialQuests = {
+
+--	}
+--	for k,v in pairs(module_specialQuests) do
+--		AddonParent.specialResetQuests[k] = v
+--	end
 end
 
 

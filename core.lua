@@ -23,7 +23,7 @@ SickOfClickingDailies = LibStub("AceAddon-3.0"):NewAddon("SickOfClickingDailies"
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 local addon = SickOfClickingDailies
 addon.Version = projectVersion..projectRevision
-
+addon.specialResetQuests = {}
 --
 --	Debug Func()
 --

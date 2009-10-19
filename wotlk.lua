@@ -68,6 +68,26 @@ do
 	profile[ LQ["Hand of the Oracles"] ] = false		--Disabled by request of "Fisker-" in IRC
 	profile[ LQ["Frenzyheart Champion"] ] = false		--These 2 quests switch faction
 	profile[ LQ["Contributin' To The Cause"] ] = false	--AC gold for rep quest
+
+	local module_specialQuests = {
+		[ LQ["A Rare Herb"] ] = "GetNextWGReset",
+		[ LQ["Bones and Arrows"] ] = "GetNextWGReset",
+		[ LQ["Defend the Siege"] ] = "GetNextWGReset",
+		[ LQ["Fueling the Demolishers"] ] = "GetNextWGReset",
+		[ LQ["Healing with Roses"] ] = "GetNextWGReset",
+		[ LQ["Jinxing the Walls"] ] = "GetNextWGReset",
+		[ LQ["No Mercy for the Merciless"] ] = "GetNextWGReset",
+		[ LQ["Slay them all!"] ] = "GetNextWGReset",
+		[ LQ["Stop the Siege"] ] = "GetNextWGReset",
+		[ LQ["Victory in Wintergrasp"] ] = "GetNextWGReset",
+		[ LQ["Warding the Walls"] ] = "GetNextWGReset",
+		[ LQ["Warding the Warriors"] ] = "GetNextWGReset",
+		[ LQ["Southern Sabotage"] ] = "GetNextWGReset",
+		[ LQ["Toppling the Towers"] ] = "GetNextWGReset",
+	}
+	for k,v in pairs(module_specialQuests) do
+		AddonParent.specialResetQuests[k] = v
+	end
 end
 
 
@@ -425,7 +445,7 @@ function module:PlayerVsPlayerQuests()
 						values = { LQ["A Rare Herb"], LQ["Bones and Arrows"], LQ["Defend the Siege"], LQ["Fueling the Demolishers"], LQ["Healing with Roses"],
 					LQ["Jinxing the Walls"], LQ["No Mercy for the Merciless"], LQ["Slay them all!"], LQ["Stop the Siege"], LQ["Victory in Wintergrasp"],
 					LQ["Warding the Walls"], LQ["Warding the Warriors"], LQ["Southern Sabotage"], LQ["Toppling the Towers"],
-				},
+						},
 					},
 				},
 			},
@@ -469,14 +489,6 @@ function module:PlayerVsPlayerQuests()
 	local t = loadstring(str)()(L, LQ, self)
 	return t
 end
-do
-	local specialResetQuests = AddonParent.specialResetQuests or {}
-	for k,v in ipairs(module:PlayerVsPlayerQuests().args.wg.args.wgSub.values) do
-		specialResetQuests[v] = "GetNextWGReset"
-	end
-	AddonParent.specialResetQuests = specialResetQuests
-end
-	
 
 local jc_sub_Text = L["Shipment: "]
 local function jcScrub(text)
