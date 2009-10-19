@@ -297,8 +297,10 @@ local qTable = {
 	[11293] = "Bark for the Barleybrews!",
 	[11294] = "Bark for the Thunderbrews!",
 	[12062] = "Insult Coren Direbrew",
-	[12192] = "This One Time, When I Was Drunk..."
-				
+	[12192] = "This One Time, When I Was Drunk...",
+
+--Hallow's End
+	[12404] = "Candy Bucket",
 
 }	--End of name Scanner Master Table
 

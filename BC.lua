@@ -151,6 +151,9 @@ module.npcList = table.concat({
 	23558,	--Neill Ramstein
 	24497,	--Ram Master Ray
 
+	-- Hallow's End
+	L["Candy Bucket"],	--Object Name
+
 	}, ":")
 
 function module:GetOptionsTable()
@@ -231,7 +234,14 @@ function module:GetWorldQuests()
 								desc = L["Gossip selections for the <Ram Racing Master> to allow you to repeat 'There and Back Again' every 12 or 18 hrs"]
 							},
 						},						
-					},					
+					},
+					hallowsEnd = { name = L["Hallow's End"], type = "group",
+						args = {
+							gen = { type = "multiselect", name = L["Hallow's End"], width = "full",
+								values = { L["Candy Bucket"] },
+							},
+						},
+					},
 				},
 			},
 		},
