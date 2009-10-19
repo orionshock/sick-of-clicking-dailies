@@ -78,13 +78,6 @@ function module:OnDisable()
 	AddonParent:UnRegisterQuests("Classic")
 end
 
-module.npcList = table.concat({
-	"10618",	--Rivern Frostwind
-	"15351",	--Alliance Brigadier General
-	"15350",	--Horde Warbringer
-	}, ":")
-
-
 function module:GetOptionsTable()
 	local options = {
 		name = L["Classic"],

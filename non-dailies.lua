@@ -37,7 +37,7 @@ module.defaults = {
 			--not very many of these quests so it won't matter :D
 		},
 		gossip = {},
-		npcList = "",
+--		npcList = "",
 	},
 }
 

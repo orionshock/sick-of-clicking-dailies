@@ -95,67 +95,6 @@ function module:OnDisable()
 	AddonParent:UnRegisterQuests("BC")
 end
 
-module.npcList = table.concat({
-	--SkyGuard
-	23048,		--Sky Sergeant Doryn
-	23383,		--Skyguard Prisoner
-	23335,		--Skyguard Khatie
-	23120,		--Sky Sergeant Vanderlip
-	--Ogrila
-	23253,		--Kronk
-	23233,		--Chu'a'lor
-	--Netherwing
-	23140,		--Taskmaster Varkule Dragonbreath
-	23141,		--Yarzill the Merc
-	23149,		--Mistress of the Mines
-	23376,		--Dragonmaw Foreman
-	23291,		--Chief Overseer Mudlump
-	23434,		--Commander Hobb
-	23452,		--Commander Arcus
-	23139,		--Overlord Mor'ghor
-	--SSO
-	25112,		--Anchorite Ayuri
-	24967,		--Captain Theris Dawnhearth
-	25046,		--Smith Hauthaa
-	24937,		--Magistrix Seyla
-	25069,		--Magister Ilastar
-	24975,		--Mar'nah
-	25088,		--Captain Valindria
-	25057,		--Battlemage Arynna
-	24965,		--Vindicator Xayann
-	19202,		--Emissary Mordin
-	25108,		--Vindicator Kaalan
-	24932,		--Exarch Nasuun
-	25133,		--Astromancer Darnarian
-	25140,		--Lord Torvos
-	25061,		--Harbinger Inuuro
-	19475,		--Harbinger Haronem
-	25112,		--Anchorite Ayuri
-	--Professions
-	24393,		--The Rokk
-	25580,		--Old Man Barlo
-	--Instance
-	24369,		--Wind Trader Zhareem
-	24370,		--Nether-Stalker Mah'duun
-
-	--Brewfest
-	24499,	--Ja'ron
-	24498,	--Cort Gorestein
-	23627,	--Becan Barleybrew
-	23628,	--Daran Thunderbrew
-	26719,	--Brewfest Spy
-	23872,	--Coren Direbrew
-	27215,	--Boxey Boltspinner
-	27216,	--Bizzle Quicklift
-	L["Dark Iron Mole Machine Wreckage"],	--An object based Daily Quest
-	23558,	--Neill Ramstein
-	24497,	--Ram Master Ray
-
-	-- Hallow's End
-	L["Candy Bucket"],	--Object Name
-
-	}, ":")
-
 function module:GetOptionsTable()
 	local cooking_values = { (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate Of Meat", L["None"]}
 	local options = {
