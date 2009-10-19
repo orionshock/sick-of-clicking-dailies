@@ -87,13 +87,13 @@ local function gossipOption(opt)
 	end
 end
 
-function addon:RegisterQuests(name, questTable, npcID, options, gossip)
+function addon:RegisterQuests(name, questTable, options, gossip)
 	--Quest Groupings
 	assert(type(questTable) == "table")
 	moduleQLookup[name] = questTable
 	--Quest NPC ID's
-	assert(type(npcID) == "string")
-	questNPCs[name] = npcID
+--	assert(type(npcID) == "string")
+--	questNPCs[name] = npcID
 	--Quest Options
 	assert(type(options) == "table")
 	moduleQOptions[name] = options
@@ -259,11 +259,11 @@ local stopFlag, s_title, s_npc = false	--Event Dispatching stuff..
 function addon:GOSSIP_SHOW(event)
 	D(event)
 	local stopFlag, s_title, s_npc = false, nil, nil
-	local npc = self:CheckNPC(event)
-	if not npc then
-		D(event, "no known npc")
-		return
-	end
+--	local npc = self:CheckNPC(event)
+--	if not npc then
+--		D(event, "no known npc")
+--		return
+--	end
 	if (IsShiftKeyDown()) then return end
 	local sel, quest, status = self:OpeningCheckQuest(event)
 	D(event, "logic batterie sel:", sel, "quest:", quest, "status:", status)
@@ -305,11 +305,11 @@ end
 
 function addon:QUEST_GREETING(event, ...)
 	local stopFlag, s_title, s_npc = false, nil, nil
-	local npc = self:CheckNPC(event)
-	if not npc then
-		D(event, "no known npc")
-		return
-	end
+--	local npc = self:CheckNPC(event)
+--	if not npc then
+--		D(event, "no known npc")
+--		return
+--	end
 	if (IsShiftKeyDown()) then return end
 	local numActiveQuests = GetNumActiveQuests();
 	local numAvailableQuests = GetNumAvailableQuests();
@@ -335,10 +335,10 @@ end
 function addon:QUEST_DETAIL(event)
 	D(event)
 	if IsShiftKeyDown() then return end
-	local npc = self:CheckNPC(event)
+--	local npc = self:CheckNPC(event)
 	local quest = self:TitleCheck(event)
 	D(event, "found:", npc, quest)
-	if npc and quest then
+	if quest then	--	if npc and quest then
 		D(event,"Accepting Quest", quest, npc)
 		AcceptQuest()
 		return
@@ -349,10 +349,10 @@ end
 function addon:QUEST_PROGRESS(event)
 	D(event)
    	if IsShiftKeyDown() then return end
-	local npc = self:CheckNPC(event)
+--	local npc = self:CheckNPC(event)
 	local quest = self:TitleCheck(event)
 	D(event, "found:", npc, quest)
-	if npc and quest then
+	if quest then	--	if npc and quest then
 		if not IsQuestCompletable() then
 			D(event, "QuestNotCompleteable, set flag and DeclineQuest()")
 			nextQuestFlag = true
@@ -373,9 +373,9 @@ do
 		D(event, "nextQuestFlag to false")
 		nextQuestFlag = false
 		if IsShiftKeyDown() then return end
-		local npc = self:CheckNPC(event)
+--		local npc = self:CheckNPC(event)
 		local quest = self:TitleCheck(event)
-		if npc and quest then
+		if quest then	--	if npc and quest then
 			local opt = qOptions(quest)
 			if (opt and (opt == -1)) then
 				stopFlag = true
@@ -395,7 +395,7 @@ do
 
 	function SOCD_GetQuestRewardHook(opt)
 		local enabled, present =  qTable(GetTitleText())
-		local npcID = addon:CheckNPC("hook")
+--		local npcID = addon:CheckNPC("hook")
 		D("GetQuestRewardHook", enabled, present, npcID)
 		if present then
 			D("SOCD_DAILIY_QUEST_COMPLETE", present, npcID, opt, addon.QuestLogCache[present])
@@ -422,31 +422,31 @@ function addon:PLAYER_TARGET_CHANGED(event)
 	npcBad, nextQuestFlag, questIndex = false, false, 0
 end
 
-function addon:CheckNPC(te)
-	te = "CkNPC~"..te
-	local npcID = UnitGUID("target") and tonumber( strsub( UnitGUID("target"), -12, -7), 16)
-	if not npcID then
-		npcID = (GossipFrameNpcNameText:GetParent():IsVisible() and GossipFrameNpcNameText:GetText()) or (QuestFrameNpcNameText:GetParent():IsVisible() and QuestFrameNpcNameText:GetText())
-	end
-	if not npcID then
-		D(te, "no npc/object found")
-		return
-	end
-	local f = false
-	for i,v in pairs(questNPCs) do
-		if v:find(npcID) then
-			f = npcID
-		end
-	end
-	if not f then
-		D(te, "no npc/object found")
-		nextQuestFlag, questIndex = false, 0
-		return
-	else
-		D(te, "found npc", f)
-		return f
-	end
-end
+--function addon:CheckNPC(te)
+--	te = "CkNPC~"..te
+--	local npcID = UnitGUID("target") and tonumber( strsub( UnitGUID("target"), -12, -7), 16)
+--	if not npcID then
+--		npcID = (GossipFrameNpcNameText:GetParent():IsVisible() and GossipFrameNpcNameText:GetText()) or (QuestFrameNpcNameText:GetParent():IsVisible() and QuestFrameNpcNameText:GetText())
+--	end
+--	if not npcID then
+--		D(te, "no npc/object found")
+--		return
+--	end
+--	local f = false
+--	for i,v in pairs(questNPCs) do
+--		if v:find(npcID) then
+--			f = npcID
+--		end
+--	end
+--	if not f then
+--		D(te, "no npc/object found")
+--		nextQuestFlag, questIndex = false, 0
+--		return
+--	else
+--		D(te, "found npc", f)
+--		return f
+--	end
+--end
 
 local function scrubQuests(title, lvl, triv, ...)
 	if not (...) then return title end

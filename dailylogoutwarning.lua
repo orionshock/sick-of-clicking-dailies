@@ -44,6 +44,7 @@ end
 
 function module:RefreshConfig(event, db, newProf)
 	D(self:GetName(), event, newProf)
+
 	if db.profile.modules.DailyLogoutWarning then
 		self:Enable()
 	else

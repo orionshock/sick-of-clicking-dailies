@@ -55,16 +55,16 @@ function module:OnInitialize()
 	--D("OnInit")
 	db = AddonParent.db:RegisterNamespace("BC", module.defaults)
 	self.db = db
-	AddonParent.db.RegisterCallback(self, "OnProfileChanged", "RefreshConfig")
-	AddonParent.db.RegisterCallback(self, "OnProfileCopied", "RefreshConfig")
-	AddonParent.db.RegisterCallback(self, "OnProfileReset", "RefreshConfig")
+	db.RegisterCallback(self, "OnProfileChanged", "RefreshConfig")
+	db.RegisterCallback(self, "OnProfileCopied", "RefreshConfig")
+	db.RegisterCallback(self, "OnProfileReset", "RefreshConfig")
 end
 
 function module:RefreshConfig(event, db, newProfile)
 	D(self:GetName(), event, newProfile)
 	if self:IsEnabled() then
 		AddonParent:UnRegisterQuests("BC")
-		AddonParent:RegisterQuests("BC", self.db.profile.quests, self.npcList, self.db.profile.qOptions, self.db.profile.gossip)
+		AddonParent:RegisterQuests("BC", db.profile.quests, db.profile.qOptions, db.profile.gossip)
 	end
 end
 
@@ -87,7 +87,7 @@ function module:OnEnable()
 	SetItemRef("item:33857","item:33857")	--Crate Of Meat
 	SetItemRef("item:33857","item:33857")
 	
-	AddonParent:RegisterQuests("BC", self.db.profile.quests, self.npcList, self.db.profile.qOptions, self.db.profile.gossip)
+	AddonParent:RegisterQuests("BC", db.profile.quests, db.profile.qOptions, db.profile.gossip)
 end
 
 function module:OnDisable()
@@ -177,7 +177,7 @@ end
 
 function module:GetWorldQuests()
 	local str = [[
-	return function(L, LQ, module)
+	return function(L, LQ, module, GT)
 	local t = {
 		name = CHANNEL_CATEGORY_WORLD, type = "group", order = 1,
 		args = {
@@ -240,6 +240,11 @@ function module:GetWorldQuests()
 							gen = { type = "multiselect", name = L["Hallow's End"], width = "full",
 								values = { L["Candy Bucket"] },
 							},
+							gossip = { type = "multiselect", width = "full", name = GOSSIP_OPTIONS,
+								get = "GossipMulitGet" , set = "GossipMulitSet",
+								values = { [ GT["Trick or Treat!"] ]= L["Inkeeper Trick or treating"], },
+
+							},
 						},
 					},
 				},
@@ -248,7 +253,7 @@ function module:GetWorldQuests()
 	}		
 	return t
 	end ]]
-	local t = loadstring(str)()(L, LQ, self)
+	local t = loadstring(str)()(L, LQ, self, GT)
 	return t
 end
 
@@ -469,4 +474,28 @@ function module:Multi_Set(info, value, state)
 	else
 		db.profile.quests[value] = state
 	end
+end
+
+function module:GossipMulitGet(info, value, state)
+	print("Gossip Get", info, value, state)
+	if type(value) == "number" then
+		print("return", db.profile.gossip[info.option.values[value] ] )
+		return db.profile.gossip[info.option.values[value] ]
+	else
+		print("return", db.profile.gossip[value])
+		return db.profile.gossip[value]
+	end
+
+end
+
+function module:GossipMulitSet(info, value, state)
+	print("Gossip Set", info, value, state)
+	if type(value) == "number" then
+		db.profile.gossip[info.option.values[value] ] = state
+		print("Set", db.profile.gossip[info.option.values[value] ] )
+	else
+		db.profile.gossip[value] = state
+		print("Set", db.profile.gossip[value] )
+	end
+
 end

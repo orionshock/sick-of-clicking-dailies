@@ -75,23 +75,23 @@ function module:OnInitialize()
 	--D("OnInit")
 	db = AddonParent.db:RegisterNamespace("LK", module.defaults)
 	self.db = db
-	AddonParent.db.RegisterCallback(self, "OnProfileChanged", "RefreshConfig")
-	AddonParent.db.RegisterCallback(self, "OnProfileCopied", "RefreshConfig")
-	AddonParent.db.RegisterCallback(self, "OnProfileReset", "RefreshConfig")
+	db.RegisterCallback(self, "OnProfileChanged", "RefreshConfig")
+	db.RegisterCallback(self, "OnProfileCopied", "RefreshConfig")
+	db.RegisterCallback(self, "OnProfileReset", "RefreshConfig")
 end
 
 function module:RefreshConfig(event, db, newProfile)
 	D(self:GetName(), event, newProfile)
 	if self:IsEnabled() then
 		AddonParent:UnRegisterQuests("LK")
-		AddonParent:RegisterQuests("LK", self.db.profile.quests, self.npcList, self.db.profile.qOptions, self.db.profile.gossip)
+		AddonParent:RegisterQuests("LK", db.profile.quests, db.profile.qOptions, db.profile.gossip)
 	end
 end
 
 
 function module:OnEnable()
 	--D("OnEnable")
-	AddonParent:RegisterQuests("LK", db.profile.quests, self.npcList, db.profile.qOptions, db.profile.gossip)
+	AddonParent:RegisterQuests("LK", db.profile.quests, db.profile.qOptions, db.profile.gossip)
 	SetItemRef("item:43950", "item:43950")	--Kirin Tor Faction Token
 	SetItemRef("item:43950", "item:43950")
 

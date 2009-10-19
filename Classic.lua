@@ -32,15 +32,19 @@ local db, qTable = nil, AddonParent.qTable
 module.defaults = {
 	profile = {
 		--This Table will get auto gened by the next block from the locale data
+		quests = {
+		},
 		qOptions = {
 			--["*"] = 3,
 			--This section has to be manually set with the localized quest name and a default option of off
 			--not very many of these quests so it won't matter :D
 		},
+		gossip = {
+		},
 	},
 }
 do
-	local profile = module.defaults.profile
+	local profile = module.defaults.profile.quests
 	for k,v in pairs(LQ) do
 		profile[v] = true
 	end
@@ -51,22 +55,22 @@ function module:OnInitialize()
 	--D("OnInit")
 	db = AddonParent.db:RegisterNamespace("Classic", module.defaults)
 	self.db = db
-	AddonParent.db.RegisterCallback(self, "OnProfileChanged", "RefreshConfig")
-	AddonParent.db.RegisterCallback(self, "OnProfileCopied", "RefreshConfig")
-	AddonParent.db.RegisterCallback(self, "OnProfileReset", "RefreshConfig")
+	db.RegisterCallback(self, "OnProfileChanged", "RefreshConfig")
+	db.RegisterCallback(self, "OnProfileCopied", "RefreshConfig")
+	db.RegisterCallback(self, "OnProfileReset", "RefreshConfig")
 end
 
 function module:RefreshConfig(event, db, newProfile)
 	D(self:GetName(), event, newProfile)
 	if self:IsEnabled() then
 		AddonParent:UnRegisterQuests("Classic")
-		AddonParent:RegisterQuests("Classic", self.db.profile, self.npcList, self.db.profile.qOptions)
+		AddonParent:RegisterQuests("Classic", db.profile.quests, db.profile.qOptions, db.profile.gossip)
 	end
 end
 
 function module:OnEnable()
 	--D("OnEnable")
-	AddonParent:RegisterQuests("Classic", db.profile, self.npcList, db.profile.qOptions)
+	AddonParent:RegisterQuests("Classic", db.profile.quests, db.profile.qOptions, db.profile.gossip)
 end
 
 function module:OnDisable()
