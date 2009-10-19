@@ -48,12 +48,14 @@ do
 	for k,v in pairs(LQ) do
 		profile[v] = true
 	end
---	local module_specialQuests = {
-
---	}
---	for k,v in pairs(module_specialQuests) do
---		AddonParent.specialResetQuests[k] = v
---	end
+	local module_specialQuests = {
+		[ LQ["Frostsaber Provisions"] ] = "Exclude",
+		[ LQ["Winterfall Intrusion"]] = "Exclude",
+		[ LQ["Rampaging Giants"]] = "Exclude",
+	}
+	for k,v in pairs(module_specialQuests) do
+		AddonParent.specialResetQuests[k] = v
+	end
 end
 
 
