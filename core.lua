@@ -60,16 +60,20 @@ addon.D = D
 --
 
 local function qTable(k)
-	local f
-	for _, questTable in pairs(moduleQLookup) do
+	local f, m
+	for module, questTable in pairs(moduleQLookup) do
 		if questTable[k] then
-			return questTable[k], k
+--			print("found", k, "in", module, "As enabled")
+			return questTable[k], k, module
 		elseif questTable[k] ~= nil then
 			f = k
+			m = module
 		end
 	end
-	return nil, f
+--	print("found", k, "in", m, "As disbaled")
+	return nil, f, m
 end
+addon.IsQuestHandled = qTable
 
 local function qOptions(k)
 	for _,oTable in pairs(moduleQOptions) do
