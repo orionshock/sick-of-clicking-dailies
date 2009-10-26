@@ -3,6 +3,7 @@ local AddonParent = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
 local D = AddonParent.D
 
 local module = AddonParent:NewModule("LDB")
+module.noModuleControl = true
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
 local db, completedQuests, specialResetQuests
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
@@ -26,6 +27,7 @@ function module:RefreshConfig(event, f_db, profileName)
 	completedQuests = db.char.completedQuests
 	D(self:GetName(), event, profileName)
 end
+local ldbObj, SecondsToTime, GetQuestResetTime = nil, SecondsToTime, GetQuestResetTime
 
 function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, npc, opt, id)
 	D(event, quest, npc, opt, id)
@@ -38,8 +40,6 @@ function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, npc, opt, id)
 	module:SortQuestCompleTable()
 end
 
-
-local ldbObj, SecondsToTime, GetQuestResetTime = nil, SecondsToTime, GetQuestResetTime
 local prefix = QUEST_LOG_DAILY_TOOLTIP:match( "\n(.+)" )
 local function OnTooltipShow(self)
 	self:AddDoubleLine( prefix:format( SecondsToTime(GetQuestResetTime()) ),  QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests())  )
@@ -51,6 +51,9 @@ local function OnTooltipShow(self)
 		end
 	end
 	self:AddLine(" ")
+	if IsInInstance() then
+		self:AddLine(L["Warning, you are in an instance, DailyQuest Resets Recorded \n and Time to New Day are not reliable here"])
+	end
 	self:AddDoubleLine( L["Click: Left for Quest Log"], L["Right for SOCD Options"] )
 end
 

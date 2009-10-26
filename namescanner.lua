@@ -320,14 +320,16 @@ do
 		D("Set: '"..self.englishQuestTitle.."' --> '"..dbo[self.englishQuestTitle].."'" )
 		local id, eName = next(qTable, self.questId)
 		if not id or not eName then
-			print("no id or eName Next")
+			print("|cff9933FFSOCD:|r no id or eName Next")
 			print("|cff9933FFSOCD:|r Reached end of Quest table, You can now export the data")
+			print("|cff9933FFSOCD:|r Scanned total of", self.count, "quests")
 			ttScanFrame:Hide()
 			return
 		end
 --		print("    Next:", id, eName)
 		self.questId = id
 		self.englishQuestTitle = eName
+		self.count = self.count + 1
 	end)
 
 	local interval, delay = 1, 0
@@ -345,6 +347,7 @@ function module:StartTTScan(info)
 --	print(id, eName)
 	tt.questId = id
 	tt.englishQuestTitle = eName
+	tt.count = 1
 	ttScanFrame:Show()
 	return tt:SetHyperlink( ("quest:%d"):format(id) )
 end

@@ -48,9 +48,6 @@ function module:OnInitialize()
 	questTable = AddonParent.moduleQLookup
 	self.db = db
 	self:CreateInteractionFrame()
-	self.frame:SetScript("OnShow", self.frame.Hide)
-
-	self.frame:SetScript("OnShow", nil)
 	db.RegisterCallback(self, "OnProfileChanged", "RefreshConfig")
 	db.RegisterCallback(self, "OnProfileCopied", "RefreshConfig")
 	db.RegisterCallback(self, "OnProfileReset", "RefreshConfig")
@@ -60,8 +57,7 @@ end
 function module:OnEnable()
 	D("OnEnable")
 	AddonParent:RegisterQuests("RRQ", db.profile.quests, db.profile.qOptions )
-
---	self.frame:RegisterEvent("QUEST_PROGRESS")
+	self.frame:RegisterEvent("QUEST_PROGRESS")
 	self.frame:RegisterEvent("QUEST_DETAIL")
 	self.frame:RegisterEvent("QUEST_COMPLETE")
 	self.frame:RegisterEvent("QUEST_FINISHED")
@@ -83,12 +79,11 @@ end
 function module:OnDisable()
 	D("OnDisable")
 	AddonParent:UnRegisterQuests("RRQ")
---	self.frame:UnregisterEvent("QUEST_PROGRESS")
+	self.frame:UnregisterEvent("QUEST_PROGRESS")
 	self.frame:UnregisterEvent("QUEST_DETAIL")
 	self.frame:UnregisterEvent("QUEST_COMPLETE")
 	self.frame:UnregisterEvent("QUEST_FINISHED")
 	self.frame:Hide()
-	self.frame:SetScript("OnShow", self.frame.Hide)
 end
 
 
@@ -160,6 +155,12 @@ local function SOCD_OnEvnet(self, event, ...)
 
 end
 
+local function Frame_OnShow(self)
+	if not module:IsEnabled() then
+		self:Hide()
+	end
+end
+
 local backdrop = {
 	bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
 	edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
@@ -202,9 +203,11 @@ function module:CreateInteractionFrame()
 
 
 	frame:SetScript("OnEvent", SOCD_OnEvnet)
+	frame:SetScript("OnShow", Frame_OnShow)
 	check:SetScript("OnClick", CheckButton_OnClick)
 	check:SetScript("OnEnter", CheckButton_OnEnter)
 	check:SetScript("OnLeave", CheckButton_OnLeave)
+
 
 	self.frame = frame
 end
