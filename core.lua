@@ -16,13 +16,17 @@ This version comes with a built in config system made with Ace3's Config GUI Lib
 local projectVersion = "@project-version@"
 local projectRevision = "@project-revision@"
 local fileRevision = "@file-revision@"
+if projectVersion:find("project") then
+	projectVersion = "vSVN"
+	projectRevision = "rSVN"
+end
 
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
 
 SickOfClickingDailies = LibStub("AceAddon-3.0"):NewAddon("SickOfClickingDailies", "AceEvent-3.0", "AceConsole-3.0")
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 local addon = SickOfClickingDailies
-addon.Version = projectVersion..projectRevision
+addon.Version = projectVersion.."-"..projectRevision
 addon.specialResetQuests = {}
 --
 --	Debug Func()
@@ -222,6 +226,7 @@ function addon:OnInitialize()
 
 	addon.db = LibStub("AceDB-3.0"):New("SOCD_SIX", defaults)
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("SickOfClickingDailies", GetOptionsTable)
+	LibStub("AceConfigDialog-3.0"):SetDefaultSize("SickOfClickingDailies", 1000, 700)
 	self:RegisterChatCommand("socd", function()
 			if  AceConfigDialog.OpenFrames["SickOfClickingDailies"] then
 				AceConfigDialog:Close("SickOfClickingDailies")
@@ -262,7 +267,7 @@ local stopFlag, s_title, s_npc = false	--Event Dispatching stuff..
 
 function addon:GOSSIP_SHOW(event)
 	D(event)
-	local stopFlag, s_title, s_npc = false, nil, nil
+--	local stopFlag, s_title, s_npc = false, nil, nil
 --	local npc = self:CheckNPC(event)
 --	if not npc then
 --		D(event, "no known npc")
@@ -308,7 +313,7 @@ function addon:DoGossipOptions(te)
 end
 
 function addon:QUEST_GREETING(event, ...)
-	local stopFlag, s_title, s_npc = false, nil, nil
+--	local stopFlag, s_title, s_npc = false, nil, nil
 --	local npc = self:CheckNPC(event)
 --	if not npc then
 --		D(event, "no known npc")
@@ -341,7 +346,7 @@ function addon:QUEST_DETAIL(event)
 	if IsShiftKeyDown() then return end
 --	local npc = self:CheckNPC(event)
 	local quest = self:TitleCheck(event)
-	D(event, "found:", npc, quest)
+	D(event, "found:", quest)
 	if quest then	--	if npc and quest then
 		D(event,"Accepting Quest", quest, npc)
 		AcceptQuest()
@@ -355,7 +360,7 @@ function addon:QUEST_PROGRESS(event)
    	if IsShiftKeyDown() then return end
 --	local npc = self:CheckNPC(event)
 	local quest = self:TitleCheck(event)
-	D(event, "found:", npc, quest)
+	D(event, "found:", quest)
 	if quest then	--	if npc and quest then
 		if not IsQuestCompletable() then
 			D(event, "QuestNotCompleteable, set flag and DeclineQuest()")
@@ -373,7 +378,7 @@ end
 
 do
 	function addon:QUEST_COMPLETE(event)
-		stopFlag = false
+--		stopFlag = false
 		D(event, "nextQuestFlag to false")
 		nextQuestFlag = false
 		if IsShiftKeyDown() then return end
@@ -382,11 +387,11 @@ do
 		if quest then	--	if npc and quest then
 			local opt = qOptions(quest)
 			if (opt and (opt == -1)) then
-				stopFlag = true
+--				stopFlag = true
 				D(event, "Has Option and time to stop", quest, opt)
 				return
 			elseif opt then
-				stopFlag = false
+--				stopFlag = false
 				D(event, "Getting Reward!", opt)
 				GetQuestReward( opt )
 				return
