@@ -556,9 +556,9 @@ function addon:AnalyzeGossipOptions(te, ...)
 	local numArgs, count = select("#", ...), 0
 	for i = 1, numArgs, 2 do
 		local element = select(i+1, ...) == "gossip" and select(i, ...) or ""
-		D(te, "Found element:", element:sub(1,8), (i+1)/2)
+		D(te, "eval", element:sub(1,16))
 		if gossipOption(element) then
-			D(te, "Is one of ours")
+			D(te, "Found element:", element:sub(1,16), (i+1)/2)
 			return element, (i+1)/2
 		end
 	end

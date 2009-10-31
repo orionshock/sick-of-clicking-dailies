@@ -242,7 +242,7 @@ function module:WorldQuests()
 									[ LQ["Congratulations!"] ] = LQ["Congratulations!"],
 										}
 									},
-									patrol_Opts = { name = L["Argent Crusade"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 2, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
+									patrol_Opts = { name = GOSSIP_OPTIONS, type = "multiselect", order = 2, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
 										values = {
 									[ GT["I'm ready to begin. What is the first ingredient you require?"] ] = tpScrub(LQ["Troll Patrol: The Alchemist's Apprentice"]),
 									[ GT["Get out there and make those Scourge wish they were never reborn!"] ] = tpScrub(LQ["Troll Patrol: Intestinal Fortitude"]),
@@ -255,7 +255,7 @@ function module:WorldQuests()
 									head1 = { type = "header", name = L["The Argent Tournament - Preliminaries"], order = 1, },
 									about = { type = "description", name = L["ArgentTournamentPreQual_Desc"], order = 2, },
 									shared = { type = "multiselect", name = L["Shared Quests"], width = "full", order = 5,
-										values = { LQ["A Chip Off the Ulduar Block"], LQ["Jack Me Some Lumber"],
+										values = { --LQ["A Chip Off the Ulduar Block"], LQ["Jack Me Some Lumber"],
 											--These 2 quests are being removed in patch 3.2 ^^^^^^^
 											LQ["The Edge Of Winter"], LQ["A Worthy Weapon"], LQ["A Blade Fit For A Champion"]
 										},
@@ -271,6 +271,10 @@ function module:WorldQuests()
 									},
 									campOpt = { type = "select", name = L["Champion Quest Rewards"], order = 35, get = "ACTGet", set = "ACTSet",
 										values = { [-1] = L["None"], (GetItemInfo(46114)), (GetItemInfo(45724)),},
+									},
+									gossip = { type = "multiselect", name = GOSSIP_OPTIONS, order = 40, width = "full",
+										get = "GossipMulitGet", set = "GossipMulitSet",
+										values = { [ GT["I am ready to fight!"] ]= L["Jousting Challenge"], },
 									},
 								},
 							},
@@ -330,7 +334,8 @@ function module:WorldQuests()
 									LQ["Assault by Ground"], LQ["Assault by Air"],
 									 },
 							},
-							gossip = { name = L["Icecrown"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 2, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
+							gossip = { name = L["Icecrown"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 2, width = "full", 
+								get = "GossipMulitGet", set = "GossipMulitSet",
 								values = { [ GT["Go on, you're free.  Get out of here!"] ] = LQ["Slaves to Saronite"],
 									[ GT["Give me a bomber!"] ] = L["Bombing Quests in Icecrown"],
 									},
@@ -358,7 +363,13 @@ function module:WorldQuests()
 		return t
 	end
 ]]
-	local t = loadstring(str)()(L, LQ, self, tpScrub, GT)
+	local t, lsEr = loadstring(str)
+	if type(t) == "function" then
+		t = t()(L, LQ, self, tpScrub, GT)
+	else
+		geterrorhandler()("SOCD-WotLK-WorldQuests\n"..lsEr)
+		return nil
+	end
 	return t
 end
 
