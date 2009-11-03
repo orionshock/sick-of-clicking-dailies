@@ -37,6 +37,9 @@ function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, npc, opt, id)
 	else
 		completedQuests[quest] = time()+ GetQuestResetTime()
 	end
+	if IsInInstance() then
+		print("|cff9933FFSOCD:|r", L["Warning, you are in an instance, DailyQuest Resets Recorded and Time to New Day are not reliable here."])
+	end
 	module:SortQuestCompleTable()
 end
 
@@ -51,9 +54,6 @@ local function OnTooltipShow(self)
 		end
 	end
 	self:AddLine(" ")
-	if IsInInstance() then
-		self:AddLine(L["Warning, you are in an instance, DailyQuest Resets Recorded \n and Time to New Day are not reliable here"])
-	end
 	self:AddDoubleLine( L["Click: Left for Quest Log"], L["Right for SOCD Options"] )
 end
 
