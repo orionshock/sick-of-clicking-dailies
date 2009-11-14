@@ -108,4 +108,4 @@ GT["I'm ready to begin. What is the first ingredient you require?"] = GT_R["I'm 
 		end
 	end
 
----Localization Counter-- Bump to generate new zip for locale changes = 11
+---Localization Counter-- Bump to generate new zip for locale changes = 12

@@ -50,7 +50,7 @@ L["Wintergrasp"] = PVPBATTLEGROUND_WINTERGRASPTIMER:match("(.+)|n")
 --	Classic, Populated by WoWAce-Curseforge Packager.		  --
 ----------------------------------------------------------------------------
 
-local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "zhTW", false, debug)
+local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "zhTW", false)
 
 	if C then
 
@@ -62,7 +62,7 @@ local C = LibStub("AceLocale-3.0"):NewLocale("SOCD_Classic", "zhTW", false, debu
 --	TBC, Populated by WoWAce-Curseforge Packager.			  --
 ----------------------------------------------------------------------------	
 
-local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "zhTW", false, debug)
+local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "zhTW", false)
 
 	if BC then
 
@@ -74,7 +74,7 @@ local BC = LibStub("AceLocale-3.0"):NewLocale("SOCD_BC", "zhTW", false, debug)
 --	WOTLK, Populated by WoWAce-Curseforge Packager.			  --
 ----------------------------------------------------------------------------
 
-local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "zhTW", false, debug)
+local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "zhTW", false)
 
 	if LK then
 
@@ -86,7 +86,7 @@ local LK = LibStub("AceLocale-3.0"):NewLocale("SOCD_LK", "zhTW", false, debug)
 --	Gossip Texts, Populated by WoWAce-Curseforge Packager.			  --
 ----------------------------------------------------------------------------
 
-local GT = LibStub("AceLocale-3.0"):NewLocale("SOCD_GossipText", "zhTW", false, debug)
+local GT = LibStub("AceLocale-3.0"):NewLocale("SOCD_GossipText", "zhTW", false)
 	if GT then
 
 --@localization(locale="zhTW", format="lua_additive_table", same-key-is-true=true, namespace="GossipTexts", table-name="GT")@
