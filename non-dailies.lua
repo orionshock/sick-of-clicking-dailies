@@ -16,7 +16,7 @@ do
 			str = string.join(", ", tostringall(arg, ...) )
 			str = str:gsub(":,", ":"):gsub("=,", "=")
 		end
-		if AddonParent.db and AddonParent.db.profile.debug then		
+		if AddonParent.db and AddonParent.db.global.debug then		
 			print("|cff9933FFSOCD-RRQ:|r "..str)
 		end
 		return str
@@ -137,10 +137,14 @@ local function SOCD_OnEvnet(self, event, ...)
 		D("catch event, hiding() ")
 		self:Hide() 
 		return
+	else
+		D("Supported Event, showing()")
+		self:Show()
 	end
 
 	if GetQuestItemInfo("choice",1) ~= "" then
 		D("Quest has choice reward, hiding()")
+		self:Hide()
 		return
 	end
 
