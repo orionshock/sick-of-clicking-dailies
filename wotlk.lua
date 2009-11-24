@@ -590,8 +590,8 @@ function module:FactionTokenSet(info, val)
 	qOpt[LQ["Timear Foresees Ymirjar Berserkers in your Future!"] ] = val
 end
 
-function module:ThxQuestReward(info, quest, value)
-	print("ThxQuestReward", info, quest, value)
+function module:ThxQuestReward(info, val)
+	print("ThxQuestReward", info, val)
 	if val then	--Set function
 		print("Set Func?", value)
 		local qOpt = db.profile.qOptions
