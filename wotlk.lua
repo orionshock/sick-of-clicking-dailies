@@ -62,7 +62,7 @@ module.defaults = {
 			[GT["Let's do this, sister."] ] = true,	--Defending your Title in Storm peaks
 			[GT["Go on, you're free.  Get out of here!"] ] = true,	--"Slaves to Saronite
 			[GT["Give me a bomber!"] ] = true,	--Bombing quests in icecrown
-			[GT["Mount the Hippogryph and prepare for battle!"]] = true,	--Get Kracken!
+			[GT["Mount the Hippogryph and prepare for battle!"]] = true,	--Get Kraken!
 		}
 	},
 }
@@ -297,7 +297,7 @@ function module:WorldQuests()
 									},
 									gossip = { type = "multiselect", name = GOSSIP_OPTIONS, order = 40, width = "full",
 										get = "GossipMulitGet", set = "GossipMulitSet",
-										values = { [ GT["Mount the Hippogryph and prepare for battle!"] ] = LQ["Get Kracken!"] },
+										values = { [ GT["Mount the Hippogryph and prepare for battle!"] ] = LQ["Get Kraken!"] },
 									},
 								},
 							}
