@@ -47,7 +47,12 @@ module.defaults = {
 			[LQ["Battle Before The Citadel"]] = -1,
 			[LQ["Taking Battle To The Enemy"]] = -1,
 			[LQ["Threat From Above"]] = -1,
-
+			--Turky Festives
+			[LQ["Can't Get Enough Turkey"]] = -1,
+			[LQ["Don't Forget The Stuffing!"]] = -1,
+			[LQ["Easy As Pie"]] = -1,
+			[LQ["She Says Potato"]] = -1,
+			[LQ["We're Out of Cranberry Chutney Again?"]] = -1,
 		},
 		quests = {},
 		gossip = {
@@ -363,6 +368,25 @@ function module:WorldQuests()
 					},
 				},
 			},
+			worldEvents = {  type = "group", name = L["World Events"], order = 3,
+				args = {
+					thanksgiving = { type = "group", name = L["Pilgrim's Bounty"], 
+						args = {
+							quests = { type = "multiselect", order = 1, width = "full", name = L["Pilgrim's Bounty"],
+								values = {
+							LQ["Can't Get Enough Turkey"], LQ["Don't Forget The Stuffing!"], LQ["Easy As Pie"], 
+							LQ["She Says Potato"], LQ["We're Out of Cranberry Chutney Again?"] },
+							},
+							rewards = { name = L["Quest Rewards"], type = "select", order = 2, get = "ThxQuestReward", set = "ThxQuestReward",
+								values = { [-1] = L["None"],
+	GetItemInfo(46723) or "Pilgrim's Hat", GetItemInfo(46800) or "Pilgrim's Attire",GetItemInfo(44785) or "Pilgrim's Dress",
+	GetItemInfo(46824) or "Pilgrim's Robe", GetItemInfo(44788) or "Pilgrim's Boots", GetItemInfo(44812) or "Pilgrim's Shooter",
+								},
+							},
+						},
+					},
+				},
+			},
 		},
 	}
 		return t
@@ -564,6 +588,22 @@ function module:FactionTokenSet(info, val)
 	qOpt[LQ["Timear Foresees Infinite Agents in your Future!"] ] = val
 	qOpt[LQ["Timear Foresees Titanium Vanguards in your Future!"] ] = val
 	qOpt[LQ["Timear Foresees Ymirjar Berserkers in your Future!"] ] = val
+end
+
+function module:ThxQuestReward(info, quest, value)
+	print("ThxQuestReward", info, quest, value)
+	if val then	--Set function
+		print("Set Func?", value)
+		local qOpt = db.profile.qOptions
+		qOpt[ LQ["Can't Get Enough Turkey"] ] = val
+		qOpt[ LQ["Don't Forget The Stuffing!"] ] = val
+		qOpt[ LQ["Easy As Pie"] ] = val
+		qOpt[ LQ["She Says Potato"] ] = val
+		qOpt[ LQ["We're Out of Cranberry Chutney Again?"] ] = val
+	else
+		print("Get func", quest)
+		return db.profile.qOptions[ LQ["Can't Get Enough Turkey"] ]
+	end
 end
 
 function module:ACTGet(info)

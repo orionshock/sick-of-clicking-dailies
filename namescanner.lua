@@ -301,6 +301,12 @@ local qTable = {
 
 --Hallow's End
 	[12404] = "Candy Bucket",
+--Pilgrim's bounty
+	[14061] = "Can't Get Enough Turkey",
+	[14062] = "Don't Forget The Stuffing!",
+	[14060] = "Easy As Pie",
+	[14058] = "She Says Potato",
+	[14059] = "We're Out of Cranberry Chutney Again?",
 
 }	--End of name Scanner Master Table
 
