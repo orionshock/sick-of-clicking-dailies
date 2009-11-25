@@ -13,9 +13,9 @@ function D(...)
 	local str = string.join(", ", tostringall(...) )
 	str = str:gsub("([=:]), ", "%1")
 
-	--if AddonParent.db and AddonParent.db.global.debug then
+	if AddonParent.db and AddonParent.db.global.debug then
 		print("|cff99ff66SOCD-AT:|r "..str)
-	--end
+	end
 	return str
 end
 
@@ -56,7 +56,7 @@ end
 
 
 local function OnTooltipShow(self)
-	self:AddLine("Quests for All Toons")
+	self:AddLine(L["Quests for All Toons"])
 	self:AddLine(" ")
 	for _, charName in ipairs(module.sortedPlayerList) do
 		self:AddLine(charName.." - "..db.chars[charName])
@@ -97,12 +97,12 @@ function module:CreateLDB()
 	local trackLDB = {
 		type = "data source",
 		icon = "Interface\\Icons\\Achievement_Win_Wintergrasp",
-		text = "Dailies On Alts Tracking",
+		text = L["Dailies On Alts"],
 		OnEnter = OnEnter,
 		OnLeave = OnLeave,
 		OnTooltipShow = OnTooltipShow,
 	}
-	self.ldb = LibStub("LibDataBroker-1.1"):NewDataObject("Dailies On Alts Tracking", trackLDB)
+	self.ldb = LibStub("LibDataBroker-1.1"):NewDataObject(L["Dailies On Alts"], trackLDB)
 end
 
 
