@@ -39,6 +39,7 @@ function module:OnInitialize()
 end
 
 function module:OnEnable()
+	self:CreateLDB()
 	D("OnEnable")
 --	self:RegisterMessage("SOCD_DAILIY_QUEST_COMPLETE")
 end
@@ -55,22 +56,16 @@ end
 
 
 local function OnTooltipShow(self)
-	D("OnTooltipShow")
-	self:AddDoubleLine( prefix:format( SecondsToTime(GetQuestResetTime()) ),  QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests())  )
 	self:AddLine("Quests for All Toons")
 	self:AddLine(" ")
-	print("Dive into db.chars, itterate quests")
 	for _, charName in ipairs(module.sortedPlayerList) do
-		print("evaluating player", charName, ". Get Sorted Quest Table")
-		self:AddLine( D(charName, "~", db.chars[charName] ) )
-		local sortedTable = SortQuestCompleTable( db[ charName ] )
+		self:AddLine(charName.." - "..db.chars[charName])
+		local sortedTable = module:SortQuestCompleTable( db[ charName ] )
 		for _, quest in ipairs(sortedTable) do
-			D("Adding", quest, date("%c", db[charName][quest]))
-			self:AddDoubleLine( quest, date("%c", db[charName][quest]) )
+			self:AddDoubleLine( "    "..quest, date("%c", db[charName][quest]) )
 		end
 		self:AddLine(" ")
 	end
-	D("End OnTooltipShow")	
 end
 
 do
@@ -98,33 +93,40 @@ local function OnLeave(self)
 end
 
 
-
+function module:CreateLDB()
+	local trackLDB = {
+		type = "data source",
+		icon = "Interface\\Icons\\Achievement_Win_Wintergrasp",
+		text = "Dailies On Alts Tracking",
+		OnEnter = OnEnter,
+		OnLeave = OnLeave,
+		OnTooltipShow = OnTooltipShow,
+	}
+	self.ldb = LibStub("LibDataBroker-1.1"):NewDataObject("Dailies On Alts Tracking", trackLDB)
+end
 
 
 
 
 --
 do
-
-local TimeToResetGroup = select(2, LDBModule.AnimationFrame:GetAnimationGroups() )
-local Ani = TimeToResetGroup:CreateAnimation()
-Ani:SetDuration(1)
-Ani:SetOrder(2)
-Ani:SetScript("OnFinished", function(self,...)
-	D("AltTracking - Reset Animation, Pruning History")
---	if GetQuestResetTime() > 86300 then return end
-	for toon, qTable in pairs(db) do
-		if toon ~= "chars" then
-			D("Pruning toon", toon)
-			for quest, ttl in pairs(qTable) do
-				if time() > ttl then
-					D("Pruning", quest, "Exired on:", date("%c", ttl), "current Time:", date() )
-					qtable[quest] = nil
+	local TimeToResetGroup = select(2, LDBModule.AnimationFrame:GetAnimationGroups() )
+	local Ani = TimeToResetGroup:CreateAnimation()
+	Ani:SetDuration(1)
+	Ani:SetOrder(2)
+	Ani:SetScript("OnFinished", function(self,...)
+		D("AltTracking - Reset Animation, Pruning History")
+	--	if GetQuestResetTime() > 86300 then return end
+		for toon, qTable in pairs(db) do
+			if toon ~= "chars" then
+				D("Pruning toon", toon)
+				for quest, ttl in pairs(qTable) do
+					if time() > ttl then
+						D("Pruning", quest, "Exired on:", date("%c", ttl), "current Time:", date() )
+						qtable[quest] = nil
+					end
 				end
 			end
 		end
-	end
-end)
-
-
+	end)
 end

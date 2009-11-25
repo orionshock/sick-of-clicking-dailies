@@ -34,8 +34,7 @@
 ## Credits: Sinxia/kunda (deDE Translation), Cinedelle (frFR Translation), Crafty/Vyacheslav (ruRU Translation)
 ## Version: @project-version@
 ## X-Email: Orionshock@gmail.com
-## SavedVariables: SOCD_ALTTRACKING_DB
-## X-Embeds: Ace3
+
 ## Required Dependancy: SickOfClickingDailies
 
 ## DefaultState: Disabled
