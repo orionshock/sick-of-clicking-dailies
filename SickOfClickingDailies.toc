@@ -65,3 +65,7 @@ dailylogoutwarning.lua
 #@alpha@
 namescanner.lua
 #@end-alpha@
+
+#@debug@
+SickOfClickingDailies_AltTracking\module.xml
+#@end-debug@
