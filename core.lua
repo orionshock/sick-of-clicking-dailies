@@ -408,11 +408,13 @@ do
 		D("GetQuestRewardHook", enabled, present, npcID)
 		if present then
 			D("SOCD_DAILIY_QUEST_COMPLETE", present, npcID, opt, addon.QuestLogCache[present])
-			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", present, npcID, opt, addon.QuestLogCache[present])
+			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", present, opt, addon.QuestLogCache[present])
 		end
 	end
 	hooksecurefunc("GetQuestReward", SOCD_GetQuestRewardHook )
-
+	function SOCD_TestDailyEventSend()
+		addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", "TestQuest"..time() , nil, 1234)
+	end
 end
 
 function addon:QUEST_LOG_UPDATE(event)

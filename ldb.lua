@@ -29,8 +29,8 @@ function module:RefreshConfig(event, f_db, profileName)
 end
 local ldbObj, SecondsToTime, GetQuestResetTime = nil, SecondsToTime, GetQuestResetTime
 
-function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, npc, opt, id)
-	D(event, quest, npc, opt, id)
+function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, opt, id)
+	D(event, quest, opt, id)
 	id = id or "??"
 	if specialResetQuests[quest] then
 		completedQuests[quest.." ~ "..date()] = self[ specialResetQuests[quest] ](self)
