@@ -92,12 +92,13 @@ end
 
 
 
-local frame = CreateFrame("frame")
-local Group = frame:CreateAnimationGroup()
-local Ani = Group:CreateAnimation("Animation")
+local AnimationFrame = CreateFrame("frame")
+module.AnimationFrame = AnimationFrame
+local ldbUpdateTimerGroup = AnimationFrame:CreateAnimationGroup()
+local Ani = ldbUpdateTimerGroup:CreateAnimation("Animation")
 Ani:SetDuration(60)
 Ani:SetOrder(1)
-Group:SetLooping("REPEAT")
+ldbUpdateTimerGroup:SetLooping("REPEAT")
 
 
 
@@ -120,19 +121,16 @@ function module:CreateLDB()
 	dailyTTL.text = (dailyTTL.label)..(dailyTTL.value)
 	self.ldb = ldb:NewDataObject("SOCD Dailies Reset Timmer", dailyTTL)
 	ldbObj = self.ldb
-	Group:Play()
+	ldbUpdateTimerGroup:Play()
 end
 
 local function UpdateLDB_Object(frame, elapsed)
 	local ttl = GetQuestResetTime()
 	ldbObj.value = SecondsToTime(ttl)
 	ldbObj.text = (ldbObj.label)..(ldbObj.value)
-	if ttl > 86300 or tonumber(date("%H%M")) < 359 then	--86390 is early in the day & 259 is 2:59am
-		module:PruneHistory()
-	end
 end
 
-Group:SetScript("OnLoop", UpdateLDB_Object)
+ldbUpdateTimerGroup:SetScript("OnLoop", UpdateLDB_Object)
 
 function module:PruneHistory()
 	for quest, ttl in pairs(completedQuests) do
@@ -144,8 +142,24 @@ function module:PruneHistory()
 	self:SortQuestCompleTable()
 end
 
+local TimeToResetGroup = AnimationFrame:CreateAnimationGroup()
+local resetAni = TimeToResetGroup:CreateAnimation("Animation")
+TimeToResetGroup:SetScript("OnLoop", function(self)
+	D("TimeToResetGroup, Setting new End of Day")
+	resetAni:SetDuration( GetQuestResetTime() )
+end)
+resetAni:SetScript("OnFinished", function(self)
+	D("Reset Animation, Pruning History")
+	module:PruneHistory()
 
+end)
 
+resetAni:SetDuration(6)
+resetAni:SetOrder(1)
+TimeToResetGroup:Play()
+TimeToResetGroup:SetLooping("REPEAT")
+
+--	/dump select(2, SickOfClickingDailies:GetModule("LDB").AnimationFrame:GetAnimationGroups()):GetAnimations():GetElapsed()
 ------------
 
 
