@@ -50,8 +50,9 @@ function LDBModule:SOCD_DAILIY_QUEST_COMPLETE(event, quest, opt, id)
 	old_LDB_DailieEvent(LDBModule, event, quest, opt, id)
 	D("Tracking Hook",quest, "expires in",  date("%c", completedQuests[quest]))
 	local ttd = completedQuests[quest]
-	local t = db[playerName]
+	local t = db[playerName] or {}
 	t[quest] = ttd
+	db[playerName] = t
 end
 
 
@@ -59,12 +60,14 @@ local function OnTooltipShow(self)
 	self:AddLine(L["Quests for All Toons"])
 	self:AddLine(" ")
 	for _, charName in ipairs(module.sortedPlayerList) do
-		self:AddLine(charName.." - "..db.chars[charName])
-		local sortedTable = module:SortQuestCompleTable( db[ charName ] )
-		for _, quest in ipairs(sortedTable) do
-			self:AddDoubleLine( "    "..quest, date("%c", db[charName][quest]) )
+		if db[charName] and next(db[charName]) then
+			self:AddLine(charName.." - "..db.chars[charName])
+			local sortedTable = module:SortQuestCompleTable( db[ charName ] )
+			for _, quest in ipairs(sortedTable) do
+				self:AddDoubleLine( "    "..quest, date("%c", db[charName][quest]) )
+			end
+			self:AddLine(" ")
 		end
-		self:AddLine(" ")
 	end
 end
 
@@ -126,6 +129,12 @@ do
 						qtable[quest] = nil
 					end
 				end
+			end
+		end
+		for toon, qTable in pairs(db) do
+			if not next(qTable) then
+				D("removing", toon," from db, no quests")
+				db[toon] = nil
 			end
 		end
 	end)
