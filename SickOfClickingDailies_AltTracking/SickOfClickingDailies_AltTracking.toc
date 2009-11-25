@@ -1,0 +1,48 @@
+﻿## Interface: 30200
+## X-WoWI-ID: 7798
+
+#@non-debug@
+## Title: @localization(locale="enUS", key="Title-AltTracking", namespace="ToC")@
+## Title-frFR: @localization(locale="frFR", key="Title-AltTracking", namespace="ToC")@
+## Title-deDE: @localization(locale="deDE", key="Title-AltTracking", namespace="ToC")@
+## Title-koKR: @localization(locale="koKR", key="Title-AltTracking", namespace="ToC")@
+## Title-esMX: @localization(locale="esMX", key="Title-AltTracking", namespace="ToC")@
+## Title-ruRU: @localization(locale="ruRU", key="Title-AltTracking", namespace="ToC")@
+## Title-zhCN: @localization(locale="zhCN", key="Title-AltTracking", namespace="ToC")@
+## Title-esES: @localization(locale="esES", key="Title-AltTracking", namespace="ToC")@
+## Title-zhTW: @localization(locale="zhTW", key="Title-AltTracking", namespace="ToC")@
+## Notes: @localization(locale="enUS", key="Description-AltTracking", namespace="ToC")@
+## Notes-frFR: @localization(locale="frFR", key="Description-AltTracking", namespace="ToC")@
+## Notes-deDE: @localization(locale="deDE", key="Description-AltTracking", namespace="ToC")@
+## Notes-koKR: @localization(locale="koKR", key="Description-AltTracking", namespace="ToC")@
+## Notes-esMX: @localization(locale="esMX", key="Description-AltTracking", namespace="ToC")@
+## Notes-ruRU: @localization(locale="ruRU", key="Description-AltTracking", namespace="ToC")@
+## Notes-zhCN: @localization(locale="zhCN", key="Description-AltTracking", namespace="ToC")@
+## Notes-esES: @localization(locale="esES", key="Description-AltTracking", namespace="ToC")@
+## Notes-zhTW: @localization(locale="zhTW", key="Description-AltTracking", namespace="ToC")@
+#@end-non-debug@
+
+#@debug@
+## Title: Sick of Clicking Dailys? - Alt Tracking
+## Notes: Provides tracking for your all your Dailies.
+#@end-debug@
+
+
+
+## Author: OrionShock
+
+## Credits: Sinxia/kunda (deDE Translation), Cinedelle (frFR Translation), Crafty/Vyacheslav (ruRU Translation)
+## Version: @project-version@
+## X-Email: Orionshock@gmail.com
+## SavedVariables: SOCD_ALTTRACKING_DB
+## X-Embeds: Ace3
+## Required Dependancy: SickOfClickingDailies
+
+## DefaultState: Disabled
+## LoadManagers: AddonLoader
+## X-LoadOn-Always: delayed
+
+## X-Category: Quests & Leveling
+
+module.xml
+

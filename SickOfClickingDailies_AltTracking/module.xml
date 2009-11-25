@@ -1,0 +1,17 @@
+<!--
+Module.xml file that loads this module for both module loaded by addon and in LoD State.
+
+load the core file and the localizations. Libs are provided by parent addon as parent addon is required.
+
+-->
+
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+
+<Include file="localizations\localization.xml"/>
+<Script file="core.lua"/>
+
+
+
+</Ui>
