@@ -33,3 +33,6 @@ externals:
 		url: svn://svn.wowace.com/wow/libstub/mainline/tags/1.0
 	libs/LibDataBroker-1.1:
 		url: git://github.com/tekkub/libdatabroker-1-1.git
+
+move-folders:
+	SickOfClickingDailies/SickOfClickingDailies_AltTracking: SickOfClickingDailies_AltTracking
