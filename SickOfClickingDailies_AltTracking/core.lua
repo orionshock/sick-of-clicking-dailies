@@ -13,9 +13,9 @@ function D(...)
 	local str = string.join(", ", tostringall(...) )
 	str = str:gsub("([=:]), ", "%1")
 
-	if AddonParent.db and AddonParent.db.global.debug then
+	--if AddonParent.db and AddonParent.db.global.debug then
 		print("|cff99ff66SOCD-AT:|r "..str)
-	end
+	--end
 	return str
 end
 
@@ -49,7 +49,7 @@ local old_LDB_DailieEvent = LDBModule.SOCD_DAILIY_QUEST_COMPLETE
 function LDBModule:SOCD_DAILIY_QUEST_COMPLETE(event, quest, opt, id)
 	old_LDB_DailieEvent(LDBModule, event, quest, opt, id)
 	D("Tracking Hook",quest, "expires in",  date("%c", completedQuests[quest]))
-	local ttd = completedQuests[quest]
+	local ttd = completedQuests[quest] or completedQuests[quest.." ~ "..date()]
 	local t = db[playerName] or {}
 	t[quest] = ttd
 	db[playerName] = t
@@ -114,7 +114,9 @@ end
 --
 do
 	local TimeToResetGroup = select(2, LDBModule.AnimationFrame:GetAnimationGroups() )
+	TimeToResetGroup.name = "TimeToResetGroup"
 	local Ani = TimeToResetGroup:CreateAnimation()
+	Ani.name = "ALtTrack-Animation"
 	Ani:SetDuration(1)
 	Ani:SetOrder(2)
 	Ani:SetScript("OnFinished", function(self,...)
@@ -126,7 +128,7 @@ do
 				for quest, ttl in pairs(qTable) do
 					if time() > ttl then
 						D("Pruning", quest, "Exired on:", date("%c", ttl), "current Time:", date() )
-						qtable[quest] = nil
+						qTable[quest] = nil
 					end
 				end
 			end
@@ -138,4 +140,8 @@ do
 			end
 		end
 	end)
+	function SOCD_CheckTTND()
+		local elapsed, duration = math.floor((TimeToResetGroup:GetAnimations()):GetElapsed()), TimeToResetGroup:GetDuration()
+		print("Animation Time To new day. Elapsed:", elapsed, "Duration", duration, SecondsToTime( duration - elapsed) )
+	end
 end
