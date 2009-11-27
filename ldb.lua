@@ -30,7 +30,7 @@ end
 local ldbObj, SecondsToTime, GetQuestResetTime = nil, SecondsToTime, GetQuestResetTime
 
 function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, opt, id)
-	D(event, quest, opt, id)
+	D("LDBModule:", event, quest, opt, id)
 	id = id or "??"
 	if specialResetQuests[quest] then
 		completedQuests[quest.." ~ "..date()] = self[ specialResetQuests[quest] ](self)

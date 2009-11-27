@@ -426,6 +426,7 @@ function module:InstanceQuests()
 			[LQ["Timear Foresees Infinite Agents in your Future!"] ] = norInstScrub(LQ["Timear Foresees Infinite Agents in your Future!"]),
 			[LQ["Timear Foresees Titanium Vanguards in your Future!"] ] = norInstScrub(LQ["Timear Foresees Titanium Vanguards in your Future!"]),
 			[LQ["Timear Foresees Ymirjar Berserkers in your Future!"] ] = norInstScrub(LQ["Timear Foresees Ymirjar Berserkers in your Future!"]),
+			[ LQ["All Things in Good Time"] ]= LQ["All Things in Good Time"],
 						}
 					},
 					option = { name = L["Faction Token"], type = "select", order = 2, get = "FactionTokenGet", set = "FactionTokenSet", width = "double",
