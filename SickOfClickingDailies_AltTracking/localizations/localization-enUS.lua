@@ -23,7 +23,7 @@ L["PvP"] = PVP
 L["Quests"] = QUESTS_LABEL
 
 
---@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, namespace="Base_All", table-name="L")@
+--@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
 
 	end	
 
