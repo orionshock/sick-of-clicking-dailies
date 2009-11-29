@@ -40,6 +40,7 @@
 ## DefaultState: Enabled
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: delayed
+## LoadOnDemand: 1
 
 ## X-Category: Quests & Leveling
 
