@@ -37,7 +37,7 @@
 
 ## Required Dependancy: SickOfClickingDailies
 
-## DefaultState: Disabled
+## DefaultState: enabled
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: delayed
 ## LoadOnDemand: 1
