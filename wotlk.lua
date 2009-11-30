@@ -57,7 +57,7 @@ module.defaults = {
 		quests = {},
 		gossip = {
 			--["Tell me of yourself, Xarantaur. Why are you called the Witness?"] = true,
-			[GT["I'm ready to begin. What is the first ingredient you require?"]] = true,	--Alchy Dailie from Argent crusade in Drak'Tharon
+			[GT["I'm ready to begin. What is the first ingredient you require?"]] = true,	--Alchy Daily from Argent crusade in Drak'Tharon
 			[GT["Get out there and make those Scourge wish they were never reborn!"]] = true,	--Troll patrol quest
 			[GT["Let's do this, sister."] ] = true,	--Defending your Title in Storm peaks
 			[GT["Go on, you're free.  Get out of here!"] ] = true,	--"Slaves to Saronite
@@ -170,10 +170,13 @@ local trol_patrol_sub_Text = L["Troll Patrol: "]
 local function tpScrub(text)
 	return (tostring(text):gsub(trol_patrol_sub_Text, ""))
 end
-
+local function inlineTableSort(t)
+	table.sort(t)
+	return t
+end
 function module:WorldQuests()
 	local str = [[
-	return function(L, LQ, module, tpScrub, GT)
+	return function(L, LQ, module, tpScrub, GT, inlineTableSort)
 		local t = {
 		type = "group",
 		name = CHANNEL_CATEGORY_WORLD,
@@ -184,7 +187,7 @@ function module:WorldQuests()
 					Kalu = { type = "group", name = L["The Kalu'ak"],
 						args = {
 							kaluSub = { name = L["The Kalu'ak"], type = "multiselect", width = "full",
-								values = { LQ["Planning for the Future"], LQ["Preparing for the Worst"], LQ["The Way to His Heart..."], },
+								values = inlineTableSort({ LQ["Planning for the Future"], LQ["Preparing for the Worst"], LQ["The Way to His Heart..."], }),
 							},
 						},
 					},
@@ -198,32 +201,32 @@ function module:WorldQuests()
 					Wyrmreset = { type = "group", name = L["The Wyrmrest Accord"],
 						args = {
 							wyrmwrestSub = { name = L["The Wyrmrest Accord"], type = "multiselect", order = 1, width = "full",
-								values = { LQ["Aces High!"], LQ["Drake Hunt"], LQ["Defending Wyrmrest Temple"] },
+								values = inlineTableSort({ LQ["Aces High!"], LQ["Drake Hunt"], LQ["Defending Wyrmrest Temple"] }),
 							},
 						},
 					},
 					hodir = { type = "group", name = L["The Sons of Hodir"],
 						args = {
 							hodirSub = { name = L["The Sons of Hodir"], type = "multiselect", width = "full",
-								values = { LQ["Blowing Hodir's Horn"], LQ["Feeding Arngrim"], LQ["Hot and Cold"], LQ["Polishing the Helm"], LQ["Spy Hunter"],
-									LQ["Thrusting Hodir's Spear"],  },
+								values = inlineTableSort({ LQ["Blowing Hodir's Horn"], LQ["Feeding Arngrim"], LQ["Hot and Cold"], 
+									LQ["Polishing the Helm"], LQ["Spy Hunter"], LQ["Thrusting Hodir's Spear"],  }),
 							},
 						},
 					},
 					Oracles = { type = "group", name = L["The Oracles"],
 						args = {
 							oraclesSub = { name = L["The Oracles"], type = "multiselect", order = 1, width = "full",
-								values = { LQ["A Cleansing Song"], LQ["Appeasing the Great Rain Stone"], LQ["Hand of the Oracles"],
-									LQ["Mastery of the Crystals"], LQ["Power of the Great Ones"], LQ["Song of Fecundity"], LQ["Song of Reflection"],
-									LQ["Song of Wind and Water"], LQ["Will of the Titans"], },
+								values = inlineTableSort({ LQ["A Cleansing Song"], LQ["Appeasing the Great Rain Stone"],
+				LQ["Hand of the Oracles"], LQ["Mastery of the Crystals"], LQ["Power of the Great Ones"], LQ["Song of Fecundity"], LQ["Song of Reflection"],
+									LQ["Song of Wind and Water"], LQ["Will of the Titans"], }),
 							},
 						},
 					},
 					Frenzyheart = { type = "group", name = L["Frenzyheart Tribe"],
 						args = {
 							frenzySub = { name = "Frenzyheart", type = "multiselect", order = 1, width = "full",
-								values = { LQ["A Hero's Headgear"], LQ["Chicken Party!"], LQ["Frenzyheart Champion"], LQ["Kartak's Rampage"], LQ["Rejek: First Blood"],
-									LQ["Secret Strength of the Frenzyheart"], LQ["Strength of the Tempest"], LQ["The Heartblood's Strength"], LQ["Tools of War"], },
+								values = inlineTableSort({ LQ["A Hero's Headgear"], LQ["Chicken Party!"], LQ["Frenzyheart Champion"], LQ["Kartak's Rampage"], LQ["Rejek: First Blood"],
+									LQ["Secret Strength of the Frenzyheart"], LQ["Strength of the Tempest"], LQ["The Heartblood's Strength"], LQ["Tools of War"], }),
 							},
 						},
 					},
@@ -261,19 +264,16 @@ function module:WorldQuests()
 									head1 = { type = "header", name = L["The Argent Tournament - Preliminaries"], order = 1, },
 									about = { type = "description", name = L["ArgentTournamentPreQual_Desc"], order = 2, },
 									shared = { type = "multiselect", name = L["Shared Quests"], width = "full", order = 5,
-										values = { --LQ["A Chip Off the Ulduar Block"], LQ["Jack Me Some Lumber"],
-											--These 2 quests are being removed in patch 3.2 ^^^^^^^
-											LQ["The Edge Of Winter"], LQ["A Worthy Weapon"], LQ["A Blade Fit For A Champion"]
-										},
+										values = inlineTableSort({ LQ["The Edge Of Winter"], LQ["A Worthy Weapon"], LQ["A Blade Fit For A Champion"]}),
 									},
 									aspirant = {type = "multiselect", name = L["Aspirant Class"], width = "full", order = 10,
-										values = { LQ["Training In The Field"], LQ["Learning The Reins"] },
+										values = inlineTableSort({ LQ["Training In The Field"], LQ["Learning The Reins"] }),
 									},
 									valiant = {type = "multiselect", name = L["Valiant Class"], width = "full", order = 20,
-										values = { LQ["At The Enemy's Gates"], LQ["The Grand Melee"], LQ["A Valiant's Field Training"] },
+										values = inlineTableSort({ LQ["At The Enemy's Gates"], LQ["The Grand Melee"], LQ["A Valiant's Field Training"] }),
 									},
 									champ = { type = "multiselect", name = L["Champion Class"], width = "full", order = 30,
-										values = { LQ["Battle Before The Citadel"], LQ["Threat From Above"], LQ["Among the Champions"], LQ["Taking Battle To The Enemy"], LQ["Contributin' To The Cause"] },
+										values = inlineTableSort({ LQ["Battle Before The Citadel"], LQ["Threat From Above"], LQ["Among the Champions"], LQ["Taking Battle To The Enemy"], LQ["Contributin' To The Cause"] }),
 									},
 									campOpt = { type = "select", name = L["Champion Quest Rewards"], order = 35, get = "ACTGet", set = "ACTSet",
 										values = { [-1] = L["None"], (GetItemInfo(46114)), (GetItemInfo(45724)),},
@@ -289,11 +289,10 @@ function module:WorldQuests()
 									head1 = { type = "header", name = L["The Argent Tournament - Finale"], order = 1, },
 									about = { type = "description", name = L["ArgentTournamentFinale_Desc"], order = 2, },
 									part = { type = "multiselect", name = L["Shared Quests"], order = 10, width = "full",
-										values = { LQ["You've Really Done It This Time, Kul"], LQ["Rescue at Sea"], LQ["A Leg Up"], LQ["The Light's Mercy"],
+										values = inlineTableSort({ LQ["You've Really Done It This Time, Kul"], LQ["Rescue at Sea"], LQ["A Leg Up"], LQ["The Light's Mercy"],
 											LQ["Stop The Aggressors"], LQ["Breakfast Of Champions"], LQ["Gormok Wants His Snobolds"], LQ["What Do You Feed a Yeti, Anyway?"],
 											LQ["The Fate Of The Fallen"], LQ["Get Kraken!"], LQ["Drottinn Hrothgar"],LQ["Mistcaller Yngvar"],
-											LQ["Ornolf The Scarred"], LQ["Deathspeaker Kharos"],
-}
+											LQ["Ornolf The Scarred"], LQ["Deathspeaker Kharos"],})
 									},
 									gossip = { type = "multiselect", name = GOSSIP_OPTIONS, order = 40, width = "full",
 										get = "GossipMulitGet", set = "GossipMulitSet",
@@ -306,15 +305,15 @@ function module:WorldQuests()
 					Knights = { type = "group", name = L["Knights of the Ebon Blade"],
 						args = {
 							knightsSub = { name = L["Knights of the Ebon Blade"], type = "multiselect", width = "full",
-								values = { LQ["Intelligence Gathering"], LQ["Leave Our Mark"], LQ["No Fly Zone"],
-									LQ["From Their Corpses, Rise!"], LQ["Shoot 'Em Up"], LQ["Vile Like Fire!"],  },
+								values = inlineTableSort({ LQ["Intelligence Gathering"], LQ["Leave Our Mark"], LQ["No Fly Zone"],
+									LQ["From Their Corpses, Rise!"], LQ["Shoot 'Em Up"], LQ["Vile Like Fire!"],  }),
 							},
 						},
 					},
 					Ravasaur = { type = "group", name = L["Ravasaur Trainers"],
 						args = {
 							raveSub = { name = L["Ravasaur Trainers"], type = "multiselect", width = "full",
-								values = { LQ["Gorishi Grub"], LQ["Hungry, Hungry Hatchling"], LQ["Poached, Scrambled, Or Raw?"], LQ["Searing Roc Feathers"], },
+								values = inlineTableSort({ LQ["Gorishi Grub"], LQ["Hungry, Hungry Hatchling"], LQ["Poached, Scrambled, Or Raw?"], LQ["Searing Roc Feathers"], }),
 							},
 						},
 					},
@@ -325,8 +324,8 @@ function module:WorldQuests()
 					peaks = { type = "group", name =  L["The Storm Peaks"],
 						args = {
 							peaksSub = { name =  L["The Storm Peaks"], type = "multiselect", order = 1, width = "full",
-								values = { LQ["Back to the Pit"], LQ["Defending Your Title"], LQ["Overstock"],
-								LQ["Maintaining Discipline"], LQ["The Aberrations Must Die"], },
+								values = inlineTableSort({ LQ["Back to the Pit"], LQ["Defending Your Title"], LQ["Overstock"],
+								LQ["Maintaining Discipline"], LQ["The Aberrations Must Die"], }),
 							},
 							peaksGossip = { name = L["The Storm Peaks"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 8, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
 								values = { [ GT["Let's do this, sister."] ] = LQ["Defending Your Title"] },
@@ -336,13 +335,13 @@ function module:WorldQuests()
 					Icecrown = { type = "group", name = L["Icecrown"],
 						args = {
 							shared = { name = L["Icecrown"], type = "multiselect", order = 1, width = "full",
-								values = { LQ["King of the Mountain"], LQ["Blood of the Chosen"], LQ["Drag and Drop"], LQ["Neutralizing the Plague"],
+								values = inlineTableSort({ LQ["King of the Mountain"], LQ["Blood of the Chosen"], LQ["Drag and Drop"], LQ["Neutralizing the Plague"],
 									LQ["No Rest For The Wicked"], LQ["Not a Bug"], LQ["Retest Now"], LQ["Slaves to Saronite"], LQ["That's Abominable!"],
 									LQ["Total Ohmage: The Valley of Lost Hope!"], LQ["Volatility"], LQ["Keeping the Alliance Blind"],
 									LQ["Riding the Wavelength: The Bombardment"], LQ["Static Shock Troops: the Bombardment"],
 									LQ["The Solution Solution"], LQ["Capture More Dispatches"], LQ["Putting the Hertz: The Valley of Lost Hope"],
 									LQ["Assault by Ground"], LQ["Assault by Air"],
-									 },
+									 }),
 							},
 							gossip = { name = L["Icecrown"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 2, width = "full", 
 								get = "GossipMulitGet", set = "GossipMulitSet",
@@ -373,9 +372,9 @@ function module:WorldQuests()
 					thanksgiving = { type = "group", name = L["Pilgrim's Bounty"], 
 						args = {
 							quests = { type = "multiselect", order = 1, width = "full", name = L["Pilgrim's Bounty"],
-								values = {
+								values = inlineTableSort({
 							LQ["Can't Get Enough Turkey"], LQ["Don't Forget The Stuffing!"], LQ["Easy As Pie"], 
-							LQ["She Says Potato"], LQ["We're Out of Cranberry Chutney Again?"] },
+							LQ["She Says Potato"], LQ["We're Out of Cranberry Chutney Again?"] }),
 							},
 							rewards = { name = L["Quest Rewards"], type = "select", order = 2, get = "ThxQuestReward", set = "ThxQuestReward",
 								values = { [-1] = L["None"],
@@ -394,7 +393,7 @@ function module:WorldQuests()
 ]]
 	local t, lsEr = loadstring(str)
 	if type(t) == "function" then
-		t = t()(L, LQ, self, tpScrub, GT)
+		t = t()(L, LQ, self, tpScrub, GT, inlineTableSort)
 	else
 		geterrorhandler()("SOCD-WotLK-WorldQuests\n"..lsEr)
 		return nil
@@ -412,7 +411,7 @@ local function herInstScrub(text)
 end
 function module:InstanceQuests()
 	local str = [[
-	return function(L, LQ, module, norInstScrub, herInstScrub)
+	return function(L, LQ, module, norInstScrub, herInstScrub, inlineTableSort)
 	local t = {
 		type = "group",
 		name = L["Doungeons"],
@@ -460,14 +459,14 @@ function module:InstanceQuests()
 	}
 	return t
 	end ]]
-	local t = loadstring(str)()(L, LQ, self, norInstScrub, herInstScrub)
+	local t = loadstring(str)()(L, LQ, self, norInstScrub, herInstScrub, inlineTableSort)
 
 	return t
 end
 
 function module:PlayerVsPlayerQuests()
 	local str = [[
-	return function(L, LQ, module)
+	return function(L, LQ, module, inlineTableSort)
 	local t = {
 		type = "group",
 		name = L["World PvP"],
@@ -476,34 +475,34 @@ function module:PlayerVsPlayerQuests()
 			bg  = { type = "group", name = L["Battlegrounds"],
 				args = {
 					bgSub = { name = L["Battlegrounds"], type = "multiselect", width = "full",
-						values = { LQ["Call to Arms: Strand of the Ancients"], LQ["Call to Arms: Isle of Conquest"] },
+						values = inlineTableSort({ LQ["Call to Arms: Strand of the Ancients"], LQ["Call to Arms: Isle of Conquest"] }),
 					},
 				},
 			},
 			wg  = { type = "group", name = L["Wintergrasp"],	--Don't care too much to break the horde and alliance ones up here...
 				args = {
 					wgSub = { name = L["Wintergrasp"], type = "multiselect", width = "full",
-						values = { LQ["A Rare Herb"], LQ["Bones and Arrows"], LQ["Defend the Siege"], LQ["Fueling the Demolishers"], LQ["Healing with Roses"],
+						values = inlineTableSort({ LQ["A Rare Herb"], LQ["Bones and Arrows"], LQ["Defend the Siege"], LQ["Fueling the Demolishers"], LQ["Healing with Roses"],
 					LQ["Jinxing the Walls"], LQ["No Mercy for the Merciless"], LQ["Slay them all!"], LQ["Stop the Siege"], LQ["Victory in Wintergrasp"],
 					LQ["Warding the Walls"], LQ["Warding the Warriors"], LQ["Southern Sabotage"], LQ["Toppling the Towers"],
-						},
+						}),
 					},
 				},
 			},
 			Grizzly  = { type = "group", name = L["Grizzly Hills"],		--These are all classified as PvP Quests, even though it might not take pvp, as dictated by Acheivemnt
 				args = {
 					shared = { name = L["Shared Quests"], type = "multiselect", order = 1, width = "full",
-						values = { LQ["Keep Them at Bay"], LQ["Riding the Red Rocket"], LQ["Smoke 'Em Out"] },
+						values = inlineTableSort({ LQ["Keep Them at Bay"], LQ["Riding the Red Rocket"], LQ["Smoke 'Em Out"] }),
 					},
 					horde = { name = L["Horde"], type = "multiselect", order = 10, width = "full",
-						values = { LQ["Blackriver Brawl"], LQ["Making Repairs"], LQ["Overwhelmed!"], LQ["Crush Captain Brightwater!"],
-							LQ["Shred the Alliance"], LQ["Keep 'Em on Their Heels"] },
+						values = inlineTableSort({ LQ["Blackriver Brawl"], LQ["Making Repairs"], LQ["Overwhelmed!"], LQ["Crush Captain Brightwater!"],
+							LQ["Shred the Alliance"], LQ["Keep 'Em on Their Heels"] }),
 
 						hidden = function(info) return select(2, UnitFactionGroup("player")) == "Alliance" end
 					},
 					alliance = { name = L["Alliance"], type = "multiselect", order = 20, width = "full",
-						values = { LQ["Blackriver Skirmish"], LQ["Life or Death"], LQ["Kick 'Em While They're Down"], LQ["Down With Captain Zorna!"],
-							LQ["Pieces Parts"], LQ["Shredder Repair"] },
+						values = inlineTableSort({ LQ["Blackriver Skirmish"], LQ["Life or Death"], LQ["Kick 'Em While They're Down"], LQ["Down With Captain Zorna!"],
+							LQ["Pieces Parts"], LQ["Shredder Repair"] }),
 						hidden = function(info) return select(2, UnitFactionGroup("player")) == "Horde" end
 					},
 				},
@@ -527,7 +526,7 @@ function module:PlayerVsPlayerQuests()
 	}
 	return t
 	end]]
-	local t = loadstring(str)()(L, LQ, self)
+	local t = loadstring(str)()(L, LQ, self, inlineTableSort)
 	return t
 end
 
@@ -537,7 +536,7 @@ local function jcScrub(text)
 end
 function module:ProfessionsQuests()
 	local str = [[
-	return function(L, LQ, module, jcScrub)
+	return function(L, LQ, module, jcScrub, inlineTableSort)
 	local t = {
 		type = "group",
 		name = L["Professions"],
@@ -560,14 +559,14 @@ function module:ProfessionsQuests()
 			cook = { type = "group", name = L["Cooking"],
 				args = {
 					cookSub = { name = L["Cooking"], type = "multiselect", order = 1, width = "full",
-						values = { LQ["Cheese for Glowergold"], LQ["Convention at the Legerdemain"], LQ["Infused Mushroom Meatloaf"], LQ["Mustard Dogs!"], LQ["Sewer Stew"] },
+						values = inlineTableSort({ LQ["Cheese for Glowergold"], LQ["Convention at the Legerdemain"], LQ["Infused Mushroom Meatloaf"], LQ["Mustard Dogs!"], LQ["Sewer Stew"] }),
 					},
 				},
 			},
 			fish = { type = "group", name = L["Fishing"],
 				args = {
 					shared = { name = L["Fishing"], type = "multiselect", order = 1, width = "full",
-						values = { LQ["Blood Is Thicker"], LQ["Dangerously Delicious"], LQ["Jewel Of The Sewers"], LQ["Monsterbelly Appetite"], LQ["The Ghostfish"], },
+						values = inlineTableSort({ LQ["Blood Is Thicker"], LQ["Dangerously Delicious"], LQ["Jewel Of The Sewers"], LQ["Monsterbelly Appetite"], LQ["The Ghostfish"], }),
 					},
 				},
 			},
@@ -575,7 +574,7 @@ function module:ProfessionsQuests()
 	}
 	return t
 	end]]
-	local t = loadstring(str)()(L, LQ, module, jcScrub)
+	local t = loadstring(str)()(L, LQ, module, jcScrub, inlineTableSort)
 	return t
 end
 
