@@ -13,9 +13,9 @@ function D(...)
 	local str = string.join(", ", tostringall(...) )
 	str = str:gsub("([=:]), ", "%1")
 
-	--if AddonParent.db and AddonParent.db.global.debug then
+	if AddonParent.db and AddonParent.db.global.debug then
 		print("|cff99ff66SOCD-AT:|r "..str)
-	--end
+	end
 	return str
 end
 
