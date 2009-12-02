@@ -35,7 +35,7 @@
 ## Version: @project-version@
 ## X-Email: Orionshock@gmail.com
 
-## Required Dependancy: SickOfClickingDailies
+## RequiredDependancy: SickOfClickingDailies
 
 ## DefaultState: enabled
 ## LoadManagers: AddonLoader
