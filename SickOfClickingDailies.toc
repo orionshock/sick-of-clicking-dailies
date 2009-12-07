@@ -35,6 +35,7 @@
 ## Version: @project-version@
 ## X-Email: Orionshock@gmail.com
 ## SavedVariables: SOCD_SIX
+## OptionalDeps: Ace3
 ## X-Embeds: Ace3
 
 ## DefaultState: Enabled

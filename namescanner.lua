@@ -11,6 +11,7 @@ Good Luck!
 
 local SOCD = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
 local module = SOCD:NewModule("QuestScanner", "AceEvent-3.0")
+module.noModuleControl = true
 local dbo
 
 local tempQuestTable = {}
