@@ -16,7 +16,7 @@
 --	General -- Used by all or most :)				  --
 ----------------------------------------------------------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_AltTracking", "frFR", true, debug)
+local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_AltTracking", "frFR")
 
 	if L then
 --These are not importable to WoWAce/Curseforge Locale system, as these are pulled directly from the client.
