@@ -119,7 +119,7 @@ function module:CreateLDB()
 		OnClick = OnClick,
 	}
 	dailyTTL.text = (dailyTTL.label)..(dailyTTL.value)
-	self.ldb = ldb:NewDataObject("SOCD Dailies Reset Timmer", dailyTTL)
+	self.ldb = ldb:NewDataObject("SOCD - Reset Timer", dailyTTL)
 	ldbObj = self.ldb
 	ldbUpdateTimerGroup:Play()
 end
