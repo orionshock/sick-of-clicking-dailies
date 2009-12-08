@@ -112,7 +112,7 @@ function module:CreateLDB()
 		OnLeave = OnLeave,
 		OnTooltipShow = OnTooltipShow,
 	}
-	self.ldb = LibStub("LibDataBroker-1.1"):NewDataObject(L["SOCD - Alts Tracking"], trackLDB)
+	self.ldb = LibStub("LibDataBroker-1.1"):NewDataObject("SOCD - Alts Tracking", trackLDB)
 end
 
 
