@@ -154,7 +154,7 @@ resetAni:SetScript("OnFinished", function(self)
 
 end)
 
-resetAni:SetDuration(6)
+resetAni:SetDuration(600)
 resetAni:SetOrder(1)
 TimeToResetGroup:Play()
 TimeToResetGroup:SetLooping("REPEAT")

@@ -128,22 +128,23 @@ do
 	Ani:SetOrder(2)
 	Ani:SetScript("OnFinished", function(self,...)
 		D("AltTracking - Reset Animation, Pruning History")
-	--	if GetQuestResetTime() > 86300 then return end
-		for toon, qTable in pairs(db) do
-			if toon ~= "chars" then
-				D("Pruning toon", toon)
-				for quest, ttl in pairs(qTable) do
-					if time() > ttl then
-						D("Pruning", quest, "Exired on:", date("%c", ttl), "current Time:", date() )
-						qTable[quest] = nil
+		if GetQuestResetTime() > 86300 then return end
+			for toon, qTable in pairs(db) do
+				if toon ~= "chars" then
+					D("Pruning toon", toon)
+					for quest, ttl in pairs(qTable) do
+						if time() > ttl then
+							D("Pruning", quest, "Exired on:", date("%c", ttl), "current Time:", date() )
+							qTable[quest] = nil
+						end
 					end
 				end
 			end
-		end
-		for toon, qTable in pairs(db) do
-			if not next(qTable) then
-				D("removing", toon," from db, no quests")
-				db[toon] = nil
+			for toon, qTable in pairs(db) do
+				if not next(qTable) then
+					D("removing", toon," from db, no quests")
+					db[toon] = nil
+				end
 			end
 		end
 	end)
