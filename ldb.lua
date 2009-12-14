@@ -2,7 +2,7 @@ local AddonParent = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
 
 local D = AddonParent.D
 
-local module = AddonParent:NewModule("LDB")
+local module = AddonParent:NewModule("LDB", "AceEvent-3.0")
 module.noModuleControl = true
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
 local db, completedQuests, specialResetQuests, AltTrack
@@ -21,8 +21,17 @@ function module:OnInitialize()
 	db.RegisterCallback(self, "OnProfileChanged", "RefreshConfig")
 	db.RegisterCallback(self, "OnProfileCopied", "RefreshConfig")
 	db.RegisterCallback(self, "OnProfileReset", "RefreshConfig")
+	self:RegisterEvent("ADDON_LOADED")
+end
 
-	AltTrack = AddonParent:GetModule("Alt Tracking")
+function module:OnEnable()
+	AltTrack = AddonParent:GetModule("Alt Tracking", true)
+end
+
+function module:ADDON_LOADED(event, addon, ...)
+	if addon == "SickOfClickingDailies_AltTracking" then
+		AltTrack = AddonParent:GetModule("Alt Tracking", true)
+	end
 end
 
 function module:RefreshConfig(event, f_db, profileName)
