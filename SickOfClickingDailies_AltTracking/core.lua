@@ -47,8 +47,8 @@ end
 
 function module:OnEnable()
 	self:CreateLDB()
+	self:PruneHistory()
 	D("OnEnable")
---	self:RegisterMessage("SOCD_DAILIY_QUEST_COMPLETE")
 end
 
 local old_LDB_DailieEvent = LDBModule.SOCD_DAILIY_QUEST_COMPLETE
@@ -119,36 +119,23 @@ end
 
 
 --
-do
-	local TimeToResetGroup = select(2, LDBModule.AnimationFrame:GetAnimationGroups() )
-	TimeToResetGroup.name = "TimeToResetGroup"
-	local Ani = TimeToResetGroup:CreateAnimation()
-	Ani.name = "ALtTrack-Animation"
-	Ani:SetDuration(1)
-	Ani:SetOrder(2)
-	Ani:SetScript("OnFinished", function(self,...)
-		D("AltTracking - Reset Animation, Pruning History")
-		if GetQuestResetTime() > 86300 then return end
-		for toon, qTable in pairs(db) do
-			if toon ~= "chars" then
-				D("Pruning toon", toon)
-				for quest, ttl in pairs(qTable) do
-					if time() > ttl then
-						D("Pruning", quest, "Exired on:", date("%c", ttl), "current Time:", date() )
-						qTable[quest] = nil
-					end
+function module:PruneHistory()
+	D("AltTracking - Pruning History")
+	for toon, qTable in pairs(db) do
+		if toon ~= "chars" then
+			D("Pruning toon", toon)
+			for quest, ttl in pairs(qTable) do
+				if time() > ttl then
+					D("Pruning", quest, "Exired on:", date("%c", ttl), "current Time:", date() )
+					qTable[quest] = nil
 				end
 			end
 		end
-		for toon, qTable in pairs(db) do
-			if not next(qTable) then
-				D("removing", toon," from db, no quests")
-				db[toon] = nil
-			end
+	end
+	for toon, qTable in pairs(db) do
+		if not next(qTable) then
+			D("removing", toon," from db, no quests")
+			db[toon] = nil
 		end
-	end)
-	function SOCD_CheckTTND()
-		local elapsed, duration = math.floor((TimeToResetGroup:GetAnimations()):GetElapsed()), TimeToResetGroup:GetDuration()
-		print("Animation Time To new day. Elapsed:", elapsed, "Duration", duration, SecondsToTime( duration - elapsed) )
 	end
 end

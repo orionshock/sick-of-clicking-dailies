@@ -5,7 +5,7 @@ local D = AddonParent.D
 local module = AddonParent:NewModule("LDB")
 module.noModuleControl = true
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
-local db, completedQuests, specialResetQuests
+local db, completedQuests, specialResetQuests, AltTrack
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 module.sortedQuestTable = {}
 
@@ -21,6 +21,8 @@ function module:OnInitialize()
 	db.RegisterCallback(self, "OnProfileChanged", "RefreshConfig")
 	db.RegisterCallback(self, "OnProfileCopied", "RefreshConfig")
 	db.RegisterCallback(self, "OnProfileReset", "RefreshConfig")
+
+	AltTrack = AddonParent:GetModule("Alt Tracking")
 end
 
 function module:RefreshConfig(event, f_db, profileName)
@@ -90,18 +92,6 @@ local function OnClick(frame, button)
 end
 
 
-
-
-local AnimationFrame = CreateFrame("frame")
-module.AnimationFrame = AnimationFrame
-local ldbUpdateTimerGroup = AnimationFrame:CreateAnimationGroup()
-local Ani = ldbUpdateTimerGroup:CreateAnimation("Animation")
-Ani:SetDuration(60)
-Ani:SetOrder(1)
-ldbUpdateTimerGroup:SetLooping("REPEAT")
-
-
-
 function module:CreateLDB()
 	local ldb = LibStub("LibDataBroker-1.1", true)
 	if not ldb then
@@ -124,13 +114,35 @@ function module:CreateLDB()
 	ldbUpdateTimerGroup:Play()
 end
 
-local function UpdateLDB_Object(frame, elapsed)
+local TimerFrame = CreateFrame("frame")
+module.TimerFrame = TimerFrame
+
+local delay, interval = 50,60
+local timeToEndOfDay
+TimerFrame:SetScript("OnUpdate", function(self, elapsed)
+	delay = delay + elapsed
+	if delay > interval then
+		module:UpdateLDBText()
+		if not timeToEndOfDay then
+			timeToEndOfDay = time() + GetQuestResetTime()
+		end
+		if time() > timeToEndOfDay then
+			module:PruneHistory()
+			if AltTrack then
+				AltTrack:PruneHistory()
+			end
+		end
+	end
+end)
+
+
+function module:UpdateLDBText()
 	local ttl = GetQuestResetTime()
 	ldbObj.value = SecondsToTime(ttl)
 	ldbObj.text = (ldbObj.label)..(ldbObj.value)
 end
 
-ldbUpdateTimerGroup:SetScript("OnLoop", UpdateLDB_Object)
+
 
 function module:PruneHistory()
 	for quest, ttl in pairs(completedQuests) do
@@ -141,26 +153,6 @@ function module:PruneHistory()
 	end
 	self:SortQuestCompleTable()
 end
-
-local TimeToResetGroup = AnimationFrame:CreateAnimationGroup()
-local resetAni = TimeToResetGroup:CreateAnimation("Animation")
-TimeToResetGroup:SetScript("OnLoop", function(self)
-	D("TimeToResetGroup, Setting new End of Day")
-	resetAni:SetDuration( GetQuestResetTime() )
-end)
-resetAni:SetScript("OnFinished", function(self)
-	D("Reset Animation, Pruning History")
-	module:PruneHistory()
-
-end)
-
-resetAni:SetDuration(600)
-resetAni:SetOrder(1)
-TimeToResetGroup:Play()
-TimeToResetGroup:SetLooping("REPEAT")
-
---	/dump select(2, SickOfClickingDailies:GetModule("LDB").AnimationFrame:GetAnimationGroups()):GetAnimations():GetElapsed()
-------------
 
 
 function module:GetOptionsTable(rootTable)
