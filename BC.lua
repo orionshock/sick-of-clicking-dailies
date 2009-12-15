@@ -125,7 +125,7 @@ function module:GetWorldQuests()
 	local str = [[
 	return function(L, LQ, module, GT)
 	local t = {
-		name = CHANNEL_CATEGORY_WORLD, type = "group", order = 1,
+		name = L["World Events"], type = "group", order = 1,
 		args = {
 			skettiswrap = { type = "group", name = L["Sha'tari Skyguard"],
 				args = {

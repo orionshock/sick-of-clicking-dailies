@@ -140,6 +140,7 @@ TimerFrame:SetScript("OnUpdate", function(self, elapsed)
 				AltTrack:PruneHistory()
 			end
 		end
+		delay = 0
 	end
 end)
 
