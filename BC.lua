@@ -125,7 +125,7 @@ function module:GetWorldQuests()
 	local str = [[
 	return function(L, LQ, module, GT)
 	local t = {
-		name = L["World Events"], type = "group", order = 1,
+		name = CHANNEL_CATEGORY_WORLD, type = "group", order = 1,
 		args = {
 			skettiswrap = { type = "group", name = L["Sha'tari Skyguard"],
 				args = {
@@ -164,7 +164,7 @@ function module:GetWorldQuests()
 				},
 			},
 			sso = module:GenerateSSOOptions(),
-			events = { type = "group", name = "World Events",
+			events = { type = "group", name = L["World Events"],
 				args = {
 					brewfest = { name = L["Brewfest"], type = "group",
 						args = {

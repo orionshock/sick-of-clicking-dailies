@@ -476,7 +476,7 @@ function module:PlayerVsPlayerQuests()
 					},
 				},
 			},
-			Icecrown  = { type = "group", name = L["World PvP"], 		--I know, not a whole lot eh?
+			Icecrown  = { type = "group", name = L["Icecrown"], 		--I know, not a whole lot eh?
 				args = {
 --					shared = { name = L["Shared Quests"], type = "multiselect", order = 1, width = "full",
 --						values = {  },
