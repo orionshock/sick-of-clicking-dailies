@@ -289,10 +289,13 @@ function module:WorldQuests()
 									head1 = { type = "header", name = L["The Argent Tournament - Finale"], order = 1, },
 									about = { type = "description", name = L["ArgentTournamentFinale_Desc"], order = 2, },
 									part = { type = "multiselect", name = L["Shared Quests"], order = 10, width = "full",
-										values = inlineTableSort({ LQ["You've Really Done It This Time, Kul"], LQ["Rescue at Sea"], LQ["A Leg Up"], LQ["The Light's Mercy"],
-											LQ["Stop The Aggressors"], LQ["Breakfast Of Champions"], LQ["Gormok Wants His Snobolds"], LQ["What Do You Feed a Yeti, Anyway?"],
-											LQ["The Fate Of The Fallen"], LQ["Get Kraken!"], LQ["Drottinn Hrothgar"],LQ["Mistcaller Yngvar"],
-											LQ["Ornolf The Scarred"], LQ["Deathspeaker Kharos"],})
+										values = inlineTableSort({ LQ["You've Really Done It This Time, Kul"], LQ["Rescue at Sea"],
+										LQ["A Leg Up"], LQ["The Light's Mercy"], LQ["Stop The Aggressors"], 
+										LQ["Breakfast Of Champions"], LQ["Gormok Wants His Snobolds"], 
+										LQ["What Do You Feed a Yeti, Anyway?"],LQ["The Fate Of The Fallen"], LQ["Get Kraken!"],
+										LQ["Drottinn Hrothgar"],LQ["Mistcaller Yngvar"], LQ["Ornolf The Scarred"],
+										LQ["Deathspeaker Kharos"],
+										})
 									},
 									gossip = { type = "multiselect", name = GOSSIP_OPTIONS, order = 40, width = "full",
 										get = "GossipMulitGet", set = "GossipMulitSet",
@@ -313,7 +316,8 @@ function module:WorldQuests()
 					Ravasaur = { type = "group", name = L["Ravasaur Trainers"],
 						args = {
 							raveSub = { name = L["Ravasaur Trainers"], type = "multiselect", width = "full",
-								values = inlineTableSort({ LQ["Gorishi Grub"], LQ["Hungry, Hungry Hatchling"], LQ["Poached, Scrambled, Or Raw?"], LQ["Searing Roc Feathers"], }),
+								values = inlineTableSort({ LQ["Gorishi Grub"], LQ["Hungry, Hungry Hatchling"], 
+									LQ["Poached, Scrambled, Or Raw?"], LQ["Searing Roc Feathers"], }),
 							},
 						},
 					},
@@ -327,7 +331,8 @@ function module:WorldQuests()
 								values = inlineTableSort({ LQ["Back to the Pit"], LQ["Defending Your Title"], LQ["Overstock"],
 								LQ["Maintaining Discipline"], LQ["The Aberrations Must Die"], }),
 							},
-							peaksGossip = { name = L["The Storm Peaks"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 8, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
+							peaksGossip = { name = L["The Storm Peaks"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 8, width = "full", 
+								get = "GossipMulitGet", set = "GossipMulitSet",
 								values = { [ GT["Let's do this, sister."] ] = LQ["Defending Your Title"] },
 							},
 						},
@@ -335,11 +340,12 @@ function module:WorldQuests()
 					Icecrown = { type = "group", name = L["Icecrown"],
 						args = {
 							shared = { name = L["Icecrown"], type = "multiselect", order = 1, width = "full",
-								values = inlineTableSort({ LQ["King of the Mountain"], LQ["Blood of the Chosen"], LQ["Drag and Drop"], LQ["Neutralizing the Plague"],
-									LQ["No Rest For The Wicked"], LQ["Not a Bug"], LQ["Retest Now"], LQ["Slaves to Saronite"], LQ["That's Abominable!"],
-									LQ["Total Ohmage: The Valley of Lost Hope!"], LQ["Volatility"], LQ["Keeping the Alliance Blind"],
-									LQ["Riding the Wavelength: The Bombardment"], LQ["Static Shock Troops: the Bombardment"],
-									LQ["The Solution Solution"], LQ["Capture More Dispatches"], LQ["Putting the Hertz: The Valley of Lost Hope"],
+								values = inlineTableSort({ LQ["King of the Mountain"], LQ["Blood of the Chosen"], LQ["Drag and Drop"], 
+									LQ["Neutralizing the Plague"], LQ["No Rest For The Wicked"], LQ["Not a Bug"], LQ["Retest Now"],
+									LQ["Slaves to Saronite"], LQ["That's Abominable!"], LQ["Total Ohmage: The Valley of Lost Hope!"],
+									LQ["Volatility"], LQ["Keeping the Alliance Blind"], LQ["Riding the Wavelength: The Bombardment"],
+									LQ["Static Shock Troops: the Bombardment"], LQ["The Solution Solution"],
+									LQ["Capture More Dispatches"], LQ["Putting the Hertz: The Valley of Lost Hope"], 
 									LQ["Assault by Ground"], LQ["Assault by Air"],
 									 }),
 							},
@@ -417,44 +423,7 @@ function module:InstanceQuests()
 		name = L["Doungeons"],
 		order = 2,
 		args = {
-			normal  = { type = "group", name = L["Dungeon"], order = 1,		--Note to self, search _G again for some client localizations, they changed alot in 3.2
-				args = {
-					normalSub = { name = L["Dungeon"], type = "multiselect", order = 1, width = "full",
-						values = {
-			[LQ["Timear Foresees Centrifuge Constructs in your Future!"] ] = norInstScrub(LQ["Timear Foresees Centrifuge Constructs in your Future!"]),
-			[LQ["Timear Foresees Infinite Agents in your Future!"] ] = norInstScrub(LQ["Timear Foresees Infinite Agents in your Future!"]),
-			[LQ["Timear Foresees Titanium Vanguards in your Future!"] ] = norInstScrub(LQ["Timear Foresees Titanium Vanguards in your Future!"]),
-			[LQ["Timear Foresees Ymirjar Berserkers in your Future!"] ] = norInstScrub(LQ["Timear Foresees Ymirjar Berserkers in your Future!"]),
-			[ LQ["All Things in Good Time"] ]= LQ["All Things in Good Time"],
-						}
-					},
-					option = { name = L["Faction Token"], type = "select", order = 2, get = "FactionTokenGet", set = "FactionTokenSet", width = "double",
-						values = { [-1] = L["None"],  (GetItemInfo(43950)) or "Kirin Tor", (GetItemInfo(44711)) or "Argent Crusade",
-								(GetItemInfo(44713)) or "Ebon Blade", (GetItemInfo(44710)) or "Wyrmrest", (GetItemInfo(49702)) or "Sons of Hodir" },
-					}
-				},
-			},
-			heroic = { type = "group", name = L["Heroic Dungeon"], order = 2,
-				args = {
-					heroicSub = { name =  L["Heroic Dungeon"], type = "multiselect", width = "full",
-						values = {
-							[LQ["Proof of Demise: Anub'arak"] ] = herInstScrub(LQ["Proof of Demise: Anub'arak"]),
-							[LQ["Proof of Demise: Cyanigosa"] ] = herInstScrub(LQ["Proof of Demise: Cyanigosa"]),
-							[LQ["Proof of Demise: Gal'darah"] ] = herInstScrub(LQ["Proof of Demise: Gal'darah"]),
-							[LQ["Proof of Demise: Herald Volazj"] ] = herInstScrub(LQ["Proof of Demise: Herald Volazj"]),
-							[LQ["Proof of Demise: Ingvar the Plunderer"] ] = herInstScrub(LQ["Proof of Demise: Ingvar the Plunderer"]),
-							[LQ["Proof of Demise: Keristrasza"] ] = herInstScrub(LQ["Proof of Demise: Keristrasza"]),
-							[LQ["Proof of Demise: King Ymiron"] ] = herInstScrub(LQ["Proof of Demise: King Ymiron"]),
-							[LQ["Proof of Demise: Ley-Guardian Eregos"] ] = herInstScrub(LQ["Proof of Demise: Ley-Guardian Eregos"]),
-							[LQ["Proof of Demise: Loken"] ] = herInstScrub(LQ["Proof of Demise: Loken"]),
-							[LQ["Proof of Demise: Mal'Ganis"] ] = herInstScrub(LQ["Proof of Demise: Mal'Ganis"]),
-							[LQ["Proof of Demise: Sjonnir The Ironshaper"] ] = herInstScrub(LQ["Proof of Demise: Sjonnir The Ironshaper"]),
-							[LQ["Proof of Demise: The Prophet Tharon'ja"] ] = herInstScrub(LQ["Proof of Demise: The Prophet Tharon'ja"]),
-							[LQ["Proof of Demise: The Black Knight"] ] = herInstScrub(LQ["Proof of Demise: The Black Knight"]),
-						}
-					},
-				},
-			},
+			help = {type = "description", name = "The Daily Dungeon quests are no longer in the game.. this will be updated with the raid ones soon"},
 		},
 	}
 	return t
