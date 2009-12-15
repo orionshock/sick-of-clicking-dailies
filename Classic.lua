@@ -107,10 +107,10 @@ function module:GetOptionsTable()
 end
 
 function module:Multi_Get(info, value)
-	return db.profile[info.option.values[value]]
+	return db.profile.quests[info.option.values[value]]
 end
 
 function module:Multi_Set(info, value, state)
-	db.profile[info.option.values[value]] = state
+	db.profile.quests[info.option.values[value]] = state
 end
 
