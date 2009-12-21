@@ -190,22 +190,22 @@ local qTable = {
 	[13199] = "Bones and Arrows", --WotLK
 	[13201] = "Healing with Roses", --WotLK
 	[13222] = "Defend the Siege", --WotLK
-	[13240] = "Timear Foresees Centrifuge Constructs in your Future!", --WotLK
-	[13241] = "Timear Foresees Ymirjar Berserkers in your Future!", --WotLK
-	[13243] = "Timear Foresees Infinite Agents in your Future!", --WotLK
-	[13244] = "Timear Foresees Titanium Vanguards in your Future!", --WotLK
-	[13245] = "Proof of Demise: Ingvar the Plunderer", --WotLK
-	[13246] = "Proof of Demise: Keristrasza", --WotLK
-	[13247] = "Proof of Demise: Ley-Guardian Eregos", --WotLK
-	[13248] = "Proof of Demise: King Ymiron", --WotLK
-	[13249] = "Proof of Demise: The Prophet Tharon'ja", --WotLK
-	[13250] = "Proof of Demise: Gal'darah", --WotLK
-	[13251] = "Proof of Demise: Mal'Ganis", --WotLK
-	[13252] = "Proof of Demise: Sjonnir The Ironshaper", --WotLK
-	[13253] = "Proof of Demise: Loken", --WotLK
-	[13254] = "Proof of Demise: Anub'arak", --WotLK
-	[13255] = "Proof of Demise: Herald Volazj", --WotLK
-	[13256] = "Proof of Demise: Cyanigosa", --WotLK
+--	[13240] = "Timear Foresees Centrifuge Constructs in your Future!", --WotLK, removed in 3.2
+--	[13241] = "Timear Foresees Ymirjar Berserkers in your Future!", --WotLK, removed in 3.2
+--	[13243] = "Timear Foresees Infinite Agents in your Future!", --WotLK, removed in 3.2
+--	[13244] = "Timear Foresees Titanium Vanguards in your Future!", --WotLK, removed in 3.2
+--	[13245] = "Proof of Demise: Ingvar the Plunderer", --WotLK, removed in 3.2
+--	[13246] = "Proof of Demise: Keristrasza", --WotLK, removed in 3.2
+--	[13247] = "Proof of Demise: Ley-Guardian Eregos", --WotLK, removed in 3.2
+--	[13248] = "Proof of Demise: King Ymiron", --WotLK, removed in 3.2
+--	[13249] = "Proof of Demise: The Prophet Tharon'ja", --WotLK, removed in 3.2
+--	[13250] = "Proof of Demise: Gal'darah", --WotLK, removed in 3.2
+--	[13251] = "Proof of Demise: Mal'Ganis", --WotLK, removed in 3.2
+--	[13252] = "Proof of Demise: Sjonnir The Ironshaper", --WotLK, removed in 3.2
+--	[13253] = "Proof of Demise: Loken", --WotLK, removed in 3.2
+--	[13254] = "Proof of Demise: Anub'arak", --WotLK, removed in 3.2
+--	[13255] = "Proof of Demise: Herald Volazj", --WotLK, removed in 3.2
+--	[13256] = "Proof of Demise: Cyanigosa", --WotLK, removed in 3.2
 	[13261] = "Volatility", --WotLK
 	[13276] = "That's Abominable!", --WotLK
 	[13283] = "King of the Mountain", --WotLK
@@ -264,50 +264,50 @@ local qTable = {
 
 
 --Fishing:
-	[13833] = "Blood Is Thicker",
-	[13834] = "Dangerously Delicious",
-	[13832] = "Jewel Of The Sewers",
-	[13836] = "Monsterbelly Appetite",
-	[13830] = "The Ghostfish",
+	[13833] = "Blood Is Thicker", --WotLK
+	[13834] = "Dangerously Delicious", --WotLK
+	[13832] = "Jewel Of The Sewers", --WotLK
+	[13836] = "Monsterbelly Appetite", --WotLK
+	[13830] = "The Ghostfish", --WotLK
 
 --Patch 3.2 Additions:
-	[14096] = "You've Really Done It This Time, Kul",
-	[14152] = "Rescue at Sea",
-	[14074] = "A Leg Up",
-	[14077] = "The Light's Mercy",
-	[14080] = "Stop The Aggressors",
-	[14076] = "Breakfast Of Champions",
-	[14090] = "Gormok Wants His Snobolds",
-	[14112] = "What Do You Feed a Yeti, Anyway?",
+	[14096] = "You've Really Done It This Time, Kul", --WotLK
+	[14152] = "Rescue at Sea", --WotLK
+	[14074] = "A Leg Up", --WotLK
+	[14077] = "The Light's Mercy", --WotLK
+	[14080] = "Stop The Aggressors", --WotLK
+	[14076] = "Breakfast Of Champions", --WotLK
+	[14090] = "Gormok Wants His Snobolds", --WotLK
+	[14112] = "What Do You Feed a Yeti, Anyway?", --WotLK
 
-	[14107] = "The Fate Of The Fallen",
-	[14108] = "Get Kraken!",
-	[14101] = "Drottinn Hrothgar",
-	[14102] = "Mistcaller Yngvar",
-	[14104] = "Ornolf The Scarred",
-	[14105] = "Deathspeaker Kharos",
-	[14199] = "Proof of Demise: The Black Knight",
+	[14107] = "The Fate Of The Fallen", --WotLK
+	[14108] = "Get Kraken!", --WotLK
+	[14101] = "Drottinn Hrothgar", --WotLK
+	[14102] = "Mistcaller Yngvar", --WotLK
+	[14104] = "Ornolf The Scarred", --WotLK
+	[14105] = "Deathspeaker Kharos", --WotLK
+--	[14199] = "Proof of Demise: The Black Knight"--WOTLK, removed in 3.2
 
-	[13903] = "Gorishi Grub",
-	[13915] = "Hungry, Hungry Hatchling",
-	[13904] = "Poached, Scrambled, Or Raw?",
-	[13905] = "Searing Roc Feathers",
+	[13903] = "Gorishi Grub", --WotLK
+	[13915] = "Hungry, Hungry Hatchling", --WotLK
+	[13904] = "Poached, Scrambled, Or Raw?", --WotLK
+	[13905] = "Searing Roc Feathers", --WotLK
 ---Brewfest
 	[11408] = "Bark for T'chali's Voodoo Brewery!",	--BC
-	[11407] = "Bark for Drohn's Distillery!",
-	[11293] = "Bark for the Barleybrews!",
-	[11294] = "Bark for the Thunderbrews!",
-	[12062] = "Insult Coren Direbrew",
-	[12192] = "This One Time, When I Was Drunk...",
+	[11407] = "Bark for Drohn's Distillery!",	--BC
+	[11293] = "Bark for the Barleybrews!",	--BC
+	[11294] = "Bark for the Thunderbrews!",	--BC
+	[12062] = "Insult Coren Direbrew",	--BC
+	[12192] = "This One Time, When I Was Drunk...",	--BC
 
 --Hallow's End
-	[12404] = "Candy Bucket",
+	[12404] = "Candy Bucket", --BC
 --Pilgrim's bounty
-	[14061] = "Can't Get Enough Turkey",
-	[14062] = "Don't Forget The Stuffing!",
-	[14060] = "Easy As Pie",
-	[14058] = "She Says Potato",
-	[14059] = "We're Out of Cranberry Chutney Again?",
+	[14061] = "Can't Get Enough Turkey", --WotLK
+	[14062] = "Don't Forget The Stuffing!", --WotLK
+	[14060] = "Easy As Pie", --WotLK
+	[14058] = "She Says Potato", --WotLK
+	[14059] = "We're Out of Cranberry Chutney Again?", --WotLK
 
 }	--End of name Scanner Master Table
 
