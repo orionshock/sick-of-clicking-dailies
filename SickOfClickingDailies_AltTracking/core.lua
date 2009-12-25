@@ -56,7 +56,7 @@ function LDBModule:SOCD_DAILIY_QUEST_COMPLETE(event, quest, opt, id)
 	local t = db[playerName] or {}
 	t[quest] = ttd
 	db[playerName] = t
-	self.totalQuests[quest] = true
+	module.totalQuests[quest] = true
 end
 
 do
@@ -114,7 +114,7 @@ local function OnEnter(self)
 		OnTooltipShow(GameTooltip)
 		GameTooltip:Show()
 	end
-	print("sorted player list #", #module.sortedPlayerList)
+--	print("sorted player list #", #module.sortedPlayerList)
 
 end
 
