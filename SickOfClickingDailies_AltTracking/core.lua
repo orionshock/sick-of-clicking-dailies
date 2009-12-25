@@ -86,25 +86,45 @@ local function OnTooltipShow(self)
 	end
 end
 
-local LibQTip = LibStub('LibQTip-1.0')
+	--Copied from LibQTip
+local function GetTipAnchor(frame)
+	local x,y = frame:GetCenter()
+	if not x or not y then return "TOPLEFT", "BOTTOMLEFT" end
+	local hhalf = (x > UIParent:GetWidth() * 2/3) and "RIGHT" or (x < UIParent:GetWidth() / 3) and "LEFT" or ""
+	local vhalf = (y > UIParent:GetHeight() / 2) and "TOP" or "BOTTOM"
+	return vhalf..hhalf, frame, (vhalf == "TOP" and "BOTTOM" or "TOP")..hhalf
+end
+	--[[	E	]]--
+
+
+local LibQTip -- = LibStub('LibQTip-1.0', true)
 local function OnEnter(self)
---	GameTooltip:SetOwner(self, "ANCHOR_NONE")
---	GameTooltip:SetPoint("TOPLEFT", self, "BOTTOMLEFT")
---	GameTooltip:ClearLines()
---	OnTooltipShow(GameTooltip)
---	GameTooltip:Show()
+--	LibQTip = LibStub('LibQTip-1.0', true)
+	if LibQTip then
+		local tooltip = LibQTip:Acquire("SOCD_ALT", #module.sortedPlayerList+1)
+		self.tooltip = tooltip
+		module:populateTooltip(tooltip)
+		tooltip:SmartAnchorTo(self)
+		tooltip:Show()
+	else
+		GameTooltip:ClearAllPoints()
+		GameTooltip:SetOwner(self, "ANCHOR_NONE")
+		GameTooltip:SetPoint( GetTipAnchor(self) )
+		GameTooltip:ClearLines()
+		OnTooltipShow(GameTooltip)
+		GameTooltip:Show()
+	end
 	print("sorted player list #", #module.sortedPlayerList)
-	local tooltip = LibQTip:Acquire("SOCD_ALT", #module.sortedPlayerList+1)
-	self.tooltip = tooltip
-	module:populateTooltip(tooltip)
-	tooltip:SmartAnchorTo(self)
-	tooltip:Show()
+
 end
 
 local function OnLeave(self)
-	LibQTip:Release(self.tooltip)
-	self.tooltip = nil
---	GameTooltip:Hide()
+	if self.tooltip then
+		LibQTip:Release(self.tooltip)
+		self.tooltip = nil
+	else
+		GameTooltip:Hide()
+	end
 end
 
 
