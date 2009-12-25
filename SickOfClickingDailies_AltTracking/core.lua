@@ -62,6 +62,17 @@ function LDBModule:SOCD_DAILIY_QUEST_COMPLETE(event, quest, opt, id)
 	db[playerName] = t
 end
 
+do
+	local t = {}
+	function module:SortQuestCompleTable(completedQuests)
+		wipe(t)
+		for k, v in pairs(completedQuests) do
+			tinsert( t , k)
+		end
+		table.sort(t)
+		return t
+	end
+end
 
 local function OnTooltipShow(self)
 	self:AddLine(L["Quests for All Toons"])
@@ -75,18 +86,6 @@ local function OnTooltipShow(self)
 			end
 			self:AddLine(" ")
 		end
-	end
-end
-
-do
-	local t = {}
-	function module:SortQuestCompleTable(completedQuests)
-		wipe(t)
-		for k, v in pairs(completedQuests) do
-			tinsert( t , k)
-		end
-		table.sort(t)
-		return t
 	end
 end
 
