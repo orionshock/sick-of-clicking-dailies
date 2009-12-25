@@ -35,12 +35,8 @@ function module:OnInitialize()
 	db[playerName] = db[playerName] or {}
 	db.chars[playerName] = UnitFactionGroup("player")
 	self.sortedPlayerList = {}
-	for player in pairs(db.chars) do
-		tinsert(self.sortedPlayerList, player)
-	end
-	table.sort(self.sortedPlayerList)
-
-
+	self.sortedQuestList = {}
+	self.totalQuests = {}
 
 	D("OnInitialize")
 end
@@ -60,6 +56,7 @@ function LDBModule:SOCD_DAILIY_QUEST_COMPLETE(event, quest, opt, id)
 	local t = db[playerName] or {}
 	t[quest] = ttd
 	db[playerName] = t
+	self.totalQuests[quest] = true
 end
 
 do
@@ -67,7 +64,7 @@ do
 	function module:SortQuestCompleTable(completedQuests)
 		wipe(t)
 		for k, v in pairs(completedQuests) do
-			tinsert( t , k)
+			tinsert(t , k)
 		end
 		table.sort(t)
 		return t
@@ -89,16 +86,25 @@ local function OnTooltipShow(self)
 	end
 end
 
+local LibQTip = LibStub('LibQTip-1.0')
 local function OnEnter(self)
-	GameTooltip:SetOwner(self, "ANCHOR_NONE")
-	GameTooltip:SetPoint("TOPLEFT", self, "BOTTOMLEFT")
-	GameTooltip:ClearLines()
-	OnTooltipShow(GameTooltip)
-	GameTooltip:Show()
+--	GameTooltip:SetOwner(self, "ANCHOR_NONE")
+--	GameTooltip:SetPoint("TOPLEFT", self, "BOTTOMLEFT")
+--	GameTooltip:ClearLines()
+--	OnTooltipShow(GameTooltip)
+--	GameTooltip:Show()
+	print("sorted player list #", #module.sortedPlayerList)
+	local tooltip = LibQTip:Acquire("SOCD_ALT", #module.sortedPlayerList+1)
+	self.tooltip = tooltip
+	module:populateTooltip(tooltip)
+	tooltip:SmartAnchorTo(self)
+	tooltip:Show()
 end
 
 local function OnLeave(self)
-	GameTooltip:Hide()
+	LibQTip:Release(self.tooltip)
+	self.tooltip = nil
+--	GameTooltip:Hide()
 end
 
 
@@ -109,7 +115,7 @@ function module:CreateLDB()
 		text = L["Dailies On Alts"],
 		OnEnter = OnEnter,
 		OnLeave = OnLeave,
-		OnTooltipShow = OnTooltipShow,
+--		OnTooltipShow = OnTooltipShow,
 	}
 	self.ldb = LibStub("LibDataBroker-1.1"):NewDataObject("SOCD - Alts Tracking", trackLDB)
 end
@@ -131,10 +137,69 @@ function module:PruneHistory()
 			end
 		end
 	end
+	wipe(self.sortedPlayerList)
 	for toon, qTable in pairs(db) do
 		if not next(qTable) then
 			D("removing", toon," from db, no quests")
 			db[toon] = nil
+		else
+			if toon ~= "chars" then
+				tinsert(self.sortedPlayerList, toon)
+			end
+		end
+	end
+	table.sort(self.sortedPlayerList)
+end
+
+
+--LQT stuff
+--	self.sortedPlayerList	self.totalQuests self.sortedQuestList
+function module:UpdateAllQuests()
+	for toon, qTable in pairs(db) do
+		if toon ~= "chars" then
+			for quest, _ in pairs(qTable) do
+				self.totalQuests[quest] = true
+			end
+		end
+	end
+	wipe(self.sortedQuestList)
+	for k in pairs(self.totalQuests) do
+		tinsert(self.sortedQuestList, k)
+	end
+	table.sort(self.sortedQuestList)
+	--
+end
+   
+function module:populateTooltip(tip)
+	self:UpdateAllQuests()
+	tip:SetColumnLayout(#self.sortedPlayerList + 1)
+	tip:AddHeader(L["Quests for All Toons"])
+--	tip:AddLine()
+	local yOffset, xOffset = 2,1
+	local rCount = 1
+	tip:AddLine()
+	for i = 1, #self.sortedPlayerList do
+--		print("Add", self.sortedPlayerList[i], "row", yOffset, "col", xOffset+i )
+		tip:SetCell( yOffset, xOffset+i, self.sortedPlayerList[i] )
+	end
+	for i = 1, #self.sortedQuestList do
+		tip:AddLine()
+--		print("Add:", self.sortedQuestList[i], "row", yOffset+i, "col", 1)
+		tip:SetCell(yOffset+i, 1, self.sortedQuestList[i], "RIGHT")
+	end
+	
+	local xOffset, yOffset = 1,1
+	for x, player in pairs(self.sortedPlayerList) do
+		for y, quest in pairs(self.sortedQuestList) do
+			if db[player] and db[player][quest] then
+--				print("Set", quest, player, "row", y+yOffset, "col", x+xOffset)
+				tip:SetCell(1+y+yOffset, x+xOffset, "XX", "CENTER")
+			end
 		end
 	end
 end
+
+
+
+
+
