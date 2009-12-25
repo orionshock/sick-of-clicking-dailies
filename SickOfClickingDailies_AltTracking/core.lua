@@ -97,9 +97,9 @@ end
 	--[[	E	]]--
 
 
-local LibQTip -- = LibStub('LibQTip-1.0', true)
+local LibQTip = LibStub('LibQTip-1.0', true)
 local function OnEnter(self)
---	LibQTip = LibStub('LibQTip-1.0', true)
+	LibQTip = LibStub('LibQTip-1.0', true)
 	if LibQTip then
 		local tooltip = LibQTip:Acquire("SOCD_ALT", #module.sortedPlayerList+1)
 		self.tooltip = tooltip
