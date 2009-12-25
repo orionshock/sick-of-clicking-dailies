@@ -35,6 +35,7 @@ function module:OnInitialize()
 	db[playerName] = db[playerName] or {}
 	db.chars[playerName] = UnitFactionGroup("player")
 	self.sortedPlayerList = {}
+	self.unsortedPlayers = {}
 	self.sortedQuestList = {}
 	self.totalQuests = {}
 
@@ -179,6 +180,7 @@ function module:UpdateAllQuests()
 		if toon ~= "chars" then
 			for quest, _ in pairs(qTable) do
 				self.totalQuests[quest] = true
+				self.unsortedPlayers[toon] = true
 			end
 		end
 	end
@@ -188,6 +190,12 @@ function module:UpdateAllQuests()
 	end
 	table.sort(self.sortedQuestList)
 	--
+	wipe(self.sortedPlayerList)
+	for k in pairs(self.unsortedPlayers) do
+		tinsert(self.sortedPlayerList, k)
+	end
+	table.sort(self.sortedPlayerList)
+
 end
    
 function module:populateTooltip(tip)
