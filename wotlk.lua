@@ -37,11 +37,6 @@ module.defaults = {
 			--["*"] = 3,
 			--This section has to be manually set with the localized quest name and a default option of off
 			--not very many of these quests so it won't matter :D
-			--Instance non-Heroic
-			[LQ["Timear Foresees Centrifuge Constructs in your Future!"]] = -1,
-			[LQ["Timear Foresees Infinite Agents in your Future!"]] = -1,
-			[LQ["Timear Foresees Titanium Vanguards in your Future!"]] = -1,
-			[LQ["Timear Foresees Ymirjar Berserkers in your Future!"]] = -1,
 			--Argent Tournament
 			[LQ["Among the Champions"]] = -1,
 			[LQ["Battle Before The Citadel"]] = -1,
@@ -545,18 +540,6 @@ function module:ProfessionsQuests()
 	end]]
 	local t = loadstring(str)()(L, LQ, module, jcScrub, inlineTableSort)
 	return t
-end
-
-function module:FactionTokenGet(info)
-	return db.profile.qOptions[LQ["Timear Foresees Centrifuge Constructs in your Future!"] ]
-end
-
-function module:FactionTokenSet(info, val)
-	local qOpt = db.profile.qOptions
-	qOpt[LQ["Timear Foresees Centrifuge Constructs in your Future!"] ] = val
-	qOpt[LQ["Timear Foresees Infinite Agents in your Future!"] ] = val
-	qOpt[LQ["Timear Foresees Titanium Vanguards in your Future!"] ] = val
-	qOpt[LQ["Timear Foresees Ymirjar Berserkers in your Future!"] ] = val
 end
 
 function module:ThxQuestReward(info, val)
