@@ -58,6 +58,7 @@ module.defaults = {
 			[GT["Go on, you're free.  Get out of here!"] ] = true,	--"Slaves to Saronite
 			[GT["Give me a bomber!"] ] = true,	--Bombing quests in icecrown
 			[GT["Mount the Hippogryph and prepare for battle!"]] = true,	--Get Kraken!
+			[GT["I am ready to fight!"]] = true, 	--Jousting
 		}
 	},
 }
