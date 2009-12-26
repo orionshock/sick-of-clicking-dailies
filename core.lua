@@ -71,7 +71,7 @@ local function qTable(k)
 			return questTable[k], k, module
 		elseif questTable[k] ~= nil then
 			f = k
-			m = module
+			m = module ~= "RRQ" and module or nil
 		end
 	end
 --	print("found", k, "in", m, "As disbaled")
