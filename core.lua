@@ -251,6 +251,9 @@ function addon:OnEnable()
 	self:RegisterEvent("QUEST_COMPLETE")
 	self:RegisterEvent("PLAYER_TARGET_CHANGED")
 	self:RegisterEvent("QUEST_LOG_UPDATE")
+
+	--Random LFG Support--
+	self:RegisterEvent("LFG_COMPLETION_REWARD")
 end
 
 function addon:OnDisable()
@@ -565,4 +568,27 @@ function addon:AnalyzeGossipOptions(te, ...)
 		end
 	end
 	return false, 0
+end
+
+
+
+function addon:LFG_COMPLETION_REWARD(event, ...)
+	print(event, ...)
+	print("dungeon type", LFDQueueFrame.type)
+
+	local WotLKdoneToday = GetLFGDungeonRewards(262)	--WotLK
+	local _, WotLKname = GetLFGRandomDungeonInfo(5)
+
+	if WotLKdoneToday then
+		addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", WotLKname )
+	end
+
+	local BCdoneToday = GetLFGDungeonRewards(260)	--BC
+	local _, BCname = GetLFGRandomDungeonInfo(3)
+
+	if BCdoneToday then
+		addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", BCname )
+	end
+
+
 end
