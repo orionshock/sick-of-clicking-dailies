@@ -595,8 +595,3 @@ function addon:LFG_COMPLETION_REWARD(event, ...)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	print("SOCD - Remember to Zone out of the instance to track the Daily Completion in SOCD")
 end
-
-
-
-
-end
