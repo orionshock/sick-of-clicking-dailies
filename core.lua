@@ -254,6 +254,7 @@ function addon:OnEnable()
 
 	--Random LFG Support--
 	self:RegisterEvent("LFG_COMPLETION_REWARD")
+	self:ZONE_CHANGED_NEW_AREA("OnEnable-ZCNA")
 end
 
 function addon:OnDisable()
@@ -585,13 +586,10 @@ function addon:ZONE_CHANGED_NEW_AREA(event, ...)
 		if BCdoneToday then
 			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", BCname )
 		end
-		self:RegisterEvent("LFG_COMPLETION_REWARD")
 		self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
 	end
 end
 function addon:LFG_COMPLETION_REWARD(event, ...)
-	print(event, "registering for ZCNA to grab accurate times for reset",...)
-	self:UnregisterEvent("LFG_COMPLETION_REWARD")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-	print("SOCD - Remember to Zone out of the instance to track the Daily Completion in SOCD")
+--	print("SOCD - Remember to Zone out of the instance to track the Daily Completion in SOCD")
 end
