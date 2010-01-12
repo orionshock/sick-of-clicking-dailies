@@ -40,7 +40,7 @@ L["Quests"] = QUESTS_LABEL
 L["Revered"] = FACTION_STANDING_LABEL7
 L["Wintergrasp"] = PVPBATTLEGROUND_WINTERGRASPTIMER:match("(.+)|n")
 
---@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, namespace="Base_All", table-name="L")@
+--@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, handle-subnamespaces="none", table-name="L")@
 
 	end	
 
@@ -109,4 +109,4 @@ GT["I am ready to fight!"] = GT_R["I am ready to fight!(F)"]:gsub("[%(MF%)]+$", 
 		end
 	end
 
----Localization Counter-- Bump to generate new zip for locale changes = 14
+---Localization Counter-- Bump to generate new zip for locale changes = 15
