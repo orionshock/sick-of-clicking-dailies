@@ -40,7 +40,7 @@ L["Quests"] = QUESTS_LABEL
 L["Revered"] = FACTION_STANDING_LABEL7
 L["Wintergrasp"] = PVPBATTLEGROUND_WINTERGRASPTIMER:match("(.+)|n")
 
---@localization(locale="esES", format="lua_additive_table", same-key-is-true=true, namespace="Base_All", table-name="L")@
+--@localization(locale="esES", format="lua_additive_table", same-key-is-true=true, handle-subnamespaces="none", table-name="L")@
 
 	end	
 
