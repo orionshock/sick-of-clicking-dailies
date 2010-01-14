@@ -9,7 +9,7 @@ load the core file and the localizations. Libs are provided by parent addon as p
 ..\FrameXML\UI.xsd">
 
 
-<Include file="localizations\localization.xml"/>
+<Script file="localizations.lua"/>
 <Script file="core.lua"/>
 
 
