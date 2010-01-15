@@ -426,7 +426,7 @@ function addon:QUEST_LOG_UPDATE(event)
 	D(event)
 	for i  = 1, GetNumQuestLogEntries() do
                	local questTitle, level, questTag, suggestedGroup, isHeader , isCollapsed, isComplete, isDaily, questID = GetQuestLogTitle(i)
-		self.QuestLogCache[questTitle] = (not isHeader) and questID
+		self.QuestLogCache[questTitle] = (not isHeader) and questID or nil
 	end
 			
 	self:RegisterEvent(event)
