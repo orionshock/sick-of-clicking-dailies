@@ -14,11 +14,10 @@ This version comes with a built in config system made with Ace3's Config GUI Lib
 ]]--
 
 local projectVersion = "@project-version@"
-local projectRevision = "@project-revision@"
-local fileRevision = "@file-revision@"
+local projectRevision = "@project-abbreviated-hash@"
 if projectVersion:find("project") then
-	projectVersion = "vSVN"
-	projectRevision = "rSVN"
+	projectVersion = "git"
+	projectRevision = "dev"
 end
 
 local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
