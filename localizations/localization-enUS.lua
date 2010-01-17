@@ -109,4 +109,4 @@ GT["I am ready to fight!"] = GT_R["I am ready to fight!(F)"]:gsub("[%(MF%)]+$", 
 		end
 	end
 
----Localization Counter-- Bump to generate new zip for locale changes = 15
+---Localization Counter-- Bump to generate new zip for locale changes = 16
