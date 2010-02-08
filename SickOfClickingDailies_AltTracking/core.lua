@@ -12,7 +12,7 @@ local AddonParent = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
 local LDBModule = AddonParent:GetModule("LDB")
 local module = AddonParent:NewModule("Alt Tracking", "AceEvent-3.0")
 module.noModuleControl = true
-L = LibStub("AceLocale-3.0"):GetLocale("SOCD_AltTracking")
+local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_AltTracking")
 
 local playerName, completedQuests, db
 
