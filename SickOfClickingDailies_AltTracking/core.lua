@@ -16,7 +16,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_AltTracking")
 
 local playerName, completedQuests, db
 
-function D(...)
+local function D(...)
 	local str = string.join(", ", tostringall(...) )
 	str = str:gsub("([=:]), ", "%1")
 
