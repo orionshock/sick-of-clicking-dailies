@@ -323,7 +323,7 @@ do
 			print("|cff9933FFSOCD:|r Invalid Setup for SOCD Quest Scanning")
 			ttScanFrame:Hide()
 		end
-		dbo[self.englishQuestTitle] = ttlt:GetText()
+		dbo[self.englishQuestTitle] = (ttlt:GetText() or ""):trim()
 		D("Set: '"..self.englishQuestTitle.."' --> '"..dbo[self.englishQuestTitle].."'" )
 		local id, eName = next(qTable, self.questId)
 		if not id or not eName then
