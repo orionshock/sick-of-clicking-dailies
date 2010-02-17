@@ -419,7 +419,7 @@ end
 
 local function scrubQuests(title, lvl, triv, ...)
 	if not (...) then return title end
-	return title, scrubQuests(...)
+	return title:trim(), scrubQuests(...)
 end
 
 function addon:QuestItteratePickUp(te, ...)
@@ -503,9 +503,10 @@ end
 
 function addon:TitleCheck(te)
 	te = "TitleCk~"..te
-	if qTable(GetTitleText()) then
-		D(te, GetTitleText())
-		return GetTitleText()
+	local title = (GetTitleText() or "" ):trim()
+	if qTable(title) then
+		D(te, title)
+		return title
 	end
 end
 
