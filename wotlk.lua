@@ -403,17 +403,10 @@ function module:WorldQuests()
 	return t
 end
 
-local normal_instance_sub_Text = L["Timear Foresees (.+) in your Future!"]
-local function norInstScrub(text)
-	return ( text:match(normal_instance_sub_Text) )
-end
-local heroic_instance_sub_Text = L["Proof of Demise: "]
-local function herInstScrub(text)
-	return ( text:gsub(heroic_instance_sub_Text, "") )
-end
+
 function module:InstanceQuests()
 	local str = [[
-	return function(L, LQ, module, norInstScrub, herInstScrub, inlineTableSort)
+	return function(L, LQ, module, inlineTableSort)
 	local t = {
 		type = "group",
 		name = L["Doungeons"],
