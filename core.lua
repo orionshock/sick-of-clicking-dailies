@@ -417,10 +417,16 @@ function addon:PLAYER_TARGET_CHANGED(event)
 	npcBad, nextQuestFlag, questIndex = false, false, 0
 end
 
-local function scrubQuests(title, lvl, triv, ...)
+local function scrubAvailableQuests(title, lvl, triv, isDaily, repeatable, ...)
 	if not (...) then return title end
 	return title:trim(), scrubQuests(...)
 end
+
+local function scrubActiveQuests(title, level, triv, unknown, ...)
+	if not (...) then return title end
+	return title:trim(), scrubQuests(...)
+end
+
 
 function addon:QuestItteratePickUp(te, ...)
 	te = "QuPickUp~"..te
@@ -490,11 +496,11 @@ end
 
 function addon:OpeningCheckQuest(te)
 	te = "OpQu~"..te
-	local selection, quest = self:QuestItteratePickUp(te, scrubQuests(GetGossipAvailableQuests()))
+	local selection, quest = self:QuestItteratePickUp(te, scrubAvailableQuests(GetGossipAvailableQuests()))
 	if quest then
 			return selection, quest, "Available"
 	else
-		selection, quest = self:QuestItterateTurnIn(te, scrubQuests(GetGossipActiveQuests()))
+		selection, quest = self:QuestItterateTurnIn(te, scrubActiveQuests(GetGossipActiveQuests()))
 		if quest then
 			return selection, quest, "Active"
 		end
