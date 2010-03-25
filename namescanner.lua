@@ -47,9 +47,9 @@ local qTable = {
 	[11085] = "Escape from Skettis", --BC
 	[11086] = "Disrupting the Twilight Portal", --BC
 	[11097] = "The Deadliest Trap Ever Laid", --BC
-	[11335] = "Call to Arms: Arathi Basin", --C
-	[11337] = "Call to Arms: Eye of the Storm", --BC
-	[11338] = "Call to Arms: Warsong Gulch", --C
+--	[11335] = "Call to Arms: Arathi Basin", --C
+--	[11337] = "Call to Arms: Eye of the Storm", --BC
+--	[11338] = "Call to Arms: Warsong Gulch", --C
 	[11354] = "Wanted: Nazan's Riding Crop", --BC
 	[11362] = "Wanted: Keli'dan's Feathered Stave", --BC
 	[11363] = "Wanted: Bladefist's Seal", --BC
@@ -228,9 +228,9 @@ local qTable = {
 	[13423] = "Defending Your Title", --WotLK
 	[13424] = "Back to the Pit", --WotLK
 	[13425] = "The Aberrations Must Die", --WotLK
-	[13427] = "Call to Arms: Alterac Valley", --C
+--	[13427] = "Call to Arms: Alterac Valley", --C
 	[12170]= "Blackriver Brawl", --WotLK
-	[13405]= "Call to Arms: Strand of the Ancients", --WotLK
+--	[13405]= "Call to Arms: Strand of the Ancients", --WotLK
 	[12315]= "Crush Captain Brightwater!", --WotLK
 	[13202]= "Jinxing the Walls", --WotLK
 	[12284]= "Keep 'Em on Their Heels", --WotLK
@@ -240,7 +240,7 @@ local qTable = {
 	[13192]= "Warding the Walls", --WotLK
 	[13284] = "Assault by Ground", --WotLK
 	[13309] = "Assault by Air", --WotLK
-	[14163] = "Call to Arms: Isle of Conquest",	--WotLK
+--	[14163] = "Call to Arms: Isle of Conquest",	--WotLK
 
 --Shared
 	[13627] = "Jack Me Some Lumber",	--WotLK
@@ -308,6 +308,26 @@ local qTable = {
 	[14060] = "Easy As Pie", --WotLK
 	[14058] = "She Says Potato", --WotLK
 	[14059] = "We're Out of Cranberry Chutney Again?", --WotLK
+
+--Raid Weakley Quests	"Must Die"
+	[24580] = "Anub'Rekhan Must Die!",
+	[24585] = "Flame Leviathan Must Die!",
+	[24587] = "Ignis the Furnace Master Must Die!",
+	[24582] = "Instructor Razuvious Must Die!",
+	[24589] = "Lord Jaraxxus Must Die!",
+	[24590] = "Lord Marrowgar Must Die!",
+	[24584] = "Malygos Must Die!",
+	[24581] = "Noth the Plaguebringer Must Die!",
+	[24583] = "Patchwerk Must Die!",
+	[24586] = "Razorscale Must Die!",
+	[24579] = "Sartharion Must Die!",
+	[24588] = "XT-002 Deconstructor Must Die!",
+--	IceCrown Weakly Quests
+	[24879] = "Blood Quickening",
+	[24875] = "Deprogramming",
+	[24878] = "Residue Rendezvous",
+	[24880] = "Respite for a Tormented Soul",
+	[24877] = "Securing the Ramparts",
 
 }	--End of name Scanner Master Table
 
