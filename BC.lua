@@ -307,10 +307,6 @@ function module:GetPvPQuests()
 	local t = {
 		name = L["PvP"], type = "group", order = 3,
 		args = {
-			battlegrounds = {
-				name = L["Battlegrounds"], type = "multiselect", width = "full",
-				values = { LQ["Call to Arms: Eye of the Storm"] },
-			},
 			world = {
 				name = L["World PvP"], type = "multiselect", width = "full",
 				values = { LQ["Hellfire Fortifications"], LQ["Spirits of Auchindoun"], LQ["Enemies, Old and New"], LQ["In Defense of Halaa"] },

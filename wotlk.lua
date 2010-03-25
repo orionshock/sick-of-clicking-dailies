@@ -430,13 +430,6 @@ function module:PlayerVsPlayerQuests()
 		name = L["World PvP"],
 		order = 3,
 		args = {
-			bg  = { type = "group", name = L["Battlegrounds"],
-				args = {
-					bgSub = { name = L["Battlegrounds"], type = "multiselect", width = "full",
-						values = inlineTableSort({ LQ["Call to Arms: Strand of the Ancients"], LQ["Call to Arms: Isle of Conquest"] }),
-					},
-				},
-			},
 			wg  = { type = "group", name = L["Wintergrasp"],	--Don't care too much to break the horde and alliance ones up here...
 				args = {
 					wgSub = { name = L["Wintergrasp"], type = "multiselect", width = "full",
