@@ -412,13 +412,21 @@ function module:InstanceQuests()
 		name = L["Doungeons"],
 		order = 2,
 		args = {
-			help = {type = "description", name = "The Daily Dungeon quests are no longer in the game.. this will be updated with the raid ones soon"},
+			raid = { type = "multiselect", name = L["Raid Quests"], width = "full", order = 1
+				values = inlineTableSort( { LQ["Anub'Rekhan Must Die!"], LQ["Flame Leviathan Must Die!"], LQ["Ignis the Furnace Master Must Die!"], 
+					LQ["Instructor Razuvious Must Die!"], LQ["Lord Jaraxxus Must Die!"], LQ["Lord Marrowgar Must Die!"], LQ["Malygos Must Die!"], 
+					LQ["Noth the Plaguebringer Must Die!"],	LQ["Patchwerk Must Die!"], LQ["Razorscale Must Die!"], LQ["Sartharion Must Die!"], LQ["XT-002 Deconstructor Must Die!"],
+				}) ,
+			},
+			icc = { type = "multiselect", name = L["Icecrown Citadel"], width = "full", order = 2,
+				values = inlineTableSort( { LQ["Blood Quickening"], LQ["Deprogramming"], LQ["Residue Rendezvous"], LQ["Respite for a Tormented Soul"], LQ["Securing the Ramparts"],
+				} ),
+			},
 		},
 	}
 	return t
 	end ]]
-	local t = loadstring(str)()(L, LQ, self, norInstScrub, herInstScrub, inlineTableSort)
-
+	local t = loadstring(str)()(L, LQ, self, inlineTableSort)
 	return t
 end
 
