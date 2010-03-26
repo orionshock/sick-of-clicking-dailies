@@ -243,8 +243,8 @@ local qTable = {
 --	[14163] = "Call to Arms: Isle of Conquest",	--WotLK
 
 --Shared
-	[13627] = "Jack Me Some Lumber",	--WotLK
-	[13681] = "A Chip Off the Ulduar Block",	--WotLK
+--	[13627] = "Jack Me Some Lumber",	--WotLK	removed in round 2 of AT
+--	[13681] = "A Chip Off the Ulduar Block",	--WotLK	removed in round 2 of AT
 	[13675] = "The Edge Of Winter",	--WotLK
 	[13674] = "A Worthy Weapon", 	--WotLK
 	[13673] = "A Blade Fit For A Champion",	--WotLK
