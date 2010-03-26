@@ -419,12 +419,12 @@ end
 
 local function scrubAvailableQuests(title, lvl, triv, isDaily, repeatable, ...)
 	if not (...) then return title end
-	return title:trim(), scrubQuests(...)
+	return title:trim(), scrubAvailableQuests(...)
 end
 
 local function scrubActiveQuests(title, level, triv, unknown, ...)
 	if not (...) then return title end
-	return title:trim(), scrubQuests(...)
+	return title:trim(), scrubActiveQuests(...)
 end
 
 
