@@ -185,15 +185,25 @@ end
 
 
 do		-- === Wintergrasp Reset Function ===
-	local diff_to_next_wg_reset = {
-		[1] = 2,		--sunday
-		[2] = 1,		--monday
-		[3] = 4,		--tuesday*
-		[4] = 3,		--wed	
-		[5] = 2,		--thur
-		[6] = 1,		--fri
-		[7] = 3,		--sat	*
+	--Project Ticket #72;  --Code Attributed to ethancentaurai for reset interval being 1 day ahead of the US schedule.
+	local diff_to_next_wg_reset = GetCVar("realmList"):find("^eu%.") and { -- Europe
+		[1] = 3,	-- sunday
+		[2] = 2,	-- monday
+		[3] = 1,	-- tuesday
+		[4] = 7,	-- wednesday *
+		[5] = 6,	-- thursday
+		[6] = 5,	-- friday
+		[7] = 4,	-- saturday
+	} or { -- the rest of the world
+		[1] = 2,	-- sunday
+		[2] = 1,	-- monday
+		[3] = 7,	-- tuesday *
+		[4] = 6,	-- wednesday
+		[5] = 5,	-- thursday
+		[6] = 4,	-- friday
+		[7] = 3,	-- saturday
 	}
+	----End fix for ticket #72
 
 	local diff = {}
 	function module:GetNextWGReset()
