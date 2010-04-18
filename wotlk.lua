@@ -86,6 +86,25 @@ do
 		[ LQ["Warding the Warriors"] ] = "GetNextWGReset",
 		[ LQ["Southern Sabotage"] ] = "GetNextWGReset",
 		[ LQ["Toppling the Towers"] ] = "GetNextWGReset",
+
+		[ LQ["Anub'Rekhan Must Die!"] ] = "GetNextWGReset",
+		[ LQ["Flame Leviathan Must Die!"] ] = "GetNextWGReset",
+		[ LQ["Ignis the Furnace Master Must Die!"] ] = "GetNextWGReset",
+		[ LQ["Instructor Razuvious Must Die!"] ] = "GetNextWGReset",
+		[ LQ["Lord Jaraxxus Must Die!"]  ] = "GetNextWGReset",
+		[ LQ["Lord Marrowgar Must Die!"] ] = "GetNextWGReset",
+		[ LQ["Malygos Must Die!"] ] = "GetNextWGReset",
+		[ LQ["Noth the Plaguebringer Must Die!"] ] = "GetNextWGReset",
+		[ LQ["Patchwerk Must Die!"]  ] = "GetNextWGReset",
+		[ LQ["Razorscale Must Die!"] ] = "GetNextWGReset",
+		[ LQ["Sartharion Must Die!"] ] = "GetNextWGReset",
+		[ LQ["XT-002 Deconstructor Must Die!"] ] = "GetNextWGReset",
+		[ LQ["Blood Quickening"] ] = "GetNextWGReset",
+		[ LQ["Deprogramming"] ] = "GetNextWGReset",
+		[ LQ["Residue Rendezvous"] ] = "GetNextWGReset",
+		[ LQ["Respite for a Tormented Soul"] ] = "GetNextWGReset",
+		[ LQ["Securing the Ramparts"] ] = "GetNextWGReset",
+
 	}
 	for k,v in pairs(module_specialQuests) do
 		AddonParent.specialResetQuests[k] = v
