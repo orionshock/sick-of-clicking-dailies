@@ -59,6 +59,7 @@ module.defaults = {
 			[GT["Give me a bomber!"] ] = true,	--Bombing quests in icecrown
 			[GT["Mount the Hippogryph and prepare for battle!"]] = true,	--Get Kraken!
 			[GT["I am ready to fight!"]] = true, 	--Jousting
+			[GT["I'm ready to join your squad on the way to Ymirheim. Let's get moving."]] = true,
 		}
 	},
 }
@@ -368,6 +369,7 @@ function module:WorldQuests()
 								get = "GossipMulitGet", set = "GossipMulitSet",
 								values = { [ GT["Go on, you're free.  Get out of here!"] ] = LQ["Slaves to Saronite"],
 									[ GT["Give me a bomber!"] ] = L["Bombing Quests in Icecrown"],
+									[ GT["I'm ready to join your squad on the way to Ymirheim. Let's get moving."] ] = LQ["Assault by Ground"],
 									},
 							},
 						},
