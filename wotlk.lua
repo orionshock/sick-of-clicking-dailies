@@ -565,9 +565,7 @@ function module:ProfessionsQuests()
 end
 
 function module:ThxQuestReward(info, val)
-	print("ThxQuestReward", info, val)
 	if val then	--Set function
-		print("Set Func?", value)
 		local qOpt = db.profile.qOptions
 		qOpt[ LQ["Can't Get Enough Turkey"] ] = val
 		qOpt[ LQ["Don't Forget The Stuffing!"] ] = val
@@ -575,7 +573,6 @@ function module:ThxQuestReward(info, val)
 		qOpt[ LQ["She Says Potato"] ] = val
 		qOpt[ LQ["We're Out of Cranberry Chutney Again?"] ] = val
 	else
-		print("Get func", quest)
 		return db.profile.qOptions[ LQ["Can't Get Enough Turkey"] ]
 	end
 end
