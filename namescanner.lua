@@ -267,7 +267,7 @@ local qTable = {
 	[13833] = "Blood Is Thicker", --WotLK
 	[13834] = "Dangerously Delicious", --WotLK
 	[13832] = "Jewel Of The Sewers", --WotLK
-	[13836] = "Monsterbelly Appetite", --WotLK
+	[13836] = "Disarmed!", --WotLK		--Replaced Monsterbelly Appitite some time round 3.3.3
 	[13830] = "The Ghostfish", --WotLK
 
 --Patch 3.2 Additions:
