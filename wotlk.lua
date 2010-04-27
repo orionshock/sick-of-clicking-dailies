@@ -552,7 +552,7 @@ function module:ProfessionsQuests()
 			fish = { type = "group", name = L["Fishing"],
 				args = {
 					shared = { name = L["Fishing"], type = "multiselect", order = 1, width = "full",
-						values = inlineTableSort({ LQ["Blood Is Thicker"], LQ["Dangerously Delicious"], LQ["Jewel Of The Sewers"], LQ["Monsterbelly Appetite"], LQ["The Ghostfish"], }),
+						values = inlineTableSort({ LQ["Blood Is Thicker"], LQ["Dangerously Delicious"], LQ["Jewel Of The Sewers"], LQ["Disarmed!"], LQ["The Ghostfish"], }),
 					},
 				},
 			},
