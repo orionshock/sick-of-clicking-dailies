@@ -14,7 +14,7 @@ do
 			str = arg:format(...)
 		else
 			str = string.join(", ", tostringall(arg, ...) )
-			str = str:gsub(":,", ":"):gsub("=,", "=")
+			str = str:gsub("[=:'], ", "%1")
 		end
 		if AddonParent.db and AddonParent.db.global.debug then		
 			print("|cff9933FFSOCD-RRQ:|r "..str)
@@ -92,7 +92,7 @@ end
 local function CheckButton_OnClick(self, button)
 	D(self:GetName(), "OnClick, Button:", button, "IsChecked:", self:GetChecked() )
 	local isChecked = self:GetChecked()
-	local quest = GetTitleText()
+	local quest = GetTitleText():trim()
 	local enabled, exists, module = AddonParent.IsQuestHandled(quest)
 	D("Quest: '", quest, "' found in:", module, " IsEnabled:", enabled )
 	if exists then	--in the system
@@ -148,8 +148,8 @@ local function SOCD_OnEvnet(self, event, ...)
 		return
 	end
 
-	local quest = GetTitleText()
-	local enabled , exists, module = AddonParent.IsQuestHandled(quest)
+	local quest = GetTitleText():trim()
+	local enabled, exists, module = AddonParent.IsQuestHandled(quest)
 	self.check:SetChecked(enabled)
 	if enabled then
 		D("Quest: '", quest, "' is enabled. Handled by:", module)
