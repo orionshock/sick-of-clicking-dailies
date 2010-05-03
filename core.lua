@@ -66,14 +66,14 @@ local function qTable(k)
 	local f, m
 	for module, questTable in pairs(moduleQLookup) do
 		if questTable[k] then
---			print("found", k, "in", module, "As enabled")
+			print("found", k, "in", module, "As enabled")
 			return questTable[k], k, module
 		elseif questTable[k] ~= nil then
 			f = k
 			m = module ~= "RRQ" and module or nil
 		end
 	end
---	print("found", k, "in", m, "As disbaled")
+	print("found", k, "in", m, "As disbaled")
 	return nil, f, m
 end
 addon.IsQuestHandled = qTable
@@ -418,12 +418,12 @@ function addon:PLAYER_TARGET_CHANGED(event)
 end
 
 local function scrubAvailableQuests(title, lvl, triv, isDaily, repeatable, ...)
-	if not (...) then return title end
+	if not (...) then return title:trim() end
 	return title:trim(), scrubAvailableQuests(...)
 end
 
 local function scrubActiveQuests(title, level, triv, unknown, ...)
-	if not (...) then return title end
+	if not (...) then return title:trim() end
 	return title:trim(), scrubActiveQuests(...)
 end
 
@@ -496,10 +496,12 @@ end
 
 function addon:OpeningCheckQuest(te)
 	te = "OpQu~"..te
+	print( scrubAvailableQuests(GetGossipAvailableQuests() ) )
 	local selection, quest = self:QuestItteratePickUp(te, scrubAvailableQuests(GetGossipAvailableQuests()))
 	if quest then
 			return selection, quest, "Available"
 	else
+		print(scrubActiveQuests(GetGossipActiveQuests()))
 		selection, quest = self:QuestItterateTurnIn(te, scrubActiveQuests(GetGossipActiveQuests()))
 		if quest then
 			return selection, quest, "Active"
