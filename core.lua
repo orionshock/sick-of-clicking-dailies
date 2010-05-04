@@ -66,7 +66,6 @@ local function qTable(k)
 	local f, m
 	for module, questTable in pairs(moduleQLookup) do
 		if questTable[k] == true then
-			print("found", k, "in", module, "As enabled")
 			return true, k, module
 		elseif questTable[k] == false then
 			if module == "RRQ" then
