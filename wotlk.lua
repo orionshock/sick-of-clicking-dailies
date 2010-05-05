@@ -60,6 +60,7 @@ module.defaults = {
 			[GT["Mount the Hippogryph and prepare for battle!"]] = true,	--Get Kraken!
 			[GT["I am ready to fight!"]] = true, 	--Jousting
 			[GT["I'm ready to join your squad on the way to Ymirheim. Let's get moving."]] = true,
+			[GT["We need to get into the fight. Are you ready?"]] = true
 		}
 	},
 }
@@ -218,6 +219,9 @@ function module:WorldQuests()
 						args = {
 							wyrmwrestSub = { name = L["The Wyrmrest Accord"], type = "multiselect", order = 1, width = "full",
 								values = inlineTableSort({ LQ["Aces High!"], LQ["Drake Hunt"], LQ["Defending Wyrmrest Temple"] }),
+							},
+							gossip = { name = GOSSIP_OPTIONS, type = "multiselect", order = 2, width = "full", get = "GossipMulitGet", set = "GossipMulitSet",
+								values = inlineTableSort({ [ GT["We need to get into the fight. Are you ready?"] ] = LQ["Defending Wyrmrest Temple"] } ),
 							},
 						},
 					},
