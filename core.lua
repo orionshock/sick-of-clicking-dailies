@@ -99,10 +99,6 @@ function addon:RegisterQuests(name, questTable, options, gossip)
 	--Quest Groupings
 	assert(type(questTable) == "table")
 	moduleQLookup[name] = questTable
-	--Quest NPC ID's
---	assert(type(npcID) == "string")
---	questNPCs[name] = npcID
-	--Quest Options
 	assert(type(options) == "table")
 	moduleQOptions[name] = options
 --	D("Quest Grouping %s registered", name)
