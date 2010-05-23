@@ -96,7 +96,7 @@ local function CheckButton_OnClick(self, button)
 	local enabled, exists, module = AddonParent.IsQuestHandled(quest)
 	D("Quest: '", quest, "' found in:", module, " IsEnabled:", enabled )
 	if exists then	--in the system
-		D("Quest: '", quest, "' is in the system. Toggle to:", isChecked and "ON" or "oFF")
+		D("Quest: ", quest, " in ", module, " ~ is in the system. Toggle to:", isChecked and "ON" or "oFF")
 		questTable[module][quest] = (isChecked and true or false)
 
 	else	--add to the system
