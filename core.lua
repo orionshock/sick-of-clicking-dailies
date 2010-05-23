@@ -251,10 +251,12 @@ function addon:OnEnable()
 	--Random LFG Support--
 	self:RegisterEvent("LFG_COMPLETION_REWARD")
 	self:ZONE_CHANGED_NEW_AREA("OnEnable-ZCNA")
+	D("Core File, OnEnable")
 end
 
 function addon:OnDisable()
 	--self:UnregisterAllEvents()
+	D("Core File, OnDisable")
 end
 
 --
