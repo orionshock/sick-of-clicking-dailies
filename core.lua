@@ -63,19 +63,23 @@ addon.D = D
 --
 
 local function qTable(k)
-	local f, m
+--	local f, m
 	for module, questTable in pairs(moduleQLookup) do
 		if questTable[k] == true then
-			return true, k, module
+--			if module == "RRQ" then
+--				return nil
+--			else
+				return true, k, module
+--			end
 		elseif questTable[k] == false then
-			if module == "RRQ" then
-				return nil
-			else
+--			if module == "RRQ" then
+--				return nil
+--			else
 				return false, k, module
-			end
+--			end
 		end
 	end
-	return nil, f, m
+--	return nil, f, m
 end
 addon.IsQuestHandled = qTable
 
