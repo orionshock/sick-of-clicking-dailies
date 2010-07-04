@@ -545,22 +545,34 @@ function addon:AnalyzeGossipOptions(te, ...)
 	return false, 0
 end
 
+	local ignoreRLFD = {
+		[258] = true,	--Classic Dungeon
+		[259] = true,	--BC Dungeon
+		[260] = true,	--BC Heroic Dungeon
+	}
 
 function addon:ZONE_CHANGED_NEW_AREA(event, ...)
-	local _, iType = GetInstanceInfo()
-	if iType == "none" then
-		local WotLKdoneToday = GetLFGDungeonRewards(262)	--WotLK
-		local _, WotLKname = GetLFGRandomDungeonInfo(5)
-		if WotLKdoneToday then
-			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", WotLKname )
+--	local _, iType = GetInstanceInfo()
+--	if iType == "none" then
+--		local WotLKdoneToday = GetLFGDungeonRewards(262)	--WotLK
+--		local _, WotLKname = GetLFGRandomDungeonInfo(5)
+--		if WotLKdoneToday then
+--			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", WotLKname )
+--		end
+--		local BCdoneToday = GetLFGDungeonRewards(260)	--BC
+--		local _, BCname = GetLFGRandomDungeonInfo(3)
+--
+--		if BCdoneToday then
+--			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", BCname )
+--		end
+--		self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
+--	end
+	for i = 1, GetNumRandomDungeons() do
+		local isHoliday, id, name = select(15, GetLFGRandomDungeonInfo(i)), GetLFGRandomDungeonInfo(i)
+		local doneToday = GetLFGDungeonRewards(id)
+		if doneToday and not ignoreRLFD[id] then
+			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", name )
 		end
-		local BCdoneToday = GetLFGDungeonRewards(260)	--BC
-		local _, BCname = GetLFGRandomDungeonInfo(3)
-
-		if BCdoneToday then
-			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", BCname )
-		end
-		self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
 	end
 end
 function addon:LFG_COMPLETION_REWARD(event, ...)
