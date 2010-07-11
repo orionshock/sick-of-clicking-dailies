@@ -201,7 +201,7 @@ end
 function module:populateTooltip(tip)
 	self:UpdateAllQuests()
 	tip:SetColumnLayout(#self.sortedPlayerList + 1)
-	tip:AddHeader(L["Daily Quests for All Toons"])
+	tip:AddHeader(L["Dailies for all Characters"])
 --	tip:AddLine()
 	local yOffset, xOffset = 2,1
 	local rCount = 1
