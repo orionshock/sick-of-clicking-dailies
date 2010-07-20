@@ -48,6 +48,7 @@ module.defaults = {
 			[LQ["Easy As Pie"]] = -1,
 			[LQ["She Says Potato"]] = -1,
 			[LQ["We're Out of Cranberry Chutney Again?"]] = -1,
+--			[ LQ["Reading the Bones"] ] = 1,
 		},
 		quests = {},
 		gossip = {
@@ -111,6 +112,8 @@ do
 	for k,v in pairs(module_specialQuests) do
 		AddonParent.specialResetQuests[k] = v
 	end
+	wipe(module_specialQuests)
+	module_specialQuests = nil
 end
 
 
@@ -367,6 +370,7 @@ function module:WorldQuests()
 									LQ["Static Shock Troops: the Bombardment"], LQ["The Solution Solution"],
 									LQ["Capture More Dispatches"], LQ["Putting the Hertz: The Valley of Lost Hope"], 
 									LQ["Assault by Ground"], LQ["Assault by Air"],
+									--LQ["Reading the Bones"],
 									 }),
 							},
 							gossip = { name = L["Icecrown"].." "..GOSSIP_OPTIONS, type = "multiselect", order = 2, width = "full", 
