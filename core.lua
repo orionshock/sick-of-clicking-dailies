@@ -552,5 +552,7 @@ function addon:ZONE_CHANGED_NEW_AREA(event, ...)
 				addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", name )
 			end
 		end
+	else
+		D("in broken area, don't scan random dungeosn")
 	end
 end
