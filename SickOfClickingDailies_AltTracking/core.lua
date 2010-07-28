@@ -225,7 +225,6 @@ end
 
 local qsort
 local function uglySortByPlayer(questA,questB)
-	print(questA,questB)
 	if qsort[questA] and qsort[questB] then
 		return questA < questB
 	end
@@ -238,7 +237,6 @@ local function uglySortByPlayer(questA,questB)
 	if (not qsort[questA]) and (not qsort[questB]) then
 		return questA < questB
 	end
-	print("Err?")
 end
 
 local function TipOnClick(cell, arg, button)
