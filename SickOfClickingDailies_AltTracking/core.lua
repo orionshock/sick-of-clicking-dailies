@@ -125,10 +125,10 @@ local function OnEnter(self)
 
 end
 
-local delay, interval = 0,2
+local delay, interval = 0,1
 local mouseovertimer = CreateFrame("Frame")
 mouseovertimer:SetScript("OnUpdate", function(self, elapsed)
-	if LibQTipTooltip then
+	if LibQTipTooltip and self.ldbObj then
 		if MouseIsOver(LibQTipTooltip) or MouseIsOver(self.ldbObj) then
 			delay = 0
 		else
