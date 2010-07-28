@@ -258,7 +258,6 @@ function addon:OnEnable()
 	self:RegisterEvent("QUEST_PROGRESS")
 	self:RegisterEvent("QUEST_COMPLETE")
 	self:RegisterEvent("PLAYER_TARGET_CHANGED")
-	self:RegisterEvent("QUEST_LOG_UPDATE")
 
 	--Random LFG Support--
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
