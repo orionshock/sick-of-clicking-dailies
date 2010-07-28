@@ -97,14 +97,20 @@ local function GetTipAnchor(frame)
 end
 	--[[	E	]]--
 
-
+local tooltipIsSortedNow, LibQTipTooltip = nil
 local LibQTip = LibStub('LibQTip-1.0', true)
 local function OnEnter(self)
+	if LibQTipTooltip then
+		if LibQTipTooltip:IsShown() then
+			return
+		end
+	end
+
 	LibQTip = LibStub('LibQTip-1.0', true)
 	if LibQTip then
 		local tooltip = LibQTip:Acquire("SOCD_ALT", #module.sortedPlayerList+1)
-		self.tooltip = tooltip
-		module:populateTooltip(tooltip)
+		LibQTipTooltip = tooltip
+		module:populateTooltip(tooltip, tooltipIsSortedNow)
 		tooltip:SmartAnchorTo(self)
 		tooltip:Show()
 	else
@@ -119,10 +125,29 @@ local function OnEnter(self)
 
 end
 
-local function OnLeave(self)
+local delay, interval = 0,2
+local mouseovertimer = CreateFrame("Frame")
+mouseovertimer:SetScript("OnUpdate", function(self, elapsed)
 	if self.tooltip then
-		LibQTip:Release(self.tooltip)
-		self.tooltip = nil
+		if MouseIsOver(LibQTipTooltip) or MouseIsOver(self.ldbObj) then
+			delay = 0
+		else
+			delay = delay + elapsed
+		end
+		if delay > interval then
+			LibQTip:Release(LibQTipTooltip)
+			LibQTipTooltip = nil
+			self.ldbObj = nil
+			delay = 0
+			self:Hide()
+		end
+	end
+end)
+
+local function OnLeave(self)
+	if LibQTipTooltip then
+		mouseovertimer.ldbObj = self
+		mouseovertimer:Show()
 	else
 		GameTooltip:Hide()
 	end
@@ -197,38 +222,75 @@ function module:UpdateAllQuests()
 	table.sort(self.sortedPlayerList)
 
 end
+
+local qsort
+local function uglySortByPlayer(questA,questB)
+	print(questA,questB)
+	if qsort[questA] and qsort[questB] then
+		return questA < questB
+	end
+	if qsort[questA] and (not qsort[questB]) then
+		return true
+	end
+	if (not qsort[questA]) and qsort[questB] then
+		return false
+	end
+	if (not qsort[questA]) and (not qsort[questB]) then
+		return questA < questB
+	end
+	print("Err?")
+end
+
+local function TipOnClick(cell, arg, button)
+	local self = module
+	if self.unsortedPlayers[arg] then
+		tooltipIsSortedNow = arg
+		qsort = db[arg]
+		table.sort(self.sortedQuestList, uglySortByPlayer)
+		qsort = nil
+		LibQTipTooltip:Clear()
+		module:populateTooltip(LibQTipTooltip, tooltipIsSortedNow)
+	else
+		tooltipIsSortedNow = nil
+		table.sort(self.sortedQuestList)
+		LibQTipTooltip:Clear()
+		module:populateTooltip(LibQTipTooltip, tooltipIsSortedNow)
+	end
+end
+
    
-function module:populateTooltip(tip)
-	self:UpdateAllQuests()
+function module:populateTooltip(tip, sortedListMode)
+	if not sortedListMode then
+		self:UpdateAllQuests()
+	end
 	tip:SetColumnLayout(#self.sortedPlayerList + 1)
 	tip:AddHeader(L["Dailies for all Characters"])
---	tip:AddLine()
-	local yOffset, xOffset = 2,1
-	local rCount = 1
-	tip:AddLine()
+	local yOffset, xOffset = tip:AddLine()
+	tip:SetCell(yOffset, xOffset, " ")
+	tip:SetCellScript(yOffset, xOffset, "OnMouseDown", TipOnClick, "default view" )
+
 	for i = 1, #self.sortedPlayerList do
---		print("Add", self.sortedPlayerList[i], "row", yOffset, "col", xOffset+i )
+		--print("Add", self.sortedPlayerList[i], "row", yOffset, "col", xOffset+i )
 		tip:SetCell( yOffset, xOffset+i, self.sortedPlayerList[i] )
+		tip:SetCellScript(yOffset, xOffset+i, "OnMouseDown", TipOnClick, self.sortedPlayerList[i] )
 	end
 	for i = 1, #self.sortedQuestList do
 		tip:AddLine()
---		print("Add:", self.sortedQuestList[i], "row", yOffset+i, "col", 1)
+		--print("Add:", self.sortedQuestList[i], "row", yOffset+i, "col", 1)
 		tip:SetCell(yOffset+i, 1, self.sortedQuestList[i], "RIGHT")
 	end
 	
-	local xOffset, yOffset = 1,1
 	for x, player in pairs(self.sortedPlayerList) do
 		for y, quest in pairs(self.sortedQuestList) do
 			if db[player] and db[player][quest] then
---				print("Set", quest, player, "row", 1+y+yOffset, "col", x+xOffset)
-				tip:SetCell(1+y+yOffset, x+xOffset, " ", "CENTER")
-				tip:SetCellColor(1+y+yOffset, x+xOffset, 0, 1, 0)
+				--print("Set", quest, player, "row", y+yOffset, "col", x+xOffset)
+				tip:SetCell( y+yOffset, x+xOffset, " ", "CENTER")
+				tip:SetCellColor( y+yOffset, x+xOffset, 0, 1, 0)
+				if player == sortedListMode then
+					tip:SetLineColor(y+yOffset, 0,0,1,1)
+				end
 			end
 		end
 	end
 end
-
-
-
-
 
