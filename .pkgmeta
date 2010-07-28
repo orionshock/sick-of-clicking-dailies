@@ -31,7 +31,7 @@ externals:
 		url: svn://svn.wowace.com/wow/callbackhandler/mainline/tags/1.0.3/CallbackHandler-1.0
 	libs/LibStub:
 		url: svn://svn.wowace.com/wow/libstub/mainline/tags/1.0
-	LibDataBroker-1.1:
+	libs/LibDataBroker-1.1:
 		url: git://git.wowace.com/wow/libdatabroker-1-1/mainline.git
 		tag: latest
 
