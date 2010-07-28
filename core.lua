@@ -402,25 +402,14 @@ do
 		local enabled, present =  qTable(GetTitleText())
 		D("GetQuestRewardHook", enabled, present, npcID)
 		if present then
-			D("SOCD_DAILIY_QUEST_COMPLETE", present, npcID, opt, addon.QuestLogCache[present])
-			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", present, opt, addon.QuestLogCache[present])
+			D("SOCD_DAILIY_QUEST_COMPLETE", present, npcID, opt)
+			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", present, opt)
 		end
 	end
 	hooksecurefunc("GetQuestReward", SOCD_GetQuestRewardHook )
 	function SOCD_TestDailyEventSend()
 		addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", "TestQuest"..time() , nil, 1234)
 	end
-end
-
-function addon:QUEST_LOG_UPDATE(event)
-	self:UnregisterEvent(event)
-	D(event)
-	for i  = 1, GetNumQuestLogEntries() do
-               	local questTitle, level, questTag, suggestedGroup, isHeader , isCollapsed, isComplete, isDaily, questID = GetQuestLogTitle(i)
-		self.QuestLogCache[questTitle] = (not isHeader) and questID or nil
-	end
-			
-	self:RegisterEvent(event)
 end
 
 function addon:PLAYER_TARGET_CHANGED(event)
