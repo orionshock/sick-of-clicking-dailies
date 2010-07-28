@@ -36,6 +36,7 @@
 ## X-Email: Orionshock@gmail.com
 
 ## RequiredDependancy: SickOfClickingDailies
+## OptionalDependancy: LibQTip-1.0
 
 ## DefaultState: enabled
 ## LoadManagers: AddonLoader
