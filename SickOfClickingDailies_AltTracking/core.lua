@@ -110,7 +110,7 @@ local function OnEnter(self)
 	if LibQTip then
 		local tooltip = LibQTip:Acquire("SOCD_ALT", #module.sortedPlayerList+1)
 		LibQTipTooltip = tooltip
-		module:populateTooltip(tooltip, tooltipIsSortedNow)
+		module:populateTooltip(tooltip)
 		tooltip:SmartAnchorTo(self)
 		tooltip:Show()
 	else
@@ -128,7 +128,7 @@ end
 local delay, interval = 0,2
 local mouseovertimer = CreateFrame("Frame")
 mouseovertimer:SetScript("OnUpdate", function(self, elapsed)
-	if self.tooltip then
+	if LibQTipTooltip then
 		if MouseIsOver(LibQTipTooltip) or MouseIsOver(self.ldbObj) then
 			delay = 0
 		else
@@ -200,6 +200,22 @@ end
 
 --LQT stuff
 --	self.sortedPlayerList	self.totalQuests self.sortedQuestList
+local qsort
+local function uglySortByPlayer(questA,questB)
+	if qsort[questA] and qsort[questB] then
+		return questA < questB
+	end
+	if qsort[questA] and (not qsort[questB]) then
+		return true
+	end
+	if (not qsort[questA]) and qsort[questB] then
+		return false
+	end
+	if (not qsort[questA]) and (not qsort[questB]) then
+		return questA < questB
+	end
+end
+
 function module:UpdateAllQuests()
 	for toon, qTable in pairs(db) do
 		if toon ~= "chars" then
@@ -213,7 +229,14 @@ function module:UpdateAllQuests()
 	for k in pairs(self.totalQuests) do
 		tinsert(self.sortedQuestList, k)
 	end
-	table.sort(self.sortedQuestList)
+
+	if tooltipIsSortedNow then
+		qsort = db[tooltipIsSortedNow]
+		table.sort(self.sortedQuestList, uglySortByPlayer)
+		qsort = nil
+	else
+		table.sort(self.sortedQuestList)
+	end
 	--
 	wipe(self.sortedPlayerList)
 	for k in pairs(self.unsortedPlayers) do
@@ -257,10 +280,8 @@ local function TipOnClick(cell, arg, button)
 end
 
    
-function module:populateTooltip(tip, sortedListMode)
-	if not sortedListMode then
-		self:UpdateAllQuests()
-	end
+function module:populateTooltip(tip)
+	self:UpdateAllQuests()
 	tip:SetColumnLayout(#self.sortedPlayerList + 1)
 	tip:AddHeader(L["Dailies for all Characters"])
 	local yOffset, xOffset = tip:AddLine()
@@ -284,7 +305,7 @@ function module:populateTooltip(tip, sortedListMode)
 				--print("Set", quest, player, "row", y+yOffset, "col", x+xOffset)
 				tip:SetCell( y+yOffset, x+xOffset, " ", "CENTER")
 				tip:SetCellColor( y+yOffset, x+xOffset, 0, 1, 0)
-				if player == sortedListMode then
+				if player == tooltipIsSortedNow then
 					tip:SetLineColor(y+yOffset, 0,0,1,1)
 				end
 			end
