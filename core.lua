@@ -261,7 +261,7 @@ function addon:OnEnable()
 	self:RegisterEvent("QUEST_LOG_UPDATE")
 
 	--Random LFG Support--
-	self:RegisterEvent("LFG_COMPLETION_REWARD")
+	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	self:ZONE_CHANGED_NEW_AREA("OnEnable-ZCNA")
 	D("Core File, OnEnable")
 end
@@ -552,30 +552,17 @@ end
 	}
 
 function addon:ZONE_CHANGED_NEW_AREA(event, ...)
---	local _, iType = GetInstanceInfo()
---	if iType == "none" then
---		local WotLKdoneToday = GetLFGDungeonRewards(262)	--WotLK
---		local _, WotLKname = GetLFGRandomDungeonInfo(5)
---		if WotLKdoneToday then
---			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", WotLKname )
---		end
---		local BCdoneToday = GetLFGDungeonRewards(260)	--BC
---		local _, BCname = GetLFGRandomDungeonInfo(3)
---
---		if BCdoneToday then
---			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", BCname )
---		end
---		self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
---	end
-	for i = 1, GetNumRandomDungeons() do
-		local isHoliday, id, name = select(15, GetLFGRandomDungeonInfo(i)), GetLFGRandomDungeonInfo(i)
-		local doneToday = GetLFGDungeonRewards(id)
-		if doneToday and not ignoreRLFD[id] then
-			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", name )
+	local _, iType = GetInstanceInfo()
+	D(event, iType)
+	if iType == "none" then
+		D("not in instance")
+		for i = 1, GetNumRandomDungeons() do
+			local id, name = GetLFGRandomDungeonInfo(i)
+			local doneToday = GetLFGDungeonRewards(id)
+			D(name, "/", id, " - Done: ", doneToday, " - Ignore:", ignoreRLFD[id] )
+			if doneToday and not ignoreRLFD[id] then
+				addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", name )
+			end
 		end
 	end
-end
-function addon:LFG_COMPLETION_REWARD(event, ...)
-	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
---	print("SOCD - Remember to Zone out of the instance to track the Daily Completion in SOCD")
 end
