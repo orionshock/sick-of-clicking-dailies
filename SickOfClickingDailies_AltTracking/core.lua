@@ -221,12 +221,8 @@ function module:populateTooltip(tip)
 		for y, quest in pairs(self.sortedQuestList) do
 			if db[player] and db[player][quest] then
 --				print("Set", quest, player, "row", 1+y+yOffset, "col", x+xOffset)
-				tip:SetCell(1+y+yOffset, x+xOffset, "XX", "CENTER")
-				tip:SetCellColor(1+y+yOffset, x+xOffset, 0, 1, 0)
-			else
---				print("Quest Not done", quest, player)
 				tip:SetCell(1+y+yOffset, x+xOffset, " ", "CENTER")
-				tip:SetCellColor(1+y+yOffset, x+xOffset, 1, 0, 0)
+				tip:SetCellColor(1+y+yOffset, x+xOffset, 0, 1, 0)
 			end
 		end
 	end
