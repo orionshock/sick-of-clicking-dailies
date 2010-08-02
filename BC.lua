@@ -16,10 +16,12 @@ local GetLocalizedQuestNameByID = AddonParent.GetLocalizedQuestNameByID
 
 function module:OnInitialize()
 	self:Debug("OnInit")
-
+	AddonParent.RegisterMessage(module, "SOCD_QuestByID_Ready")
 end
 
 function module:OnEnable()
+	self:Debug("OnEnable")
+
 	SetItemRef("item:30809","item:30809")	--Aldor Mark
 	SetItemRef("item:30809","item:30809")
 
@@ -37,7 +39,8 @@ function module:OnEnable()
 
 	SetItemRef("item:33857","item:33857")	--Crate Of Meat
 	SetItemRef("item:33857","item:33857")
-	AddonParent.RegisterMessage(self, "SOCD_QuestByID_Ready", SetupModule)
+
+
 end
 
 function module:OnDisable()
@@ -53,15 +56,16 @@ local function GetOptionGroup(id, ...)
 	end
 end
 
-function module:SetupModule(event, ...)
-	local otps = {
+function module:SOCD_QuestByID_Ready(event, ...)
+	self:Debug(event, ...)
+	local opts = {
 		name = L["Burning Crusade"],
 		type = "group",
 		handler = self,
 		get = "QuestOptGet",
 		set = "QuestOptSet",
 		args = {
-			Cooking = { type = "group", name = L["Cooking"],
+			Cooking = { type = "group", name = L["Cooking"], inline = true,
 				args = {
 					["SuperHotStew"] = GetOptionGroup( 11379 , (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate Of Meat" ) ,
 					["SoupForTheSoul"] = GetOptionGroup( 11381 , (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate Of Meat" ) ,
@@ -69,7 +73,7 @@ function module:SetupModule(event, ...)
 					["Manalicious"] = GetOptionGroup( 11380 , (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate Of Meat" ) ,
 				},
 			},
-			SSO = { type = "group", name = L["SSO Quests"]
+			SSO = { type = "group", name = L["SSO Quests"], inline = true,
 				args = {
 					["BloodForBlood"] = GetOptionGroup( 11515  , (GetItemInfo(30809)) or "Aldor Mark", (GetItemInfo(30810)) or "Scryer Mark") ,
 					["AtamalArmaments"] = GetOptionGroup( 11544 , (GetItemInfo(34538)) or "Other Oil" , (GetItemInfo(34539)) or "Caster Oil")
@@ -82,11 +86,11 @@ function module:SetupModule(event, ...)
 --				},
 --			}.
 		},
-	},
+	}
 	self.options = opts
 
 	local moduleSpecialQuests = {
-	[ L["Candy Bucket"] ] = "Exclude",
+		[ L["Candy Bucket"] ] = "Exclude",
 	}
 	for k,v in pairs(moduleSpecialQuests) do
 		AddonParent.SpecialQuestResets[k] = v
