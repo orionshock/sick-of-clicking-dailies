@@ -4,18 +4,22 @@ local AddonName, AddonParent = ...
 local module = AddonParent:NewModule("LDB", "AceEvent-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale(AddonName)
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
-
+local SortedQuestList, questsCompleted = {}
 
 
 local SecondsToTime, GetQuestResetTime = SecondsToTime, GetQuestResetTime
-local ldbObj, LibDataBroker, db, SpecialQuestResets, playerName
+local ldbObj, LibDataBroker, db, SpecialQuestResets, playerName, LibQTip
 
 function module:OnInitialize()
 	self:Debug("OnInit")
 	LibStub("AceEvent-3.0").RegisterMessage(self, "SOCD_DAILIY_QUEST_COMPLETE")
-	LibDataBroker = LibStub("LibDataBroker-1.1", true)
+
 	db = AddonParent.db
+	questsCompleted = db.char.questsCompleted
 	SpecialQuestResets = AddonParent.SpecialQuestResets
+
+	LibDataBroker = LibStub("LibDataBroker-1.1", true)
+	LibQTip = LibStub('LibQTip-1.0', true)
 end
 
 function module:OnEnable()
@@ -25,7 +29,26 @@ function module:OnEnable()
 	db.factionrealm[playerName] = db.factionrealm[playerName] or {}
 end
 
+local function specialSort(a,b)
+	if SortedQuestList[a] and SortedQuestList[b] then
+		return a < b
+	end
+	if SortedQuestList[a] and ( not SortedQuestList[b] ) then
+		return false
+	end
+	if (not SortedQuestList[a]) and SortedQuestList[b] then
+		return true
+	end
+	return a < b
+end
 
+function module:UpdateSortedList()
+	wipe(SortedQuestList)
+	for k, v in pairs( questsCompleted ) do
+		SortedQuestList[ #SortedQuestList + 1] = k
+	end
+	table.sort(SortedQuestList, specialSort)	
+end
 
 function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, opt)
 	self:Debug(event, quest, opt)
@@ -35,9 +58,11 @@ function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, opt)
 	else
 		reset = time()+GetQuestResetTime()-1
 	end
-	db.char.questsCompleted[quest] = reset
+	questsCompleted[quest] = reset
 	db.factionrealm[playerName][quest] = reset
 	self:Debug("Quest:", quest, "Resets at:", date("%c", reset) )
+
+	self:UpdateSortedList()
 end
 
 local prefix = QUEST_LOG_DAILY_TOOLTIP:match( "\n(.+)" )
@@ -47,8 +72,36 @@ local function OnTooltipShow(self)
 	self:AddDoubleLine( L["Click: Left for Quest Log"], L["Right for SOCD Options"] )
 end
 
+local function PopulateLibQTip(self)
+	local tip = LibQTip:Acquire("SOCD-LDBTip", 3, "LEFT", "CENTER", "RIGHT")
+	module.tooltip = tip
+	tip:AddHeader(AddonName)	
+	local y, x = tip:AddLine(prefix:format( SecondsToTime(GetQuestResetTime()) ),"  ",  QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests()))
+	tip:AddLine( " ", " ", " ")
+	for i = 1, #SortedQuestList do
+		local q = SortedQuestList[i]
+		if SpecialQuestResets[q] then
+			tip:AddLine( q, "*", date("%c", questsCompleted[ q ] ) )
+		else
+			tip:AddLine( q, "   ", date("%c", questsCompleted[ q ] ) )
+		end
+	end
+	tip:AddLine( " ", " ", " ")
+	tip:AddLine( L["Click: Left for Quest Log"], " ", L["Right for SOCD Options"] )
+	tip:SmartAnchorTo(self)
+	tip:Show()
+end
+
+
 
 local function OnEnter(self)
+	if module.tooltip and module.tooltip:IsShown() then
+		return
+	end
+	if LibQTip then
+		PopulateLibQTip(self)
+		return
+	end
 	GameTooltip:SetOwner(self, "ANCHOR_NONE")
 	GameTooltip:SetPoint("TOPLEFT", self, "BOTTOMLEFT")
 	GameTooltip:ClearLines()
@@ -57,6 +110,11 @@ local function OnEnter(self)
 end
 
 local function OnLeave(self)
+	if module.tooltip then
+		LibQTip:Release(module.tooltip)
+		module.tooltip = nil
+		return
+	end
 	GameTooltip:Hide()
 end
 
