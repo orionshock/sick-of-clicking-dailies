@@ -88,6 +88,7 @@ local db_defaults = {
 			core = true,
 			QuestScanner = false,
 			Options = true,
+			BC = true,
 		},
 		QuestNameCache = {
 		},	--Also used by Addon to see if the quest is a daily. this is a  { ["Localized Quest Name"] = true } table
@@ -96,33 +97,59 @@ local db_defaults = {
 	},
 }
 
+function addon.GetOptionsTable()
+	local t = { name = addonName, type = "group", handler = addon,
+		args = {
+			info = {type = "description", name = L["MainOptionsDesc"], order = 1 }
+		},
+	}
+	Debug("GetOptionsTable, itterating modules")
+	for name, module in addon:IterateModules() do
+		Debug("Module:", name, module.options)
+		if module.options then
+			t.args[name] = module.options
+		end
+	end
+	return t
+end
+
 function addon:OnInitialize()
 	self.db = LibStub("AceDB-3.0"):New("SOCD_SEVEN", db_defaults)
 	db = self.db
 end
 
 function addon:OnEnable(event, addon)
-
+	--Events
 	self:RegisterEvent("GOSSIP_SHOW")
 	self:RegisterEvent("QUEST_GREETING")
 	self:RegisterEvent("QUEST_DETAIL")
 	self:RegisterEvent("QUEST_PROGRESS")
 	self:RegisterEvent("QUEST_COMPLETE")
 
-	self:RegisterChatCommand("socd", function()
-		print("SOCD Slash Command Place Holder")
-		if self.QuestNameScanned then
-			print("Ready for setup")
-		else
-			print("Still Init, plz wait")
-		end
-	end)
+	--Quest Scanner
 	if db.global.currentRev ~= self.version then
 		self:GetModule("QuestScanner"):StartScan()
 	else
 		self:SendMessage("SOCD_QuestByID_Ready")
 		self.QuestNameScanned = true
 	end
+
+	--Options & Slash command
+
+	local AceConfigDialog = LibStub("AceConfigDialog-3.0")
+	LibStub("AceConfig-3.0"):RegisterOptionsTable(addonName, self.GetOptionsTable)
+	self:RegisterChatCommand("socd", function()
+		print("SOCD Slash Command Place Holder")
+		if self.QuestNameScanned then
+			if  AceConfigDialog.OpenFrames[addonName] then
+				AceConfigDialog:Close(addonName)
+			else
+				AceConfigDialog:Open(addonName)
+			end
+		else
+			print("Still Init, plz wait")
+		end
+	end)
 end
 
 --[[
