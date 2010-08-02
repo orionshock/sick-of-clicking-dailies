@@ -331,6 +331,7 @@ do
 		if not id or not eName then
 			module:Debug("Reached end of Quest table. Total Quests Scanned:", self.count)
 			AddonParent.db.global.currentRev = AddonParent.version
+			AddonParent.QuestNameScanned = true
 			AddonParent:SendMessage("SOCD_QuestByID_Ready")
 			ttScanFrame:Hide()
 			return
