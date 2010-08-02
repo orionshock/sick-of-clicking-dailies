@@ -14,6 +14,7 @@ This version comes with a built in config system made with Ace3's Config GUI Lib
 
 =====================================================================================================
 ]]--
+local addonName, AddonNS = ...
 
 local projectVersion = "@project-version@"
 local projectRevision = "@project-abbreviated-hash@"
@@ -22,10 +23,11 @@ if projectVersion:find("project") then
 	projectRevision = "dev"
 end
 
-SOCD  = LibStub("AceAddon-3.0"):NewAddon("SickOfClickingDailies", "AceEvent-3.0", "AceConsole-3.0")
-SOCD.version = projectVersion.."-"..projectRevision
-
-local addon = SOCD
+_G[addonName] = LibStub("AceAddon-3.0"):NewAddon(AddonNS, addonName, "AceEvent-3.0", "AceConsole-3.0")
+AddonNS.version = projectVersion.."-"..projectRevision
+AddonNS.SpecialQuestResets = {}
+local L = LibStub("AceLocale-3.0"):GetLocale(addonName)
+local addon = AddonNS
 local db
 
 local function Debug(...)
@@ -40,7 +42,8 @@ local module_Proto = {
 	Debug = function(self, ...)
 		if db and db.global.debug[ self:GetName() ] then
 			local str = string.join(", ", tostringall(...) )
-			str = str:gsub("[:=],", "%1")
+			str = str:gsub("([:=>]),", "%1")
+			str = str:gsub(", ([%-])", " %1")
 			print("|cff9933FFSOCD-Debug-"..( self.GetName and self:GetName() or "")..":|r ", str)
 		end
 	end,
@@ -62,7 +65,7 @@ local module_Proto = {
 	end,
 	
 }
-SOCD:SetDefaultModulePrototype(module_Proto)
+addon:SetDefaultModulePrototype(module_Proto)
 
 ---------------------------------------------------------------------------
 
@@ -82,6 +85,7 @@ local db_defaults = {
 	global = {
 		debug = {
 			core = true,
+			QuestScanner = true,
 		},
 		QuestNameCache = {
 		},
@@ -91,7 +95,6 @@ local db_defaults = {
 function addon:OnInitialize()
 	self.db = LibStub("AceDB-3.0"):New("SOCD_SEVEN", db_defaults)
 	db = self.db
-
 end
 
 function addon:OnEnable(event, addon)
@@ -106,8 +109,7 @@ function addon:OnEnable(event, addon)
 			print("SOCD Slash Command Place Holder")
 	end)
 	if db.global.currentRev ~= self.version then
-		--self:GetModule("QuestScanner"):Update()
-		--db.global.currentRev = self.version
+		self:GetModule("QuestScanner"):StartScan()
 	end
 end
 
@@ -256,11 +258,12 @@ end
 ]]--
 
 function addon:GetQuestRewardOption(title)
-	--function broken atm during dev--
+	title = title:trim()
 	return db.profile.QuestRewardOptions[title] or nil
 end
 
 function addon:ShouldIgnoreQuest(title)
+	title = title:trim()
 	if db.global.QuestNameCache[title] == nil then
 		return true
 	end
@@ -271,6 +274,7 @@ function addon:ShouldIgnoreQuest(title)
 end
 
 function addon:CaptureDailyQuest(title)
+	title = title:trim()
 	if db then
 		db.global.QuestNameCache[title] = true
 	end
