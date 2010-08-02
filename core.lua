@@ -45,10 +45,20 @@ local module_Proto = {
 		end
 	end,
 	ToggleQuestStatus = function(self, title, status)
-		print(self:GetName(), title, status)		--Place Holder
+		self:Debug("ToggleQuestStatus", title, status)		--Place Holder
+		if type(status) ~= "boolen" then
+			self:Debug("ToggleQuestStatus", title, "Not a boolen value, got:", status)
+			return
+		end
+		db.profile.QuestStatus[title] = status
+		
 	end
 	SetQuestRewardOption = function(self, title, opt)
-		print(self:GetName(), title, opt)		--Place Holder
+		self:Debug("SetQuestRewardOption", title, opt)		--Place Holder
+		if type(opt) ~= "number" then
+			self:Debug("SetQuestRewardOption", title, "Option not a number, got:", opt)
+		end
+		db.profile.QuestRewardOptions[title] = opt
 	end
 	
 }
@@ -241,7 +251,7 @@ end
 
 function addon:GetQuestRewardOption(title)
 	--function broken atm during dev--
-	return -1
+	return db.profile.QuestRewardOptions[title] or nil
 end
 
 function addon:ShouldIgnoreQuest(title)
