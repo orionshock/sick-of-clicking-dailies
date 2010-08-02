@@ -31,12 +31,15 @@ local addon = AddonNS
 local db
 
 local function Debug(...)
+	
+	local str = string.join(", ", tostringall(...) )
+	str = str:gsub("([:=>]),", "%1")
+	str = str:gsub(", ([%-])", " %1")
+	
 	if db and db.global.debug.core then
-		local str = string.join(", ", tostringall(...) )
-		str = str:gsub("([:=>]),", "%1")
-		str = str:gsub(", ([%-])", " %1")
 		print("SOCD-Debug-Core: ", str)
 	end
+	return str
 end
 
 local module_Proto = {
@@ -71,6 +74,10 @@ addon:SetDefaultModulePrototype(module_Proto)
 ---------------------------------------------------------------------------
 
 local db_defaults = {
+	char = {
+		questsCompleted = {
+		},
+	},
 	profile = {
 		addonOpts = {
 			--will populate later
@@ -89,6 +96,7 @@ local db_defaults = {
 			QuestScanner = false,
 			Options = true,
 			BC = true,
+			LDB = true,
 		},
 		QuestNameCache = {
 		},	--Also used by Addon to see if the quest is a daily. this is a  { ["Localized Quest Name"] = true } table
@@ -267,7 +275,7 @@ function addon:QUEST_COMPLETE(event)
 		local rewardOpt = self:GetQuestRewardOption( title )
 		if (GetQuestItemInfo("choice", 1) ~= "") and (not rewardOpt) then
 			--Has quest option but we don't have a selection, means that this is a new quest that isn't in the DB.
-			print("Sick Of Clicking Dailies: Found a new Quest:", title, " It has reward choices but is not yet added to the addon. Please report it at www.wowace.com")	--Localize ME!
+			print( self:Debug("Sick Of Clicking Dailies: Found a new Quest:", title, " It has reward choices but is not yet added to the addon. Please report it at www.wowace.com"))
 			return
 		end
 		if (rewardOpt and (rewardOpt == -1)) then
@@ -283,6 +291,19 @@ function addon:QUEST_COMPLETE(event)
 
 	end
 end
+
+---Completion Hook :)
+	function SOCD_GetQuestRewardHook(opt)
+		local title = GetTitleText()
+		Debug("GetQuestRewardHook, IsDaily:", addon:IsDailyQuest(title) )
+		if addon:IsDailyQuest(title) then
+			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", title )
+		end
+	end
+	hooksecurefunc("GetQuestReward", SOCD_GetQuestRewardHook )
+	function SOCD_TestDailyEventSend()
+		addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", "TestQuest"..time(), 0)
+	end
 
 
 
@@ -316,4 +337,8 @@ function addon:CaptureDailyQuest(title)
 	if db then
 		db.global.QuestNameCache[title] = true
 	end
+end
+
+function addon:IsDailyQuest(title)
+	return db.global.QuestNameCache[title] ~= nil
 end
