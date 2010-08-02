@@ -57,17 +57,17 @@ localizations\localization.xml
 
 
 core.lua
-Classic.lua
-BC.lua
-wotlk.lua
-non-dailies.lua
-ldb.lua
-dailylogoutwarning.lua
+#Classic.lua
+#BC.lua
+#wotlk.lua
+#non-dailies.lua
+#ldb.lua
+#dailylogoutwarning.lua
 
 #@alpha@
-namescanner.lua
+#namescanner.lua
 #@end-alpha@
 
 #@debug@
-SickOfClickingDailies_AltTracking\module.xml
+#SickOfClickingDailies_AltTracking\module.xml
 #@end-debug@
