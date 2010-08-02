@@ -12,14 +12,20 @@ end
 
 local AddonName, AddonParent = ...
 local module = AddonParent:NewModule("QuestScanner", "AceEvent-3.0")
-local localeQuestNameByID = {}
+local localeQuestNameByID
 local dbo
 
-function module:OnEnable()
+function module:OnInitialize()
+		--Addon's Main OnEnable does the version check and starts it if needed
+		--However, we want to set the db up here just in case.
 	dbo = AddonParent.db.global.QuestNameCache
-	self:Debug("OnEnable, starting Scan")
-	return self:StartScan()
+	localeQuestNameByID = AddonParent.db.global.localeQuestNameByID
 end
+
+--function module:OnEnable()
+--	self:Debug("OnEnable, starting Scan")
+--	return self:StartScan()
+--end
 
 local qTable = {
 	[4970] = "Frostsaber Provisions", --C
@@ -334,7 +340,7 @@ do
 	end)
 
 
-	local interval, delay = 1, .5
+	local interval, delay = 1, .3
 	ttScanFrame:SetScript("OnUpdate", function(self, elapsed)
 		delay = delay + elapsed
 		if delay > interval then
@@ -356,4 +362,11 @@ end
 function module:StopScan(info)
 	self:Debug("Stopping Tooltip Scanning?")
 	ttScanFrame:Hide()
+end
+
+
+
+function AddonParent.GetLocalizedQuestNameByID(id)
+	id = tonumber(id)
+	return localeQuestNameByID and localeQuestNameByID[id] or nil
 end
