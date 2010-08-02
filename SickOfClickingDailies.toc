@@ -59,7 +59,8 @@ localizations\localization.xml
 core.lua
 namescanner.lua
 
-#Classic.lua
+Classic.lua
+
 #BC.lua
 #wotlk.lua
 #non-dailies.lua
