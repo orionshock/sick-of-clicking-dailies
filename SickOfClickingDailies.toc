@@ -57,6 +57,8 @@ localizations\localization.xml
 
 
 core.lua
+namescanner.lua
+
 #Classic.lua
 #BC.lua
 #wotlk.lua
@@ -65,7 +67,7 @@ core.lua
 #dailylogoutwarning.lua
 
 #@alpha@
-#namescanner.lua
+
 #@end-alpha@
 
 #@debug@
