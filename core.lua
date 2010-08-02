@@ -241,9 +241,11 @@ end
 function addon:ShouldIgnoreQuest(title)
 	if db.global.QuestNameCache[title] == nil then
 		return true
-	else
-		return false
 	end
+	if db.profile.QuestStatus[title] == false then
+		return true
+	end
+	return false
 end
 
 function addon:CaptureDailyQuest(title)
