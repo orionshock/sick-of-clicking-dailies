@@ -23,6 +23,8 @@ if projectVersion:find("project") then
 end
 
 SOCD  = LibStub("AceAddon-3.0"):NewAddon("SickOfClickingDailies", "AceEvent-3.0", "AceConsole-3.0")
+SOCD.version = projectVersion.."-"..projectRevisiion
+
 local addon = SOCD
 local db
 
@@ -79,6 +81,7 @@ local db_defaults = {
 function addon:OnInitialize()
 	self.db = LibStub("AceDB-3.0"):New("SOCD_SEVEN", db_defaults)
 	db = self.db
+
 end
 
 function addon:OnEnable(event, addon)
@@ -92,7 +95,10 @@ function addon:OnEnable(event, addon)
 	self:RegisterChatCommand("socd", function()
 			print("SOCD Slash Command Place Holder")
 	end)
-
+	if db.global.currentRev ~= self.version then
+		--self:GetModule("QuestScanner"):Update()
+		--db.global.currentRev = self.version
+	end
 end
 
 --[[
