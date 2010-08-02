@@ -1,29 +1,25 @@
 --[[
- $Rev$
-This file is used to update locale information by automagically generating it from the client
-
-This module now has a gui interface and an ingame export option.
-
-
-Good Luck!
+ 
 
 ]]
 
-local SOCD = LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
-local module = SOCD:NewModule("QuestScanner", "AceEvent-3.0")
-module.noModuleControl = true
-local dbo
-
-local tempQuestTable = {}
-function module:OnEnable()
-	self.tempQuestTable = tempQuestTable
-	self:RegisterEvent("QUEST_DETAIL")
-
-	SOCD.db.global.Scanner = SOCD.db.global.Scanner or {}
-	dbo = SOCD.db.global.Scanner
+local projectVersion = "@project-version@"
+local projectRevision = "@project-abbreviated-hash@"
+if projectVersion:find("project") then
+	projectVersion = "git"
+	projectRevision = "dev"
 end
 
-local D = SOCD.D
+local AddonName, AddonParent = ...
+local module = AddonParent:NewModule("QuestScanner", "AceEvent-3.0")
+local localeQuestNameByID = {}
+local dbo
+
+function module:OnEnable()
+	dbo = AddonParent.db.global.QuestNameCache
+	self:Debug("OnEnable, starting Scan")
+	return self:StartScan()
+end
 
 local qTable = {
 	[4970] = "Frostsaber Provisions", --C
@@ -47,9 +43,6 @@ local qTable = {
 	[11085] = "Escape from Skettis", --BC
 	[11086] = "Disrupting the Twilight Portal", --BC
 	[11097] = "The Deadliest Trap Ever Laid", --BC
---	[11335] = "Call to Arms: Arathi Basin", --C
---	[11337] = "Call to Arms: Eye of the Storm", --BC
---	[11338] = "Call to Arms: Warsong Gulch", --C
 	[11354] = "Wanted: Nazan's Riding Crop", --BC
 	[11362] = "Wanted: Keli'dan's Feathered Stave", --BC
 	[11363] = "Wanted: Bladefist's Seal", --BC
@@ -190,22 +183,6 @@ local qTable = {
 	[13199] = "Bones and Arrows", --WotLK
 	[13201] = "Healing with Roses", --WotLK
 	[13222] = "Defend the Siege", --WotLK
---	[13240] = "Timear Foresees Centrifuge Constructs in your Future!", --WotLK, removed in 3.2
---	[13241] = "Timear Foresees Ymirjar Berserkers in your Future!", --WotLK, removed in 3.2
---	[13243] = "Timear Foresees Infinite Agents in your Future!", --WotLK, removed in 3.2
---	[13244] = "Timear Foresees Titanium Vanguards in your Future!", --WotLK, removed in 3.2
---	[13245] = "Proof of Demise: Ingvar the Plunderer", --WotLK, removed in 3.2
---	[13246] = "Proof of Demise: Keristrasza", --WotLK, removed in 3.2
---	[13247] = "Proof of Demise: Ley-Guardian Eregos", --WotLK, removed in 3.2
---	[13248] = "Proof of Demise: King Ymiron", --WotLK, removed in 3.2
---	[13249] = "Proof of Demise: The Prophet Tharon'ja", --WotLK, removed in 3.2
---	[13250] = "Proof of Demise: Gal'darah", --WotLK, removed in 3.2
---	[13251] = "Proof of Demise: Mal'Ganis", --WotLK, removed in 3.2
---	[13252] = "Proof of Demise: Sjonnir The Ironshaper", --WotLK, removed in 3.2
---	[13253] = "Proof of Demise: Loken", --WotLK, removed in 3.2
---	[13254] = "Proof of Demise: Anub'arak", --WotLK, removed in 3.2
---	[13255] = "Proof of Demise: Herald Volazj", --WotLK, removed in 3.2
---	[13256] = "Proof of Demise: Cyanigosa", --WotLK, removed in 3.2
 	[13261] = "Volatility", --WotLK
 	[13276] = "That's Abominable!", --WotLK
 	[13283] = "King of the Mountain", --WotLK
@@ -228,9 +205,7 @@ local qTable = {
 	[13423] = "Defending Your Title", --WotLK
 	[13424] = "Back to the Pit", --WotLK
 	[13425] = "The Aberrations Must Die", --WotLK
---	[13427] = "Call to Arms: Alterac Valley", --C
 	[12170]= "Blackriver Brawl", --WotLK
---	[13405]= "Call to Arms: Strand of the Ancients", --WotLK
 	[12315]= "Crush Captain Brightwater!", --WotLK
 	[13202]= "Jinxing the Walls", --WotLK
 	[12284]= "Keep 'Em on Their Heels", --WotLK
@@ -240,22 +215,19 @@ local qTable = {
 	[13192]= "Warding the Walls", --WotLK
 	[13284] = "Assault by Ground", --WotLK
 	[13309] = "Assault by Air", --WotLK
---	[14163] = "Call to Arms: Isle of Conquest",	--WotLK
 
---Shared
---	[13627] = "Jack Me Some Lumber",	--WotLK	removed in round 2 of AT
---	[13681] = "A Chip Off the Ulduar Block",	--WotLK	removed in round 2 of AT
+
 	[13675] = "The Edge Of Winter",	--WotLK
 	[13674] = "A Worthy Weapon", 	--WotLK
 	[13673] = "A Blade Fit For A Champion",	--WotLK
---Asshat
+
 	[13676] = "Training In The Field",	--WotLK
 	[13677] = "Learning The Reins",	--WotLK
---Vergin
+
 	[13857] = "At The Enemy's Gates",
 	[13772] = "The Grand Melee",
 	[13771] = "A Valiant's Field Training",
---Chimpmonk
+
 	[13861] = "Battle Before The Citadel",	--WotLK
 	[13682] = "Threat From Above",	--WotLK
 	[13790] = "Among the Champions",	--WotLK
@@ -263,14 +235,14 @@ local qTable = {
 	[13846] = "Contributin' To The Cause", --WotLK
 
 
---Fishing:
+
 	[13833] = "Blood Is Thicker", --WotLK
 	[13834] = "Dangerously Delicious", --WotLK
 	[13832] = "Jewel Of The Sewers", --WotLK
-	[13836] = "Disarmed!", --WotLK		--Replaced Monsterbelly Appitite some time round 3.3.3
+	[13836] = "Disarmed!", --WotLK
 	[13830] = "The Ghostfish", --WotLK
 
---Patch 3.2 Additions:
+
 	[14096] = "You've Really Done It This Time, Kul", --WotLK
 	[14152] = "Rescue at Sea", --WotLK
 	[14074] = "A Leg Up", --WotLK
@@ -286,13 +258,12 @@ local qTable = {
 	[14102] = "Mistcaller Yngvar", --WotLK
 	[14104] = "Ornolf The Scarred", --WotLK
 	[14105] = "Deathspeaker Kharos", --WotLK
---	[14199] = "Proof of Demise: The Black Knight"--WOTLK, removed in 3.2
 
 	[13903] = "Gorishi Grub", --WotLK
 	[13915] = "Hungry, Hungry Hatchling", --WotLK
 	[13904] = "Poached, Scrambled, Or Raw?", --WotLK
 	[13905] = "Searing Roc Feathers", --WotLK
----Brewfest
+
 	[11408] = "Bark for T'chali's Voodoo Brewery!",	--BC
 	[11407] = "Bark for Drohn's Distillery!",	--BC
 	[11293] = "Bark for the Barleybrews!",	--BC
@@ -300,16 +271,16 @@ local qTable = {
 	[12062] = "Insult Coren Direbrew",	--BC
 	[12192] = "This One Time, When I Was Drunk...",	--BC
 
---Hallow's End
+
 	[12404] = "Candy Bucket", --BC
---Pilgrim's bounty
+
 	[14061] = "Can't Get Enough Turkey", --WotLK
 	[14062] = "Don't Forget The Stuffing!", --WotLK
 	[14060] = "Easy As Pie", --WotLK
 	[14058] = "She Says Potato", --WotLK
 	[14059] = "We're Out of Cranberry Chutney Again?", --WotLK
 
---Raid Weakley Quests	"Must Die"
+
 	[24580] = "Anub'Rekhan Must Die!",
 	[24585] = "Flame Leviathan Must Die!",
 	[24587] = "Ignis the Furnace Master Must Die!",
@@ -322,7 +293,7 @@ local qTable = {
 	[24586] = "Razorscale Must Die!",
 	[24579] = "Sartharion Must Die!",
 	[24588] = "XT-002 Deconstructor Must Die!",
---	IceCrown Weakly Quests
+
 	[24879] = "Blood Quickening",
 	[24875] = "Deprogramming",
 	[24878] = "Residue Rendezvous",
@@ -331,35 +302,39 @@ local qTable = {
 
 }	--End of name Scanner Master Table
 
-module.qTable = qTable
 
-local tt = CreateFrame("GameTooltip", "QuestScanTT", UIParent, "GameTooltipTemplate")
-local ttlt = QuestScanTTTextLeft1
+local tt = CreateFrame("GameTooltip", "SOCDQuestScanTT", UIParent, "GameTooltipTemplate")
+local ttlt = _G[tt:GetName().."TextLeft1"]
 local ttScanFrame = CreateFrame("frame")
 ttScanFrame:Hide()
 do
 	tt:SetScript("OnTooltipSetQuest", function(self, ...)
 		if (not self.questId) or (not self.englishQuestTitle) then
-			print("|cff9933FFSOCD:|r Invalid Setup for SOCD Quest Scanning")
+			self:Debug("Invalid Setup for SOCD Quest Scanning")
 			ttScanFrame:Hide()
 		end
-		dbo[self.englishQuestTitle] = (ttlt:GetText() or ""):trim()
-		D("Set: '"..self.englishQuestTitle.."' --> '"..dbo[self.englishQuestTitle].."'" )
+		local questTitleText = (ttlt:GetText() or ""):trim()
+		dbo[questTitleText] = true
+		localeQuestNameByID[ tonumber(self.questId) ] = questTitleText
+
+		self.count = self.count + 1
+
+		module:Debug("Caching:", self.questId, self.englishQuestTitle, "-->", questTitleText )
+
 		local id, eName = next(qTable, self.questId)
 		if not id or not eName then
-			print("|cff9933FFSOCD:|r no id or eName Next")
-			print("|cff9933FFSOCD:|r Reached end of Quest table, You can now export the data")
-			print("|cff9933FFSOCD:|r Scanned total of", self.count, "quests")
+			module:Debug("Reached end of Quest table. Total Quests Scanned:", self.count)
+			AddonParent.db.global.currentRev = AddonParent.version
+			AddonParent:SendMessage("SOCD_QuestByID_Ready")
 			ttScanFrame:Hide()
 			return
 		end
---		print("    Next:", id, eName)
 		self.questId = id
 		self.englishQuestTitle = eName
-		self.count = self.count + 1
 	end)
 
-	local interval, delay = 1, 0
+
+	local interval, delay = 1, .5
 	ttScanFrame:SetScript("OnUpdate", function(self, elapsed)
 		delay = delay + elapsed
 		if delay > interval then
@@ -367,153 +342,18 @@ do
 			delay = 0
 		end
 	end)
+
 end
-function module:StartTTScan(info)
-	print("|cff9933FFSOCD:|r Starting Localized Tooltip Scan")
+function module:StartScan()
+	self:Debug("Starting Localized Tooltip Scan")
 	local id, eName = next(qTable)
---	print(id, eName)
 	tt.questId = id
 	tt.englishQuestTitle = eName
-	tt.count = 1
+	tt.count = 0
 	ttScanFrame:Show()
 	return tt:SetHyperlink( ("quest:%d"):format(id) )
 end
-function module:StopTTScan(info)
-	print("|cff9933FFSOCD:|r Stopping Tooltip Scanning?")
+function module:StopScan(info)
+	self:Debug("Stopping Tooltip Scanning?")
 	ttScanFrame:Hide()
-end
-
-local locale_format = [[L["%s"] = "%s"]]
-local t = {}
-function module:Export(info)
-	D("Starting Quest Title Export")
-	t = wipe(t)
-	local i = 0
-	for eName, lName in pairs(dbo) do
-		tinsert(t, locale_format:format(eName, lName ) )	
-		D(#t, "    ", t[#t])
-		i = i + 1
-	end
-	D("Number of Quests Exported =", i)
-	table.sort(t)	
-	local str = table.concat(t, "\n")
-	self:SendToCopyFrame(str)
-end
-
-
-function module:GetOptionsTable()
-	local t = {
-		name = "Quest Name Scanner", type = "group", handler = module, order = -100,
-			args = {
-				startcache = { type = "execute", name = "Start Tooltip Scanning", func = "StartTTScan", order = 1, width = "full", },
-				stopcache = { type = "execute", name = "Stop Tooltip Scanning", func = "StopTTScan", order = 1, width = "full", },
---				check = { type = "execute", name = "Check Tooltip Cache", desc = "This will print out the quest names to chat frame to make sure you have everything", 
---					func = "CheckTTScan", order = 10, width = "full", },
-				export = { type = "execute", name = "Export to Copy paste Frame", func = "Export", order = 20, width = "full",},
---				commit = { type = "execute", name = "Commit Locale to SV", desc = "Commit names to SV file instead of exporting them", func = "CommitLocalizedNames", width = "full", order = 30 },
-				liveScan = { type = "group", name = "Live Scan", order = 40, inline = true,
-					args = {
-						box = { name = "Live Scan Export", type = "input", multiline = 10, get = "GetLiveScanText", width = "full" }
-					},
-				},
-		}
-	}
-	return t
-end
-
-do
-
-	local frame = nil
-	local editBox = nil
-	local f = nil
-
-	local function createFrames()
-		--[[		Create our frames on demand		]]--
-		frame = CreateFrame("Frame", "SOCD_LocaleExport", UIParent)
-		frame:SetBackdrop({bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
-			edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
-			tile = true, tileSize = 16, edgeSize = 16,
-			insets = {left = 3, right = 3, top = 5, bottom = 3}}
-		)
-		frame:SetBackdropColor(0,0,0,1)
-		frame:SetWidth(500)
-		frame:SetHeight(400)
-		frame:SetPoint("CENTER", UIParent, "CENTER")
-		frame:Hide()
-		frame:SetFrameStrata("DIALOG")
-
-		local scrollArea = CreateFrame("ScrollFrame", "SOCD_LocaleExport", frame, "UIPanelScrollFrameTemplate")
-		scrollArea:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -30)
-		scrollArea:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -30, 8)
-
-		editBox = CreateFrame("EditBox", "SOCD_LocaleExport_EditBox", frame)
-		editBox:SetMultiLine(true)
-		editBox:SetMaxLetters(99999)
-		editBox:EnableMouse(true)
-		editBox:SetAutoFocus(false)
-		editBox:SetFontObject(ChatFontNormal)
-		editBox:SetWidth(400)
-		editBox:SetHeight(270)
-		editBox:SetScript("OnEscapePressed", function() frame:Hide() end)
-
-		scrollArea:SetScrollChild(editBox)
-
-		local close = CreateFrame("Button", "SOCD_LocaleExport_CloseButton", frame, "UIPanelCloseButton")
-		close:SetPoint("TOPRIGHT", frame, "TOPRIGHT")
-
-		f = true
-	end
-
-
-	function module:SendToCopyFrame(str)
-		if not f then createFrames() end
-		frame:Show()
-		editBox:SetText(str)
-		editBox:HighlightText(0)
-	end
-end
-
-
-
-function module:QUEST_DETAIL(event, ...)
-	local npcID = UnitGUID("target") and tonumber( strsub( UnitGUID("target"), -12, -7), 16) 
-	local questTitle = GetTitleText()
-	self.npcID = tonumber(npcID)
-        self.npcName = UnitName("target") or ""
-	self.questTitle = questTitle
-	--self.event = "Pickup"
-	self:RegisterEvent("QUEST_LOG_UPDATE")
-end
-
-
-local specailFormat = [[ [%d] = "%s",
-%d, -- %s 
-----------]]
-
-function module:QUEST_LOG_UPDATE(event, ...)
-       	self:UnregisterEvent("QUEST_LOG_UPDATE")
-	if not self.npcID then return end
-	local num = GetNumQuestLogEntries()
-	if num == 0 then return end
-	for i  = 1, num do
-                local questTitle, level, questTag, suggestedGroup, isHeader, isCollapsed, isComplete, isDaily, questID = GetQuestLogTitle(i)
-                if not questID then
-                        questID = (GetQuestLink(i) or "<title>"):match("\124cff%x+\124Hquest:(%d+):%d+\124h")
-                end
-		if questID and questTitle:find(self.questTitle) then
-		        tinsert( tempQuestTable, specailFormat:format(questID, self.questTitle or "", self.npcID or 0, self.npcName or "" ) )
-			if SOCD.specialResetQuests[questTitle] then
---				print("WG: QID:", questID, "Title:", self.questTitle)
-			end
-		        self.tnpcID = nil
-		        self.tquestTitle = nil
-		        self.event = nil
-		        break
-		end
-	end
-end
-
-function module:GetLiveScanText(info, ...)
-	local t = table.concat(tempQuestTable, "\n")
-	return t
 end
