@@ -68,5 +68,5 @@ BC.lua
 #dailylogoutwarning.lua
 
 #@debug@
-#SickOfClickingDailies_AltTracking\module.xml
+SickOfClickingDailies_AltTracking\module.xml
 #@end-debug@
