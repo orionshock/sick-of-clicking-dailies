@@ -110,12 +110,18 @@ function addon:OnEnable(event, addon)
 	self:RegisterEvent("QUEST_COMPLETE")
 
 	self:RegisterChatCommand("socd", function()
-			print("SOCD Slash Command Place Holder")
+		print("SOCD Slash Command Place Holder")
+		if self.QuestNameScanned then
+			print("Ready for setup")
+		else
+			print("Still Init, plz wait")
+		end
 	end)
 	if db.global.currentRev ~= self.version then
 		self:GetModule("QuestScanner"):StartScan()
 	else
 		self:SendMessage("SOCD_QuestByID_Ready")
+		self.QuestNameScanned = true
 	end
 end
 
