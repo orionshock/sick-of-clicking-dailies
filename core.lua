@@ -1,4 +1,27 @@
 
+--[[
+Sick Of Clicking Dailies is a simple addon designed to pick up and turn in Dailiy Quests for WoW.
+
+This version comes with a built in config system made with Ace3's Config GUI Libs.
+
+@project-version@
+@project-abbreviated-hash@
+
+=====================================================================================================
+ Copyright (c) 2010 by Orionshock
+
+	see included "LICENSE.txt" file with zip for details on copyright.
+
+=====================================================================================================
+]]--
+
+local projectVersion = "@project-version@"
+local projectRevision = "@project-abbreviated-hash@"
+if projectVersion:find("project") then
+	projectVersion = "git"
+	projectRevision = "dev"
+end
+
 
 NewSOCD = {}
 local function D(...)
