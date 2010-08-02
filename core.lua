@@ -85,10 +85,12 @@ local db_defaults = {
 	global = {
 		debug = {
 			core = true,
-			QuestScanner = true,
+			QuestScanner = false,
 		},
 		QuestNameCache = {
-		},
+		},	--Also used by Addon to see if the quest is a daily. this is a  { ["Localized Quest Name"] = true } table
+		localeQuestNameByID = {
+		},	---Use by Addon API to get localized quest name from ID. This is a  { [questID] = "Localized Quest Name" } table
 	},
 }
 
@@ -110,6 +112,8 @@ function addon:OnEnable(event, addon)
 	end)
 	if db.global.currentRev ~= self.version then
 		self:GetModule("QuestScanner"):StartScan()
+	else
+		self:SendMessage("SOCD_QuestByID_Ready")
 	end
 end
 
