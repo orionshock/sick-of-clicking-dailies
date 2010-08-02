@@ -61,16 +61,11 @@ QuestScanner.lua
 Options.lua
 
 Classic.lua
+BC.lua
 
-#BC.lua
 #wotlk.lua
-
 #ldb.lua
 #dailylogoutwarning.lua
-
-#@alpha@
-
-#@end-alpha@
 
 #@debug@
 #SickOfClickingDailies_AltTracking\module.xml
