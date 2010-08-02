@@ -103,7 +103,8 @@ local function procGetGossipActiveQuests(index, title, _, _, isComplete, ...)
 end
 
 function addon:GOSSIP_SHOW(event)
-	Debug(event)	
+	if IsShiftKeyDown() then return end
+	Debug(event)
 	local index, title, isDaily = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
 	if index then
 		Debug("Found Available, Quest:", title, "~IsDaily:",isDaily, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
@@ -122,6 +123,7 @@ end
 ]]--
 
 function addon:QUEST_GREETING(event, ...)
+	if IsShiftKeyDown() then return end
 	Debug(event, ...)
 	local numActiveQuests = GetNumActiveQuests()
 	local numAvailableQuests = GetNumAvailableQuests()
@@ -149,6 +151,7 @@ end
 ]]--
 
 function addon:QUEST_DETAIL(event)
+	if IsShiftKeyDown() then return end
 	local title = GetTitleText()
 	Debug(event, title, "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 
@@ -164,6 +167,7 @@ end
 ]]--
 
 function addon:QUEST_PROGRESS(event)
+	if IsShiftKeyDown() then return end
 	local title = GetTitleText()
 
 	Debug(event, title, "~IsCompleteable:", IsQuestCompletable(), "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
@@ -182,6 +186,7 @@ end
 ]]--
 
 function addon:QUEST_COMPLETE(event)
+	if IsShiftKeyDown() then return end
 	local title = GetTitleText()
 
 	Debug(event, title, "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
