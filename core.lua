@@ -48,9 +48,9 @@ local module_Proto = {
 			print("|cff9933FFSOCD-Debug-"..( self.GetName and self:GetName() or "")..":|r ", str)
 		end
 	end,
-	ToggleQuestStatus = function(self, title, status)
+	SetQuestStatus = function(self, title, status)
 		self:Debug("ToggleQuestStatus", title, status)		--Place Holder
-		if type(status) ~= "boolen" then
+		if type(status) ~= "boolean" then
 			self:Debug("ToggleQuestStatus", title, "Not a boolen value, got:", status)
 			return
 		end
@@ -87,6 +87,7 @@ local db_defaults = {
 		debug = {
 			core = true,
 			QuestScanner = false,
+			Options = true,
 		},
 		QuestNameCache = {
 		},	--Also used by Addon to see if the quest is a daily. this is a  { ["Localized Quest Name"] = true } table
@@ -146,8 +147,8 @@ local function procGetGossipActiveQuests(index, title, _, _, isComplete, ...)
 end
 
 function addon:GOSSIP_SHOW(event)
-	if IsShiftKeyDown() then return end
 	Debug(event)
+	if IsShiftKeyDown() then return end
 	local index, title, isDaily = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
 	if index then
 		Debug("Found Available, Quest:", title, "~IsDaily:",isDaily, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
@@ -166,8 +167,8 @@ end
 ]]--
 
 function addon:QUEST_GREETING(event, ...)
-	if IsShiftKeyDown() then return end
 	Debug(event, ...)
+	if IsShiftKeyDown() then return end
 	local numActiveQuests = GetNumActiveQuests()
 	local numAvailableQuests = GetNumAvailableQuests()
 	Debug("AvailableQuests")
@@ -194,10 +195,9 @@ end
 ]]--
 
 function addon:QUEST_DETAIL(event)
-	if IsShiftKeyDown() then return end
 	local title = GetTitleText()
 	Debug(event, title, "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
-
+	if IsShiftKeyDown() then return end
 	if ( QuestIsDaily() or QuestIsWeekly() ) then
 		self:CaptureDailyQuest(title)
 		if self:ShouldIgnoreQuest(title) then return end
@@ -210,11 +210,9 @@ end
 ]]--
 
 function addon:QUEST_PROGRESS(event)
-	if IsShiftKeyDown() then return end
 	local title = GetTitleText()
-
 	Debug(event, title, "~IsCompleteable:", IsQuestCompletable(), "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
-
+	if IsShiftKeyDown() then return end
 	if not IsQuestCompletable() then return end
 	if ( QuestIsDaily() or QuestIsWeekly() ) and ( not self:ShouldIgnoreQuest(title) ) then
 		Debug("Completing Quest:", title)
@@ -229,11 +227,9 @@ end
 ]]--
 
 function addon:QUEST_COMPLETE(event)
-	if IsShiftKeyDown() then return end
 	local title = GetTitleText()
-
 	Debug(event, title, "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
-
+	if IsShiftKeyDown() then return end
 	if ( QuestIsDaily() or QuestIsWeekly() ) and ( not self:ShouldIgnoreQuest(title) ) then
 		local rewardOpt = self:GetQuestRewardOption( title )
 		if (GetQuestItemInfo("choice", 1) ~= "") and (not rewardOpt) then
@@ -269,12 +265,16 @@ end
 
 function addon:ShouldIgnoreQuest(title)
 	title = title:trim()
+	Debug("Checking ignore option for:", title)
 	if db.global.QuestNameCache[title] == nil then
+		Debug("Ignoring quest because it's not a daily")
 		return true
 	end
 	if db.profile.QuestStatus[title] == false then
+		Debug("Ignorign quest because it's disabled")
 		return true
 	end
+	Debug("Not Ignoring Quest")
 	return false
 end
 
