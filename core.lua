@@ -1,558 +1,199 @@
---[[
-Sick Of Clicking Dailies is a simple addon designed to pick up and turn in Dailiy Quests for WoW.
 
-This version comes with a built in config system made with Ace3's Config GUI Libs.
 
-@project-version@
-@project-abbreviated-hash@
-
-=====================================================================================================
- Copyright (c) 2007 by Orionshock
-
-	see included "LICENSE.txt" file with zip for details on copyright.
-
-=====================================================================================================
-]]--
-
-local projectVersion = "@project-version@"
-local projectRevision = "@project-abbreviated-hash@"
-if projectVersion:find("project") then
-	projectVersion = "git"
-	projectRevision = "dev"
+NewSOCD = {}
+local function D(...)
+	local str = string.join(", ", tostringall(...) )
+	str = str:gsub("[:=],", "%1")
+	print("NewSOCD: ", str)
 end
 
-local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_Core")
+local addon = NewSOCD
+local eventFrame = CreateFrame("Frame")
 
-SickOfClickingDailies = LibStub("AceAddon-3.0"):NewAddon("SickOfClickingDailies", "AceEvent-3.0", "AceConsole-3.0")
-local AceConfigDialog = LibStub("AceConfigDialog-3.0")
-local addon = SickOfClickingDailies
-addon.Version = projectVersion.."-"..projectRevision
-addon.specialResetQuests = {}
---
---	Debug Func()
---
-local D = function() end
---@alpha@
-function D(arg, ...)
-	local str
-	if string.find(tostring(arg), "%%") then
-		str = arg:format(...)
+eventFrame:SetScript("OnEvent", function(self, event, ...)
+	if type(addon[event]) == "function" then
+		addon[event](addon, event, ...)
 	else
-		str = string.join(", ", tostringall(arg, ...) )
-		str = str:gsub(":,", ":"):gsub("=,", "=")
+		addon:InspectAPI(event, ...)
 	end
-	if addon.db and addon.db.global.debug then
-		print("|cff9933FFSOCD:|r "..str)
-	end
-	return str
-end
---@end-alpha@
-
---
---	Addon Decleration & File Wide locals
---
-
-local moduleQLookup, moduleQOptions, questNPCs, moduleGossipOptions = {}, {}, {}, {}
-addon.moduleQLookup = moduleQLookup
-addon.moduleQOptions = moduleQOptions
-addon.questNPCs = questNPCs
-addon.moduleGossipOptions = moduleGossipOptions
-addon.D = D
-
---
---	Quest Name lookup func's
---
-
-local function qTable(k)
---	local f, m
-	for module, questTable in pairs(moduleQLookup) do
-		if questTable[k] == true then
---			if module == "RRQ" then
---				return nil
---			else
-				return true, k, module
---			end
-		elseif questTable[k] == false then
---			if module == "RRQ" then
---				return nil
---			else
-				return false, k, module
---			end
-		end
-	end
---	return nil, f, m
-end
-addon.IsQuestHandled = qTable
-
-local function qOptions(k)
-	for _,oTable in pairs(moduleQOptions) do
-		if oTable[k] then
-			return oTable[k]
-		end
-	end
+end)
+function addon:RegisterEvent(event)
+	eventFrame:RegisterEvent(event)
 end
 
-local function gossipOption(opt)
-	for _, gTable in pairs(moduleGossipOptions) do
-		if gTable[opt] then
-			return gTable[opt]
-		end
-	end
+function addon:UnregisterEvent(event)
+	eventFrame:UnregisterEvent(event)
 end
+addon:RegisterEvent("ADDON_LOADED")
 
-function addon:RegisterQuests(name, questTable, options, gossip)
-	--Quest Groupings
-	assert(type(questTable) == "table")
-	moduleQLookup[name] = questTable
-	assert(type(options) == "table")
-	moduleQOptions[name] = options
---	D("Quest Grouping %s registered", name)
-	if gossip then
-		assert(type(gossip) == "table")
-		moduleGossipOptions[name] = gossip
---		D("Gossip Options for %s registered", name)
-	end
-end
-
-function addon:UnRegisterQuests(name)
-	if moduleQLookup[name] then
-		moduleQLookup[name] = nil
-		moduleQOptions[name] = nil
-		questNPCs[name] = nil
-		moduleGossipOptions[name] = nil
-
---		D("Quest Grouping %s unregistered", name)
-
-	end
-end
-
---
---	Options Table Defualts
---
-
-local defaults = {
-	char = {
-		completedQuests = {},
-		showExTT = false,
-	},
-	profile = {
-		questLoop = true,
-		modules = {
-			["DailyLogoutWarning"] = false,
-		},
-	},
-	global = {
-		debug = false,
-	},
-}
-
---
---	Options Table & Module Methods for getting options tables
---
-
-local function GetModuleOptions(Lname, mName)
-	return { name = Lname, type = "toggle", get = "GetModuleState", set = "ToggleModule", arg = mName}
-end
-
-local function GetOptionsTable()
-	local options = {
-		name = L["Sick of Clicking Dailies"],
-		type = "group",
-		handler = addon,
-		childGroups = "tab",
-		args = {
-			questLoop = { type = "toggle", name = L["Enable Quest Looping"], desc = L["questLoop_Desc"], get = "QuestLoop", set = "QuestLoop" },
-			MiscOpt = {type = "group", name = L["Misc Options"], order = -2, args = {}, plugins = {} },
-			moduleControl = {
-				name = L["Module Control"],
-				type = "group", order = -1,
-				args = {
-					--@alpha@
-					debug = { type = "toggle", name = "Enable Debug", get = function() return addon.db.global.debug end, set = function(_, val) addon.db.global.debug = val end },
-					--@end-alpha@
-				},
-			},
-		},
-	}
-	local i = 1
-	for name, module in addon:IterateModules() do
-		options.args[name] = (type(module.GetOptionsTable) == 'function' and module:GetOptionsTable(options)) or nil
-		if not module.noModuleControl then
-			options.args.moduleControl.args[name] = GetModuleOptions(L[name], name)
-		end
-		i = i + 1
-	end
-	local profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(addon.db)
-	profile.inline = true
-	profile.order = 30
-	options.args.MiscOpt.args.profile = profile
-	return options
-end
-
-function addon:GetModuleState(info)
-	return self.db.profile.modules[info.option.arg]
-end
-function addon:ToggleModule(info, value)
-	local option = info.option.arg
-	if value then
-		self:EnableModule(option)
-		self.db.profile.modules[option] = true
-	else
-		self:DisableModule(option)
-		self.db.profile.modules[option] = false
-	end
-end
-
-function addon:QuestLoop(info, value)
-	if value == nil then
-		--Get
-		return self.db.profile.questLoop
-	else
-		--Set
-		self.db.profile.questLoop = value
-	end
-end
-
-
---
---	Main Addon Functions
---
-local projectVersion = "@project-version@"
-local projectRevision = "@project-abbreviated-hash@"
-if projectVersion:find("project") then
-	projectVersion = "git"
-	projectRevision = "dev"
-end
-
-function addon:OnInitialize()
-	for name, _ in self:IterateModules() do
-		if defaults.profile.modules[name] == nil then
-			defaults.profile.modules[name] = true
-		end
-	end
-
-	addon.db = LibStub("AceDB-3.0"):New("SOCD_SIX", defaults)
-	LibStub("AceConfig-3.0"):RegisterOptionsTable("SickOfClickingDailies", GetOptionsTable)
-	LibStub("AceConfigDialog-3.0"):SetDefaultSize("SickOfClickingDailies", 1000, 700)
-	self:RegisterChatCommand("socd", function()
-			if  AceConfigDialog.OpenFrames["SickOfClickingDailies"] then
-				AceConfigDialog:Close("SickOfClickingDailies")
-			else
-				AceConfigDialog:Open("SickOfClickingDailies")
-			end
-
-		end )
-
-	for name, module in self:IterateModules() do
-		module:SetEnabledState(self.db.profile.modules[name])
-
-	end
-	self.QuestLogCache = {}
-	self.Version = projectVersion.."-"..projectRevision
-end
-
-function addon:OnEnable()
+function addon:ADDON_LOADED(event, addon)
+	if addon ~= "TestingGround" then return end
 	self:RegisterEvent("GOSSIP_SHOW")
-	self:RegisterEvent("QUEST_GREETING")
 	self:RegisterEvent("QUEST_DETAIL")
 	self:RegisterEvent("QUEST_PROGRESS")
 	self:RegisterEvent("QUEST_COMPLETE")
-	self:RegisterEvent("PLAYER_TARGET_CHANGED")
 
-	--Random LFG Support--
-	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-	self:ZONE_CHANGED_NEW_AREA("OnEnable-ZCNA")
-	D("Core File, OnEnable")
+	self:RegisterEvent("QUEST_GREETING")
+
+
+
 end
 
-function addon:OnDisable()
-	--self:UnregisterAllEvents()
-	D("Core File, OnDisable")
+function addon:InspectAPI(event, ...)
+	print(event, ...)
+	print("~QuestIsDaily", QuestIsDaily(), "~QuestIsWeekly", QuestIsWeekly() )
+	local title, _, _, isDaily, isRepeatable = GetGossipAvailableQuests()
+	print("GetGossipAvailableQuests", title, " isDaily: ", isDaily, " isRepeatable: ", isRepeatable )
+
+	local title, _, _, isComplete = GetGossipActiveQuests()
+	print("GetGossipActiveQuests", title, " isComplete: ", isComplete)
+
 end
 
---
---	Quest Handlers
---
+--[[
+	Gossip Show Event
+		2 helper functions to scrub though the information.
+		IMO this api sucks.
+		Sadly when turning in quests, we don't know if they are daily's, but don't care about that now.
+]]--
+local function procGetGossipAvailableQuests(index, title, _, _, isDaily, _, ...)
+	if title and isDaily then
+		if not addon:ShouldIgnoreQuest(title) then
+			return index, title, isDaily
+		end
+	elseif ... then
+		return procGetGossipAvailableQuests(index + 1, ...)
+	end
+end
 
-local npcBad, nextQuestFlag, questIndex, gossipPop = nil, false, 1, false
-
-local stopFlag, s_title, s_npc = false	--Event Dispatching stuff..
+local function procGetGossipActiveQuests(index, title, _, _, isComplete, ...)
+	if title and isComplete then
+		if not addon:ShouldIgnoreQuest(title) then
+			return index, title, isComplete
+		end
+	elseif ... then
+		return procGetGossipActiveQuests(index+1, ...)
+	end
+end
 
 function addon:GOSSIP_SHOW(event)
-	D(event)
-	if (IsShiftKeyDown()) then return end
-	local sel, quest, status = self:OpeningCheckQuest(event)
-	D(event, "logic batterie sel:", sel, "quest:", quest, "status:", status)
-	if sel then
-		D(event, "We have quest selection", sel, quest, status, "| BadNPC:", npcBad)
-		if npcBad then
-			D(event, "badNPC, gossipDive")
-			self:DoGossipOptions(event.."~EoQ" )
-			if not self.db.profile.questLoop then
-				D(event,"No QuestLooping, exit Func")
-				return
-			end
-		end
-		D(event, npcBad and "QuestLoopingEnabled" )
-		D(event, "Interacting with NPC", status, sel, quest)
-		if status == "Available" then
-			return SelectGossipAvailableQuest(sel)
-		elseif status == "Active" then
-			return SelectGossipActiveQuest(sel)
-		end
-	elseif not sel then
-		D(event, "No quests?? just gossip")
-		self:DoGossipOptions(event.."~NoQ")
+	D(event)	
+	local index, title, isDaily = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
+	if index then
+		D("Found Available, Quest:", title, "~IsDaily:",isDaily, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+		return SelectGossipAvailableQuest(index)
 	end
+	local index, title, isComplete = procGetGossipActiveQuests(1, GetGossipActiveQuests() )
+	if index then
+		D("Found Active Quest that is Complete:", title, "~IsComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+		return SelectGossipActiveQuest(index)
+	end
+--	D("Proccess Gossip Options here")		
 end
 
-function addon:DoGossipOptions(te)
-	te = "GosOpt~"..te
-	D(te)
-	local hasGossip, index = self:AnalyzeGossipOptions(te, GetGossipOptions() )
-	D(te, hasGossip, index)
-	if hasGossip then
-		D(te, hasGossip:sub(1,8), index)
-		npcBad =  false
-		D(te, "selectingOpt", index)
-		SelectGossipOption(index)
-	end
-end
+--[[
+	Quest Greeting, npc's that don't want to talk give us this window. API here is Kinda Ugly.
+]]--
 
 function addon:QUEST_GREETING(event, ...)
-	if (IsShiftKeyDown()) then return end
-	local numActiveQuests = GetNumActiveQuests();
-	local numAvailableQuests = GetNumAvailableQuests();
-	if numAvailableQuests > 0 then
-		local selection, quest = self:QuestItteratePickUp(event, GetAvailableTitle(1), GetAvailableTitle(2), GetAvailableTitle(3), GetAvailableTitle(4), GetAvailableTitle(5), GetAvailableTitle(6) )
-		if selection and quest then
-			SelectAvailableQuest(selection)
-			return
+	D(event, ...)
+	local numActiveQuests = GetNumActiveQuests()
+	local numAvailableQuests = GetNumAvailableQuests()
+	D("AvailableQuests")
+	for i = 1, numAvailableQuests do
+		local title, _, isDaily = GetAvailableTitle(i), GetAvailableQuestInfo(i)
+		D("Quest:", title, "~IsDaily:", isDaily, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+		if (title and isDaily) and ( not self:ShouldIgnoreQuest(title) ) then
+			D("picking up quest:", title)
+			SelectAvailableQuest(i)
 		end
 	end
-
-	if numActiveQuests > 0 then
-		local selection, quest = self:QuestItterateTurnIn(event, GetActiveTitle(1), GetActiveTitle(2), GetActiveTitle(3), GetActiveTitle(4), GetActiveTitle(5), GetActiveTitle(6) )
-		if selection and quest then
-			SelectActiveQuest(selection)
-			return
+	for i = 1, numActiveQuests do
+		local title, isComplete = GetActiveTitle(i)
+		D("Quest:", title, "~isComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+		if (title and isComplete) and ( not self:ShouldIgnoreQuest(title) ) then
+			D("turning in quest:", title)
+			SelectActiveQuest(i)
 		end
 	end
-
-
 end
+
+--[[
+	Quest Detail Event
+]]--
 
 function addon:QUEST_DETAIL(event)
-	D(event)
-	if IsShiftKeyDown() then return end
-	local quest = self:TitleCheck(event)
-	D(event, "found:", quest)
-	if quest then	--	if npc and quest then
-		D(event,"Accepting Quest", quest, npc)
-		AcceptQuest()
-		return
-	end
-end
+	local title = GetTitleText()
+	D(event, title, "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 
-
-function addon:QUEST_PROGRESS(event)
-	D(event)
-   	if IsShiftKeyDown() then return end
-	local quest = self:TitleCheck(event)
-	D(event, "found:", quest)
-	if quest then	--	if npc and quest then
-		if not IsQuestCompletable() then
-			D(event, "QuestNotCompleteable, set flag and DeclineQuest()")
-			nextQuestFlag = true
-			DeclineQuest()
-			return
-		else
-			D(event, "set nextQuestFlag to false")
-			nextQuestFlag = false
-		end
-		D(event, "Turning in quest")
-		return CompleteQuest() --HERE
-    end
-end
-
-do
-	function addon:QUEST_COMPLETE(event)
-		D(event, "nextQuestFlag to false")
-		nextQuestFlag = false
-		if IsShiftKeyDown() then return end
-		local quest = self:TitleCheck(event)
-		if quest then
-			local opt = qOptions(quest)
-			if (opt and (opt == -1)) then
-				D(event, "Has Option and time to stop", quest, opt)
-				return
-			elseif opt then
-				D(event, "Getting Reward!", opt)
-				GetQuestReward( opt )
-				return
-			end
-			D(event, "Getting Money!")
-			GetQuestReward(0)
-			return
-	    end
-	end
-
-	function SOCD_GetQuestRewardHook(opt)
-		local enabled, present =  qTable(GetTitleText())
-		D("GetQuestRewardHook", enabled, present, npcID)
-		if present then
-			D("SOCD_DAILIY_QUEST_COMPLETE", present, npcID, opt)
-			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", present, opt)
-		end
-	end
-	hooksecurefunc("GetQuestReward", SOCD_GetQuestRewardHook )
-	function SOCD_TestDailyEventSend()
-		addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", "TestQuest"..time() , nil, 1234)
-	end
-end
-
-function addon:PLAYER_TARGET_CHANGED(event)
-	D(event, "Set nextQuestFlag to false")
-	npcBad, nextQuestFlag, questIndex = false, false, 0
-end
-
-local function scrubAvailableQuests(title, lvl, triv, isDaily, repeatable, ...)
-	if not title then return end
-	if not (...) then return title:trim() end
-	return title:trim(), scrubAvailableQuests(...)
-end
-
-local function scrubActiveQuests(title, level, triv, unknown, ...)
-	if not title then return end
-	if not (...) then return title:trim() end
-	return title:trim(), scrubActiveQuests(...)
-end
-
-
-function addon:QuestItteratePickUp(te, ...)
-	te = "QuPickUp~"..te
-	if (...) == nil then
-		D(te, "nil opening on the vargArg")
-		return
-	end
-	for i=1, select("#", ...) do
-		local element = select(i, ...)
-		if qTable(element) then
-			D(te, "found quest, index:", i , "Quest:", element )
-			return i , element
-		end
+	if ( QuestIsDaily() or QuestIsWeekly() ) then
+		self:CaptureDailyQuest(title)
+		if self:ShouldIgnoreQuest(title) then return end
+		D("Accepting Daily/Weekly Quest:", title)
+		return AcceptQuest()
 	end
 end
 --[[
-	logic:
-		function is fed the varg arg with the titles from GetGossipActiveQuests() looks like this.
---		"Troll Patrol: The Alchemist's Apprentice", 76, nil,
---		format: "QuestTitle", "QuestLvl", "Trivaial" =  GetGossipActiveQuests()
+	Quest Progress Event
 ]]--
 
-function addon:QuestItterateTurnIn(te, ...)
-	te = "QiTi~"..te
-	D(te, ...)
-	if not (...) then return end
-	local numQuests = select("#", ...)
-	D(te, "nextQuestFlag:", nextQuestFlag)
-	if nextQuestFlag then	--Means we've been here before and we're moving on...
-		nextQuestFlag = false	--don't want to fk with things
-		questIndex = questIndex +1	--push the index up one so we can move on
-		D(te, "NextQuest, newIndex:",  questIndex)
-		if questIndex > numQuests then	--if our new index is greater than the available quests, flag it and return the first quest for looping
-			D(te, "Index is grater than Number, index:", questIndex, "total:", numQuests)
-			npcBad = true		--flag the NPC bad
-			questIndex = 1		--reset the index to 1
-			D(te, "set flag true and index to 1")
-			for i = 1, numQuests do	--itterate the vars though
-				if qTable(select(i,...)) then	--test quest
-					questIndex = i	--if found set the index
-					D(te, "found quest", i, (select(i, ...)))
-					return questIndex, (select(i, ...))	--return the index and questName for debugging
-				end
-			end
-		else		--means that we're still in the first round or we havn't hit the end yet
-			D(te, "index less than total, inner round, push next index for quest")
-			for i = questIndex, numQuests do		--start at our index, as we've allready bumpted it up to the next one in sequence
-				if qTable(select(i,...)) then	--test quest
-					questIndex = i	--if found set the index
-					D(te, "found quest", i, (select(i, ...)))
-					return questIndex, (select(i, ...))	--return the index and questName for debugging
-				end
-			end
-		end
-	else		-- Weee first quest - this is the likely senerio.
-		D(te, "First timers")
-		questIndex = 1
-		for i = questIndex, numQuests do		--start at our index, as we've allready bumpted it up to the next one in sequence
-			if qTable(select(i,...)) then	--test quest
-				questIndex = i	--if found set the index
-				D(te, "found quest", i, (select(i, ...)))
-				return questIndex, (select(i, ...))	--return the index and questName for debugging
-			end
-		end
-	end
-end
+function addon:QUEST_PROGRESS(event)
+	local title = GetTitleText()
 
-function addon:OpeningCheckQuest(te)
-	te = "OpQu~"..te
-	local selection, quest = self:QuestItteratePickUp(te, scrubAvailableQuests(GetGossipAvailableQuests()))
-	if quest then
-			return selection, quest, "Available"
-	else
-		selection, quest = self:QuestItterateTurnIn(te, scrubActiveQuests(GetGossipActiveQuests()))
-		if quest then
-			return selection, quest, "Active"
-		end
-	end
-end
+	D(event, title, "~IsCompleteable:", IsQuestCompletable(), "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 
-function addon:TitleCheck(te)
-	te = "TitleCk~"..te
-	local title = (GetTitleText() or "" ):trim()
-	if qTable(title) then
-		D(te, title)
-		return title
+	if not IsQuestCompletable() then return end
+	if ( QuestIsDaily() or QuestIsWeekly() ) and ( not self:ShouldIgnoreQuest(title) ) then
+		D("Completing Quest:", title)
+		CompleteQuest()
 	end
 end
 
 
-function addon:AnalyzeGossipOptions(te, ...)
-	te = "EvalGossip~"..te
-	D(te, "evaluating" )
-	local numArgs, count = select("#", ...), 0
-	for i = 1, numArgs, 2 do
-		local element = select(i+1, ...) == "gossip" and select(i, ...) or ""
-		D(te, "eval", element:sub(1,16))
-		if gossipOption(element) then
-			D(te, "Found element:", element:sub(1,16), (i+1)/2)
-			return element, (i+1)/2
+--[[
+	Quest Complete Event
+		--Can't get this far unless you can turn it in.
+]]--
+
+function addon:QUEST_COMPLETE(event)
+	local title = GetTitleText()
+
+	D(event, title, "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+
+	if ( QuestIsDaily() or QuestIsWeekly() ) and ( not self:ShouldIgnoreQuest(title) ) then
+		local rewardOpt = self:GetQuestRewardOption( title )
+		if (rewardOpt and (rewardOpt == -1)) then
+			return
+		elseif rewardOpt then
+			D(event, "Getting Reward:", (GetQuestItemInfo("choice", rewardOpt)) )
+			GetQuestReward( rewardOpt )
+			return
 		end
+		D(event, "Getting Money!")
+		GetQuestReward(0)
+		return
+
 	end
-	return false, 0
 end
 
-	local ignoreRLFD = {
-		[258] = true,	--Classic Dungeon
-		[259] = true,	--BC Dungeon
-		[260] = true,	--BC Heroic Dungeon
-	}
 
-function addon:ZONE_CHANGED_NEW_AREA(event, ...)
-	local _, iType = GetInstanceInfo()
-	D(event, iType)
-	if iType == "none" then
-		D("not in instance")
-		for i = 1, GetNumRandomDungeons() do
-			local id, name = GetLFGRandomDungeonInfo(i)
-			local doneToday = GetLFGDungeonRewards(id)
-			D(name, "/", id, " - Done: ", doneToday, " - Ignore:", ignoreRLFD[id] )
-			if doneToday and not ignoreRLFD[id] then
-				addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", name )
-			end
-		end
-	else
-		D("in broken area, don't scan random dungeosn")
-	end
+
+
+--[[
+	General Support Functions
+]]--
+
+function addon:GetQuestRewardOption(title)
+	--function broken atm during dev--
+--	D("GetQuestRewardOption, -1")
+	return -1
+end
+
+function addon:ShouldIgnoreQuest(title)
+--	D("ShouldIgnoreQuest: ", title, false)
+	return false
+end
+
+function addon:CaptureDailyQuest(title)
+	--
 end
