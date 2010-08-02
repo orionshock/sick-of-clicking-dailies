@@ -27,6 +27,7 @@ function module:OnEnable()
 	self:CreateLDB()
 	playerName = UnitName("player")
 	db.factionrealm[playerName] = db.factionrealm[playerName] or {}
+	self:UpdateSortedList()
 end
 
 local function specialSort(a,b)
@@ -76,7 +77,7 @@ local function PopulateLibQTip(self)
 	local tip = LibQTip:Acquire("SOCD-LDBTip", 3, "LEFT", "CENTER", "RIGHT")
 	module.tooltip = tip
 	tip:AddHeader(AddonName)	
-	local y, x = tip:AddLine(prefix:format( SecondsToTime(GetQuestResetTime()) ),"  ",  QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests()))
+	tip:AddLine(prefix:format( SecondsToTime(GetQuestResetTime()) ),"  ",  QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests()))
 	tip:AddLine( " ", " ", " ")
 	for i = 1, #SortedQuestList do
 		local q = SortedQuestList[i]
@@ -122,10 +123,14 @@ local function OnClick(frame, button)
 	if button == "LeftButton" then
 		ToggleFrame(QuestLogFrame)
 	elseif button == "RightButton" then
-		if  AceConfigDialog.OpenFrames[AddonName] then
-			AceConfigDialog:Close(AddonName)
+		if AddonParent.QuestNameScanned then
+			if  AceConfigDialog.OpenFrames[AddonName] then
+				AceConfigDialog:Close(AddonName)
+			else
+				AceConfigDialog:Open(AddonName)
+			end
 		else
-			AceConfigDialog:Open(AddonName)
+			module:Debug("Can't open Options, Still Initilizing.")
 		end
 	end
 end
