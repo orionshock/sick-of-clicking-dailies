@@ -33,7 +33,8 @@ local db
 local function Debug(...)
 	if db and db.global.debug.core then
 		local str = string.join(", ", tostringall(...) )
-		str = str:gsub("[:=],", "%1")
+		str = str:gsub("([:=>]),", "%1")
+		str = str:gsub(", ([%-])", " %1")
 		print("SOCD-Debug-Core: ", str)
 	end
 end
