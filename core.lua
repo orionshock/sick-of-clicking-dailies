@@ -42,6 +42,13 @@ local module_Proto = {
 			print("|cff9933FFSOCD-Debug-"..( self.GetName and self:GetName() or "")..":|r ", str)
 		end
 	end,
+	ToggleQuestStatus = function(self, title, status)
+		print(self:GetName(), title, status)		--Place Holder
+	end
+	SetQuestRewardOption = function(self, title, opt)
+		print(self:GetName(), title, opt)		--Place Holder
+	end
+	
 }
 SOCD:SetDefaultModulePrototype(module_Proto)
 
@@ -49,10 +56,22 @@ SOCD:SetDefaultModulePrototype(module_Proto)
 
 local db_defaults = {
 	profile = {
+		addonOpts = {
+			--will populate later
+		},
+		QuestStatus = {
+			-- By default all quests are Enabled, it's only after the user sees said quest that it can be turned off.
+			-- Some quests are off by default, Such as ones that require you to pay money or like the faction switchers in solizar.
+		},
+		QuestRewardOptions = {
+			-- -1 means stop, rest mean use, it's left up to the modules to make sure this works right.
+		}
 	},
 	global = {
 		debug = {
 			core = true,
+		},
+		QuestNameCache = {
 		},
 	},
 }
@@ -220,9 +239,15 @@ function addon:GetQuestRewardOption(title)
 end
 
 function addon:ShouldIgnoreQuest(title)
-	return false
+	if db.global.QuestNameCache[title] == nil then
+		return true
+	else
+		return false
+	end
 end
 
 function addon:CaptureDailyQuest(title)
-	--
+	if db then
+		db.global.QuestNameCache[title] = true
+	end
 end
