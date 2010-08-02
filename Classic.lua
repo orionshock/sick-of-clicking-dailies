@@ -14,7 +14,7 @@ local function SetupModule(event)
 		[ GetLocalizedQuestNameByID(5201) ] = "Exclude",	--Winterfall Intrusion
 		[ GetLocalizedQuestNameByID(5981) ] = "Exclude",	--Rampaging Giants
 	}
-	for k,v in pairs(moduleSpecialQuests)
+	for k,v in pairs(moduleSpecialQuests) do
 		AddonParent.SpecialQuestResets[k] = v
 	end
 end
