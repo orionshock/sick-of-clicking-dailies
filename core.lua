@@ -23,7 +23,7 @@ if projectVersion:find("project") then
 end
 
 SOCD  = LibStub("AceAddon-3.0"):NewAddon("SickOfClickingDailies", "AceEvent-3.0", "AceConsole-3.0")
-SOCD.version = projectVersion.."-"..projectRevisiion
+SOCD.version = projectVersion.."-"..projectRevision
 
 local addon = SOCD
 local db
@@ -52,14 +52,14 @@ local module_Proto = {
 		end
 		db.profile.QuestStatus[title] = status
 		
-	end
+	end,
 	SetQuestRewardOption = function(self, title, opt)
 		self:Debug("SetQuestRewardOption", title, opt)		--Place Holder
 		if type(opt) ~= "number" then
 			self:Debug("SetQuestRewardOption", title, "Option not a number, got:", opt)
 		end
 		db.profile.QuestRewardOptions[title] = opt
-	end
+	end,
 	
 }
 SOCD:SetDefaultModulePrototype(module_Proto)
@@ -119,6 +119,7 @@ end
 ]]--
 local function procGetGossipAvailableQuests(index, title, _, _, isDaily, _, ...)
 	if title and isDaily then
+		addon:CaptureDailyQuest(title)
 		if not addon:ShouldIgnoreQuest(title) then
 			return index, title, isDaily
 		end
@@ -228,6 +229,11 @@ function addon:QUEST_COMPLETE(event)
 
 	if ( QuestIsDaily() or QuestIsWeekly() ) and ( not self:ShouldIgnoreQuest(title) ) then
 		local rewardOpt = self:GetQuestRewardOption( title )
+		if (GetQuestItemInfo("choice", 1) ~= "") and (not rewardOpt) then
+			--Has quest option but we don't have a selection, means that this is a new quest that isn't in the DB.
+			print("Sick Of Clicking Dailies: Found a new Quest:", title, " It has reward choices but is not yet added to the addon. Please report it at www.wowace.com")	--Localize ME!
+			return
+		end
 		if (rewardOpt and (rewardOpt == -1)) then
 			return
 		elseif rewardOpt then
