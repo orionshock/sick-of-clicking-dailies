@@ -59,12 +59,12 @@ localizations\localization.xml
 core.lua
 QuestScanner.lua
 Options.lua
-
+ldb.lua
 Classic.lua
 BC.lua
 
 #wotlk.lua
-#ldb.lua
+
 #dailylogoutwarning.lua
 
 #@debug@
