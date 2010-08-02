@@ -7,24 +7,37 @@ local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 
 
 
-local ldbObj, SecondsToTime, GetQuestResetTime = nil, SecondsToTime, GetQuestResetTime
-local LibDataBroker
+local SecondsToTime, GetQuestResetTime = SecondsToTime, GetQuestResetTime
+local ldbObj, LibDataBroker, db, SpecialQuestResets, playerName
 
 function module:OnInitialize()
 	self:Debug("OnInit")
 	LibStub("AceEvent-3.0").RegisterMessage(self, "SOCD_DAILIY_QUEST_COMPLETE")
 	LibDataBroker = LibStub("LibDataBroker-1.1", true)
+	db = AddonParent.db
+	SpecialQuestResets = AddonParent.SpecialQuestResets
 end
 
 function module:OnEnable()
 	self:Debug("OnEnable")
 	self:CreateLDB()
+	playerName = UnitName("player")
+	db.factionrealm[playerName] = db.factionrealm[playerName] or {}
 end
 
 
 
 function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, opt)
 	self:Debug(event, quest, opt)
+	local reset
+	if SpecialQuestResets[quest] then
+		reset = self[ SpecialQuestResets[quest] ](self)
+	else
+		reset = time()+GetQuestResetTime()-1
+	end
+	db.char.questsCompleted[quest] = reset
+	db.factionrealm[playerName][quest] = reset
+	self:Debug("Quest:", quest, "Resets at:", date("%c", reset) )
 end
 
 local prefix = QUEST_LOG_DAILY_TOOLTIP:match( "\n(.+)" )
