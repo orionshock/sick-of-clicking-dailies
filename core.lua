@@ -90,6 +90,10 @@ local db_defaults = {
 			-- -1 means stop, rest mean use, it's left up to the modules to make sure this works right.
 		}
 	},
+	factionrealm = {
+		chars = {
+		},
+	},
 	global = {
 		debug = {
 			core = true,
