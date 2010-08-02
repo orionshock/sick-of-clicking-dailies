@@ -57,13 +57,14 @@ localizations\localization.xml
 
 
 core.lua
-namescanner.lua
+QuestScanner.lua
+Options.lua
 
 Classic.lua
 
 #BC.lua
 #wotlk.lua
-#non-dailies.lua
+
 #ldb.lua
 #dailylogoutwarning.lua
 
