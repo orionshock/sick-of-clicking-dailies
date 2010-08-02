@@ -34,7 +34,7 @@
 ## Credits: Sinxia/kunda (deDE Translation), Cinedelle (frFR Translation), Crafty/Vyacheslav (ruRU Translation)
 ## Version: @project-version@
 ## X-Email: Orionshock@gmail.com
-## SavedVariables: SOCD_SIX
+## SavedVariables: SOCD_SEVEN
 ## OptionalDeps: Ace3
 ## X-Embeds: Ace3
 
