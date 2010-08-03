@@ -13,7 +13,7 @@ local addonName = ...
 
 local genderMale = UnitSex("player") == 2
 
-local L = LibStub("AceLocale-3.0"):NewLocale(addonName, "zhTW", true)
+local L = LibStub("AceLocale-3.0"):NewLocale(addonName, "zhTW", false)
 
 if L then
 
