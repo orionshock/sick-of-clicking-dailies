@@ -62,8 +62,7 @@ Options.lua
 ldb.lua
 Classic.lua
 BC.lua
-
-#wotlk.lua
+wotlk.lua
 
 #dailylogoutwarning.lua
 
