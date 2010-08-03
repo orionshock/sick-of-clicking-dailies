@@ -7,8 +7,9 @@ local AddonName, AddonParent = ...
 
 local module = AddonParent:NewModule("LK")
 local L = LibStub("AceLocale-3.0"):GetLocale(AddonName)
+local GT = LibStub("AceLocale-3.0"):GetLocale(AddonName.."GossipText")
 local db
---local GT = LibStub("AceLocale-3.0"):GetLocale("SOCD_GossipText")
+
 
 function module:OnInitialize()
 	self:Debug("OnInit")
@@ -55,6 +56,12 @@ local function GetOptionGroup(id, rewardOptTbl)
 		return { name = "QuestID: "..id , type = "select", values = rewardOptTbl }
 	end
 end
+local function GetGossipOptGroup(title, id, arg)
+	local qtitle = GetLocalizedQuestNameByID(id)
+	if title or qtitle then
+		return { name = title or qtitle, type = "toggle", arg = arg }
+	end
+end
 
 function module:SOCD_QuestByID_Ready(event, ...)
 	self:Debug(event, ...)
@@ -85,6 +92,19 @@ function module:SOCD_QuestByID_Ready(event, ...)
 					["EasyAsPie"] = GetOptionGroup( 14060 , thxgivingRewardOpts ),	--"Easy As Pie",
 					["SheSaysPotato"] = GetOptionGroup( 14058 , thxgivingRewardOpts ),	-- "She Says Potato"
 					["WereOutofCranberryChutneyAgain"] = GetOptionGroup( 14059 , thxgivingRewardOpts ),	-- "We're Out of Cranberry Chutney Again?"
+				},
+			},
+			gossipOpts = { name = GOSSIP_OPTIONS, type = "group",
+				args = {
+					["DefendingYourTitle"] = GetGossipOptGroup( nil, 13423 , GT["Let's do this, sister."]),
+					["Joust"] = GetGossipOptGroup( L["Jousting Challenge"], nil, GT["I am ready to fight!"]),
+					["GetKraken"] = GetGossipOptGroup( nil, 14108, GT["Mount the Hippogryph and prepare for battle!"]),
+					["AlchyApprentice"] = GetGossipOptGroup( nil, 12541, GT["I'm ready to begin. What is the first ingredient you require?"]),
+					["IntestFort"] = GetGossipOptGroup( nil, 12509 , GT["Get out there and make those Scourge wish they were never reborn!"]),
+					["Slaves2Saronite"] = GetGossipOptGroup( nil, 13302, GT["Go on, you're free.  Get out of here!"]),
+					["BombingInICC"] = GetGossipOptGroup( L["Bombing Quests in Icecrown"], nil, GT["Give me a bomber!"]),
+					["AssultByGround"] = GetGossipOptGroup( nil, 13284, GT["I'm ready to join your squad on the way to Ymirheim. Let's get moving."]),
+					["DefendingWyrmTemp"] = GetGossipOptGroup( nil, 12372, GT["We need to get into the fight. Are you ready?"]),
 				},
 			},
 		},
@@ -179,44 +199,33 @@ function module:SOCD_QuestByID_Ready(event, ...)
 
 	tempTitle = GetLocalizedQuestNameByID(14059)	--"We're Out of Cranberry Chutney Again?"
 	dbLoc[tempTitle] = dbLoc[tempTitle] or -1
+
+	self:AddGossipAutoSelect(GT["Let's do this, sister."], true)
+	self:AddGossipAutoSelect(GT["I am ready to fight!"], true)
+	self:AddGossipAutoSelect(GT["Mount the Hippogryph and prepare for battle!"], true)
+	self:AddGossipAutoSelect(GT["Get out there and make those Scourge wish they were never reborn!"], true)
+	self:AddGossipAutoSelect(GT["I'm ready to begin. What is the first ingredient you require?"], true)
+	self:AddGossipAutoSelect(GT["Go on, you're free.  Get out of here!"], true)
+	self:AddGossipAutoSelect(GT["Give me a bomber!"], true)
+	self:AddGossipAutoSelect(GT["I'm ready to join your squad on the way to Ymirheim. Let's get moving."], true)
+	self:AddGossipAutoSelect(GT["We need to get into the fight. Are you ready?"], true)
+
 end
 
 
 function module:QuestOptGet(info, ...)
 	--self:Debug("QuestOptGet", db.profile.QuestRewardOptions[ info.option.name ] )
+	if info.arg then
+		return self:GetSetGossipStatus(info.arg)
+	end
 	return db.profile.QuestRewardOptions[ info.option.name ] 
 end
 
 function module:QuestOptSet(info, value, ...)
 	--self:Debug("QuestOptSet", info.option.name, value)
+	if info.arg then
+		self:GetSetGossipStatus(info.arg, value)
+		return
+	end
 	db.profile.QuestRewardOptions[ info.option.name ]  = value
 end
-
-
---[[
-
---Gossip Options
-WyrmrestGossipValues = { [ GT["We need to get into the fight. Are you ready?"] ] = LQ["Defending Wyrmrest Temple"] }
-TrollPatrolGossipValues = { [ GT["I'm ready to begin. What is the first ingredient you require?"] ] = tpScrub(LQ["Troll Patrol: The Alchemist's Apprentice"]),
-			[ GT["Get out there and make those Scourge wish they were never reborn!"] ] = tpScrub(LQ["Troll Patrol: Intestinal Fortitude"] }
-TournyPreGossipValues = { [ GT["I am ready to fight!"] ]= L["Jousting Challenge"], }
-TournyFinalGossipValues = { [ GT["Mount the Hippogryph and prepare for battle!"] ] = LQ["Get Kraken!"] }
-StormPeaksGossipValues = { [ GT["Let's do this, sister."] ] = LQ["Defending Your Title"] }
-IcecrownGossipValues = { [ GT["Go on, you're free.  Get out of here!"] ] = LQ["Slaves to Saronite"],
-			[ GT["Give me a bomber!"] ] = L["Bombing Quests in Icecrown"],
-			[ GT["I'm ready to join your squad on the way to Ymirheim. Let's get moving."] ] = LQ["Assault by Ground"],}
-
-
-
-[GT["I'm ready to begin. What is the first ingredient you require?"] ] = true,	--Alchy Daily from Argent crusade in Drak'Tharon
-[GT["Get out there and make those Scourge wish they were never reborn!"] ] = true,	--Troll patrol quest
-[GT["Let's do this, sister."] ] = true,	--Defending your Title in Storm peaks
-[GT["Go on, you're free.  Get out of here!"] ] = true,	--"Slaves to Saronite
-[GT["Give me a bomber!"] ] = true,	--Bombing quests in icecrown
-[GT["Mount the Hippogryph and prepare for battle!"] ] = true,	--Get Kraken!
-[GT["I am ready to fight!"] ] = true, 	--Jousting
-[GT["I'm ready to join your squad on the way to Ymirheim. Let's get moving."] ] = true,
-[GT["We need to get into the fight. Are you ready?"] ] = true
-
-]]--
-
