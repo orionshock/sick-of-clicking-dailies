@@ -180,8 +180,6 @@ TimerFrame:SetScript("OnUpdate", function(self, elapsed)
 end)
 
 function module:PruneDB()
-[quest] = reset
-	db.factionrealm[playerName][quest] = reset
 	for k, v in pairs(questsCompleted) do
 		if time() > v then
 			questsCompleted[k] = nil
