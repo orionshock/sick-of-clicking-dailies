@@ -150,6 +150,7 @@ function addon:OnEnable(event, addon)
 	self:RegisterEvent("QUEST_DETAIL")
 	self:RegisterEvent("QUEST_PROGRESS")
 	self:RegisterEvent("QUEST_COMPLETE")
+	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 
 	--Quest Scanner
 	if db.global.currentRev ~= self.version then
@@ -353,7 +354,29 @@ end
 	end
 
 
+local ignoreRLFD = {
+	[258] = true,	--Classic Dungeon
+	[259] = true,	--BC Dungeon
+	[260] = true,	--BC Heroic Dungeon
+}
 
+function addon:ZONE_CHANGED_NEW_AREA(event, ...)
+	local _, iType = GetInstanceInfo()
+	D(event, iType)
+	if iType == "none" then
+		D("not in instance")
+		for i = 1, GetNumRandomDungeons() do
+			local id, name = GetLFGRandomDungeonInfo(i)
+			local doneToday = GetLFGDungeonRewards(id)
+			D(name, "/", id, " - Done: ", doneToday, " - Ignore:", ignoreRLFD[id] )
+			if doneToday and not ignoreRLFD[id] then
+				addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", name )
+			end
+		end
+	else
+		D("in broken area, don't scan random dungeosn")
+	end
+end
 
 --[[
 	General Support Functions
