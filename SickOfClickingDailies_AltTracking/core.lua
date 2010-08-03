@@ -136,6 +136,9 @@ end
 
 
 local function OnEnter(self)
+	if LibQTipTooltip and LibQTipTooltip:IsShown() then
+		return
+	end
 	local tooltip = LibQTip:Acquire("SOCD_ALT", #sortedPlayerList+1)
 	LibQTipTooltip = tooltip
 	module:populateTooltip(tooltip)
