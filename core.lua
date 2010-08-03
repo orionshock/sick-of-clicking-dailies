@@ -176,6 +176,7 @@ function addon:OnEnable(event, addon)
 			print("Still Init, plz wait")
 		end
 	end)
+	self:ZONE_CHANGED_NEW_AREA()
 end
 
 --[[
@@ -188,6 +189,7 @@ local function procGetGossipAvailableQuests(index, title, _, _, isDaily, isRepea
 	if title and (isDaily or isRepeatable) then
 		addon:CaptureDailyQuest(title)
 		if not addon:ShouldIgnoreQuest(title) then
+			print("Found:", index, title, (isDaily or isRepeatable))
 			return index, title, (isDaily or isRepeatable)
 		end
 	elseif ... then
@@ -206,19 +208,19 @@ local function procGetGossipActiveQuests(index, title, _, _, isComplete, ...)
 end
 
 function addon:GOSSIP_SHOW(event)
-	--Debug(event)
+	Debug(event)
 	if IsShiftKeyDown() then return end
 	local index, title, isDaily = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
 	if index then
-		--Debug("Found Available, Quest:", title, "~IsDaily/Repeatable:",isDaily, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+		Debug("Found Available, Quest:", title, "~IsDaily/Repeatable:",isDaily, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 		return SelectGossipAvailableQuest(index)
 	end
 	local index, title, isComplete = procGetGossipActiveQuests(1, GetGossipActiveQuests() )
 	if index then
-		--Debug("Found Active Quest that is Complete:", title, "~IsComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+		Debug("Found Active Quest that is Complete:", title, "~IsComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 		return SelectGossipActiveQuest(index)
 	end
-	--Debug("Proccessing Gossip ")
+	Debug("Proccessing Gossip ")
 	self:ProccessGossipOptions( GetGossipOptions() )
 end
 
@@ -237,24 +239,24 @@ end
 ]]--
 
 function addon:QUEST_GREETING(event, ...)
-	--Debug(event, ...)
+	Debug(event, ...)
 	if IsShiftKeyDown() then return end
 	local numActiveQuests = GetNumActiveQuests()
 	local numAvailableQuests = GetNumAvailableQuests()
-	--Debug("AvailableQuests")
+	Debug("AvailableQuests")
 	for i = 1, numAvailableQuests do
 		local title, _, isDaily, isRepeatable = GetAvailableTitle(i), GetAvailableQuestInfo(i)
-		--Debug("Quest:", title, "~IsDaily/Repeatable:", isDaily or isRepeatable, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+		Debug("Quest:", title, "~IsDaily/Repeatable:", isDaily or isRepeatable, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 		if (title and (isDaily or isRepeatable) ) and ( not self:ShouldIgnoreQuest(title) ) then
-			--Debug("picking up quest:", title)
+			Debug("picking up quest:", title)
 			return SelectAvailableQuest(i)
 		end
 	end
 	for i = 1, numActiveQuests do
 		local title, isComplete = GetActiveTitle(i)
-		--Debug("Quest:", title, "~isComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+		Debug("Quest:", title, "~isComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 		if (title and isComplete) and ( not self:ShouldIgnoreQuest(title) ) then
-			--Debug("turning in quest:", title)
+			Debug("turning in quest:", title)
 			return SelectActiveQuest(i)
 		end
 	end
@@ -362,19 +364,19 @@ local ignoreRLFD = {
 
 function addon:ZONE_CHANGED_NEW_AREA(event, ...)
 	local _, iType = GetInstanceInfo()
-	D(event, iType)
+	Debug(event, iType)
 	if iType == "none" then
-		D("not in instance")
+		Debug("not in instance")
 		for i = 1, GetNumRandomDungeons() do
 			local id, name = GetLFGRandomDungeonInfo(i)
 			local doneToday = GetLFGDungeonRewards(id)
-			D(name, "/", id, " - Done: ", doneToday, " - Ignore:", ignoreRLFD[id] )
+			Debug(name, "/", id, " - Done: ", doneToday, " - Ignore:", ignoreRLFD[id] )
 			if doneToday and not ignoreRLFD[id] then
 				addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", name )
 			end
 		end
 	else
-		D("in broken area, don't scan random dungeosn")
+		Debug("in broken area, don't scan random dungeosn")
 	end
 end
 
