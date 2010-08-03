@@ -51,9 +51,9 @@ end
 local function GetOptionGroup(id, ...)
 	local title = GetLocalizedQuestNameByID(id)
 	if title then
-		return { name = title , type = "select", values = { [-1] = L["None"], ...} }
+		return { name = title , type = "select", values = { [-1] = NONE, ...} }
 	else
-		return { name = "QuestID: "..id , type = "select", values = { [-1] = L["None"], ...} }
+		return { name = "QuestID: "..id , type = "select", values = { [-1] = NONE, ...} }
 	end
 end
 
@@ -81,12 +81,6 @@ function module:SOCD_QuestByID_Ready(event, ...)
 					["AtamalArmaments"] = GetOptionGroup( 11544 , (GetItemInfo(34538)) or "Other Oil" , (GetItemInfo(34539)) or "Caster Oil")
 				},
 			},
---			gossip = { type = "group", name = L["Gossip Options"], get = "GossipGet", set = "GossipSet",
---				args = {
---					brewfest = { type = "toogle", name = L["Brewfest"] }
---					halloween = { type = "toggle", name = L["Innkeeper Trick or treating"] }
---				},
---			}.
 		},
 	}
 	self.options = opts	--Set it onto the main of the module, it'll be picked up later.
@@ -140,30 +134,6 @@ function module:QuestOptSet(info, value, ...)
 	--self:Debug("QuestOptSet", info.option.name, value)
 	db.profile.QuestRewardOptions[ info.option.name ]  = value
 end
-
---Gossip Text to skipp though.. Will use later.
---gossip = {
---	[ GT["Do you still need some help moving kegs from the crash site near Razor Hill?"] ] = true,
---	[ GT["I'm ready to work for you today!  Give me that ram!"] ] = true,
---	[ GT["Do you still need some help shipping kegs from Kharanos?"] ] = true,
---	[ GT["I'm ready to work for you today!  Give me the good stuff!"] ] = true,
-
---[ GT["Trick or Treat!"] ]= L["Innkeeper Trick or treating"]
---},
-
-
---function module:GossipGet(info, ...)
---	print("GossipGet")
---end
-
---function module:GossipSet(info, ...)
---	print("GossipSet")
---end
-
-
-
-
-
 
 
 

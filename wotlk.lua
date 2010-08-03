@@ -202,9 +202,13 @@ function module:SOCD_QuestByID_Ready(event, ...)
 
 	self:AddGossipAutoSelect(GT["Let's do this, sister."], true)
 	self:AddGossipAutoSelect(GT["I am ready to fight!"], true)
+	--GT["I am ready to fight!(M)"]
+	--GT["I am ready to fight!(F)"]
 	self:AddGossipAutoSelect(GT["Mount the Hippogryph and prepare for battle!"], true)
 	self:AddGossipAutoSelect(GT["Get out there and make those Scourge wish they were never reborn!"], true)
 	self:AddGossipAutoSelect(GT["I'm ready to begin. What is the first ingredient you require?"], true)
+	--GT["I'm ready to begin. What is the first ingredient you require?(M)"]	--So the localization Script picks it up
+	--GT["I'm ready to begin. What is the first ingredient you require?(F)"]
 	self:AddGossipAutoSelect(GT["Go on, you're free.  Get out of here!"], true)
 	self:AddGossipAutoSelect(GT["Give me a bomber!"], true)
 	self:AddGossipAutoSelect(GT["I'm ready to join your squad on the way to Ymirheim. Let's get moving."], true)
