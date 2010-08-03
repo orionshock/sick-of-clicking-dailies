@@ -31,13 +31,13 @@ function module:OnEnable()
 end
 
 local function specialSort(a,b)
-	if SortedQuestList[a] and SortedQuestList[b] then
+	if SpecialQuestResets[a] and SpecialQuestResets[b] then
 		return a < b
 	end
-	if SortedQuestList[a] and ( not SortedQuestList[b] ) then
+	if SpecialQuestResets[a] and ( not SpecialQuestResets[b] ) then
 		return false
 	end
-	if (not SortedQuestList[a]) and SortedQuestList[b] then
+	if (not SpecialQuestResets[a]) and SpecialQuestResets[b] then
 		return true
 	end
 	return a < b
@@ -161,6 +161,9 @@ function module:UpdateLDBText()
 	local ttl = GetQuestResetTime()
 	ldbObj.value = SecondsToTime(ttl, true)
 	ldbObj.text = (ldbObj.label)..(ldbObj.value)
+	if ttl > 60*60*23 then
+		self:PruneDB()
+	end
 end
 
 local TimerFrame = CreateFrame("frame")
@@ -175,6 +178,25 @@ TimerFrame:SetScript("OnUpdate", function(self, elapsed)
 		delay = 0
 	end
 end)
+
+function module:PruneDB()
+[quest] = reset
+	db.factionrealm[playerName][quest] = reset
+	for k, v in pairs(questsCompleted) do
+		if time() > v then
+			questsCompleted[k] = nil
+		end
+	end
+	for name, data in pairs(db.factionrealm) do
+		for q, t in pairs(data) do
+			if time() > t then
+				data[q] = nil
+			end
+		end
+		if not next(data) do then
+		db.factionrealm[name] = nil
+	end
+end
 
 ---------------------------------------------
 -- Reset Functions
@@ -232,7 +254,6 @@ do		-- === Wintergrasp Reset Function ===
 		end
 		diff.hour = date("%H", time() + GetQuestResetTime())
 		diff.min = date("%M", time() + GetQuestResetTime())
-		D("Found next tuesday on:", date("%c", time(diff) ) )
 		return time(diff)
 	end
 end
