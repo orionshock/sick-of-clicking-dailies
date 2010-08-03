@@ -58,7 +58,7 @@ localizations\localization.xml
 
 core.lua
 QuestScanner.lua
-Options.lua
+options.lua
 ldb.lua
 Classic.lua
 BC.lua
