@@ -139,7 +139,6 @@ end
 function module:QuestOptSet(info, value, ...)
 	--self:Debug("QuestOptSet", info.option.name, value)
 	db.profile.QuestRewardOptions[ info.option.name ]  = value
-
 end
 
 --Gossip Text to skipp though.. Will use later.
