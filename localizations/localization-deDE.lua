@@ -6,14 +6,14 @@
 	to contribute to localizations :)
 ]]--
 local addonName = ...
-local debug = false
---@debug@
-debug = true
---@end-debug@
+
+
+
+
 
 local genderMale = UnitSex("player") == 2
 
-local L = LibStub("AceLocale-3.0"):NewLocale(addonName, "deDE", true, debug)
+local L = LibStub("AceLocale-3.0"):NewLocale(addonName, "deDE", false)
 
 if L then
 
