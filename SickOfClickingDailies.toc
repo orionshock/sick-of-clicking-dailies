@@ -64,8 +64,6 @@ Classic.lua
 BC.lua
 wotlk.lua
 
-#dailylogoutwarning.lua
-
 #@debug@
-SickOfClickingDailies_AltTracking\module.xml
+SickOfClickingDailies_AltTracking\core.lua
 #@end-debug@
