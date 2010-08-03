@@ -191,8 +191,9 @@ function module:PruneDB()
 				data[q] = nil
 			end
 		end
-		if not next(data) do then
-		db.factionrealm[name] = nil
+		if not next(data) then
+			db.factionrealm[name] = nil
+		end
 	end
 end
 
