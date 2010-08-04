@@ -220,7 +220,7 @@ function addon:GOSSIP_SHOW(event)
 		--Debug("Found Active Quest that is Complete:", title, "~IsComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 		return SelectGossipActiveQuest(index)
 	end
-	Debug("Proccessing Gossip ")
+	--Debug("Proccessing Gossip ")
 	self:ProccessGossipOptions( GetGossipOptions() )
 end
 
@@ -353,8 +353,8 @@ end
 		end
 	end
 	hooksecurefunc("GetQuestReward", SOCD_GetQuestRewardHook )
-	function SOCD_TestDailyEventSend()
-		addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", "TestQuest"..time(), 0)
+	function SOCD_TestDailyEventSend(title)
+		addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", title or "TestQuest"..time(), 0)
 	end
 
 
@@ -366,19 +366,19 @@ local ignoreRLFD = {
 
 function addon:ZONE_CHANGED_NEW_AREA(event, ...)
 	local _, iType = GetInstanceInfo()
-	Debug(event, iType)
+	--Debug(event, iType)
 	if iType == "none" then
-		Debug("not in instance")
+		--Debug("not in instance")
 		for i = 1, GetNumRandomDungeons() do
 			local id, name = GetLFGRandomDungeonInfo(i)
 			local doneToday = GetLFGDungeonRewards(id)
-			Debug(name, "/", id, " - Done: ", doneToday, " - Ignore:", ignoreRLFD[id] )
+			--Debug(name, "/", id, " - Done: ", doneToday, " - Ignore:", ignoreRLFD[id] )
 			if doneToday and not ignoreRLFD[id] then
 				addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", name )
 			end
 		end
 	else
-		Debug("in broken area, don't scan random dungeosn")
+		--Debug("in broken area, don't scan random dungeosn")
 	end
 end
 
