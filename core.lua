@@ -189,7 +189,6 @@ local function procGetGossipAvailableQuests(index, title, _, _, isDaily, isRepea
 	if title and (isDaily or isRepeatable) then
 		addon:CaptureDailyQuest(title)
 		if not addon:ShouldIgnoreQuest(title) then
-			print("Found:", index, title, (isDaily or isRepeatable))
 			return index, title, (isDaily or isRepeatable)
 		end
 	elseif ... then
