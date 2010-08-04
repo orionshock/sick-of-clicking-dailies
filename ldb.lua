@@ -27,10 +27,12 @@ function module:OnEnable()
 	self:Debug("OnEnable")
 	self:CreateLDB()
 	playerName = UnitName("player")
+
+	self:PruneDB()
+
 	db.factionrealm[playerName] = db.factionrealm[playerName] or {}
 	db.factionrealm.chars[playerName] = select(2, UnitClass("player"))
 
-	self:PruneDB()
 	self:UpdateSortedList()
 end
 
@@ -64,6 +66,7 @@ function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, opt)
 		reset = time()+GetQuestResetTime()-1
 	end
 	questsCompleted[quest] = reset
+	db.factionrealm[playerName] = db.factionrealm[playerName] or {}
 	db.factionrealm[playerName][quest] = reset
 	self:Debug("Quest:", quest, "Resets at:", date("%c", reset) )
 
