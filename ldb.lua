@@ -174,7 +174,9 @@ local timeToEndOfDay
 TimerFrame:SetScript("OnUpdate", function(self, elapsed)
 	delay = delay + elapsed
 	if delay > interval then
-		module:UpdateLDBText()
+		if ldbObj then
+			module:UpdateLDBText()
+		end
 		delay = 0
 	end
 end)
