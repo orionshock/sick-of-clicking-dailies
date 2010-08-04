@@ -71,14 +71,15 @@ local function SOCD_OnEvnet(self, event, ...)
 	end
 	local title = GetTitleText()
 	module:Debug("FrameOnEvent", event, "Quest:", title, "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", AddonParent:ShouldIgnoreQuest(title) )
-	if ( QuestIsDaily() or QuestIsWeekly() ) then
+	if ( QuestIsDaily() or QuestIsWeekly() or AddonParent.IsRepeatableQuest(title) ) then
 		if AddonParent:ShouldIgnoreQuest(title) then
 			self.check:SetChecked(false)
 		else
 			self.check:SetChecked(true)
 		end
+	else
+		self:Hide()
 	end
-
 end
 
 local function Frame_OnShow(self)
