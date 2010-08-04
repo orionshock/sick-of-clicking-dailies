@@ -12,7 +12,7 @@ local module = AddonParent:NewModule("AltTrack", "AceEvent-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale(AddoName)
 local LibQTip
 local unsortedPlayers, sortedPlayerList, sortedQuestList, totalQuests = {}, {}, {}, {}
-
+local classColorTable = RAID_CLASS_COLORS
 
 function module:OnInitialize()
 	LibQTip = LibStub('LibQTip-1.0', true)
@@ -23,7 +23,7 @@ end
 
 function module:OnEnable()
 	LibQTip = LibStub('LibQTip-1.0', true)
-
+	classColorTable = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
 	self:CreateLDB()
 	self:Debug("OnEnable")
 end
@@ -55,9 +55,9 @@ end
 function module:UpdateAllQuests()
 	for toon, qTable in pairs(db) do
 		if toon ~= "chars" then
+			unsortedPlayers[toon] = true
 			for quest, _ in pairs(qTable) do
 				totalQuests[quest] = true
-				unsortedPlayers[toon] = true
 			end
 		end
 	end
@@ -110,7 +110,13 @@ function module:populateTooltip(tip)
 
 	for i = 1, #sortedPlayerList do
 		--print("Add", sortedPlayerList[i], "row", yOffset, "col", xOffset+i )
-		tip:SetCell( yOffset, xOffset+i, sortedPlayerList[i] )
+		local class = db.chars[ sortedPlayerList[i] ]
+		local ct = classColorTable[class]
+		if ct then
+			tip:SetCell( yOffset, xOffset+i, string.format("|cff%.2x%.2x%.2x%s|r", ct.r*255, ct.g*255, ct.b*255, sortedPlayerList[i] ) )
+		else
+			tip:SetCell( yOffset, xOffset+i, sortedPlayerList[i]  )
+		end
 		tip:SetCellScript(yOffset, xOffset+i, "OnMouseDown", TipOnClick, sortedPlayerList[i] )
 	end
 	for i = 1, #sortedQuestList do
