@@ -7,6 +7,7 @@ local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 local SortedQuestList, questsCompleted = {}
 
 
+
 local SecondsToTime, GetQuestResetTime = SecondsToTime, GetQuestResetTime
 local ldbObj, LibDataBroker, db, SpecialQuestResets, playerName, LibQTip
 
@@ -27,6 +28,9 @@ function module:OnEnable()
 	self:CreateLDB()
 	playerName = UnitName("player")
 	db.factionrealm[playerName] = db.factionrealm[playerName] or {}
+	db.factionrealm.chars[playerName] = select(2, UnitClass("player"))
+
+	self:PruneDB()
 	self:UpdateSortedList()
 end
 
@@ -188,13 +192,16 @@ function module:PruneDB()
 		end
 	end
 	for name, data in pairs(db.factionrealm) do
-		for q, t in pairs(data) do
-			if time() > t then
-				data[q] = nil
+		if name ~= "chars" then
+			for q, t in pairs(data) do
+
+				if time() > t then
+					data[q] = nil
+				end
 			end
-		end
-		if not next(data) then
-			db.factionrealm[name] = nil
+			if not next(data) then
+				db.factionrealm[name] = nil
+			end
 		end
 	end
 end
