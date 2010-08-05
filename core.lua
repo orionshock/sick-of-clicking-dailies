@@ -108,7 +108,7 @@ local db_defaults = {
 	},
 	global = {
 		debug = {
-			core = true,
+			core = false,
 			QuestScanner = false,
 			Options = false,
 			BC = false,
@@ -125,7 +125,23 @@ local db_defaults = {
 function addon.GetOptionsTable()
 	local t = { name = addonName, type = "group", handler = addon,
 		args = {
-			info = {type = "description", name = L["MainOptionsDesc"], order = 1 }
+			info = {type = "description", name = L["MainOptionsDesc"], order = 1 },
+			--@alpha@
+			debug = { type = "group", name = "Debug", order = 100,
+				args = {
+					masDebug = { type = "multiselect", name = "Enable / Disable Module Debug", order = 1, 
+						get = function(info, val) return addon.db.global.debug[ val ] end, 
+						set = function(info, opt, val) addon.db.global.debug[ opt ] = val end,
+						values = { 
+							["core"] = "Core", ["QuestScanner"] = "Quest Scanner", ["Options"] = "Options",
+							["BC"] = "BC Module", ["LDB"] = "LDB Module", ["LK"] = "LK Module",
+						},
+					},
+				enableAll = { type = "execute", name = "Enable All", func = function(info) for k,v in pairs(addon.db.global.debug) do addon.db.global.debug[k] = true end end, },
+				disableAll = { type = "execute", name = "Disable All", func = function(info) for k,v in pairs(addon.db.global.debug) do addon.db.global.debug[k] = false end end, },
+				},
+			},
+			--@end-alpha@
 		},
 	}
 	--Debug("GetOptionsTable, itterating modules")
