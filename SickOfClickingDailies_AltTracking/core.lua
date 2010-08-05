@@ -13,6 +13,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale(AddoName)
 local LibQTip
 local unsortedPlayers, sortedPlayerList, sortedQuestList, totalQuests = {}, {}, {}, {}
 local classColorTable = RAID_CLASS_COLORS
+local specialQuests = AddonParent.SpecialQuestResets
 
 function module:OnInitialize()
 	LibQTip = LibStub('LibQTip-1.0', true)
@@ -39,16 +40,41 @@ local tooltipIsSortedNow, LibQTipTooltip = nil
 local qsort
 local function uglySortByPlayer(questA,questB)
 	if qsort[questA] and qsort[questB] then
-		return questA < questB
-	end
-	if qsort[questA] and (not qsort[questB]) then
+		if specialQuests[questA] and specialQuests[questB] then
+			return questA < questB
+		elseif specialQuests[questA] and not specialQuests[questB] then
+			return false
+		elseif not specialQuests[questA] and specialQuests[questB] then
+			return true
+		else
+			return questA < questB
+		end
+	elseif qsort[questA] and (not qsort[questB]) then
 		return true
-	end
-	if (not qsort[questA]) and qsort[questB] then
+	elseif (not qsort[questA]) and qsort[questB] then
 		return false
+	else
+		if specialQuests[questA] and specialQuests[questB] then
+			return questA < questB
+		elseif specialQuests[questA] and not specialQuests[questB] then
+			return false
+		elseif not specialQuests[questA] and specialQuests[questB] then
+			return true
+		else
+			return questA < questB
+		end
 	end
-	if (not qsort[questA]) and (not qsort[questB]) then
-		return questA < questB
+end
+
+local function default_Sort(a,b)
+	if specialQuests[a] and specialQuests[b] then
+		return a < b
+	elseif specialQuests[a] and not specialQuests[b] then
+		return false
+	elseif not specialQuests[a] and specialQuests[b] then
+		return true
+	else
+		return a < b
 	end
 end
 
@@ -71,7 +97,7 @@ function module:UpdateAllQuests()
 		table.sort(sortedQuestList, uglySortByPlayer)
 		qsort = nil
 	else
-		table.sort(sortedQuestList)
+		table.sort(sortedQuestList, default_Sort)
 	end
 	--
 	wipe(sortedPlayerList)
@@ -122,7 +148,12 @@ function module:populateTooltip(tip)
 	for i = 1, #sortedQuestList do
 		tip:AddLine()
 		--print("Add:", sortedQuestList[i], "row", yOffset+i, "col", 1)
-		tip:SetCell(yOffset+i, 1, sortedQuestList[i], "RIGHT")
+		if specialQuests[ sortedQuestList[i] ] then
+			tip:SetCell(yOffset+i, 1, sortedQuestList[i], "RIGHT")
+			tip:SetCellColor(yOffset+i, 1, .73, .55, .96, 1)
+		else
+			tip:SetCell(yOffset+i, 1, sortedQuestList[i], "RIGHT")
+		end
 	end
 	
 	for x, player in pairs(sortedPlayerList) do
