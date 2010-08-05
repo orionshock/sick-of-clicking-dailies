@@ -29,16 +29,10 @@ local GT = LibStub("AceLocale-3.0"):NewLocale(addonName.."GossipText", "ruRU", t
 
 	local GT_R = LibStub("AceLocale-3.0"):GetLocale(addonName.."GossipText")
 	if genderMale then	--Masculine Context
-
-		GT["I'm ready to work for you today!  Give me the good stuff!"] = GT_R["I'm ready to work for you today!  Give me the good stuff!(M)"]:gsub("[%(MF%)]+$", "")
-		GT["I'm ready to work for you today!  Give me that ram!"] = GT_R["I'm ready to work for you today!  Give me that ram!(M)"]:gsub("[%(MF%)]+$", "")
 		GT["I'm ready to begin. What is the first ingredient you require?"] = GT_R["I'm ready to begin. What is the first ingredient you require?(M)"]:gsub("[%(MF%)]+$", "")
 		GT["I am ready to fight!"] = GT_R["I am ready to fight!(M)"]:gsub("[%(MF%)]+$", "")
 
 	else			--Feminine Context
-
-		GT["I'm ready to work for you today!  Give me the good stuff!"] = GT_R["I'm ready to work for you today!  Give me the good stuff!(F)"]:gsub("[%(MF%)]+$", "")
-		GT["I'm ready to work for you today!  Give me that ram!"] = GT_R["I'm ready to work for you today!  Give me that ram!(F)"]:gsub("[%(MF%)]+$", "")
 		GT["I'm ready to begin. What is the first ingredient you require?"] = GT_R["I'm ready to begin. What is the first ingredient you require?(F)"]:gsub("[%(MF%)]+$", "")
 		GT["I am ready to fight!"] = GT_R["I am ready to fight!(F)"]:gsub("[%(MF%)]+$", "")
 	end
