@@ -7,9 +7,9 @@
 		final goal here is to provide the lists of quests & what toons have not completed that quest.
 ]]--
 
-local AddoName, AddonParent = ...
-local module = AddonParent:NewModule("AltTrack", "AceEvent-3.0")
-local L = LibStub("AceLocale-3.0"):GetLocale(AddoName)
+local AddoName, AddonParent = ..., LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
+local module = --AddonParent:NewModule("AltTrack", "AceEvent-3.0")
+local L = LibStub("AceLocale-3.0"):GetLocale("SickOfClickingDailies")
 local LibQTip
 local unsortedPlayers, sortedPlayerList, sortedQuestList, totalQuests = {}, {}, {}, {}
 local classColorTable = RAID_CLASS_COLORS
