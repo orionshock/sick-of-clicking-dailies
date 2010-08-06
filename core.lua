@@ -201,11 +201,10 @@ end
 		Sadly when turning in quests, we don't know if they are daily's, but don't care about that now.
 ]]--
 local function procGetGossipAvailableQuests(index, title, _, _, isDaily, isRepeatable, ...)
+	Debug("procGetGossipAvailableQuests", title, isDaily, isRepeatable)
 	if title and (isDaily or isRepeatable) then
 		addon:CaptureDailyQuest(title)
-		if not addon:ShouldIgnoreQuest(title) then
-			return index, title, (isDaily or isRepeatable)
-		end
+		return index, title, (isDaily or isRepeatable)
 	elseif ... then
 		return procGetGossipAvailableQuests(index + 1, ...)
 	end
@@ -213,9 +212,7 @@ end
 
 local function procGetGossipActiveQuests(index, title, _, _, isComplete, ...)
 	if title and isComplete then
-		if not addon:ShouldIgnoreQuest(title) then
-			return index, title, isComplete
-		end
+		return index, title, isComplete
 	elseif ... then
 		return procGetGossipActiveQuests(index+1, ...)
 	end
@@ -225,12 +222,12 @@ function addon:GOSSIP_SHOW(event)
 	Debug(event)
 	if IsShiftKeyDown() then return end
 	local index, title, isDaily = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
-	if index then
+	if index and not self:ShouldIgnoreQuest(title) then
 		Debug("Found Available, Quest:", title, "~IsDaily/Repeatable:",isDaily, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 		return SelectGossipAvailableQuest(index)
 	end
 	local index, title, isComplete = procGetGossipActiveQuests(1, GetGossipActiveQuests() )
-	if index then
+	if index and not self:ShouldIgnoreQuest(title) then
 		Debug("Found Active Quest that is Complete:", title, "~IsComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 		return SelectGossipActiveQuest(index)
 	end
@@ -278,17 +275,17 @@ end
 
 local function IsRepeatableQuest(test)
 	--hack:
---	Debug("IsRepeatableQuest API()", test)
+	Debug("IsRepeatableQuest API()", test)
 	local _, title, isDaily = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
 	if test == title then
---		Debug("Found Repeatable quest in Gossip hack:", title)
+		Debug("Found Repeatable quest in Gossip hack:", title)
 		return true
 	end
 	local numAvailableQuests = GetNumAvailableQuests()
 	for i = 1, numAvailableQuests do
 		local title, _, isDaily, isRepeatable = GetAvailableTitle(i), GetAvailableQuestInfo(i)
 		if (title == test ) and (isDaily or isRepeatable) then
---			Debug("Found Repeatable quest in Quest hack:", title)
+			Debug("Found Repeatable quest in Quest hack:", title)
 			return true
 		end
 	end
