@@ -13,7 +13,7 @@ local ldbObj, LibDataBroker, db, SpecialQuestResets, playerName, LibQTip
 
 function module:OnInitialize()
 	self:Debug("OnInit")
-	LibStub("AceEvent-3.0").RegisterMessage(self, "SOCD_DAILIY_QUEST_COMPLETE")
+
 
 	db = AddonParent.db
 	questsCompleted = db.char.questsCompleted
@@ -24,14 +24,21 @@ function module:OnInitialize()
 end
 
 function module:OnEnable()
+
 	self:Debug("OnEnable")
 	self:CreateLDB()
 	playerName = UnitName("player")
-
+	assert(playerName)
+	print("SOCD:", playerName)
 	self:PruneDB()
 
 	db.factionrealm[playerName] = db.factionrealm[playerName] or {}
 	db.factionrealm.chars[playerName] = select(2, UnitClass("player"))
+
+
+
+	LibStub("AceEvent-3.0").RegisterMessage(self, "SOCD_DAILIY_QUEST_COMPLETE")
+	AddonParent:ZONE_CHANGED_NEW_AREA()
 
 	self:UpdateSortedList()
 end
@@ -67,6 +74,7 @@ function module:SOCD_DAILIY_QUEST_COMPLETE(event, quest, opt)
 	end
 	questsCompleted[quest] = reset
 	db.factionrealm[playerName] = db.factionrealm[playerName] or {}
+	assert( db.factionrealm[playerName] )
 	db.factionrealm[playerName][quest] = reset
 	self:Debug("Quest:", quest, "Resets at:", date("%c", reset) )
 

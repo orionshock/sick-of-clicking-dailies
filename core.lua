@@ -192,7 +192,6 @@ function addon:OnEnable(event, addon)
 			print("Still Init, plz wait")
 		end
 	end)
-	self:ZONE_CHANGED_NEW_AREA()
 end
 
 --[[
