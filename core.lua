@@ -181,7 +181,6 @@ function addon:OnEnable(event, addon)
 	local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 	LibStub("AceConfig-3.0"):RegisterOptionsTable(addonName, self.GetOptionsTable)
 	self:RegisterChatCommand("socd", function()
-		print("SOCD Slash Command Place Holder")
 		if self.QuestNameScanned then
 			if  AceConfigDialog.OpenFrames[addonName] then
 				AceConfigDialog:Close(addonName)
@@ -189,7 +188,7 @@ function addon:OnEnable(event, addon)
 				AceConfigDialog:Open(addonName)
 			end
 		else
-			print("Still Init, plz wait")
+			print("|cff9933FFSickOfClickingDailies|r --", L["Still Setting up localizations please wait"])
 		end
 	end)
 end
