@@ -222,19 +222,19 @@ local function procGetGossipActiveQuests(index, title, _, _, isComplete, ...)
 end
 
 function addon:GOSSIP_SHOW(event)
-	--Debug(event)
+	Debug(event)
 	if IsShiftKeyDown() then return end
 	local index, title, isDaily = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
 	if index then
-		--Debug("Found Available, Quest:", title, "~IsDaily/Repeatable:",isDaily, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+		Debug("Found Available, Quest:", title, "~IsDaily/Repeatable:",isDaily, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 		return SelectGossipAvailableQuest(index)
 	end
 	local index, title, isComplete = procGetGossipActiveQuests(1, GetGossipActiveQuests() )
 	if index then
-		--Debug("Found Active Quest that is Complete:", title, "~IsComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+		Debug("Found Active Quest that is Complete:", title, "~IsComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 		return SelectGossipActiveQuest(index)
 	end
-	--Debug("Proccessing Gossip ")
+	Debug("Proccessing Gossip ")
 	self:ProccessGossipOptions( GetGossipOptions() )
 end
 
@@ -257,20 +257,20 @@ function addon:QUEST_GREETING(event, ...)
 	if IsShiftKeyDown() then return end
 	local numActiveQuests = GetNumActiveQuests()
 	local numAvailableQuests = GetNumAvailableQuests()
-	--Debug("AvailableQuests")
+	Debug("AvailableQuests")
 	for i = 1, numAvailableQuests do
 		local title, _, isDaily, isRepeatable = GetAvailableTitle(i), GetAvailableQuestInfo(i)
-		--Debug("Quest:", title, "~IsDaily/Repeatable:", isDaily or isRepeatable, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+		Debug("Quest:", title, "~IsDaily/Repeatable:", isDaily or isRepeatable, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 		if (title and (isDaily or isRepeatable) ) and ( not self:ShouldIgnoreQuest(title) ) then
-			--Debug("picking up quest:", title)
+			Debug("picking up quest:", title)
 			return SelectAvailableQuest(i)
 		end
 	end
 	for i = 1, numActiveQuests do
 		local title, isComplete = GetActiveTitle(i)
-		--Debug("Quest:", title, "~isComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+		Debug("Quest:", title, "~isComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 		if (title and isComplete) and ( not self:ShouldIgnoreQuest(title) ) then
-			--Debug("turning in quest:", title)
+			Debug("turning in quest:", title)
 			return SelectActiveQuest(i)
 		end
 	end
@@ -278,16 +278,17 @@ end
 
 local function IsRepeatableQuest(test)
 	--hack:
+--	Debug("IsRepeatableQuest API()", test)
 	local _, title, isDaily = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
 	if test == title then
-		--Debug("Found Repeatable quest in Gossip hack:", title)
+--		Debug("Found Repeatable quest in Gossip hack:", title)
 		return true
 	end
 	local numAvailableQuests = GetNumAvailableQuests()
 	for i = 1, numAvailableQuests do
 		local title, _, isDaily, isRepeatable = GetAvailableTitle(i), GetAvailableQuestInfo(i)
 		if (title == test ) and (isDaily or isRepeatable) then
-			--Debug("Found Repeatable quest in Quest hack:", title)
+--			Debug("Found Repeatable quest in Quest hack:", title)
 			return true
 		end
 	end
@@ -302,12 +303,12 @@ addon.IsRepeatableQuest = IsRepeatableQuest
 
 function addon:QUEST_DETAIL(event)
 	local title = GetTitleText()
-	--Debug(event, title, "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+	Debug(event, title, "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 	if IsShiftKeyDown() then return end
 	if ( QuestIsDaily() or QuestIsWeekly() or IsRepeatableQuest(title) ) then
 		self:CaptureDailyQuest(title)
 		if self:ShouldIgnoreQuest(title) then return end
-		--Debug("Accepting Daily/Weekly Quest:", title)
+		Debug("Accepting Daily/Weekly Quest:", title)
 		return AcceptQuest()
 	end
 end
@@ -317,12 +318,12 @@ end
 
 function addon:QUEST_PROGRESS(event)
 	local title = GetTitleText()
-	--Debug(event, title, "~IsCompleteable:", IsQuestCompletable(), "~IsDaily/Weekly/Repeatable:" , QuestIsDaily() or QuestIsWeekly() or IsRepeatableQuest(title), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+	Debug(event, title, "~IsCompleteable:", IsQuestCompletable(), "~IsDaily/Weekly/Repeatable:" , QuestIsDaily() or QuestIsWeekly() or IsRepeatableQuest(title), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 	if IsShiftKeyDown() then return end
 	if not IsQuestCompletable() then return end
 	if ( QuestIsDaily() or QuestIsWeekly() or IsRepeatableQuest(title) ) then
 		if self:ShouldIgnoreQuest(title) then return end
-		--Debug("Completing Quest:", title)
+		Debug("Completing Quest:", title)
 		CompleteQuest()
 	end
 end
@@ -335,9 +336,9 @@ end
 
 function addon:QUEST_COMPLETE(event)
 	local title = GetTitleText()
-	--Debug(event, title, "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+	Debug(event, title, "~IsDaily/Weekly:" , ( QuestIsDaily() or QuestIsWeekly() or IsRepeatableQuest(title) ), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 	if IsShiftKeyDown() then return end
-	if ( QuestIsDaily() or QuestIsWeekly() ) and ( not self:ShouldIgnoreQuest(title) ) then
+	if ( QuestIsDaily() or QuestIsWeekly() or IsRepeatableQuest(title) ) and ( not self:ShouldIgnoreQuest(title) ) then
 		local rewardOpt = self:GetQuestRewardOption( title )
 		if (GetQuestItemInfo("choice", 1) ~= "") and (not rewardOpt) then
 			--Has quest option but we don't have a selection, means that this is a new quest that isn't in the DB.
@@ -345,13 +346,14 @@ function addon:QUEST_COMPLETE(event)
 			return
 		end
 		if (rewardOpt and (rewardOpt == -1)) then
+			Debug(event, "Reward opt is -1")
 			return
 		elseif rewardOpt then
-			--Debug(event, "Getting Reward:", (GetQuestItemInfo("choice", rewardOpt)) )
+			Debug(event, "Getting Reward:", (GetQuestItemInfo("choice", rewardOpt)) )
 			GetQuestReward( rewardOpt )
 			return
 		end
-		--Debug(event, "Getting Money!")
+		Debug(event, "Getting Money!")
 		GetQuestReward(0)
 		return
 
