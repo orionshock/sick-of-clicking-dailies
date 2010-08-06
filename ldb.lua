@@ -138,11 +138,11 @@ local function OnClick(frame, button)
 	if button == "LeftButton" then
 		ToggleFrame(QuestLogFrame)
 	elseif button == "RightButton" then
-		if self.QuestNameScanned then
-			if  AceConfigDialog.OpenFrames[addonName] then
-				AceConfigDialog:Close(addonName)
+		if AddonParent.QuestNameScanned then
+			if  AceConfigDialog.OpenFrames[AddonName] then
+				AceConfigDialog:Close(AddonName)
 			else
-				AceConfigDialog:Open(addonName)
+				AceConfigDialog:Open(AddonName)
 			end
 		else
 			print("|cff9933FFSickOfClickingDailies|r --", L["Still Setting up localizations please wait"])
