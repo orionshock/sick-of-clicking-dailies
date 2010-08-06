@@ -64,20 +64,26 @@ local showEvents = {
 local function SOCD_OnEvnet(self, event, ...)
 	module:Debug(self:GetName(), event, ...)
 	if not showEvents[event] then
+		module:Debug("bad event hiding")
 		self:Hide() 
 		return
 	else
+		module:Debug("shown event")
 		self:Show()
 	end
 	local title = GetTitleText()
 	module:Debug("FrameOnEvent", event, "Quest:", title, "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", AddonParent:ShouldIgnoreQuest(title) )
 	if ( QuestIsDaily() or QuestIsWeekly() or AddonParent.IsRepeatableQuest(title) ) then
+		module:Debug("Is one of our quests")
 		if AddonParent:ShouldIgnoreQuest(title) then
+			module:Debug("Is one we ignore")
 			self.check:SetChecked(false)
 		else
+			module:Debug("Not Ignoring Quest")
 			self.check:SetChecked(true)
 		end
 	else
+		module:Debug("Not a daily / weekly / repeatable")
 		self:Hide()
 	end
 end
