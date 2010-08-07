@@ -19,20 +19,6 @@ end
 function module:OnEnable()
 	self:Debug("OnEnable")
 
-	SetItemRef("item:43950", "item:43950")	--Kirin Tor Faction Token
-	SetItemRef("item:43950", "item:43950")
-
-	SetItemRef("item:44711", "item:44711")	--Argetn Crusade Toeken
-	SetItemRef("item:44711", "item:44711")
-
-	SetItemRef("item:44713", "item:44713")	--Ebobn Blade
-	SetItemRef("item:44713", "item:44713")
-
-	SetItemRef("item:44710", "item:44710")	--wyrmrest
-	SetItemRef("item:44710", "item:44710")
-
-	SetItemRef("item:49702", "item:49702")	--Sons of Hodir
-	SetItemRef("item:49702", "item:49702")
 
 	SetItemRef("item:46114", "item:46114")	--Champion's Writ
 	SetItemRef("item:46114", "item:46114")
@@ -85,15 +71,15 @@ function module:SOCD_QuestByID_Ready(event, ...)
 					["TakingBattleToTheEnemy"] = GetOptionGroup( 13789 , champQuestRewardOpts ),	--"Taking Battle To The Enemy"
 				},
 			},
-			thanksgiving = { name = "Thanksgiving Quests", type = "group", inline = true,
-				args = {
-					["CantGetEnoughTurkey"] = GetOptionGroup( 14061 , thxgivingRewardOpts ),	--"Can't Get Enough Turkey"
-					["DontForgetTheStuffing!"] = GetOptionGroup( 14062 , thxgivingRewardOpts ),	--"Don't Forget The Stuffing!"
-					["EasyAsPie"] = GetOptionGroup( 14060 , thxgivingRewardOpts ),	--"Easy As Pie",
-					["SheSaysPotato"] = GetOptionGroup( 14058 , thxgivingRewardOpts ),	-- "She Says Potato"
-					["WereOutofCranberryChutneyAgain"] = GetOptionGroup( 14059 , thxgivingRewardOpts ),	-- "We're Out of Cranberry Chutney Again?"
-				},
-			},
+--			thanksgiving = { name = "Thanksgiving Quests", type = "group", inline = true,
+--				args = {
+--					["CantGetEnoughTurkey"] = GetOptionGroup( 14061 , thxgivingRewardOpts ),	--"Can't Get Enough Turkey"
+--					["DontForgetTheStuffing!"] = GetOptionGroup( 14062 , thxgivingRewardOpts ),	--"Don't Forget The Stuffing!"
+--					["EasyAsPie"] = GetOptionGroup( 14060 , thxgivingRewardOpts ),	--"Easy As Pie",
+--					["SheSaysPotato"] = GetOptionGroup( 14058 , thxgivingRewardOpts ),	-- "She Says Potato"
+--					["WereOutofCranberryChutneyAgain"] = GetOptionGroup( 14059 , thxgivingRewardOpts ),	-- "We're Out of Cranberry Chutney Again?"
+--				},
+--			},	--I'll Deal with this later.. don't really care right now.
 			gossipOpts = { name = GOSSIP_OPTIONS, type = "group",
 				args = {
 					["DefendingYourTitle"] = GetGossipOptGroup( nil, 13423 , GT["Let's do this, sister."]),

@@ -21,7 +21,7 @@ if L then
 
 end
 
-local GT = LibStub("AceLocale-3.0"):NewLocale(addonName.."GossipText", "esES", true, debug)
+local GT = LibStub("AceLocale-3.0"):NewLocale(addonName.."GossipText", "esES", false)
 	if GT then
 
 --@localization(locale="esES", format="lua_additive_table", same-key-is-true=true, namespace="GossipText", table-name="GT")@

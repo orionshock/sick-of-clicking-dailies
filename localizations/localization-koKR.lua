@@ -21,7 +21,7 @@ if L then
 
 end
 
-local GT = LibStub("AceLocale-3.0"):NewLocale(addonName.."GossipText", "koKR", true, debug)
+local GT = LibStub("AceLocale-3.0"):NewLocale(addonName.."GossipText", "koKR", false)
 	if GT then
 
 --@localization(locale="koKR", format="lua_additive_table", same-key-is-true=true, namespace="GossipText", table-name="GT")@
