@@ -29,7 +29,7 @@ function module:OnEnable()
 	self:CreateLDB()
 	playerName = UnitName("player")
 	assert(playerName)
-	print("SOCD:", playerName)
+
 	self:PruneDB()
 
 	db.factionrealm[playerName] = db.factionrealm[playerName] or {}
