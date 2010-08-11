@@ -204,8 +204,8 @@ end
 local function procGetGossipAvailableQuests(index, title, _, _, isDaily, isRepeatable, ...)
 	Debug("procGetGossipAvailableQuests", title, isDaily, isRepeatable)
 	if title and (isDaily or isRepeatable) then
-		addon:CaptureDailyQuest(title)
-		return index, title, (isDaily or isRepeatable)
+		addon:CaptureDailyQuest(title, isDaily, isRepeatable)
+		return index, title, isDaily, isRepeatable
 	elseif ... then
 		return procGetGossipAvailableQuests(index + 1, ...)
 	end
@@ -222,7 +222,7 @@ end
 function addon:GOSSIP_SHOW(event)
 	Debug(event)
 	if IsShiftKeyDown() then return end
-	local index, title, isDaily = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
+	local index, title, isDaily, isRepeatable = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
 	if index and not self:ShouldIgnoreQuest(title) then
 		Debug("Found Available, Quest:", title, "~IsDaily/Repeatable:",isDaily, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 		return SelectGossipAvailableQuest(index)
@@ -277,15 +277,15 @@ end
 local function IsRepeatableQuest(test)
 	--hack:
 	Debug("IsRepeatableQuest API()", test)
-	local _, title, isDaily = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
-	if test == title then
-		Debug("Found Repeatable quest in Gossip hack:", title)
+	local _, title, _,isRepeatable = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
+	if (test == title) and isRepeatable then
+		Debug("Found Repeatable quest in Gossip hack:", title, isRepeatable)
 		return true
 	end
 	local numAvailableQuests = GetNumAvailableQuests()
 	for i = 1, numAvailableQuests do
 		local title, _, isDaily, isRepeatable = GetAvailableTitle(i), GetAvailableQuestInfo(i)
-		if (title == test ) and (isDaily or isRepeatable) then
+		if (title == test ) and isRepeatable then
 			Debug("Found Repeatable quest in Quest hack:", title)
 			return true
 		end
@@ -361,8 +361,8 @@ end
 ---Completion Hook :)
 	function SOCD_GetQuestRewardHook(opt)
 		local title = GetTitleText()
-		--Debug("GetQuestRewardHook, IsDaily:", addon:IsDailyQuest(title) )
-		if addon:IsDailyQuest(title) then
+		Debug("GetQuestRewardHook, IsDaily:", addon:IsDailyQuest(title), "~IsRepeatable:", IsRepeatableQuest(title) )
+		if addon:IsDailyQuest(title) and (not IsRepeatableQuest(title))  then	---Ignore repeatable quests here, as by nature don't have a lockout
 			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", title )
 		end
 	end
