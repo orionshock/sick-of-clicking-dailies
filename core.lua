@@ -126,6 +126,7 @@ function addon.GetOptionsTable()
 	local t = { name = addonName, type = "group", handler = addon,
 		args = {
 			info = {type = "description", name = L["MainOptionsDesc"], order = 1 },
+			profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(db),
 			--@alpha@
 			debug = { type = "group", name = "Debug", order = 100,
 				args = {
@@ -144,6 +145,7 @@ function addon.GetOptionsTable()
 			--@end-alpha@
 		},
 	}
+	t.args.profiles.order = 10
 	--Debug("GetOptionsTable, itterating modules")
 	for name, module in addon:IterateModules() do
 		--Debug("Module:", name, module.options)
@@ -155,7 +157,7 @@ function addon.GetOptionsTable()
 end
 
 function addon:OnInitialize()
-	self.db = LibStub("AceDB-3.0"):New("SOCD_SEVEN", db_defaults)
+	self.db = LibStub("AceDB-3.0"):New("SOCD_SEVEN", db_defaults, true)
 	db = self.db
 end
 
