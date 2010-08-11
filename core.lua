@@ -128,7 +128,7 @@ function addon.GetOptionsTable()
 			info = {type = "description", name = L["MainOptionsDesc"], order = 1 },
 			profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(db),
 			--@alpha@
-			debug = { type = "group", name = "Debug", order = 100,
+			debug = { type = "group", name = "Debug", order = -1,
 				args = {
 					masDebug = { type = "multiselect", name = "Enable / Disable Module Debug", order = 1, 
 						get = function(info, val) return addon.db.global.debug[ val ] end, 
@@ -145,7 +145,7 @@ function addon.GetOptionsTable()
 			--@end-alpha@
 		},
 	}
-	t.args.profiles.order = 10
+	t.args.profiles.order = -10
 	--Debug("GetOptionsTable, itterating modules")
 	for name, module in addon:IterateModules() do
 		--Debug("Module:", name, module.options)

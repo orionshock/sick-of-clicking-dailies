@@ -49,7 +49,7 @@ end
 local function GetGossipOptGroup(title, id, arg)
 	local qtitle = GetLocalizedQuestNameByID(id)
 	if title or qtitle then
-		return { name = title or qtitle, type = "toggle", arg = arg }
+		return { name = title or qtitle, type = "toggle", arg = arg, width = "full" }
 	end
 end
 
