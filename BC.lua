@@ -18,6 +18,7 @@ local GetLocalizedQuestNameByID = AddonParent.GetLocalizedQuestNameByID
 function module:OnInitialize()
 	self:Debug("OnInit")
 	AddonParent.RegisterMessage(module, "SOCD_QuestByID_Ready")
+	db = AddonParent.db
 end
 
 function module:OnEnable()
@@ -41,7 +42,7 @@ function module:OnEnable()
 	SetItemRef("item:33857","item:33857")	--Crate Of Meat
 	SetItemRef("item:33857","item:33857")
 
-	db = AddonParent.db
+
 	db.RegisterCallback(self, "OnProfileChanged", "ApplyDefaults")
 	db.RegisterCallback(self, "OnProfileCopied", "ApplyDefaults")
 	db.RegisterCallback(self, "OnProfileReset", "ApplyDefaults")
