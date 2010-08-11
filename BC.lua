@@ -42,6 +42,9 @@ function module:OnEnable()
 	SetItemRef("item:33857","item:33857")
 
 	db = AddonParent.db
+	db.RegisterCallback(self, "OnProfileChanged", "ApplyDefaults")
+	db.RegisterCallback(self, "OnProfileCopied", "ApplyDefaults")
+	db.RegisterCallback(self, "OnProfileReset", "ApplyDefaults")
 end
 
 function module:OnDisable()
@@ -85,6 +88,8 @@ function module:SOCD_QuestByID_Ready(event, ...)
 	}
 	self.options = opts	--Set it onto the main of the module, it'll be picked up later.
 
+	self:ApplyDefaults(db)
+
 	--Handle the special quests we do and exclude them.
 	local moduleSpecialQuests = {
 		[ L["Candy Bucket"] ] = "Exclude",
@@ -94,8 +99,13 @@ function module:SOCD_QuestByID_Ready(event, ...)
 	end
 
 
+	
+
+end
+
+function module:ApplyDefaults(db, profileName)
 	--Quests That need to be dsabled by default.
-	local dbLoc = AddonParent.db.profile.QuestStatus	--Cache the DB location on this.
+	local dbLoc = db.profile.QuestStatus	--Cache the DB location on this.
 	local tempTitle = GetLocalizedQuestNameByID(11545)	--"A Charitable Donation"
 	dbLoc[ tempTitle ] = dbLoc[ tempTitle ] or false
 
@@ -103,7 +113,7 @@ function module:SOCD_QuestByID_Ready(event, ...)
 	dbLoc[ tempTitle ] = dbLoc[ tempTitle ] or false
 
 	--Quest with reward options that need to be defaulted.
-	dbLoc = AddonParent.db.profile.QuestRewardOptions	--Recache the new location for the next section
+	dbLoc = db.profile.QuestRewardOptions	--Recache the new location for the next section
 
 	tempTitle = GetLocalizedQuestNameByID(11379)	--SuperHotStew
 	dbLoc[tempTitle] = dbLoc[tempTitle] or -1
@@ -122,7 +132,6 @@ function module:SOCD_QuestByID_Ready(event, ...)
 
 	tempTitle = GetLocalizedQuestNameByID(11544)	--AtamalArmaments
 	dbLoc[tempTitle] = dbLoc[tempTitle] or -1
-
 end
 
 function module:QuestOptGet(info, ...)
