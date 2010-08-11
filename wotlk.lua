@@ -26,6 +26,9 @@ function module:OnEnable()
 	SetItemRef("item:45724", "item:45724")	--Champion's Purse
 	SetItemRef("item:45724", "item:45724")
 	db = AddonParent.db
+	db.RegisterCallback(self, "OnProfileChanged", "ApplyDefaults")
+	db.RegisterCallback(self, "OnProfileCopied", "ApplyDefaults")
+	db.RegisterCallback(self, "OnProfileReset", "ApplyDefaults")
 end
 
 function module:OnDisable()
@@ -140,8 +143,12 @@ function module:SOCD_QuestByID_Ready(event, ...)
 	for k,v in pairs(moduleSpecialQuests) do
 		AddonParent.SpecialQuestResets[k] = v
 	end
+end
 
-	local dbLoc = AddonParent.db.profile.QuestStatus	--Cache the DB location on this.
+
+function module:ApplyDefaults(db, profileName)
+
+	local dbLoc = db.profile.QuestStatus	--Cache the DB location on this.
 	local tempTitle
 
 	--Disabled by default Quests:
@@ -156,7 +163,7 @@ function module:SOCD_QuestByID_Ready(event, ...)
 	dbLoc[ tempTitle ] = dbLoc[ tempTitle ] or false	--AC gold for rep quest
 
 	-----
-	dbLoc = AddonParent.db.profile.QuestRewardOptions
+	dbLoc = db.profile.QuestRewardOptions
 	--Default Quest options to -1 to disable them till the user selects something
 
 	tempTitle = GetLocalizedQuestNameByID(13861)	--"Battle Before The Citadel"
