@@ -89,7 +89,7 @@ function module:SOCD_QuestByID_Ready(event, ...)
 	}
 	self.options = opts	--Set it onto the main of the module, it'll be picked up later.
 
-	self:ApplyDefaults(db)
+	self:ApplyDefaults(event, db)
 
 	--Handle the special quests we do and exclude them.
 	local moduleSpecialQuests = {
@@ -104,7 +104,8 @@ function module:SOCD_QuestByID_Ready(event, ...)
 
 end
 
-function module:ApplyDefaults(db, profileName)
+function module:ApplyDefaults(event, idb, profileName, ...)
+	db = idb
 	--Quests That need to be dsabled by default.
 	local dbLoc = db.profile.QuestStatus	--Cache the DB location on this.
 	local tempTitle = GetLocalizedQuestNameByID(11545)	--"A Charitable Donation"
