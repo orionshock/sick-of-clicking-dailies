@@ -144,11 +144,12 @@ function module:SOCD_QuestByID_Ready(event, ...)
 	for k,v in pairs(moduleSpecialQuests) do
 		AddonParent.SpecialQuestResets[k] = v
 	end
+	self:ApplyDefaults(event, db)
 end
 
 
-function module:ApplyDefaults(db, profileName)
-
+function module:ApplyDefaults(event, idb, profileName)
+	db = idb
 	local dbLoc = db.profile.QuestStatus	--Cache the DB location on this.
 	local tempTitle
 
