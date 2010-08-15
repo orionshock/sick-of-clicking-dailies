@@ -10,6 +10,8 @@ if projectVersion:find("project") then
 	projectRevision = "dev"
 end
 
+local lastChanged = "@file-date-integer@"
+
 local AddonName, AddonParent = ...
 local module = AddonParent:NewModule("QuestScanner", "AceEvent-3.0")
 local localeQuestNameByID
@@ -26,7 +28,14 @@ end
 --	self:Debug("OnEnable, starting Scan")
 --	return self:StartScan()
 --end
-
+function module:OnEnable()
+	if AddonParent.db.global.currentRev ~= lastChanged then
+		return self:StartScan()
+	else
+		AddonParent:SendMessage("SOCD_QuestByID_Ready")
+		AddonParent.QuestNameScanned = true
+	end
+end
 local qTable = {
 	[4970] = "Frostsaber Provisions", --C
 	[5201] = "Winterfall Intrusion", --C
@@ -321,6 +330,7 @@ local ttScanFrame = CreateFrame("frame")
 ttScanFrame:Hide()
 do
 	tt:SetScript("OnTooltipSetQuest", function(self, ...)
+		module:Debug("OnTooltipSetQuest", self.questId)
 		if (not self.questId) or (not self.englishQuestTitle) then
 			self:Debug("Invalid Setup for SOCD Quest Scanning")
 			ttScanFrame:Hide()
@@ -336,7 +346,7 @@ do
 		local id, eName = next(qTable, self.questId)
 		if not id or not eName then
 			module:Debug("Reached end of Quest table. Total Quests Scanned:", self.count)
-			AddonParent.db.global.currentRev = AddonParent.version
+			AddonParent.db.global.currentRev = lastChanged
 			AddonParent.QuestNameScanned = true
 			AddonParent:SendMessage("SOCD_QuestByID_Ready")
 			ttScanFrame:Hide()
@@ -344,15 +354,20 @@ do
 		end
 		self.questId = id
 		self.englishQuestTitle = eName
+		module:Debug("Showing scan frame:")
+		ttScanFrame:Show()
+		return
 	end)
 
 
-	local interval, delay = 1, .3
+	local interval, delay = .01, 0
 	ttScanFrame:SetScript("OnUpdate", function(self, elapsed)
+		module:Debug("OnUpdate", delay, elapsed, tt.questId)
 		delay = delay + elapsed
 		if delay > interval then
-			tt:SetHyperlink("quest:"..tt.questId)
 			delay = 0
+			self:Hide()
+			return tt:SetHyperlink("quest:"..tt.questId)
 		end
 	end)
 
@@ -363,7 +378,7 @@ function module:StartScan()
 	tt.questId = id
 	tt.englishQuestTitle = eName
 	tt.count = 0
-	ttScanFrame:Show()
+--	ttScanFrame:Show()
 	return tt:SetHyperlink( ("quest:%d"):format(id) )
 end
 function module:StopScan(info)

@@ -170,14 +170,6 @@ function addon:OnEnable(event, addon)
 	self:RegisterEvent("QUEST_COMPLETE")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 
-	--Quest Scanner
-	if db.global.currentRev ~= self.version then
-		self:GetModule("QuestScanner"):StartScan()
-	else
-		self:SendMessage("SOCD_QuestByID_Ready")
-		self.QuestNameScanned = true
-	end
-
 	--Options & Slash command
 
 	local AceConfigDialog = LibStub("AceConfigDialog-3.0")
