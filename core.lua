@@ -230,13 +230,13 @@ function addon:GOSSIP_SHOW(event)
 		return SelectGossipAvailableQuest(index)
 	end
 
---	local index, title = procGetGossipActiveQuests(1, GetGossipActiveQuests() )
---	if index then
---		Debug("Found Active Quest that is Complete:", title, "~IsComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
---		return SelectGossipActiveQuest(index)
---	end
---	Debug("Proccessing Gossip ")
---	self:ProccessGossipOptions( GetGossipOptions() )
+	local index, title = procGetGossipActiveQuests(1, GetGossipActiveQuests() )
+	if index then
+		Debug("Found Active Quest that is Complete:", title, "~IsComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+		return SelectGossipActiveQuest(index)
+	end
+	Debug("Proccessing Gossip ")
+	self:ProccessGossipOptions( GetGossipOptions() )
 end
 
 function addon:ProccessGossipOptions( ... )
@@ -265,14 +265,14 @@ function addon:QUEST_GREETING(event, ...)
 			return SelectAvailableQuest(i)
 		end
 	end
---	for i = 1, numActiveQuests do
---		local title, isComplete = GetActiveTitle(i)
---		Debug("Quest:", title, "~isComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
---		if procGetGossipActiveQuests(i, title, _, _, isComplete) then
---			Debug("turning in quest:", title)
---			return SelectActiveQuest(i)
---		end			
---	end
+	for i = 1, numActiveQuests do
+		local title, isComplete = GetActiveTitle(i)
+		Debug("Quest:", title, "~isComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+		if procGetGossipActiveQuests(i, title, _, _, isComplete) then
+			Debug("turning in quest:", title)
+			return SelectActiveQuest(i)
+		end			
+	end
 end
 
 --[[
