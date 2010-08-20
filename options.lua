@@ -15,6 +15,7 @@ end
 
 function module:OnEnable()
 	self:Debug("OnEnable")
+	self.frame:RegisterEvent("QUEST_GREETING")
 	self.frame:RegisterEvent("QUEST_PROGRESS")
 	self.frame:RegisterEvent("QUEST_DETAIL")
 	self.frame:RegisterEvent("QUEST_COMPLETE")
@@ -24,6 +25,7 @@ end
 
 function module:OnDisable()
 	self:Debug("OnDisable")
+	self.frame:UnregisterEvent("QUEST_GREETING")
 	self.frame:UnregisterEvent("QUEST_PROGRESS")
 	self.frame:UnregisterEvent("QUEST_DETAIL")
 	self.frame:UnregisterEvent("QUEST_COMPLETE")
@@ -63,17 +65,18 @@ local showEvents = {
 
 local function SOCD_OnEvnet(self, event, ...)
 	module:Debug(self:GetName(), event, ...)
-	if not showEvents[event] then
-		module:Debug("bad event hiding")
-		self:Hide() 
-		return
+	if showEvents[event] then
+		module:Debug("Show Event", event)
+		self:Show() 
+
 	else
-		module:Debug("shown event")
-		self:Show()
+		module:Debug("hide event", event)
+		self:Hide()
+		return
 	end
 	local title = GetTitleText()
 	module:Debug("FrameOnEvent", event, "Quest:", title, "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", AddonParent:ShouldIgnoreQuest(title) )
-	if ( QuestIsDaily() or QuestIsWeekly() or AddonParent.IsRepeatableQuest(title) ) then
+	if (AddonParent:IsQuest(title) or QuestIsDaily() or QuestIsWeekly() ) then
 		module:Debug("Is one of our quests")
 		if AddonParent:ShouldIgnoreQuest(title) then
 			module:Debug("Is one we ignore")
