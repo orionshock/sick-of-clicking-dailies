@@ -166,8 +166,8 @@ function addon:OnEnable(event, addon)
 	self:RegisterEvent("GOSSIP_SHOW")
 	self:RegisterEvent("QUEST_GREETING")
 	self:RegisterEvent("QUEST_DETAIL")
-	self:RegisterEvent("QUEST_PROGRESS")
-	self:RegisterEvent("QUEST_COMPLETE")
+--	self:RegisterEvent("QUEST_PROGRESS")
+--	self:RegisterEvent("QUEST_COMPLETE")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 
 	--Options & Slash command
@@ -195,17 +195,26 @@ end
 ]]--
 local function procGetGossipAvailableQuests(index, title, _, _, isDaily, isRepeatable, ...)
 	Debug("procGetGossipAvailableQuests", title, isDaily, isRepeatable)
-	if title and (isDaily or isRepeatable) then
-		addon:CaptureDailyQuest(title, isDaily, isRepeatable)
-		return index, title, isDaily, isRepeatable
+	if ( addon:IsQuest(title) or (isDaily or isRepeatable) ) then
+		addon:CaptureDailyQuest(title, ((isDaily and "D") or (isRepeatable and "R") ) )
+		if addon:ShouldIgnoreQuest(title) then
+			Debug("Ignoring quest:", title, "finishing loop")
+			if ... then
+				return procGetGossipAvailableQuests(index + 1, ...)
+			end
+		else
+			Debug("found:", title)
+			return index, title
+		end
 	elseif ... then
+		Debug("none found on index:", index)
 		return procGetGossipAvailableQuests(index + 1, ...)
 	end
 end
 
 local function procGetGossipActiveQuests(index, title, _, _, isComplete, ...)
-	if title and isComplete then
-		return index, title, isComplete
+	if  addon:IsQuest(title) and isComplete then
+		return index, title
 	elseif ... then
 		return procGetGossipActiveQuests(index+1, ...)
 	end
@@ -214,18 +223,20 @@ end
 function addon:GOSSIP_SHOW(event)
 	Debug(event)
 	if IsShiftKeyDown() then return end
-	local index, title, isDaily, isRepeatable = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
-	if index and not self:ShouldIgnoreQuest(title) then
-		Debug("Found Available, Quest:", title, "~IsDaily/Repeatable:",isDaily, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+
+	local index, title = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
+	if index then
+		Debug("Found Available, Quest:", title, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 		return SelectGossipAvailableQuest(index)
 	end
-	local index, title, isComplete = procGetGossipActiveQuests(1, GetGossipActiveQuests() )
-	if index and not self:ShouldIgnoreQuest(title) then
-		Debug("Found Active Quest that is Complete:", title, "~IsComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
-		return SelectGossipActiveQuest(index)
-	end
-	Debug("Proccessing Gossip ")
-	self:ProccessGossipOptions( GetGossipOptions() )
+
+--	local index, title = procGetGossipActiveQuests(1, GetGossipActiveQuests() )
+--	if index then
+--		Debug("Found Active Quest that is Complete:", title, "~IsComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+--		return SelectGossipActiveQuest(index)
+--	end
+--	Debug("Proccessing Gossip ")
+--	self:ProccessGossipOptions( GetGossipOptions() )
 end
 
 function addon:ProccessGossipOptions( ... )
@@ -247,45 +258,22 @@ function addon:QUEST_GREETING(event, ...)
 	if IsShiftKeyDown() then return end
 	local numActiveQuests = GetNumActiveQuests()
 	local numAvailableQuests = GetNumAvailableQuests()
-	Debug("AvailableQuests")
+	Debug("Looking @ AvailableQuests")
 	for i = 1, numAvailableQuests do
 		local title, _, isDaily, isRepeatable = GetAvailableTitle(i), GetAvailableQuestInfo(i)
-		Debug("Quest:", title, "~IsDaily/Repeatable:", isDaily or isRepeatable, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
-		if (title and (isDaily or isRepeatable) ) and ( not self:ShouldIgnoreQuest(title) ) then
-			Debug("picking up quest:", title)
+		if procGetGossipAvailableQuests(i, title, nil, nil, isDaily, isRepeatable) then
 			return SelectAvailableQuest(i)
 		end
 	end
-	for i = 1, numActiveQuests do
-		local title, isComplete = GetActiveTitle(i)
-		Debug("Quest:", title, "~isComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
-		if (title and isComplete) and ( not self:ShouldIgnoreQuest(title) ) then
-			Debug("turning in quest:", title)
-			return SelectActiveQuest(i)
-		end
-	end
+--	for i = 1, numActiveQuests do
+--		local title, isComplete = GetActiveTitle(i)
+--		Debug("Quest:", title, "~isComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+--		if procGetGossipActiveQuests(i, title, _, _, isComplete) then
+--			Debug("turning in quest:", title)
+--			return SelectActiveQuest(i)
+--		end			
+--	end
 end
-
-local function IsRepeatableQuest(test)
-	--hack:
-	Debug("IsRepeatableQuest API()", test)
-	local _, title, _,isRepeatable = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
-	if (test == title) and isRepeatable then
-		Debug("Found Repeatable quest in Gossip hack:", title, isRepeatable)
-		return true
-	end
-	local numAvailableQuests = GetNumAvailableQuests()
-	for i = 1, numAvailableQuests do
-		local title, _, isDaily, isRepeatable = GetAvailableTitle(i), GetAvailableQuestInfo(i)
-		if (title == test ) and isRepeatable then
-			Debug("Found Repeatable quest in Quest hack:", title)
-			return true
-		end
-	end
-
-end
-addon.IsRepeatableQuest = IsRepeatableQuest
-
 
 --[[
 	Quest Detail Event
@@ -293,13 +281,17 @@ addon.IsRepeatableQuest = IsRepeatableQuest
 
 function addon:QUEST_DETAIL(event)
 	local title = GetTitleText()
-	Debug(event, title, "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+	Debug(event, title)
 	if IsShiftKeyDown() then return end
-	if ( QuestIsDaily() or QuestIsWeekly() or IsRepeatableQuest(title) ) then
-		self:CaptureDailyQuest(title)
-		if self:ShouldIgnoreQuest(title) then return end
-		Debug("Accepting Daily/Weekly Quest:", title)
-		return AcceptQuest()
+	if ( self:IsQuest(title) or QuestIsDaily() or QuestIsWeekly() ) then
+		self:CaptureDailyQuest(title, ( (QuestIsDaily() and "D") or (QuestIsWeekly() and "W") ) )
+		if self:ShouldIgnoreQuest(title) then 
+			Debug("Ignoring Quest")
+			return
+		else
+			Debug("Accepting Quest:", title)
+			return AcceptQuest()
+		end
 	end
 end
 --[[
@@ -308,10 +300,10 @@ end
 
 function addon:QUEST_PROGRESS(event)
 	local title = GetTitleText()
-	Debug(event, title, "~IsCompleteable:", IsQuestCompletable(), "~IsDaily/Weekly/Repeatable:" , QuestIsDaily() or QuestIsWeekly() or IsRepeatableQuest(title), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+	Debug(event, title, "~IsCompleteable:", IsQuestCompletable(), "~IsDaily/Weekly/Repeatable:" , self:IsQuest(title) or QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 	if IsShiftKeyDown() then return end
 	if not IsQuestCompletable() then return end
-	if ( QuestIsDaily() or QuestIsWeekly() or IsRepeatableQuest(title) ) then
+	if ( self:IsQuest(title) or QuestIsDaily() or QuestIsWeekly() ) then
 		if self:ShouldIgnoreQuest(title) then return end
 		Debug("Completing Quest:", title)
 		CompleteQuest()
@@ -328,7 +320,11 @@ function addon:QUEST_COMPLETE(event)
 	local title = GetTitleText()
 	Debug(event, title, "~IsDaily/Weekly:" , ( QuestIsDaily() or QuestIsWeekly() or IsRepeatableQuest(title) ), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 	if IsShiftKeyDown() then return end
-	if ( QuestIsDaily() or QuestIsWeekly() or IsRepeatableQuest(title) ) and ( not self:ShouldIgnoreQuest(title) ) then
+	if ( self:IsQuest(title) or QuestIsDaily() or QuestIsWeekly() ) then
+		if self:ShouldIgnoreQuest(title) then
+			Debug("Ignoring Quest")
+			return
+		end
 		local rewardOpt = self:GetQuestRewardOption( title )
 		if (GetQuestItemInfo("choice", 1) ~= "") and (not rewardOpt) then
 			--Has quest option but we don't have a selection, means that this is a new quest that isn't in the DB.
@@ -353,9 +349,12 @@ end
 ---Completion Hook :)
 	function SOCD_GetQuestRewardHook(opt)
 		local title = GetTitleText()
-		Debug("GetQuestRewardHook, IsDaily:", addon:IsDailyQuest(title), "~IsRepeatable:", IsRepeatableQuest(title) )
-		if addon:IsDailyQuest(title) and (not IsRepeatableQuest(title))  then	---Ignore repeatable quests here, as by nature don't have a lockout
-			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", title )
+		Debug("GetQuestRewardHook, IsDaily:", addon:IsQuest(title) )
+		local isQuest, qtype = addon:IsQuest(title)
+		if isQuest then	---Ignore repeatable quests here, as by nature don't have a lockout
+			if qtype ~= "R" then
+				addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", title )
+			end
 		end
 	end
 	hooksecurefunc("GetQuestReward", SOCD_GetQuestRewardHook )
@@ -408,13 +407,14 @@ function addon:ShouldIgnoreQuest(title)
 	return false
 end
 
-function addon:CaptureDailyQuest(title)
+function addon:CaptureDailyQuest(title, qType)
 	title = title:trim()
 	if db then
-		db.global.QuestNameCache[title] = true
+		db.global.QuestNameCache[title] = qType
 	end
 end
 
-function addon:IsDailyQuest(title)
-	return db.global.QuestNameCache[title] ~= nil
+function addon:IsQuest(title)
+	title = title:trim()
+	return db.global.QuestNameCache[title] ~= nil, db.global.QuestNameCache[title]
 end
