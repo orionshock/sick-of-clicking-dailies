@@ -166,8 +166,8 @@ function addon:OnEnable(event, addon)
 	self:RegisterEvent("GOSSIP_SHOW")
 	self:RegisterEvent("QUEST_GREETING")
 	self:RegisterEvent("QUEST_DETAIL")
---	self:RegisterEvent("QUEST_PROGRESS")
---	self:RegisterEvent("QUEST_COMPLETE")
+	self:RegisterEvent("QUEST_PROGRESS")
+	self:RegisterEvent("QUEST_COMPLETE")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 
 	--Options & Slash command
@@ -318,7 +318,7 @@ end
 
 function addon:QUEST_COMPLETE(event)
 	local title = GetTitleText()
-	Debug(event, title, "~IsDaily/Weekly:" , ( QuestIsDaily() or QuestIsWeekly() or IsRepeatableQuest(title) ), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+	Debug(event, title, "~IsDaily/Weekly:" , ( self:IsQuest(title) or QuestIsDaily() or QuestIsWeekly() ), "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 	if IsShiftKeyDown() then return end
 	if ( self:IsQuest(title) or QuestIsDaily() or QuestIsWeekly() ) then
 		if self:ShouldIgnoreQuest(title) then
