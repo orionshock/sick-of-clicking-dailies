@@ -81,7 +81,7 @@ local module_Proto = {
 }
 addon:SetDefaultModulePrototype(module_Proto)
 
----------------------------------------------------------------------------
+----------------------------------------------------------------------
 
 local db_defaults = {
 	char = {
