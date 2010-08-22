@@ -408,13 +408,13 @@ function addon:ShouldIgnoreQuest(title)
 end
 
 function addon:CaptureDailyQuest(title, qType)
-	title = title:trim()
+	title = (title or ""):trim()
 	if db then
 		db.global.QuestNameCache[title] = qType
 	end
 end
 
 function addon:IsQuest(title)
-	title = title:trim()
+	title = (title or ""):trim()
 	return db.global.QuestNameCache[title] ~= nil, db.global.QuestNameCache[title]
 end
