@@ -391,7 +391,11 @@ end
 
 
 
-function AddonParent.GetLocalizedQuestNameByID(id)
-	id = tonumber(id)
-	return localeQuestNameByID and localeQuestNameByID[id] or nil
+function AddonParent.GetLocalizedQuestNameByID(self, id)
+	if id then
+		return localeQuestNameByID and localeQuestNameByID[id] or nil
+	else
+		id = tonumber(self)
+		return localeQuestNameByID and localeQuestNameByID[id] or nil
+	end
 end
