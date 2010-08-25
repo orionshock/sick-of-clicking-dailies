@@ -140,6 +140,7 @@ function addon.GetOptionsTable()
 					},
 				enableAll = { type = "execute", name = "Enable All", func = function(info) for k,v in pairs(addon.db.global.debug) do addon.db.global.debug[k] = true end end, },
 				disableAll = { type = "execute", name = "Disable All", func = function(info) for k,v in pairs(addon.db.global.debug) do addon.db.global.debug[k] = false end end, },
+				rescan = { type = "execute", name = "Rescan Quest Names", func = function(info) addon:GetModule("QuestScanner"):StartScan() end, order = -1,}
 				},
 			},
 			--@end-alpha@
@@ -210,6 +211,7 @@ local function procGetGossipAvailableQuests(index, title, _, _, isDaily, isRepea
 		Debug("none found on index:", index)
 		return procGetGossipAvailableQuests(index + 1, ...)
 	end
+	Debug("nothing found")
 end
 
 local function procGetGossipActiveQuests(index, title, _, _, isComplete, ...)
@@ -410,11 +412,12 @@ end
 function addon:CaptureDailyQuest(title, qType)
 	title = (title or ""):trim()
 	if db then
-		db.global.QuestNameCache[title] = qType
+		db.global.QuestNameCache[title] = db.global.QuestNameCache[title] or qType
 	end
 end
 
 function addon:IsQuest(title)
+	if title == nil then return end
 	title = (title or ""):trim()
 	return db.global.QuestNameCache[title] ~= nil, db.global.QuestNameCache[title]
 end
