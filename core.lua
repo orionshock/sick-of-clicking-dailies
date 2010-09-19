@@ -330,7 +330,7 @@ function addon:QUEST_COMPLETE(event)
 		local rewardOpt = self:GetQuestRewardOption( title )
 		if (GetQuestItemInfo("choice", 1) ~= "") and (not rewardOpt) then
 			--Has quest option but we don't have a selection, means that this is a new quest that isn't in the DB.
-			print( self:Debug("Sick Of Clicking Dailies: Found a new Quest:", title, " It has reward choices but is not yet added to the addon. Please report it at www.wowace.com"))
+			print( Debug("Sick Of Clicking Dailies: Found a new Quest:", title, " It has reward choices but is not yet added to the addon. Please report it at www.wowace.com"))
 			return
 		end
 		if (rewardOpt and (rewardOpt == -1)) then
