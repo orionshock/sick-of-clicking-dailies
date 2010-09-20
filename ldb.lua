@@ -32,7 +32,7 @@ function module:OnEnable()
 
 	self:PruneDB()
 
-	db.factionrealm[playerName] = db.factionrealm[playerName] or {}
+--	db.factionrealm[playerName] = db.factionrealm[playerName] or {}
 	db.factionrealm.chars[playerName] = select(2, UnitClass("player"))
 
 
