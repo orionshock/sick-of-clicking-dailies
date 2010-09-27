@@ -165,7 +165,7 @@ function module:CreateLDB()
 		value = SecondsToTime(GetQuestResetTime(), true) or "~Updating~",
 		OnEnter = OnEnter,
 		OnLeave = OnLeave,
-		OnTooltipShow = OnTooltipShow,
+		--OnTooltipShow = OnTooltipShow,
 		OnClick = OnClick,
 	}
 	dailyTTL.text = (dailyTTL.label)..(dailyTTL.value)
