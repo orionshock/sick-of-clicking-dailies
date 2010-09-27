@@ -217,7 +217,6 @@ function module:CreateLDB()
 		text = L["Dailies On Alts"],
 		OnEnter = OnEnter,
 		OnLeave = OnLeave,
---		OnTooltipShow = OnTooltipShow,
 	}
 	self.ldb = LibStub("LibDataBroker-1.1"):NewDataObject("SOCD-AltTrack", trackLDB)
 end
