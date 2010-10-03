@@ -35,7 +35,7 @@
 ## Version: @project-version@
 ## X-Email: Orionshock@gmail.com
 ## SavedVariables: SOCD_SEVEN
-## OptionalDeps: Ace3
+## OptionalDeps: Ace3, LibQTip-1.0
 ## X-Embeds: Ace3
 
 ## DefaultState: Enabled
