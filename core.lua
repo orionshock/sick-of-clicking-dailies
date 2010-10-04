@@ -169,6 +169,7 @@ function addon:OnEnable(event, addon)
 	self:RegisterEvent("QUEST_PROGRESS")
 	self:RegisterEvent("QUEST_COMPLETE")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	self:RegisterEvent("ZONE_CHANGED", "ZONE_CHANGED_NEW_AREA")
 	self:ZONE_CHANGED_NEW_AREA("OnEnable")
 
 	--Options & Slash command
