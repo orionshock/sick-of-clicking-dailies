@@ -139,7 +139,7 @@ function addon.GetOptionsTable()
 					},
 				enableAll = { type = "execute", name = "Enable All", func = function(info) for k,v in pairs(addon.db.global.debug) do addon.db.global.debug[k] = true end end, },
 				disableAll = { type = "execute", name = "Disable All", func = function(info) for k,v in pairs(addon.db.global.debug) do addon.db.global.debug[k] = false end end, },
-				rescan = { type = "execute", name = "Rescan Quest Names", func = function(info) addon:GetModule("QuestScanner"):StartScan() end, order = -1,}
+				rescan = { type = "execute", name = "Rescan Quest Names", func = function(info) addon:GetModule("QuestScanner"):StartQuestScan() end, order = -1,}
 				},
 			},
 			--@end-alpha@
