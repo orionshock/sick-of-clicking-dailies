@@ -24,25 +24,6 @@ end
 function module:OnEnable()
 	self:Debug("OnEnable")
 
-	SetItemRef("item:30809","item:30809")	--Aldor Mark
-	SetItemRef("item:30809","item:30809")
-
-	SetItemRef("item:30810","item:30810")	--Scryer Mark
-	SetItemRef("item:30810","item:30810")
-
-	SetItemRef("item:34538","item:34538")	--Melee weapon
-	SetItemRef("item:34538","item:34538")
-
-	SetItemRef("item:34539","item:34539")	--Caster weapon
-	SetItemRef("item:34539","item:34539")
-
-	SetItemRef("item:33844","item:33844")	--Barrel of Fish
-	SetItemRef("item:33844","item:33844")
-
-	SetItemRef("item:33857","item:33857")	--Crate Of Meat
-	SetItemRef("item:33857","item:33857")
-
-
 	db.RegisterCallback(self, "OnProfileChanged", "ApplyDefaults")
 	db.RegisterCallback(self, "OnProfileCopied", "ApplyDefaults")
 	db.RegisterCallback(self, "OnProfileReset", "ApplyDefaults")

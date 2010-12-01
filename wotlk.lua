@@ -20,13 +20,6 @@ end
 function module:OnEnable()
 	self:Debug("OnEnable")
 
-
-	SetItemRef("item:46114", "item:46114")	--Champion's Writ
-	SetItemRef("item:46114", "item:46114")
-
-	SetItemRef("item:45724", "item:45724")	--Champion's Purse
-	SetItemRef("item:45724", "item:45724")
-
 	db.RegisterCallback(self, "OnProfileChanged", "ApplyDefaults")
 	db.RegisterCallback(self, "OnProfileCopied", "ApplyDefaults")
 	db.RegisterCallback(self, "OnProfileReset", "ApplyDefaults")

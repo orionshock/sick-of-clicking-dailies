@@ -15,12 +15,12 @@ local lastChanged = "@file-date-integer@"
 local AddonName, AddonParent = ...
 local module = AddonParent:NewModule("QuestScanner", "AceEvent-3.0")
 local localeQuestNameByID
-local dbo
+local db
 
 function module:OnInitialize()
 		--Addon's Main OnEnable does the version check and starts it if needed
 		--However, we want to set the db up here just in case.
-	dbo = AddonParent.db.global.QuestNameCache
+	db = AddonParent.db.global
 	localeQuestNameByID = AddonParent.db.global.localeQuestNameByID
 end
 
@@ -30,7 +30,7 @@ end
 --end
 function module:OnEnable()
 	if AddonParent.db.global.currentRev ~= lastChanged then
-		return self:StartScan()
+		return self:StartQuestScan()
 	else
 		AddonParent:SendMessage("SOCD_QuestByID_Ready")
 		AddonParent.QuestNameScanned = true
@@ -326,42 +326,68 @@ local qTable = {
 
 }	--End of name Scanner Master Table
 
+local iTable = {
+		--BC
+	[30809] = "Aldor Mark",
+	[30810] = "Scryer Mark",
+	[34538] = "Melee weapon",
+	[34539] = "Caster weapon",
+	[33844] = "Barrel of Fish",
+	[33857] = "Crate Of Meat",
+		--Wrath
+	[46114] = "Champion's Writ",
+	[45724] = "Champion's Purse",
+
+}
+
 
 local tt = CreateFrame("GameTooltip", "SOCDQuestScanTT", UIParent, "GameTooltipTemplate")
 local ttlt = _G[tt:GetName().."TextLeft1"]
 local ttScanFrame = CreateFrame("frame")
 ttScanFrame:Hide()
 do
-	tt:SetScript("OnTooltipSetQuest", function(self, ...)
---		module:Debug("OnTooltipSetQuest", self.questId)
-		if (not self.questId) or (not self.qtype) then
+		local function ScanTheTooltip(self, ...)
+		--module:Debug("OnTooltipSetQuest", self.k)
+		if (not self.k) or (not self.v) then
 			module:Debug("Invalid Setup for SOCD Quest Scanning")
 			ttScanFrame:Hide()
 		end
 		local questTitleText = (ttlt:GetText() or ""):trim()
-		dbo[questTitleText] = self.qtype
-		localeQuestNameByID[ tonumber(self.questId) ] = questTitleText
+
+		if tt.dba then
+			tt.dba[ tonumber(self.k) ] = questTitleText
+		end
+		if tt.dbb then
+			tt.dbb[questTitleText] = tt.v
+		end
 
 		self.count = self.count + 1
 
-		module:Debug("Caching:", self.questId, "-->", questTitleText )
+		module:Debug("Cached:", self.k, "-->", questTitleText )
 
-		local id, qtype = next(qTable, self.questId)
+		local id, qtype = next(self.t, self.k)
 		if not id or not qtype then
-			module:Debug("Reached end of Quest table. Total Quests Scanned:", self.count)
-			AddonParent.db.global.currentRev = lastChanged
-			AddonParent.QuestNameScanned = true
-			AddonParent:SendMessage("SOCD_QuestByID_Ready")
-			ttScanFrame:Hide()
+			if self.prefix == "quest:" then
+				module:Debug("Reached end of Table. Total Scanned:", self.count)
+				AddonParent.db.global.currentRev = lastChanged
+				AddonParent.QuestNameScanned = true
+				AddonParent:SendMessage("SOCD_QuestByID_Ready")
+				ttScanFrame:Hide()
+			end
+			if self.NextScanFunc then
+				return module[ self.NextScanFunc ](module)
+			end
 			return
 		end
-		self.questId = id
-		self.qtype = qtype
---		module:Debug("Showing scan frame:")
+		self.k = id
+		self.v = qtype
+		--module:Debug("Showing scan frame:")
 		ttScanFrame:Show()
 		return
-	end)
+	end
 
+	tt:SetScript("OnTooltipSetQuest", ScanTheTooltip)
+	tt:SetScript("OnTooltipSetItem", ScanTheTooltip)
 
 	local interval, delay = .01, 0
 	ttScanFrame:SetScript("OnUpdate", function(self, elapsed)
@@ -370,20 +396,39 @@ do
 		if delay > interval then
 			delay = 0
 			self:Hide()
-			return tt:SetHyperlink("quest:"..tt.questId)
+			return tt:SetHyperlink(tt.prefix..tt.k)
 		end
 	end)
 
 end
-function module:StartScan()
-	self:Debug("Starting Localized Tooltip Scan")
+function module:StartQuestScan()
+	self:Debug("StartingTooltip Scan - QUEST")
 	local id, qtype = next(qTable)
-	tt.questId = id
-	tt.qtype = qtype
+	tt.t = qTable
+	tt.k = id
+	tt.v = qtype
+	tt.dba = db.localeQuestNameByID
+	tt.dbb = db.QuestNameCache
 	tt.count = 0
---	ttScanFrame:Show()
-	return tt:SetHyperlink( ("quest:%d"):format(id) )
+	tt.prefix = "quest:"
+	tt.NextScanFunc = "StartItemScan"
+	return tt:SetHyperlink(tt.prefix..tt.k)
 end
+
+function module:StartItemScan()
+	self:Debug("Starting Tooltip Scan - ITEMS")
+	local id, name = next(iTable)
+	tt.t = iTable
+	tt.k = id
+	tt.v = qtype
+	tt.dba = nil
+	tt.dbb = nil
+	tt.count = 0
+	tt.prefix = "item:"
+	tt.NextScanFunc = nil
+	return tt:SetHyperlink(tt.prefix..tt.k)
+end
+
 function module:StopScan(info)
 	self:Debug("Stopping Tooltip Scanning?")
 	ttScanFrame:Hide()
