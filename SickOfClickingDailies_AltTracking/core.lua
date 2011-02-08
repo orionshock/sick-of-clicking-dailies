@@ -183,7 +183,7 @@ local function OnEnter(self)
 	tooltip:Show()
 end
 
-local delay, interval = 0,1
+local delay, interval = 0, .5
 local mouseovertimer = CreateFrame("Frame")
 mouseovertimer:SetScript("OnUpdate", function(self, elapsed)
 	if LibQTipTooltip and self.ldbObj then
