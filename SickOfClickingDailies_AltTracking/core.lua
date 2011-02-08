@@ -82,8 +82,13 @@ function module:UpdateAllQuests()
 	for toon, qTable in pairs(db) do
 		if toon ~= "chars" then
 			unsortedPlayers[toon] = true
-			for quest, _ in pairs(qTable) do
-				totalQuests[quest] = true
+			if type(qTable) == "table" then
+				for quest, _ in pairs(qTable) do
+					totalQuests[quest] = true
+				end
+			else
+				local _, srcAddon = issecurevariable(db, toon)
+				geterrorhander()("Invalid Table in QTable, came from addon: "..tostring(srcAddon) )
 			end
 		end
 	end
