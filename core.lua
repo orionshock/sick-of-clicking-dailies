@@ -366,11 +366,12 @@ end
 	end
 
 
-local ignoreRLFD = {
-	[258] = true,	--Classic Dungeon
-	[259] = true,	--BC Dungeon
-	[260] = true,	--BC Heroic Dungeon
-}
+--local ignoreRLFD = {
+--	[258] = true,	--Classic Dungeon
+--	[259] = true,	--BC Dungeon
+--	[260] = true,	--BC Heroic Dungeon
+--	[261] = true
+--}
 
 function addon:ZONE_CHANGED_NEW_AREA(event, ...)
 	local _, iType = GetInstanceInfo()
@@ -379,10 +380,12 @@ function addon:ZONE_CHANGED_NEW_AREA(event, ...)
 		Debug("not in instance")
 		for i = 1, GetNumRandomDungeons() do
 			local id, name = GetLFGRandomDungeonInfo(i)
-			local doneToday = GetLFGDungeonRewards(id)
-			Debug(name, id, " - Done: ", doneToday, " - Ignore:", ignoreRLFD[id] )
-			if doneToday and not ignoreRLFD[id] then
-				addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", name )
+			local doneToday, goldReward = GetLFGDungeonRewards(id)
+			Debug(name, id, " - Done:", (goldReward ~= 0 ) and doneToday --[[, " - Ignore:", ignoreRLFD[id] ]] )
+			if (goldReward ~= 0 ) and doneToday then
+--				if doneToday and not ignoreRLFD[id] then
+					addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", name )
+--				end
 			end
 		end
 	else
