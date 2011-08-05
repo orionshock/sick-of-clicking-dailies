@@ -3,8 +3,8 @@ Sick Of Clicking Dailies is a simple addon designed to pick up and turn in Daili
 
 This version comes with a built in config system made with Ace3's Config GUI Libs.
 
-@project-version@
-@project-abbreviated-hash@
+v6.6-release-3-g4730e56
+4730e56
 
 =====================================================================================================
  Copyright (c) 2010 by Orionshock
@@ -13,6 +13,7 @@ This version comes with a built in config system made with Ace3's Config GUI Lib
 
 =====================================================================================================
 ]]--
+
 local addonName, AddonNS = ...
 
 local projectVersion = "@project-version@"
@@ -22,13 +23,13 @@ if projectVersion:find("project") then
 	projectRevision = "dev"
 end
 
+
 _G[addonName] = LibStub("AceAddon-3.0"):NewAddon(AddonNS, addonName, "AceEvent-3.0", "AceConsole-3.0")
 AddonNS.version = projectVersion.."-"..projectRevision
 AddonNS.SpecialQuestResets = {}
 local L = LibStub("AceLocale-3.0"):GetLocale(addonName)
 local addon = AddonNS
 local db
-
 local function Debug(...)
 
 	local str = string.join(", ", tostringall(...) )
@@ -159,6 +160,21 @@ end
 function addon:OnInitialize()
 	self.db = LibStub("AceDB-3.0"):New("SOCD_SEVEN", db_defaults, true)
 	db = self.db
+for name, data in pairs(db.factionrealm) do
+		if name ~= "chars" then
+			for q, t in pairs(data) do
+			local points = string.match(q,"Honor Points (%d+)")
+			if points then addon.SpecialQuestResets["Honor Points " .. points] = "GetNextWGReset" end
+			points = string.match(q,"Conquest Points (%d+)")
+			if points then addon.SpecialQuestResets["Conquest Points " .. points] = "GetNextWGReset" end
+			points = string.match(q,"Justice Points (%d+)")
+			if points then addon.SpecialQuestResets["Justice Points " .. points] = "GetNextWGReset" end
+			points = string.match(q,"Valor Points (%d+)")
+			if points then addon.SpecialQuestResets["Valor Points " .. points] = "GetNextWGReset" end
+			end
+			end
+		end
+
 end
 
 function addon:OnEnable(event, addon)
@@ -171,8 +187,9 @@ function addon:OnEnable(event, addon)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	self:RegisterEvent("ZONE_CHANGED", "ZONE_CHANGED_NEW_AREA")
 	self:ZONE_CHANGED_NEW_AREA("OnEnable")
-
-	--Options & Slash command
+	self:RegisterEvent("CHAT_MSG_COMBAT_HONOR_GAIN","Honorevent")
+	self:RegisterEvent("CHAT_MSG_CURRENCY","Currencyevent")
+	--Options & Slash command 
 
 	local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 	LibStub("AceConfig-3.0"):RegisterOptionsTable(addonName, self.GetOptionsTable)
@@ -187,6 +204,7 @@ function addon:OnEnable(event, addon)
 			print("|cff9933FFSickOfClickingDailies|r --", L["Still Setting up localizations please wait"])
 		end
 	end)
+
 end
 
 --[[
@@ -374,25 +392,104 @@ end
 --}
 
 function addon:ZONE_CHANGED_NEW_AREA(event, ...)
-	local _, iType = GetInstanceInfo()
-	Debug(event, iType)
-	if iType == "none" then
-		Debug("not in instance")
-		for i = 1, GetNumRandomDungeons() do
-			local id, name = GetLFGRandomDungeonInfo(i)
-			local doneToday, goldReward = GetLFGDungeonRewards(id)
-			Debug(name, id, " - Done:", (goldReward ~= 0 ) and doneToday --[[, " - Ignore:", ignoreRLFD[id] ]] )
-			if (goldReward ~= 0 ) and doneToday then
---				if doneToday and not ignoreRLFD[id] then
-					addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", name )
---				end
-			end
-		end
-	else
-		Debug("in broken area, don't scan random dungeosn")
-	end
 end
 
+function addon:Honorevent(event, arga)
+	local honorgained = string.match(arga,"You have been awarded (%d+)%.00 honor points%.")
+	if honorgained then
+	honorgained = tonumber(honorgained)
+	local hasRandomBGWin,HolidayHonorAmount = GetRandomBGHonorCurrencyBonuses()
+	if hasRandomBGWin then
+	HolidayHonorAmount = HolidayHonorAmount * 2
+	end
+	--DEFAULT_CHAT_FRAME:AddMessage("B x " .. arga .. " x " ..honorgained .. " x " .. HolidayHonorAmount)
+	if honorgained == HolidayHonorAmount then
+	addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", "Battleground Victory" )
+	--DEFAULT_CHAT_FRAME:AddMessage("DebugD")
+	end
+	end
+end
+function addon:Currencyevent(event, arga)
+local points = nil
+local pointstotal = nil
+
+points = string.match(arga,"You receive currency: |.+|Hcurrency:.+%[Honor Points%].+x(%d+)%.")
+pointstotal
+if points then 
+--DEFAULT_CHAT_FRAME:AddMessage("E x Honor" ..points) 
+for k, v in pairs(db.char.questsCompleted) do
+	pointstotal = string.match(k,"Honor Points (%d+)")
+		if pointstotal then	
+			db.char.questsCompleted[k] = nil 
+			db.factionrealm[UnitName("player")][k] = nil
+			pointstotal = pointstotal + points
+			break
+		end
+end
+if not pointstotal then pointstotal = points end
+addon.SpecialQuestResets["Honor Points " .. pointstotal] = "GetNextWGReset"
+addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", "Honor Points "..pointstotal )    -- Comment out this line to stop Honor counting
+end
+
+points = string.match(arga,"You receive currency: |.+|Hcurrency:.+%[Conquest Points%].+x(%d+)%.")
+
+if points then 
+--DEFAULT_CHAT_FRAME:AddMessage("E x Conquest" ..points) 
+pointstotal = nil
+for k, v in pairs(db.char.questsCompleted) do
+	pointstotal = string.match(k,"Conquest Points (%d+)")
+		if pointstotal then	
+			db.char.questsCompleted[k] = nil 
+			db.factionrealm[UnitName("player")][k] = nil
+			pointstotal = pointstotal + points
+			break
+		end
+end
+if not pointstotal then pointstotal = points end
+addon.SpecialQuestResets["Conquest Points " .. pointstotal] = "GetNextWGReset"
+addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", "Conquest Points "..pointstotal )  -- Comment out this line to stop Conquest counting
+end
+
+points = string.match(arga,"You receive currency: |.+|Hcurrency:.+%[Justice Points%].+x(%d+)%.")
+
+if points then 
+--DEFAULT_CHAT_FRAME:AddMessage("E x Justice" ..points) 
+pointstotal = nil
+for k, v in pairs(db.char.questsCompleted) do
+	pointstotal = string.match(k,"Justice Points (%d+)")
+		if pointstotal then	
+			db.char.questsCompleted[k] = nil 
+			db.factionrealm[UnitName("player")][k] = nil
+			pointstotal = pointstotal + points
+			break
+		end
+end
+if not pointstotal then pointstotal = points end
+addon.SpecialQuestResets["Justice Points " .. pointstotal] = "GetNextWGReset"
+addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", "Justice Points "..pointstotal ) -- Comment out this line to stop Justice counting
+end
+
+points = string.match(arga,"You receive currency: |.+|Hcurrency:.+%[Valor Points%].+x(%d+)%.")
+if points then 
+--DEFAULT_CHAT_FRAME:AddMessage("E x Valor" ..points) 
+pointstotal = nil
+for k, v in pairs(db.char.questsCompleted) do
+	pointstotal = string.match(k,"Valor Points (%d+)")
+		if pointstotal then	
+			db.char.questsCompleted[k] = nil 
+			db.factionrealm[UnitName("player")][k] = nil
+			pointstotal = pointstotal + points
+			break
+		end
+end
+if not pointstotal then pointstotal = points end
+addon.SpecialQuestResets["Valor Points " .. pointstotal] = "GetNextWGReset"
+addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", "Valor Points "..pointstotal )  -- Comment out this line to stop Valor counting
+end
+
+--local printable = gsub(arga, "\124", "\124\124");
+--DEFAULT_CHAT_FRAME:AddMessage("Q x " .. printable)
+end
 --[[
 	General Support Functions
 ]]--

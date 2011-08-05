@@ -14,7 +14,6 @@ local LibQTip
 local unsortedPlayers, sortedPlayerList, sortedQuestList, totalQuests = {}, {}, {}, {}
 local classColorTable = RAID_CLASS_COLORS
 local specialQuests = AddonParent.SpecialQuestResets
-
 function module:OnInitialize()
 	LibQTip = LibStub('LibQTip-1.0', true)
 
@@ -79,6 +78,7 @@ local function default_Sort(a,b)
 end
 
 function module:UpdateAllQuests()
+	wipe(totalQuests)
 	for toon, qTable in pairs(db) do
 		if toon ~= "chars" then
 			unsortedPlayers[toon] = true
@@ -133,12 +133,13 @@ end
    
 function module:populateTooltip(tip)
 	self:UpdateAllQuests()
+	tip:SetCellMarginV(2)
+	tip:SetCellMarginH(2)
 	tip:SetColumnLayout(#sortedPlayerList + 1)
 	tip:AddHeader(L["Dailies for all Characters"])
 	local yOffset, xOffset = tip:AddLine()
 	tip:SetCell(yOffset, xOffset, " ")
 	tip:SetCellScript(yOffset, xOffset, "OnMouseDown", TipOnClick, "default view" )
-
 	for i = 1, #sortedPlayerList do
 		--print("Add", sortedPlayerList[i], "row", yOffset, "col", xOffset+i )
 		local class = db.chars[ sortedPlayerList[i] ]
