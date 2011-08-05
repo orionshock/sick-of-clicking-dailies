@@ -414,7 +414,6 @@ local points = nil
 local pointstotal = nil
 
 points = string.match(arga,"You receive currency: |.+|Hcurrency:.+%[Honor Points%].+x(%d+)%.")
-pointstotal
 if points then 
 --DEFAULT_CHAT_FRAME:AddMessage("E x Honor" ..points) 
 for k, v in pairs(db.char.questsCompleted) do
