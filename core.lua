@@ -3,8 +3,8 @@ Sick Of Clicking Dailies is a simple addon designed to pick up and turn in Daili
 
 This version comes with a built in config system made with Ace3's Config GUI Libs.
 
-v6.6-release-3-g4730e56
-4730e56
+@project-version@
+@project-abbreviated-hash@
 
 =====================================================================================================
  Copyright (c) 2010 by Orionshock
@@ -187,8 +187,6 @@ function addon:OnEnable(event, addon)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	self:RegisterEvent("ZONE_CHANGED", "ZONE_CHANGED_NEW_AREA")
 	self:ZONE_CHANGED_NEW_AREA("OnEnable")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HONOR_GAIN","Honorevent")
-	self:RegisterEvent("CHAT_MSG_CURRENCY","Currencyevent")
 	--Options & Slash command 
 
 	local AceConfigDialog = LibStub("AceConfigDialog-3.0")
@@ -394,101 +392,7 @@ end
 function addon:ZONE_CHANGED_NEW_AREA(event, ...)
 end
 
-function addon:Honorevent(event, arga)
-	local honorgained = string.match(arga,"You have been awarded (%d+)%.00 honor points%.")
-	if honorgained then
-	honorgained = tonumber(honorgained)
-	local hasRandomBGWin,HolidayHonorAmount = GetRandomBGHonorCurrencyBonuses()
-	if hasRandomBGWin then
-	HolidayHonorAmount = HolidayHonorAmount * 2
-	end
-	--DEFAULT_CHAT_FRAME:AddMessage("B x " .. arga .. " x " ..honorgained .. " x " .. HolidayHonorAmount)
-	if honorgained == HolidayHonorAmount then
-	addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", "Battleground Victory" )
-	--DEFAULT_CHAT_FRAME:AddMessage("DebugD")
-	end
-	end
-end
-function addon:Currencyevent(event, arga)
-local points = nil
-local pointstotal = nil
 
-points = string.match(arga,"You receive currency: |.+|Hcurrency:.+%[Honor Points%].+x(%d+)%.")
-if points then 
---DEFAULT_CHAT_FRAME:AddMessage("E x Honor" ..points) 
-for k, v in pairs(db.char.questsCompleted) do
-	pointstotal = string.match(k,"Honor Points (%d+)")
-		if pointstotal then	
-			db.char.questsCompleted[k] = nil 
-			db.factionrealm[UnitName("player")][k] = nil
-			pointstotal = pointstotal + points
-			break
-		end
-end
-if not pointstotal then pointstotal = points end
-addon.SpecialQuestResets["Honor Points " .. pointstotal] = "GetNextWGReset"
-addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", "Honor Points "..pointstotal )    -- Comment out this line to stop Honor counting
-end
-
-points = string.match(arga,"You receive currency: |.+|Hcurrency:.+%[Conquest Points%].+x(%d+)%.")
-
-if points then 
---DEFAULT_CHAT_FRAME:AddMessage("E x Conquest" ..points) 
-pointstotal = nil
-for k, v in pairs(db.char.questsCompleted) do
-	pointstotal = string.match(k,"Conquest Points (%d+)")
-		if pointstotal then	
-			db.char.questsCompleted[k] = nil 
-			db.factionrealm[UnitName("player")][k] = nil
-			pointstotal = pointstotal + points
-			break
-		end
-end
-if not pointstotal then pointstotal = points end
-addon.SpecialQuestResets["Conquest Points " .. pointstotal] = "GetNextWGReset"
-addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", "Conquest Points "..pointstotal )  -- Comment out this line to stop Conquest counting
-end
-
-points = string.match(arga,"You receive currency: |.+|Hcurrency:.+%[Justice Points%].+x(%d+)%.")
-
-if points then 
---DEFAULT_CHAT_FRAME:AddMessage("E x Justice" ..points) 
-pointstotal = nil
-for k, v in pairs(db.char.questsCompleted) do
-	pointstotal = string.match(k,"Justice Points (%d+)")
-		if pointstotal then	
-			db.char.questsCompleted[k] = nil 
-			db.factionrealm[UnitName("player")][k] = nil
-			pointstotal = pointstotal + points
-			break
-		end
-end
-if not pointstotal then pointstotal = points end
-addon.SpecialQuestResets["Justice Points " .. pointstotal] = "GetNextWGReset"
-addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", "Justice Points "..pointstotal ) -- Comment out this line to stop Justice counting
-end
-
-points = string.match(arga,"You receive currency: |.+|Hcurrency:.+%[Valor Points%].+x(%d+)%.")
-if points then 
---DEFAULT_CHAT_FRAME:AddMessage("E x Valor" ..points) 
-pointstotal = nil
-for k, v in pairs(db.char.questsCompleted) do
-	pointstotal = string.match(k,"Valor Points (%d+)")
-		if pointstotal then	
-			db.char.questsCompleted[k] = nil 
-			db.factionrealm[UnitName("player")][k] = nil
-			pointstotal = pointstotal + points
-			break
-		end
-end
-if not pointstotal then pointstotal = points end
-addon.SpecialQuestResets["Valor Points " .. pointstotal] = "GetNextWGReset"
-addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", "Valor Points "..pointstotal )  -- Comment out this line to stop Valor counting
-end
-
---local printable = gsub(arga, "\124", "\124\124");
---DEFAULT_CHAT_FRAME:AddMessage("Q x " .. printable)
-end
 --[[
 	General Support Functions
 ]]--
