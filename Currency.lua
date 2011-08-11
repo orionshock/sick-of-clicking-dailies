@@ -131,7 +131,7 @@ if db.profile.QuestStatus["Honor Point Tracking"] then
 points = string.match(arga,"You receive currency: |.+|Hcurrency:.+%[Honor Points%].+x(%d+)%.")
 end
 if points then 
-DEFAULT_CHAT_FRAME:AddMessage("E x Honor" ..points) 
+--DEFAULT_CHAT_FRAME:AddMessage("E x Honor" ..points) 
 for k, v in pairs(db.char.questsCompleted) do
 	pointstotal = string.match(k,"Honor Points (%d+)")
 		if pointstotal then	

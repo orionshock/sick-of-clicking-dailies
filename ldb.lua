@@ -254,10 +254,10 @@ do		-- === Wintergrasp Reset Function ===
 		for k, _ in pairs(diff) do diff[k] = nil end
 		local earlymorning =  math.floor((bit.mod(GetQuestResetTime(),86400))/3600)
 		
-		DEFAULT_CHAT_FRAME:AddMessage("Debug: Dailies Time: " ..earlymorning .. " " .. date("%H")) 
-		DEFAULT_CHAT_FRAME:AddMessage("Debug3: " ..SecondsToTime(GetQuestResetTime()))
+		--DEFAULT_CHAT_FRAME:AddMessage("Debug: Dailies Time: " ..earlymorning .. " " .. date("%H")) 
+		--DEFAULT_CHAT_FRAME:AddMessage("Debug3: " ..SecondsToTime(GetQuestResetTime()))
 		if earlymorning < 12 and tonumber(date("%H")) < 12 then cur_day = cur_day - 1 
-		DEFAULT_CHAT_FRAME:AddMessage("DebuAg:") 
+		--DEFAULT_CHAT_FRAME:AddMessage("DebuAg:") 
 		end
 		local monthNumDay = select(3, CalendarGetMonth(0))
 		local newDay = cur_day + diff_to_next_wg_reset[cur_wDay]
