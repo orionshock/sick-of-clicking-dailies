@@ -35,7 +35,7 @@ local function Debug(...)
 	str = str:gsub("([:=>]),", "%1")
 	str = str:gsub(", ([%-])", " %1")
 	ChatFrame5:AddMessage("SOCD-Debug: "..str)
---	return str
+	return str
 end
 
 addon.db_defaults = {
@@ -204,5 +204,23 @@ function addon:QUEST_COMPLETE(event, ...)
 	if self:IsDisabled(title) then return end
 	if QuestIsDaily() or QuestIsWeekly() or self:IsRepeatable(title) then
 		Debug("Quest Enabled & Daily/Weekly/Repeatable")
+		local rewardOpt = self:IsSpecialQuest(name)
+			--Has quest option but we don't have a selection, means that this is a new quest that isn't in the DB.
+		if (GetQuestItemInfo("choice", 1) ~= "") and (not rewardOpt) then
+			print(Debug("Sick Of Clicking Dailies: Found a new Quest:", title, " It has reward choices but is not yet added to the addon. Please report it at www.wowace.com"))
+			return
+		end
+		if (rewardOpt and (rewardOpt == -1)) then
+			Debug(event, "Reward opt is -1, do nothing")
+			return
+		elseif rewardOpt then
+			Debug(event, "Getting Reward:", (GetQuestItemInfo("choice", rewardOpt)) )
+			--GetQuestReward( rewardOpt )
+			return
+		end
+		Debug(event, "Getting Money!")
+		--GetQuestReward(0)
+		return
+		
 	end
 end

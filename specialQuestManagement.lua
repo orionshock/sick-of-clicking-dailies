@@ -58,7 +58,7 @@ addon.db_defaults.global.reward = {	--DB Globals for reward list
 }
 
 function addon:IsSpecialQuest(name)
-	if reward[name] then
+	if self.db.profile.reward[name] then
 		return db.profile.reward[name] or -1
 	end
 end
