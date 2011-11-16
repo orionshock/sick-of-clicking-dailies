@@ -38,9 +38,14 @@ local function Debug(...)
 --	return str
 end
 
+local db_defaults = {
+	global = {
+		questCache = {}
+	}
+}
 
 function addon:OnInitialize()
-	self.db = LibStub("AceDB-3.0"):New("SOCD_DB", {}, true)
+	self.db = LibStub("AceDB-3.0"):New("SOCD_DB", db_defaults, true)
 	db = self.db
 
 end
@@ -73,10 +78,27 @@ function addon:OnEnable(event, addon)
 
 end
 
+function addon:CacheQuestName(name, isDaily, isWeekly)
+	Debug("Caching QuestName", name, (isDaily and "d") or (isWeekly and "w"))
+	db.global.questCache[name] = (isDaily and "d") or (isWeekly and "w")
+end
+function addon:IsDailyQuest(name)
+	return db.global.questCache[name] == "d"
+end
+function addon:IsWeeklyQuest(name)
+	return db.global.questCache[name] == "w"
+end
+
+function addon:IsDisabled(title)
+	return false
+end
+
+
 --Shown when the NPC wants to talk..
 local function procGetGossipAvailableQuests(index, title, _, _, isDaily, isRepeatable, ...)
-	Debug("procGetGossipAvailableQuests", title, " ~IsDaily: ", isDaily and "true" or "false", "~IsRepeatable: ", isRepeatable and "true" or "false")
-	if index and title and (isDaily or isRepeatable) then
+	Debug("IttGossipAvail:", title, " ~IsDaily: ", isDaily and "true" or "false", "~IsRepeatable: ", isRepeatable and "true" or "false")
+	if (index and title) and (isDaily or isRepeatable) then
+		addon:CacheQuestName(title, isDaily)	--Only Cache Daily and Weekly Quests, this list will help with the LDB Tracker to filter out Repeatable Quests.
 		if not addon:IsDisabled(title) then
 			Debug("found:", title)
 			return index, title
@@ -92,8 +114,9 @@ end
 
 
 local function procGetGossipActiveQuests(index, title, _, _, isComplete, ...)
-	if  addon:IsQuest(title) and isComplete then
-		return index, title
+	Debug("IttGossipActive:", index, title, "~IsComplete:", isComplete, "~IsDaily:", addon:IsDailyQuest(title) or addon:IsWeeklyQuest(title))
+	if (addon:IsDailyQuest(title) or addon:IsWeeklyQuest(title)) and isComplete then
+		return index, title, isComplete
 	elseif ... then
 		return procGetGossipActiveQuests(index+1, ...)
 	end
@@ -120,11 +143,11 @@ function addon:GOSSIP_SHOW(event)
 		return SelectGossipAvailableQuest(index)
 	end
 
---	local index, title = procGetGossipActiveQuests(1, GetGossipActiveQuests() )
---	if index then
-		--Debug("Found Active Quest that is Complete:", title, "~IsComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
---		return SelectGossipActiveQuest(index)
---	end
+	local index, title, isComplete = procGetGossipActiveQuests(1, GetGossipActiveQuests() )
+	if index then
+		Debug("Found Active Quest that is Complete:", title, "~IsComplete:", isComplete, "~IsDisabled:", self:IsDisabled(title) )
+		return SelectGossipActiveQuest(index)
+	end
 
 	--Debug("Proccessing Gossip ")
 --	proccessGossipOptions( GetGossipOptions() )
@@ -165,8 +188,4 @@ end
 function addon:QUEST_COMPLETE(event, ...)
 	Debug(event,...)
 	if IsShiftKeyDown() then return end
-end
-
-function addon:IsDisabled(title)
-	return false
 end
