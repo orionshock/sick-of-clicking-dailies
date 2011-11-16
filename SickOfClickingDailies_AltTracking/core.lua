@@ -182,7 +182,8 @@ local function OnEnter(self)
 	if LibQTipTooltip and LibQTipTooltip:IsShown() then
 		return
 	end
-	local tooltip = LibQTip:Acquire("SOCD_ALT", #sortedPlayerList+1)
+	local tooltip = LibQTip and LibQTip:Acquire("SOCD_ALT", #sortedPlayerList+1)
+	if not tooltip then return end
 	LibQTipTooltip = tooltip
 	module:populateTooltip(tooltip)
 	tooltip:SmartAnchorTo(self)
