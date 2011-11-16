@@ -99,8 +99,19 @@ local function procGetGossipActiveQuests(index, title, _, _, isComplete, ...)
 	end
 end
 
+--local function proccessGossipOptions( ... )
+--	for i = 1, select("#", ...), 2 do
+--		local txt, tpe = select(i, ...)
+--		if tpe == "gossip" then
+--			if db.profile.GossipAutoSelect[txt] then
+--				SelectGossipOption( i+1/2 )
+--			end
+--		end
+--	end
+--end
+
 function addon:GOSSIP_SHOW(event)
-	--Debug(event)
+	Debug(event)
 	if IsShiftKeyDown() then return end
 
 	local index, title = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
@@ -114,19 +125,9 @@ function addon:GOSSIP_SHOW(event)
 		--Debug("Found Active Quest that is Complete:", title, "~IsComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
 --		return SelectGossipActiveQuest(index)
 --	end
-	--Debug("Proccessing Gossip ")
---	self:ProccessGossipOptions( GetGossipOptions() )
-end
 
-function addon:ProccessGossipOptions( ... )
-	for i = 1, select("#", ...), 2 do
-		local txt, tpe = select(i, ...)
-		if tpe == "gossip" then
-			if db.profile.GossipAutoSelect[txt] then
-				SelectGossipOption( i+1/2 )
-			end
-		end
-	end
+	--Debug("Proccessing Gossip ")
+--	proccessGossipOptions( GetGossipOptions() )
 end
 
 --Shown when the NPC Dosn't want to talk
@@ -135,10 +136,23 @@ function addon:QUEST_GREETING(event, ...)
 	if IsShiftKeyDown() then return end
 end
 
+
+
 --Shown to Accept Quest
 function addon:QUEST_DETAIL(event, ...)
-	Debug(event,...)
+	local title = GetTitleText()
+	Debug(event, title, ...)
 	if IsShiftKeyDown() then return end
+	Debug(event, title, "~IsDaily:", QuestIsDaily() and "true" or "false", "~QuestIsWeekly:", QuestIsWeekly() and "true" or "false")
+	if QuestIsDaily() or QuestIsWeekly() then
+		if self:IsDisabled(title) then
+			Debug("Ignoring Quest")
+			return
+		else
+			Debug("Accepting Quest:", title)
+			return AcceptQuest()
+		end
+	end
 end
 
 --Shown when Quest is being turned in
