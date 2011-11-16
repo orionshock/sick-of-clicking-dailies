@@ -38,14 +38,14 @@ local function Debug(...)
 --	return str
 end
 
-local db_defaults = {
+addon.db_defaults = {
 	global = {
 		questCache = {}
 	}
 }
 
 function addon:OnInitialize()
-	self.db = LibStub("AceDB-3.0"):New("SOCD_DB", db_defaults, true)
+	self.db = LibStub("AceDB-3.0"):New("SOCD_DB", addon.db_defaults, true)
 	db = self.db
 
 end

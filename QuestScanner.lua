@@ -17,6 +17,14 @@ local module = AddonParent:NewModule("QuestScanner", "AceEvent-3.0")
 local localeQuestNameByID
 local db
 
+function module:Debug(...)
+	local str = string.join(", ", tostringall(...) )
+	str = str:gsub("([:=>]),", "%1")
+	str = str:gsub(", ([%-])", " %1")
+	ChatFrame5:AddMessage("SOCD-Debug: "..str)
+--	return str
+end
+
 function module:OnInitialize()
 		--Addon's Main OnEnable does the version check and starts it if needed
 		--However, we want to set the db up here just in case.
@@ -24,10 +32,6 @@ function module:OnInitialize()
 	localeQuestNameByID = AddonParent.db.global.localeQuestNameByID
 end
 
---function module:OnEnable()
---	self:Debug("OnEnable, starting Scan")
---	return self:StartScan()
---end
 function module:OnEnable()
 	if AddonParent.db.global.currentRev ~= lastChanged then
 		return self:StartQuestScan()
@@ -36,6 +40,7 @@ function module:OnEnable()
 		AddonParent.QuestNameScanned = true
 	end
 end
+
 local daily, weekly, repeatable = "D", "W", "R"
 local qTable = {
 	[4970] = repeatable,	--"Frostsaber Provisions", --C

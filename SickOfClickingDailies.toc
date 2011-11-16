@@ -56,7 +56,8 @@ embeds.xml
 
 
 core7.lua
-#QuestScanner.lua
+QuestScanner.lua
+specialQuestManagement.lua
 #options.lua
 #ldb.lua
 #Classic.lua
