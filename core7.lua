@@ -78,15 +78,27 @@ function addon:OnEnable(event, addon)
 
 end
 
-function addon:CacheQuestName(name, isDaily, isWeekly)
-	Debug("Caching QuestName", name, (isDaily and "d") or (isWeekly and "w"))
-	db.global.questCache[name] = (isDaily and "d") or (isWeekly and "w")
+function addon:CacheQuestName(name, isDaily, isWeekly, isRepeatable)
+	Debug("Caching QuestName", name, (isDaily and "d") or (isWeekly and "w") or (isRepeatable and "r") )
+	if isDaily then
+		db.global.questCache[name] = "d"
+	elseif isWeekly then
+		db.global.questCache[name] = "w"
+	elseif isRepeatable then
+		db.global.questCache[name] = "r"
+	end
 end
 function addon:IsDailyQuest(name)
+	Debug("API: IsDailyQuest:", name, db.global.questCache[name] == "d")
 	return db.global.questCache[name] == "d"
 end
 function addon:IsWeeklyQuest(name)
+	Debug("API: IsWeeklyQuest:", name, db.global.questCache[name] == "w")
 	return db.global.questCache[name] == "w"
+end
+function addon:IsRepeatable(name)
+	Debug("API: IsRepeatable:", name, db.global.questCache[name] == "r")
+	return db.global.questCache[name] == "r"
 end
 
 function addon:IsDisabled(title)
@@ -98,7 +110,7 @@ end
 local function procGetGossipAvailableQuests(index, title, _, _, isDaily, isRepeatable, ...)
 	Debug("IttGossipAvail:", title, " ~IsDaily: ", isDaily and "true" or "false", "~IsRepeatable: ", isRepeatable and "true" or "false")
 	if (index and title) and (isDaily or isRepeatable) then
-		addon:CacheQuestName(title, isDaily)	--Only Cache Daily and Weekly Quests, this list will help with the LDB Tracker to filter out Repeatable Quests.
+		addon:CacheQuestName(title, isDaily, nil, isRepeatable)	--Only Cache Daily and Weekly Quests, this list will help with the LDB Tracker to filter out Repeatable Quests.
 		if not addon:IsDisabled(title) then
 			Debug("found:", title)
 			return index, title
@@ -166,8 +178,8 @@ function addon:QUEST_DETAIL(event, ...)
 	local title = GetTitleText()
 	Debug(event, title, ...)
 	if IsShiftKeyDown() then return end
-	Debug(event, title, "~IsDaily:", QuestIsDaily() and "true" or "false", "~QuestIsWeekly:", QuestIsWeekly() and "true" or "false")
-	if QuestIsDaily() or QuestIsWeekly() then
+	Debug(event, title, "~IsDaily:", QuestIsDaily() and "true" or "false", "~QuestIsWeekly:", QuestIsWeekly() and "true" or "false", "~IsRepeatable:", addon:IsRepeatable(title) and "true" or "false" )
+	if QuestIsDaily() or QuestIsWeekly() or addon:IsRepeatable(title) then
 		if self:IsDisabled(title) then
 			Debug("Ignoring Quest")
 			return
@@ -188,4 +200,9 @@ end
 function addon:QUEST_COMPLETE(event, ...)
 	Debug(event,...)
 	if IsShiftKeyDown() then return end
+	local title = GetTitleText()
+	if self:IsDisabled(title) then return end
+	if QuestIsDaily() or QuestIsWeekly() or self:IsRepeatable(title) then
+		Debug("Quest Enabled & Daily/Weekly/Repeatable")
+	end
 end
