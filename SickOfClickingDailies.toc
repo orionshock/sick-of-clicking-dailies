@@ -34,7 +34,7 @@
 ## Credits: Sinxia/kunda (deDE Translation), Cinedelle (frFR Translation), Crafty/Vyacheslav (ruRU Translation)
 ## Version: @project-version@
 ## X-Email: Orionshock@gmail.com
-## SavedVariables: SOCD_SEVEN
+## SavedVariables: SOCD_DB
 ## OptionalDeps: Ace3, LibQTip-1.0
 ## X-Embeds: Ace3
 
@@ -55,16 +55,16 @@ embeds.xml
 localizations\localization.xml
 
 
-core.lua
-QuestScanner.lua
-options.lua
-ldb.lua
-Classic.lua
-BC.lua
-wotlk.lua
-Cata.lua
-Currency.lua
+#core.lua
+#QuestScanner.lua
+#options.lua
+#ldb.lua
+#Classic.lua
+#BC.lua
+#wotlk.lua
+#Cata.lua
+#Currency.lua
 
 #@debug@
-SickOfClickingDailies_AltTracking\core.lua
+#SickOfClickingDailies_AltTracking\core.lua
 #@end-debug@
