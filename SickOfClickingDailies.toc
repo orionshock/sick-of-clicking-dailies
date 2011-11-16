@@ -52,10 +52,10 @@ libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 embeds.xml
 #@end-no-lib-strip@
 
-localizations\localization.xml
+#localizations\localization.xml
 
 
-#core.lua
+core7.lua
 #QuestScanner.lua
 #options.lua
 #ldb.lua

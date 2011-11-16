@@ -24,20 +24,18 @@ if projectVersion:find("project") then
 end
 
 
-LibStub("AceAddon-3.0"):NewAddon(addon, addonName, "AceEvent-3.0", "AceConsole-3.0")
+SOCD = LibStub("AceAddon-3.0"):NewAddon(addon, addonName, "AceEvent-3.0", "AceConsole-3.0")
 addon.version = projectVersion.."-"..projectRevision
 
 local db
-local L = LibStub("AceLocale-3.0"):GetLocale(addonName)
+--local L = LibStub("AceLocale-3.0"):GetLocale(addonName)
 
 local function Debug(...)
 	local str = string.join(", ", tostringall(...) )
 	str = str:gsub("([:=>]),", "%1")
 	str = str:gsub(", ([%-])", " %1")
-	if db and db.global.debug.core then
-		print("SOCD-Debug-Core: ", str)
-	end
-	return str
+	ChatFrame5:AddMessage("SOCD-Debug: "..str)
+--	return str
 end
 
 
@@ -75,18 +73,86 @@ function addon:OnEnable(event, addon)
 
 end
 
-
-function addon:GOSSIP_SHOW(event, ...)
+--Shown when the NPC wants to talk..
+local function procGetGossipAvailableQuests(index, title, _, _, isDaily, isRepeatable, ...)
+	Debug("procGetGossipAvailableQuests", title, " ~IsDaily: ", isDaily and "true" or "false", "~IsRepeatable: ", isRepeatable and "true" or "false")
+	if index and title and (isDaily or isRepeatable) then
+		if not addon:IsDisabled(title) then
+			Debug("found:", title)
+			return index, title
+		elseif ... then
+			Debug("indexing next quest")
+			return procGetGossipAvailableQuests(index + 1, ...)
+		else
+			Debug("End of Quests")
+			return
+		end
+	end
 end
 
+
+local function procGetGossipActiveQuests(index, title, _, _, isComplete, ...)
+	if  addon:IsQuest(title) and isComplete then
+		return index, title
+	elseif ... then
+		return procGetGossipActiveQuests(index+1, ...)
+	end
+end
+
+function addon:GOSSIP_SHOW(event)
+	--Debug(event)
+	if IsShiftKeyDown() then return end
+
+	local index, title = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
+	if index then
+		Debug("Found Available, Quest:", title, "~IsDisabled:", self:IsDisabled(title) )
+		return SelectGossipAvailableQuest(index)
+	end
+
+--	local index, title = procGetGossipActiveQuests(1, GetGossipActiveQuests() )
+--	if index then
+		--Debug("Found Active Quest that is Complete:", title, "~IsComplete:", isComplete, "~ShouldIgnore:", self:ShouldIgnoreQuest(title) )
+--		return SelectGossipActiveQuest(index)
+--	end
+	--Debug("Proccessing Gossip ")
+--	self:ProccessGossipOptions( GetGossipOptions() )
+end
+
+function addon:ProccessGossipOptions( ... )
+	for i = 1, select("#", ...), 2 do
+		local txt, tpe = select(i, ...)
+		if tpe == "gossip" then
+			if db.profile.GossipAutoSelect[txt] then
+				SelectGossipOption( i+1/2 )
+			end
+		end
+	end
+end
+
+--Shown when the NPC Dosn't want to talk
 function addon:QUEST_GREETING(event, ...)
+	Debug(event,...)
+	if IsShiftKeyDown() then return end
 end
 
+--Shown to Accept Quest
 function addon:QUEST_DETAIL(event, ...)
+	Debug(event,...)
+	if IsShiftKeyDown() then return end
 end
 
+--Shown when Quest is being turned in
 function addon:QUEST_PROGRESS(event, ...)
+	Debug(event,...)
+	if IsShiftKeyDown() then return end
 end
 
+--Shown when Selecting reqward for quest.
 function addon:QUEST_COMPLETE(event, ...)
+	Debug(event,...)
+	if IsShiftKeyDown() then return end
+end
+
+function addon:IsDisabled(title)
+	return false
 end
