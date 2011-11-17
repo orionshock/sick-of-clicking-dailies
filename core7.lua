@@ -48,11 +48,12 @@ addon.db_defaults = {
 
 function addon:OnInitialize()
 	self.db = LibStub("AceDB-3.0"):New("SOCD_DB", addon.db_defaults, true)
-	db = self.db
-	db.global.currentRev = nil
+	self:SetEnabledState(false)
 end
 
 function addon:OnEnable(event, addon)
+	db = self.db
+	db.global.currentRev = nil
 	--Events
 	self:RegisterEvent("GOSSIP_SHOW")
 	self:RegisterEvent("QUEST_GREETING")

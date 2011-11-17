@@ -13,27 +13,33 @@ end
 local lastChanged = "@file-date-integer@"
 
 local AddonName, AddonParent = ...
-local module = AddonParent:NewModule("QuestScanner", "AceEvent-3.0")
+local module = CreateFrame("frame")
+module:SetScript("OnEvent", function(self, event, ...)
+	if IsLoggedIn() then
+		self:UnregisterEvent("PLAYER_LOGIN")
+		self:UnregisterEvent("ADDON_LOADED")
+		self:PLAYER_LOGIN("Good Morning!")
+	end
+end)
+module:RegisterEvent("PLAYER_LOGIN")
+module:RegisterEvent("ADDON_LOADED")
+
 local localeQuestNameByID
-local db
+
 
 function module:Debug(...)
 	local str = string.join(", ", tostringall(...) )
 	str = str:gsub("([:=>]),", "%1")
 	str = str:gsub(", ([%-])", " %1")
-	ChatFrame5:AddMessage("SOCD-Debug: "..str)
+	ChatFrame5:AddMessage("SOCD-QS: "..str)
 --	return str
 end
 
-function module:OnInitialize()
-		--Addon's Main OnEnable does the version check and starts it if needed
-		--However, we want to set the db up here just in case.
-	db = AddonParent.db.global
-	localeQuestNameByID = AddonParent.db.global.localeQuestNameByID
-end
-
-function module:OnEnable()
-	if AddonParent.db.global.currentRev ~= lastChanged then
+function module:PLAYER_LOGIN(event,...)
+	self:Debug(event)
+	LocalizedQuestDictionary = LocalizedQuestDictionary or {}	--Prime the Global Varg
+	localeQuestNameByID = LocalizedQuestDictionary	--Make global Varg local...
+	if LocalizedQuestVersion ~= lastChanged then	--check version
 		return self:StartQuestScan()
 	else
 		AddonParent:SendMessage("SOCD_QuestByID_Ready")
@@ -364,9 +370,6 @@ do
 		if tt.dba then
 			tt.dba[ tonumber(self.k) ] = questTitleText
 		end
-		if tt.dbb then
-			tt.dbb[questTitleText] = tt.v
-		end
 
 		self.count = self.count + 1
 
@@ -414,8 +417,7 @@ function module:StartQuestScan()
 	tt.t = qTable
 	tt.k = id
 	tt.v = qtype
-	tt.dba = db.localeQuestNameByID
-	tt.dbb = db.QuestNameCache
+	tt.dba = localeQuestNameByID
 	tt.count = 0
 	tt.prefix = "quest:"
 	tt.NextScanFunc = "StartItemScan"
@@ -429,7 +431,6 @@ function module:StartItemScan()
 	tt.k = id
 	tt.v = qtype
 	tt.dba = nil
-	tt.dbb = nil
 	tt.count = 0
 	tt.prefix = "item:"
 	tt.NextScanFunc = nil

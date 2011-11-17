@@ -50,8 +50,8 @@ local function load()
 	--=== Multi-Quest Reward Tables===--
 		--== Classic ==--
 		--== Burrning Crusade ==--
-		local bc_cookingRewards = { [-1] = NONE, (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate Of Meat" ) }
-		local ssoRewards = { [-1] = NONE, (GetItemInfo(30809)) or "Aldor Mark", (GetItemInfo(30810)) or "Scryer Mark") }
+		local bc_cookingRewards = { [-1] = NONE, (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate Of Meat" }
+		local ssoRewards = { [-1] = NONE, (GetItemInfo(30809)) or "Aldor Mark", (GetItemInfo(30810)) or "Scryer Mark" }
 		--== Wrath Of the Lich King ==--
 		local champQuestRewardOpts = { [-1] = NONE, (GetItemInfo(46114)) or "Champion's Writ", (GetItemInfo(45724)) or "Champion's Purse" }
 		local thxgivingRewardOpts = { [-1] = NONE, GetItemInfo(46723) or "Pilgrim's Hat", GetItemInfo(46800) or "Pilgrim's Attire",GetItemInfo(44785) or "Pilgrim's Dress",

@@ -34,7 +34,7 @@
 ## Credits: Sinxia/kunda (deDE Translation), Cinedelle (frFR Translation), Crafty/Vyacheslav (ruRU Translation)
 ## Version: @project-version@
 ## X-Email: Orionshock@gmail.com
-## SavedVariables: SOCD_DB
+## SavedVariables: SOCD_DB, LocalizedQuestDictionary, LocalizedQuestVersion
 ## OptionalDeps: Ace3, LibQTip-1.0
 ## X-Embeds: Ace3
 
