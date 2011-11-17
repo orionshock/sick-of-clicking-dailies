@@ -39,15 +39,17 @@ local function Debug(...)
 end
 
 addon.db_defaults = {
+	profile = {},
 	global = {
-		questCache = {}
+		questCache = {},
+		localeQuestNameByID = {},
 	}
 }
 
 function addon:OnInitialize()
 	self.db = LibStub("AceDB-3.0"):New("SOCD_DB", addon.db_defaults, true)
 	db = self.db
-
+	db.global.currentRev = nil
 end
 
 function addon:OnEnable(event, addon)

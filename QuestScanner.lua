@@ -352,12 +352,14 @@ local ttScanFrame = CreateFrame("frame")
 ttScanFrame:Hide()
 do
 		local function ScanTheTooltip(self, ...)
-		--module:Debug("OnTooltipSetQuest", self.k)
+		module:Debug("OnTooltipSetElement", self.k)
 		if (not self.k) or (not self.v) then
 			module:Debug("Invalid Setup for SOCD Quest Scanning")
 			ttScanFrame:Hide()
 		end
 		local questTitleText = (ttlt:GetText() or ""):trim()
+		while questTitleText == "Retrieving item information" do
+		end
 
 		if tt.dba then
 			tt.dba[ tonumber(self.k) ] = questTitleText
@@ -386,7 +388,7 @@ do
 		end
 		self.k = id
 		self.v = qtype
-		--module:Debug("Showing scan frame:")
+		module:Debug("Showing scan frame:")
 		ttScanFrame:Show()
 		return
 	end
