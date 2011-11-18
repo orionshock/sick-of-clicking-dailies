@@ -90,6 +90,7 @@ function addon:CacheQuestName(name, isDaily, isWeekly, isRepeatable)
 		db.global.questCache[name] = "r"
 	end
 end
+
 function addon:IsDailyQuest(name)
 	Debug("API: IsDailyQuest:", name, db.global.questCache[name] == "d")
 	return db.global.questCache[name] == "d"
@@ -217,9 +218,8 @@ function addon:QUEST_PROGRESS(event, ...)
 	if IsShiftKeyDown() then return end
 	if not IsQuestCompletable() then return end
 	if self:IsDisabled(title) then return end
-	if ( self:IsQuest(title) or QuestIsDaily() or QuestIsWeekly() ) then
-		if self:ShouldIgnoreQuest(title) then return end
-		--Debug("Completing Quest:", title)
+	if ( QuestIsDaily() or QuestIsWeekly() or addon:IsRepeatable(title) ) then
+		Debug("Completing Quest:", title)
 		CompleteQuest()
 	end
 end
@@ -254,5 +254,77 @@ function addon:QUEST_COMPLETE(event, ...)
 		GetQuestReward(0)
 		return
 		
+	end
+end
+
+---Completion Hook :)
+	function SOCD_GetQuestRewardHook(opt)
+		local title = GetTitleText()
+		Debug("GetQuestRewardHook, IsDaily:", addon:IsQuest(title) )
+		if addon:IsRepeatable(title) then return end
+		
+		if addon:IsDailyQuest(title) then
+			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", title, time()+GetQuestResetTime() )
+		elseif addon:IsWeeklyQuest(title) then
+			addon:SendMessage("SOCD_WEEKLY_QUEST_COMPLETE", title, addon:GetNextWeeklyReset() )
+		end
+	end
+	hooksecurefunc("GetQuestReward", SOCD_GetQuestRewardHook )
+	function SOCD_TestDailyEventSend(title)
+		addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", title or "TestQuest"..time(), 0)
+	end
+do		-- === Weekly Reset Function ===
+		--Testing needed to make sure reset schedule is correct. On My Server in the US, first day of the week is on monday.
+	local diff_to_next_wk_reset = GetCVar("realmList"):find("^eu%.") and { 
+				-- Europe
+		[7] = 3,	-- sunday
+		[1] = 2,	-- monday
+		[2] = 1,	-- tuesday
+		[3] = 7,	-- wednesday *Reset Day
+		[4] = 6,	-- thursday
+		[5] = 5,	-- friday
+		[6] = 4,	-- saturday
+	} or { 		-- Rest of the world
+		[7] = 2,	-- sunday
+		[1] = 1,	-- monday
+		[2] = 7,	-- tuesday *Reset Day
+		[3] = 6,	-- wednesday
+		[4] = 5,	-- thursday
+		[5] = 4,	-- friday
+		[6] = 3,	-- saturday
+	}
+	----End fix for ticket #72
+
+	local diff = {}
+	function addon:GetNextWeeklyReset()
+		local cur_day, cur_month, cur_year, cur_wDay = tonumber(date("%d")), tonumber(date("%m")), tonumber(date("%Y")), tonumber(date("%w"))
+		local monthNumDay = select(3, CalendarGetMonth(0))
+		if (cur_wDay == 2) or ( (GetCVar("realmList"):find("^eu%.")) and (cur_wDay == 3) ) then	--If on Reset Day
+			if cur_day == date("%d", time()+GetQuestResetTime() ) then	--and Next Quest Reset is on today
+				return GetQuestResetTime()	-- Return Next Daily Reset because it will happen then regardless.
+			end
+		end
+		for k, _ in pairs(diff) do diff[k] = nil end	--Clear our temp table time() only accepts a table for new stuff like this...
+		
+		local newDay = cur_day + diff_to_next_wk_reset[cur_wDay]	--Get next Day reset will happen on.
+		if newDay > monthNumDay then	--if the next day is in next month
+			newDay = newDay - monthNumDay	--Subtract the number of days in this month, we get the right day :)
+			diff.day = newDay
+			if cur_month +1 > 12 then	--If next reset next month is in the next year, then add a year and set month to 1
+				diff.month = 1
+				diff.year = cur_year + 1
+			else
+				diff.month = cur_month +1	--else just set to next month same year.
+				diff.year = cur_year
+			end
+		else	--else if we're all in the same month then just set the values accordingly :)
+			diff.day = newDay	
+			diff.year = cur_year
+			diff.month = cur_month
+		end
+		
+		diff.hour = date("%H", time() + GetQuestResetTime())	--Rip the next Hour and Min of the reset from the API.
+		diff.min = date("%M", time() + GetQuestResetTime())
+		return time(diff)
 	end
 end
