@@ -99,50 +99,5 @@ local function load()
 			return self.db.profile.reward[name] or -1
 		end
 	end
-	
-	addon.SpecialQuestResets = {
-		--== Classic ==--
-		--== Burrning Crusade ==--
-		--== Wrath Of the Lich King ==--
-			--Wintergraps PvP Quests
-		[GetLocalizedQuestNameByID(13195)] = "GetNextWeeklyReset",	--"A Rare Herb"
-		[GetLocalizedQuestNameByID(13199)] = "GetNextWeeklyReset",	--"Bones and Arrows"
-		[GetLocalizedQuestNameByID(13222)] = "GetNextWeeklyReset",	--"Defend the Siege"
-		[GetLocalizedQuestNameByID(13191)] = "GetNextWeeklyReset",	--"Fueling the Demolishers"
-		[GetLocalizedQuestNameByID(13201)] = "GetNextWeeklyReset",	--"Healing with Roses"
-		[GetLocalizedQuestNameByID(13202)] = "GetNextWeeklyReset",	--"Jinxing the Walls"
-		[GetLocalizedQuestNameByID(13177)] = "GetNextWeeklyReset",	--"No Mercy for the Merciless"
-		[GetLocalizedQuestNameByID(13178)] = "GetNextWeeklyReset",	--"Slay them all!"
-		[GetLocalizedQuestNameByID(13186)] = "GetNextWeeklyReset",	--"Stop the Siege"
-		[GetLocalizedQuestNameByID(13181)] = "GetNextWeeklyReset",	--"Victory in Wintergrasp"
-		[GetLocalizedQuestNameByID(13192)] = "GetNextWeeklyReset",	--"Warding the Walls"
-		[GetLocalizedQuestNameByID(13198)] = "GetNextWeeklyReset",	--"Warding the Warriors"
-		[GetLocalizedQuestNameByID(13538)] = "GetNextWeeklyReset",	--"Southern Sabotage"
-		[GetLocalizedQuestNameByID(13539)] = "GetNextWeeklyReset",	--"Toppling the Towers"
-
-		--Raid Weekly Quests
-		[GetLocalizedQuestNameByID(24580)] = "GetNextWeeklyReset",	--"Anub'Rekhan Must Die!"
-		[GetLocalizedQuestNameByID(24585)] = "GetNextWeeklyReset",	--"Flame Leviathan Must Die!"
-		[GetLocalizedQuestNameByID(24587)] = "GetNextWeeklyReset",	--"Ignis the Furnace Master Must Die!"
-		[GetLocalizedQuestNameByID(24582)] = "GetNextWeeklyReset",	--"Instructor Razuvious Must Die!"
-		[GetLocalizedQuestNameByID(24589)] = "GetNextWeeklyReset",	--"Lord Jaraxxus Must Die!"
-		[GetLocalizedQuestNameByID(24590)] = "GetNextWeeklyReset",	--"Lord Marrowgar Must Die!"
-		[GetLocalizedQuestNameByID(24584)] = "GetNextWeeklyReset",	--"Malygos Must Die!"
-		[GetLocalizedQuestNameByID(24581)] = "GetNextWeeklyReset",	--"Noth the Plaguebringer Must Die!"
-		[GetLocalizedQuestNameByID(24583)] = "GetNextWeeklyReset",	--"Patchwerk Must Die!"
-		[GetLocalizedQuestNameByID(24586)] = "GetNextWeeklyReset",	--"Razorscale Must Die!"
-		[GetLocalizedQuestNameByID(24579)] = "GetNextWeeklyReset",	--"Sartharion Must Die!"
-		[GetLocalizedQuestNameByID(24588)] = "GetNextWeeklyReset",	--"XT-002 Deconstructor Must Die!"
-
-		--ICC Weekly Quests
-		[GetLocalizedQuestNameByID(24879)] = "GetNextWeeklyReset",	--"Blood Quickening"
-		[GetLocalizedQuestNameByID(24875)] = "GetNextWeeklyReset",	--"Deprogramming"
-		[GetLocalizedQuestNameByID(24878)] = "GetNextWeeklyReset",	--"Residue Rendezvous"
-		[GetLocalizedQuestNameByID(24880)] = "GetNextWeeklyReset",	--"Respite for a Tormented Soul"
-		[GetLocalizedQuestNameByID(24877)] = "GetNextWeeklyReset",	--"Securing the Ramparts"
-		
-		--== Cata ==--		
-
-	}
 end
 addon.RegisterMessage("SpecialQuests", "SOCD_FINISH_QUEST_SCAN", load)
