@@ -169,8 +169,25 @@ end
 
 --Shown when the NPC Dosn't want to talk
 function addon:QUEST_GREETING(event, ...)
-	Debug(event,...)
+	Debug(event, ...)
 	if IsShiftKeyDown() then return end
+	local numActiveQuests = GetNumActiveQuests()
+	local numAvailableQuests = GetNumAvailableQuests()
+	Debug("Looking @ AvailableQuests")
+	for i = 1, numAvailableQuests do
+		local title, _, isDaily, isRepeatable = GetAvailableTitle(i), GetAvailableQuestInfo(i)
+		if procGetGossipAvailableQuests(i, title, nil, nil, isDaily, isRepeatable) then
+			return SelectAvailableQuest(i)
+		end
+	end
+	for i = 1, numActiveQuests do
+		local title, isComplete = GetActiveTitle(i)
+		Debug("Quest:", title, "~isComplete:", isComplete, "~IsDisabled:", self:IsDisabled(title) )
+		if procGetGossipActiveQuests(i, title, _, _, isComplete) then
+			Debug("turning in quest:", title)
+			return SelectActiveQuest(i)
+		end
+	end
 end
 
 
@@ -195,7 +212,16 @@ end
 --Shown when Quest is being turned in
 function addon:QUEST_PROGRESS(event, ...)
 	Debug(event,...)
+	local title = GetTitleText()
+	Debug(event, title, "~IsCompleteable:", IsQuestCompletable(),"~IsDaily:", QuestIsDaily() and "true" or "false", "~QuestIsWeekly:", QuestIsWeekly() and "true" or "false", "~IsRepeatable:", addon:IsRepeatable(title) and "true" or "false" )
 	if IsShiftKeyDown() then return end
+	if not IsQuestCompletable() then return end
+	if self:IsDisabled(title) then return end
+	if ( self:IsQuest(title) or QuestIsDaily() or QuestIsWeekly() ) then
+		if self:ShouldIgnoreQuest(title) then return end
+		--Debug("Completing Quest:", title)
+		CompleteQuest()
+	end
 end
 
 --Shown when Selecting reqward for quest.
@@ -206,22 +232,26 @@ function addon:QUEST_COMPLETE(event, ...)
 	if self:IsDisabled(title) then return end
 	if QuestIsDaily() or QuestIsWeekly() or self:IsRepeatable(title) then
 		Debug("Quest Enabled & Daily/Weekly/Repeatable")
-		local rewardOpt = self:IsSpecialQuest(name)
+		local rewardOpt = self:IsSpecialQuest(title)
 			--Has quest option but we don't have a selection, means that this is a new quest that isn't in the DB.
 		if (GetQuestItemInfo("choice", 1) ~= "") and (not rewardOpt) then
-			print(Debug("Sick Of Clicking Dailies: Found a new Quest:", title, " It has reward choices but is not yet added to the addon. Please report it at www.wowace.com"))
-			return
+			if not self:IsRepeatable(title) then
+				print(Debug("Sick Of Clicking Dailies: Found a new Quest:", title, " It has reward choices but is not yet added to the addon. Please report it at www.wowace.com"))
+				return
+			else
+				return
+			end
 		end
 		if (rewardOpt and (rewardOpt == -1)) then
 			Debug(event, "Reward opt is -1, do nothing")
 			return
 		elseif rewardOpt then
 			Debug(event, "Getting Reward:", (GetQuestItemInfo("choice", rewardOpt)) )
-			--GetQuestReward( rewardOpt )
+			GetQuestReward( rewardOpt )
 			return
 		end
 		Debug(event, "Getting Money!")
-		--GetQuestReward(0)
+		GetQuestReward(0)
 		return
 		
 	end

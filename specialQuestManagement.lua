@@ -7,6 +7,14 @@
 local addonName, addon = ...
 local GetLocalizedQuestNameByID = addon.GetLocalizedQuestNameByID
 
+local function Debug(...)
+	local str = string.join(", ", tostringall(...) )
+	str = str:gsub("([:=>]),", "%1")
+	str = str:gsub(", ([%-])", " %1")
+	ChatFrame5:AddMessage("SOCD-SQM: "..str)
+	return str
+end
+
 local function load()
 
 	addon.db_defaults.profile.status = {	--Quests that should be disabled by Default for one reason or another
@@ -85,8 +93,10 @@ local function load()
 	}
 
 	function addon:IsSpecialQuest(name)
+		Debug("IsSpecialQuest", name, self.db.profile.reward[name])
+		name = name:trim()
 		if self.db.profile.reward[name] then
-			return db.profile.reward[name] or -1
+			return self.db.profile.reward[name] or -1
 		end
 	end
 

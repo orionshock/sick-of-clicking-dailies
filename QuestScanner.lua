@@ -417,7 +417,7 @@ function module:StartQuestScan()
 	tt.prefix = "quest:"
 	tt.NextScanFunc = "StartItemScan"
 	tt.finishfunc = function()
-			--LocalizedQuestVersion = lastChanged
+			LocalizedQuestVersion = lastChanged
 			AddonParent:SendMessage("SOCD_FINISH_QUEST_SCAN")
 		end
 	return tt:SetHyperlink(tt.prefix..tt.k)
