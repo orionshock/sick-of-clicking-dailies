@@ -360,29 +360,26 @@ do
 		local function ScanTheTooltip(self, ...)
 		module:Debug("OnTooltipSetElement", self.k)
 		if (not self.k) or (not self.v) then
-			module:Debug("Invalid Setup for SOCD Quest Scanning")
+			module:Debug("Invalid Setup for SOCD Scanning")
 			ttScanFrame:Hide()
 		end
-		local questTitleText = (ttlt:GetText() or ""):trim()
-		while questTitleText == "Retrieving item information" do
+		local titleText = (ttlt:GetText() or ""):trim()
+		while titleText == "Retrieving item information" do
 		end
 
 		if tt.dba then
-			tt.dba[ tonumber(self.k) ] = questTitleText
+			tt.dba[ tonumber(self.k) ] = titleText
 		end
 
 		self.count = self.count + 1
 
-		module:Debug("Cached:", self.k, "-->", questTitleText )
+		module:Debug("Cached:", self.k, "-->", titleText )
 
 		local id, qtype = next(self.t, self.k)
 		if not id or not qtype then
-			if self.prefix == "quest:" then
-				module:Debug("Reached end of Table. Total Scanned:", self.count)
-				AddonParent.db.global.currentRev = lastChanged
-				AddonParent.QuestNameScanned = true
-				AddonParent:SendMessage("SOCD_QuestByID_Ready")
-				ttScanFrame:Hide()
+			module:Debug("Reached end of Table. Total Scanned:", self.count)
+			if self.finishfunc then
+				self.finishfunc()
 			end
 			if self.NextScanFunc then
 				return module[ self.NextScanFunc ](module)
@@ -421,6 +418,10 @@ function module:StartQuestScan()
 	tt.count = 0
 	tt.prefix = "quest:"
 	tt.NextScanFunc = "StartItemScan"
+	tt.finishfunc = function()
+			--LocalizedQuestVersion = lastChanged
+			AddonParent:SendMessage("SOCD_FINISH_QUEST_SCAN")
+		end
 	return tt:SetHyperlink(tt.prefix..tt.k)
 end
 
@@ -434,6 +435,7 @@ function module:StartItemScan()
 	tt.count = 0
 	tt.prefix = "item:"
 	tt.NextScanFunc = nil
+	tt.finishfunc = nil
 	return tt:SetHyperlink(tt.prefix..tt.k)
 end
 
