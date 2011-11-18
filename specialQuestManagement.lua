@@ -91,4 +91,4 @@ local function load()
 	end
 
 end
-addon.RegisterMessage("SpecialQuests", "SOCD_QuestByID_Ready", load)
+addon.RegisterMessage("SpecialQuests", "SOCD_FINISH_QUEST_SCAN", load)

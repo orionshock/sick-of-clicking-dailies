@@ -42,18 +42,17 @@ addon.db_defaults = {
 	profile = {},
 	global = {
 		questCache = {},
-		localeQuestNameByID = {},
 	}
 }
 
 function addon:OnInitialize()
-	self.db = LibStub("AceDB-3.0"):New("SOCD_DB", addon.db_defaults, true)
 	self:SetEnabledState(false)
+	self:RegisterMessage("SOCD_FINISH_QUEST_SCAN", function(event, ...) addon:Enable() end )
 end
 
-function addon:OnEnable(event, addon)
+function addon:OnEnable(event)
+	self.db = LibStub("AceDB-3.0"):New("SOCD_DB", self.db_defaults, true)
 	db = self.db
-	db.global.currentRev = nil
 	--Events
 	self:RegisterEvent("GOSSIP_SHOW")
 	self:RegisterEvent("QUEST_GREETING")

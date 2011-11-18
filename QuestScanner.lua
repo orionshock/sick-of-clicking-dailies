@@ -42,7 +42,7 @@ function module:PLAYER_LOGIN(event,...)
 	if LocalizedQuestVersion ~= lastChanged then	--check version
 		return self:StartQuestScan()
 	else
-		AddonParent:SendMessage("SOCD_QuestByID_Ready")
+		AddonParent:SendMessage("SOCD_FINISH_QUEST_SCAN")
 		AddonParent.QuestNameScanned = true
 	end
 end
@@ -364,8 +364,6 @@ do
 			ttScanFrame:Hide()
 		end
 		local titleText = (ttlt:GetText() or ""):trim()
-		while titleText == "Retrieving item information" do
-		end
 
 		if tt.dba then
 			tt.dba[ tonumber(self.k) ] = titleText
