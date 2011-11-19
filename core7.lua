@@ -45,9 +45,17 @@ addon.db_defaults = {
 	}
 }
 
+addon:SetDefaultModuleState(false)
+
 function addon:OnInitialize()
 	self:SetEnabledState(false)
-	self:RegisterMessage("SOCD_FINISH_QUEST_SCAN", function(event, ...) addon:Enable() end )
+	self:RegisterMessage("SOCD_FINISH_QUEST_SCAN", 
+			function(event, ...) 
+				addon:Enable()
+				for k,v in addon:IterateModules() do
+					v:Enable()
+				end
+			end )
 end
 
 function addon:OnEnable(event)
@@ -274,6 +282,7 @@ end
 	function SOCD_TestDailyEventSend(title)
 		addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", title or "TestQuest"..time(), 0)
 	end
+	
 do		-- === Weekly Reset Function ===
 		--Testing needed to make sure reset schedule is correct. On My Server in the US, first day of the week is on monday.
 	local diff_to_next_wk_reset = GetCVar("realmList"):find("^eu%.") and { 
