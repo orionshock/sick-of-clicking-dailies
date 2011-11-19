@@ -31,7 +31,8 @@ function module:OnEnable()
 	self:CreateLDB()
 	playerName = UnitName("player")
 	assert(playerName)
-
+	self:PruneDB()
+	
 end
 
 
@@ -104,4 +105,22 @@ do
 		ldbObj = LibDataBroker:NewDataObject("SOCD - Daily Reset", dailyTTL)
 	end
 
+	local interval, delay = 1, 0
+	local updateFrame = CreateFrame("frame")
+	updateFrame:SetScript("OnUpdate", function(self, elapsed)
+		if not ldbObj then return end
+		delay = delay + elapsed
+		if delay > interval then
+			ldbObj.value = SecondsToTime(GetQuestResetTime())
+			ldbObj.text = (ldbObj.label)..(ldbObj.value)
+			delay = 0
+			if GetQuestResetTime() > 86280 then
+				module:PruneDB()
+			end
+		end
+	end)
+end
+
+function module:PruneDB()
+	self:Debug("Pruning non-existant DB")
 end
