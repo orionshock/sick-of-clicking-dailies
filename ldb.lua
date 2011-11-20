@@ -27,12 +27,24 @@ function module:OnEnable()
 	self:Debug("OnEnable")
 
 	db = AddonParent.db
-
+	
 	self:CreateLDB()
 	playerName = UnitName("player")
-	assert(playerName)
 	self:PruneDB()
+	db.realm.chars[playerName] = select(2, UnitClass("player"))
+	db.realm.questLog[playerName] = db.realm.questLog[playerName] or {}
 	
+end
+
+function module:SOCD_DAILIY_QUEST_COMPLETE(event, title, ttl)
+	if (not title) or (not ttl) then return end
+	db.char[title] = ttl
+	db.realm.questLog[playerName][title] = ttl
+end
+function module:SOCD_WEEKLY_QUEST_COMPLETE(event, title, ttl)
+	if (not title) or (not ttl) then return end
+	db.char[title] = ttl
+	db.realm.questLog[playerName][title] = ttl
 end
 
 

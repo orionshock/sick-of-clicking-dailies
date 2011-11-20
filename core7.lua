@@ -39,10 +39,21 @@ local function Debug(...)
 end
 
 addon.db_defaults = {
+	char = {},	--basically the char table is the quest log of dailies/weeklys completed.
 	profile = {},
+	realm = {
+		chars = {
+			--[player] = class,
+			},
+		questLog = {
+			--[player] = {
+				--[QuestName] = TTL,
+			--	},
+			},
+		},
 	global = {
 		questCache = {},
-	}
+	},
 }
 
 addon:SetDefaultModuleState(false)
