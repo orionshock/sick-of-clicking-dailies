@@ -52,7 +52,12 @@ addon.db_defaults = {
 			},
 		},
 	global = {
-		questCache = {},
+		questCache = {
+			["Test Weekly Quest"] = "w",
+			["Test Daily Quest"] = "d",
+			["Test PvP Element"] = "p",
+			["Test LFG Element"] = "l",
+		},
 	},
 }
 
@@ -290,8 +295,10 @@ end
 		end
 	end
 	hooksecurefunc("GetQuestReward", SOCD_GetQuestRewardHook )
-	function SOCD_TestDailyEventSend(title)
-		addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", title or "TestQuest"..time(), 0)
+	function SOCD_TestDailyEventSend()
+		Debug("Firing Test Events")
+		addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", title or "Test Daily Quest", time()+GetQuestResetTime() )
+		addon:SendMessage("SOCD_WEEKLY_QUEST_COMPLETE", title or "Test Weekly Quest", addon:GetNextWeeklyReset() )
 	end
 	
 do		-- === Weekly Reset Function ===
