@@ -285,7 +285,7 @@ end
 ---Completion Hook :)
 	function SOCD_GetQuestRewardHook(opt)
 		local title = GetTitleText()
-		Debug("GetQuestRewardHook, IsDaily:", addon:IsQuest(title) )
+		Debug("GetQuestRewardHook, IsDaily:", addon:IsDailyQuest(title), "~IsWeekly:", IsWeeklyQuest(title))
 		if addon:IsRepeatable(title) then return end
 		
 		if addon:IsDailyQuest(title) then
