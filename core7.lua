@@ -161,16 +161,16 @@ local function procGetGossipActiveQuests(index, title, _, _, isComplete, ...)
 	end
 end
 
---local function proccessGossipOptions( ... )
---	for i = 1, select("#", ...), 2 do
---		local txt, tpe = select(i, ...)
---		if tpe == "gossip" then
---			if db.profile.GossipAutoSelect[txt] then
---				SelectGossipOption( i+1/2 )
---			end
---		end
---	end
---end
+local function proccessGossipOptions( ... )
+	for i = 1, select("#", ...), 2 do
+		local txt, tpe = select(i, ...)
+		if tpe == "gossip" then
+			if db.profile.enabledGossip[txt] then
+				SelectGossipOption( i+1/2 )
+			end
+		end
+	end
+end
 
 function addon:GOSSIP_SHOW(event)
 --	Debug(event)
@@ -188,8 +188,8 @@ function addon:GOSSIP_SHOW(event)
 		return SelectGossipActiveQuest(index)
 	end
 
-	--Debug("Proccessing Gossip ")
---	proccessGossipOptions( GetGossipOptions() )
+	Debug("Proccessing Gossip ")
+	proccessGossipOptions( GetGossipOptions() )
 end
 
 --Shown when the NPC Dosn't want to talk

@@ -84,6 +84,8 @@ local function SOCD_OnEvnet(self, event, ...)
 		if QuestIsDaily() or QuestIsWeekly() or AddonParent:IsRepeatable(GetTitleText()) then
 			module:Debug("Daily/Weekly/Repeatable:", QuestIsDaily() or QuestIsWeekly() or AddonParent:IsRepeatable(GetTitleText()) )
 			self:Show()
+		else
+			self:Hide()
 		end
 	else
 		self:Hide()
@@ -150,27 +152,79 @@ end
 --[[==========================================================
 	Gossip Options
 --==========================================================]]--
-local function GossipButton_OnShow(self)
-	module:Debug("CheckBox#", self.index, "~Text:", self:GetParent():GetText() )
-	if self.type ~= "Gossip" then --if not a gossip option then
+
+function GossipFrameOptionsUpdate(...)	--Hook Replace the blizzard function :)
+	local titleButton;
+	local titleIndex = 1;
+	local realOption = 2;
+	local titleButtonIcon;
+	for i=1, select("#", ...), 2 do
+		if ( GossipFrame.buttonIndex > NUMGOSSIPBUTTONS ) then
+			message("This NPC has too many quests and/or gossip options.");
+		end
+		titleButton = _G["GossipTitleButton" .. GossipFrame.buttonIndex];
+		titleButton:SetText(select(i, ...));
+		GossipResize(titleButton);
+		titleButton:SetID(titleIndex);
+		titleButton.type="Gossip";
+		titleButtonIcon = _G[titleButton:GetName() .. "GossipIcon"];
+		titleButtonIcon:SetTexture("Interface\\GossipFrame\\" .. select(i+1, ...) .. "GossipIcon");
+		titleButtonIcon:SetVertexColor(1, 1, 1, 1);
+		---------
+		local realType = select(realOption, GetGossipOptions())
+		module:Debug("BlizReplace",titleButton:GetName(), realType)
+		titleButton.realType = realType
+		---------
+		GossipFrame.buttonIndex = GossipFrame.buttonIndex + 1;
+		titleIndex = titleIndex + 1;
+		realOption = titleIndex*2
+		titleButton:Show();
+	end
+end
+
+
+local function GossipButton_OnEvent(self)
+	if self:GetParent():GetText() == nil then return end
+	module:Debug("CheckBox#", self.index,"~Type:", self:GetParent().realType, "~Text:", self:GetParent():GetText() )
+	
+	if self:GetParent().realType == "Gossip" then --we're the gossip option
+		module:Debug("RealType:", self:GetParent().realType )
+		self:Show()
 		if self.index == 1 then	--if we're the first option we need to off set from the Greeting Text
-			GossipTitleButton1:SetPoint("TOPLEFT", GossipGreetingText, "BOTTOMLEFT", -5, -20)
+			module:Debug("FirstIndex, anchor to Greeting Text")
+			GossipTitleButton1:SetPoint("TOPLEFT", GossipGreetingText, "BOTTOMLEFT", 20, -20)
 		else	--else we need to check what the last guy was doing..
+			module:Debug("Not First Index:", self.index)
 			local anchorFrame = _G["GossipTitleButton"..self.index-1]
-			if anchorFrame:IsShown() and anchorFrame.type =="Gossip" then
-				self:SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", -25, 0)
-			elseif anchorFrame:IsShown() and anchorFrame.type ~="Gossip" then
-				self:SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", 0, 0)
+			if anchorFrame.realType =="Gossip" then
+				module:Debug("AnchorFrame:", anchorFrame:GetName(), "~PreviousIs:", anchorFrame.realType, "We're and it is, lineup")
+				self:GetParent():SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", 0, -5)
+			elseif anchorFrame.realType ~="Gossip" then
+			module:Debug("AnchorFrame:", anchorFrame:GetName(), "~PreviousIs:", anchorFrame.realType, "We're and it's not, offset to lineup")
+				self:GetParent():SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", 20, -5)		
 			end
 		end
-		self:Hide() 
+	else	--We're something other than a gossip option...
+		self:Hide()
+		if self.index == 1 then	--first index, not gossip, reset to GreetingText
+			GossipTitleButton1:SetPoint("TOPLEFT", GossipGreetingText, "BOTTOMLEFT", -5, -20)
+		else	--check previous and offset accordingly..
+			local anchorFrame = _G["GossipTitleButton"..self.index-1]
+			if anchorFrame.realType =="Gossip" then
+				self:GetParent():SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", -5, -5)
+			elseif anchorFrame.realType ~="Gossip" then
+				self:GetParent():SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", 0, -5)		
+			end
+		end
+
 	end
+	--
 	local gossipText = self:GetParent():GetText()
 	if gossipText then
 		gossipText = gossipText:trim()
 		self:SetChecked( db.profile.enabledGossip[gossipText] )
 	else
-		module:Debug("! Fail")
+--		module:Debug("! Fail")
 	end
 end
 
@@ -182,14 +236,16 @@ local function GossipButton_OnClick(self, button, ...)
 end
 
 local function StyleNSizeBox(frame)
-	frame:SetWidth(35)
-	frame:SetHeight(35)
+	frame:SetWidth(20)
+	frame:SetHeight(20)
 	frame:SetNormalTexture("Interface\\Buttons\\UI-CheckBox-Up");
 	frame:SetPushedTexture("Interface\\Buttons\\UI-CheckBox-Down"); 
 	frame:SetHighlightTexture("Interface\\Buttons\\UI-CheckBox-Highlight", "ADD");
 	frame:SetCheckedTexture("Interface\\Buttons\\UI-CheckBox-Check");
 	frame:SetScript("OnClick", GossipButton_OnClick)
-	frame:SetScript("OnShow", GossipButton_OnShow)
+	frame:SetScript("OnEvent", GossipButton_OnEvent)
+	frame:RegisterEvent("GOSSIP_SHOW")
+--	frame:Hide()
 end
 
 function module:CreateGossipOptions()

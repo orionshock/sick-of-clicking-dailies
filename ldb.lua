@@ -215,5 +215,8 @@ function module:PruneDB(FoceClean)
 				questLog[quest] = nil
 			end
 		end
+		if not next(questLog) then	--prune out the empty table to prevet the alt tracker from doing weird things..
+			db.realm.questLog[char] = nil
+		end
 	end
 end
