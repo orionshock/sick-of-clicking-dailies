@@ -152,6 +152,19 @@ end
 --==========================================================]]--
 local function GossipButton_OnShow(self)
 	module:Debug("CheckBox#", self.index, "~Text:", self:GetParent():GetText() )
+	if self.type ~= "Gossip" then --if not a gossip option then
+		if self.index == 1 then	--if we're the first option we need to off set from the Greeting Text
+			GossipTitleButton1:SetPoint("TOPLEFT", GossipGreetingText, "BOTTOMLEFT", -5, -20)
+		else	--else we need to check what the last guy was doing..
+			local anchorFrame = _G["GossipTitleButton"..self.index-1]
+			if anchorFrame:IsShown() and anchorFrame.type =="Gossip" then
+				self:SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", -25, 0)
+			elseif anchorFrame:IsShown() and anchorFrame.type ~="Gossip" then
+				self:SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", 0, 0)
+			end
+		end
+		self:Hide() 
+	end
 	local gossipText = self:GetParent():GetText()
 	if gossipText then
 		gossipText = gossipText:trim()
