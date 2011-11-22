@@ -63,5 +63,5 @@ ldb.lua
 
 
 #@debug@
-#SickOfClickingDailies_AltTracking\core.lua
+SickOfClickingDailies_AltTracking\core.lua
 #@end-debug@
