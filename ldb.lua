@@ -212,7 +212,7 @@ function module:PruneDB(FoceClean)
 			self:Debug("Quest:", quest, "~TTL: ", date("%c", ttl) )
 			if time() > ttl then
 				self:Debug("Quest Expired")
-				db.char[quest] = nil
+				questLog[quest] = nil
 			end
 		end
 	end

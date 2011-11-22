@@ -20,6 +20,7 @@ end
 
 function module:OnInitialize()
 	self:CreateInteractionFrame()
+	self:CreateGossipOptions()
 end
 
 function module:OnEnable()
@@ -149,3 +150,52 @@ end
 --[[==========================================================
 	Gossip Options
 --==========================================================]]--
+local function GossipButton_OnShow(self)
+	module:Debug("CheckBox#", self.index, "~Text:", self:GetParent():GetText() )
+	local gossipText = self:GetParent():GetText()
+	if gossipText then
+		gossipText = gossipText:trim()
+		self:SetChecked( db.profile.enabledGossip[gossipText] )
+	else
+		module:Debug("! Fail")
+	end
+end
+
+local function GossipButton_OnClick(self, button, ...)
+	module:Debug("CheckBox#", self.index, "~Text:", self:GetParent():GetText() )
+	local isChecked = self:GetChecked() and true or nil
+	local gossipText = self:GetParent():GetText():trim()
+	db.profile.enabledGossip[gossipText] = isChecked
+end
+
+local function StyleNSizeBox(frame)
+	frame:SetWidth(35)
+	frame:SetHeight(35)
+	frame:SetNormalTexture("Interface\\Buttons\\UI-CheckBox-Up");
+	frame:SetPushedTexture("Interface\\Buttons\\UI-CheckBox-Down"); 
+	frame:SetHighlightTexture("Interface\\Buttons\\UI-CheckBox-Highlight", "ADD");
+	frame:SetCheckedTexture("Interface\\Buttons\\UI-CheckBox-Check");
+	frame:SetScript("OnClick", GossipButton_OnClick)
+	frame:SetScript("OnShow", GossipButton_OnShow)
+end
+
+function module:CreateGossipOptions()
+	self.gossipButtons = {}
+	local gossipButtons = self.gossipButtons
+	--First Move the Buttons over
+	GossipTitleButton1:SetPoint("TOPLEFT", GossipGreetingText, "BOTTOMLEFT", 20, -20)
+	local check = CreateFrame("CheckButton", nil, GossipTitleButton1)
+	check:SetPoint("RIGHT", GossipTitleButton1, "LEFT", 7, 0)
+	StyleNSizeBox(check)
+	check.index = 1
+	tinsert(gossipButtons, check)
+	for i = 2, 32 do
+		_G["GossipTitleButton"..i]:SetPoint("TOPLEFT", _G["GossipTitleButton"..i-1], "BOTTOMLEFT", 0,0)
+		local check = CreateFrame("CheckButton", nil, _G["GossipTitleButton"..i])
+		check:SetPoint("RIGHT", _G["GossipTitleButton"..i], "LEFT", 7, 0)
+		check.index = i
+		StyleNSizeBox(check)
+		tinsert(gossipButtons, check)
+	end
+end
+
