@@ -60,11 +60,7 @@ QuestScanner.lua
 specialQuestManagement.lua
 #options.lua
 ldb.lua
-#Classic.lua
-#BC.lua
-#wotlk.lua
-#Cata.lua
-#Currency.lua
+
 
 #@debug@
 #SickOfClickingDailies_AltTracking\core.lua
