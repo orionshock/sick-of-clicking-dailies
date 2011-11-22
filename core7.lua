@@ -129,7 +129,7 @@ function addon:IsRepeatable(name)
 end
 
 function addon:IsDisabled(title)
-	return false
+	return db.profile.disabledQuests[title] == false
 end
 
 
