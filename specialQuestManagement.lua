@@ -93,7 +93,7 @@ local function load()
 	}
 
 	function addon:IsChoiceQuest(name)
-		Debug("IsSpecialQuest", name, self.db.profile.reward[name])
+		--Debug("IsChoiceQuest", name, self.db.profile.reward[name])
 		name = name:trim()
 		if self.db.profile.reward[name] then
 			return self.db.profile.reward[name] or -1

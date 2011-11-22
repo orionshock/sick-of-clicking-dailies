@@ -244,6 +244,7 @@ function addon:QUEST_PROGRESS(event, ...)
 	if not IsQuestCompletable() then return end
 	if self:IsDisabled(title) then return end
 	if ( QuestIsDaily() or QuestIsWeekly() or addon:IsRepeatable(title) ) then
+		self:CacheQuestName(title, QuestIsDaily(), QuestIsWeekly() )
 	--	Debug("Completing Quest:", title)
 		CompleteQuest()
 	end
@@ -283,22 +284,27 @@ function addon:QUEST_COMPLETE(event, ...)
 end
 
 ---Completion Hook :)
-	function SOCD_GetQuestRewardHook(opt)
-		local title = GetTitleText()
-	--	Debug("GetQuestRewardHook, IsDaily:", addon:IsDailyQuest(title), "~IsWeekly:", addon:IsWeeklyQuest(title))
-		if addon:IsRepeatable(title) then return end
+	function SOCD_GetQuestRewardHook(opt, forceName)
+		local title = forceName or GetTitleText()
+		--Debug("GetQuestRewardHook, IsDaily:", addon:IsDailyQuest(title), "~IsWeekly:", addon:IsWeeklyQuest(title), "~IsRepeatable:",  addon:IsRepeatable(title))
+		if addon:IsRepeatable(title) then
+			--Debug("QuestIsRepeatable, not pushing Events")
+			return
+		end
 		
 		if addon:IsDailyQuest(title) then
+			--Debug("Quest Was Daily, Pushing Event::", "SOCD_DAILIY_QUEST_COMPLETE", title, (time()+GetQuestResetTime()) - ( (time()+GetQuestResetTime()) % 60 ) )
 			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", title, (time()+GetQuestResetTime()) - ( (time()+GetQuestResetTime()) % 60 ) )
 		elseif addon:IsWeeklyQuest(title) then
+			--Debug("Quest Was Weekly, Pushing Event::", "SOCD_WEEKLY_QUEST_COMPLETE", title, addon:GetNextWeeklyReset() )
 			addon:SendMessage("SOCD_WEEKLY_QUEST_COMPLETE", title, addon:GetNextWeeklyReset() )
 		end
 	end
 	hooksecurefunc("GetQuestReward", SOCD_GetQuestRewardHook )
 	function SOCD_TestDailyEventSend()
 	--	Debug("Firing Test Events")
-		addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", title or "Test Daily Quest", (time()+GetQuestResetTime()) - ( (time()+GetQuestResetTime()) % 60 ) )
-		addon:SendMessage("SOCD_WEEKLY_QUEST_COMPLETE", title or "Test Weekly Quest", addon:GetNextWeeklyReset() )
+		SOCD_GetQuestRewardHook(opt, "Test Daily Quest")
+		SOCD_GetQuestRewardHook(opt, "Test Weekly Quest")
 	end
 	
 do		-- === Weekly Reset Function ===
