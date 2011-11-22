@@ -40,7 +40,10 @@ end
 
 addon.db_defaults = {
 	char = {},	--basically the char table is the quest log of dailies/weeklys completed.
-	profile = {},
+	profile = {
+			disabledQuests = {},
+			enabledGossip = {},
+		},
 	realm = {
 		chars = {
 			--[player] = class,
@@ -79,13 +82,10 @@ function addon:OnEnable(event)
 	db = self.db
 	--Events
 	self:RegisterEvent("GOSSIP_SHOW")
-	self:RegisterEvent("QUEST_GREETING")
-	self:RegisterEvent("QUEST_DETAIL")
-	self:RegisterEvent("QUEST_PROGRESS")
-	self:RegisterEvent("QUEST_COMPLETE")
---	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
---	self:RegisterEvent("ZONE_CHANGED", "ZONE_CHANGED_NEW_AREA")
---	self:ZONE_CHANGED_NEW_AREA("OnEnable")
+--	self:RegisterEvent("QUEST_GREETING")
+--	self:RegisterEvent("QUEST_DETAIL")
+--	self:RegisterEvent("QUEST_PROGRESS")
+--	self:RegisterEvent("QUEST_COMPLETE")
 
 --Options & Slash command 
 --	local AceConfigDialog = LibStub("AceConfigDialog-3.0")

@@ -58,9 +58,8 @@ localizations\localization.xml
 core7.lua
 QuestScanner.lua
 specialQuestManagement.lua
-#options.lua
 ldb.lua
-
+options.lua
 
 #@debug@
 SickOfClickingDailies_AltTracking\core.lua

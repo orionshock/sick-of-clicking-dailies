@@ -8,6 +8,15 @@ local AddonName, AddonParent = ...
 
 local module = AddonParent:NewModule("Options")
 local L = LibStub("AceLocale-3.0"):GetLocale(AddonName)
+local db
+
+function module:Debug(...)
+	local str = string.join(", ", tostringall(...) )
+	str = str:gsub("([:=>]),", "%1")
+	str = str:gsub(", ([%-])", " %1")
+	ChatFrame5:AddMessage("SOCD-OPT: "..str)
+	return str
+end
 
 function module:OnInitialize()
 	self:CreateInteractionFrame()
@@ -15,6 +24,7 @@ end
 
 function module:OnEnable()
 	self:Debug("OnEnable")
+	db = AddonParent.db
 	self.frame:RegisterEvent("QUEST_GREETING")
 	self.frame:RegisterEvent("QUEST_PROGRESS")
 	self.frame:RegisterEvent("QUEST_DETAIL")
@@ -40,8 +50,13 @@ local function CheckButton_OnClick(self, button)
 	module:Debug("OnClick, Button:", button, "IsChecked:", self:GetChecked() )
 	local isChecked = self:GetChecked() and true or false
 	local title = GetTitleText()
-	module:Debug("CheckButton", title, isChecked, "Setting Status Accordingly")
-	module:SetQuestStatus(title, isChecked)
+	if isChecked then
+		module:Debug("Option is checked, clearing from disabled quest list")
+		db.profile.disabledQuests[title] = nil
+	else
+		module:Debug("Option !NOT! checked, adding to disabled quest list")
+		db.profile.disabledQuests[title] = false
+	end
 end
 
 --local function CheckButton_OnEnter(self)
@@ -64,36 +79,22 @@ local showEvents = {
 }
 
 local function SOCD_OnEvnet(self, event, ...)
-	module:Debug(self:GetName(), event, ...)
 	if showEvents[event] then
-		module:Debug("Show Event", event)
-		self:Show() 
-
-	else
-		module:Debug("hide event", event)
-		self:Hide()
-		return
-	end
-	local title = GetTitleText()
-	module:Debug("FrameOnEvent", event, "Quest:", title, "~IsDaily/Weekly:" , QuestIsDaily() or QuestIsWeekly(), "~ShouldIgnore:", AddonParent:ShouldIgnoreQuest(title) )
-	if (AddonParent:IsQuest(title) or QuestIsDaily() or QuestIsWeekly() ) then
-		module:Debug("Is one of our quests")
-		if AddonParent:ShouldIgnoreQuest(title) then
-			module:Debug("Is one we ignore")
-			self.check:SetChecked(false)
-		else
-			module:Debug("Not Ignoring Quest")
-			self.check:SetChecked(true)
+		if QuestIsDaily() or QuestIsWeekly() or AddonParent:IsRepeatable(GetTitleText()) then
+			module:Debug("Daily/Weekly/Repeatable:", QuestIsDaily() or QuestIsWeekly() or AddonParent:IsRepeatable(GetTitleText()) )
+			self:Show()
 		end
 	else
-		module:Debug("Not a daily / weekly / repeatable")
 		self:Hide()
-	end
+	end	
 end
 
 local function Frame_OnShow(self)
-	if not module:IsEnabled() then
-		self:Hide()
+	local title = GetTitleText():trim()
+	if db.profile.disabledQuests[title] == false then
+		self.check:SetChecked(false)
+	else
+		self.check:SetChecked(true)
 	end
 end
 
@@ -112,7 +113,7 @@ function module:CreateInteractionFrame()
 	local frame = CreateFrame("frame", "SOCD_QuestOptionFrame", QuestFrame)
 	frame:SetWidth(200)
 	frame:SetHeight(50)
-	frame:SetPoint("TOPLEFT", QuestFrame, "TOPRIGHT", -25, -15)
+	frame:SetPoint("BOTTOMRIGHT", QuestFrame, "TOPRIGHT", -30, -20)
 	frame:SetBackdrop(backdrop)
 
 	--CheckBox
@@ -145,3 +146,6 @@ function module:CreateInteractionFrame()
 
 	self.frame = frame
 end
+--[[==========================================================
+	Gossip Options
+--==========================================================]]--
