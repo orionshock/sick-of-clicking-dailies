@@ -13,17 +13,20 @@ local L = LibStub("AceLocale-3.0"):GetLocale("SickOfClickingDailies")
 local LibQTip
 local unsortedPlayers, sortedPlayerList, sortedQuestList, totalQuests = {}, {}, {}, {}
 local classColorTable = RAID_CLASS_COLORS
-local specialQuests = AddonParent.SpecialQuestResets
-function module:OnInitialize()
-	LibQTip = LibStub('LibQTip-1.0', true)
+local specialQuests = setmetatable({}, { _index = AddonParent.IsWeeklyQuest } )
 
-	db = AddonParent.db.factionrealm
-	self:Debug("OnInitialize")
+function module:Debug(...)
+	local str = string.join(", ", tostringall(...) )
+	str = str:gsub("([:=>]),", "%1")
+	str = str:gsub(", ([%-])", " %1")
+	ChatFrame5:AddMessage("SOCD-ALT: "..str)
+	return str
 end
 
 function module:OnEnable()
 	LibQTip = LibStub('LibQTip-1.0', true)
 	classColorTable = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
+	db = AddonParent.db.realm
 	self:CreateLDB()
 	self:Debug("OnEnable")
 end
@@ -79,17 +82,15 @@ end
 
 function module:UpdateAllQuests()
 	wipe(totalQuests)
-	for toon, qTable in pairs(db) do
-		if toon ~= "chars" then
-			unsortedPlayers[toon] = true
-			if type(qTable) == "table" then
-				for quest, _ in pairs(qTable) do
-					totalQuests[quest] = true
-				end
-			else
-				local _, srcAddon = issecurevariable(db, toon)
-				geterrorhander()("Invalid Table in QTable, came from addon: "..tostring(srcAddon) )
+	for toon, questLog in pairs(db.questLog) do
+		unsortedPlayers[toon] = true
+		if type(questLog) == "table" then
+			for quest, ttl in pairs(questLog) do
+				totalQuests[quest] = true
 			end
+		else
+			local _, srcAddon = issecurevariable(db, toon)
+			geterrorhander()("Invalid Table in questLog, came from addon: "..tostring(srcAddon) )
 		end
 	end
 	wipe(sortedQuestList)
@@ -98,7 +99,7 @@ function module:UpdateAllQuests()
 	end
 
 	if tooltipIsSortedNow then
-		qsort = db[tooltipIsSortedNow]
+		qsort = db.questLog[tooltipIsSortedNow]
 		table.sort(sortedQuestList, uglySortByPlayer)
 		qsort = nil
 	else
@@ -117,7 +118,7 @@ local function TipOnClick(cell, arg, button)
 	local self = module
 	if unsortedPlayers[arg] then
 		tooltipIsSortedNow = arg
-		qsort = db[arg]
+		qsort = db.questLog[arg]
 		table.sort(sortedQuestList, uglySortByPlayer)
 		qsort = nil
 		LibQTipTooltip:Clear()
@@ -164,7 +165,7 @@ function module:populateTooltip(tip)
 	
 	for x, player in pairs(sortedPlayerList) do
 		for y, quest in pairs(sortedQuestList) do
-			if db[player] and db[player][quest] then
+			if db.questLog[player] and db.questLog[player][quest] then
 				--print("Set", quest, player, "row", y+yOffset, "col", x+xOffset)
 				tip:SetCell( y+yOffset, x+xOffset, " ", "CENTER")
 				tip:SetCellColor( y+yOffset, x+xOffset, 0, 1, 0)

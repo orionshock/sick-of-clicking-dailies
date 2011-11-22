@@ -50,9 +50,6 @@ function module:SOCD_WEEKLY_QUEST_COMPLETE(event, title, ttl)
 	db.char[title] = ttl
 	db.realm.questLog[playerName][title] = ttl
 end
-function module:SOCD_LFG_RANDOM_COMPLETE(event, title, ttl)
-end
-
 
 do
 	local tooltip, populateTooltip, Tooltip_OnClick_Sort, sortByFunction
@@ -91,7 +88,7 @@ do
 
 	local prefix = QUEST_LOG_DAILY_TOOLTIP:match( "\n(.+)" )
 	function Tooltip_OnClick_Sort(self, sortBy, button)
-		module:Debug("TT_OnClick_Sort", self, sortBy, button)
+		--module:Debug("TT_OnClick_Sort", self, sortBy, button)
 		tooltip:Clear()
 		sortByFunction = sortByFuncs[sortBy] or sortByFuncs["element"]
 		populateTooltip(tooltip)		
@@ -130,7 +127,7 @@ do
 	end
 	
 	local function OnEnter(self, ...)
-		module:Debug("OnEnter", self, ...)
+		--module:Debug("OnEnter", self, ...)
 		if tooltip and tooltip:IsShown() then return end
 		tooltip = LibQTip:Acquire("SOCD_LDB_PlayerTrack", 3, "RIGHT", "LEFT", "CENTER")
 		tooltip:SmartAnchorTo(self)
@@ -141,13 +138,13 @@ do
 		tooltip:Show()
 	end
 	local function OnLeave(self, ...)
-		module:Debug("OnLeave", self, ...)
+		--module:Debug("OnLeave", self, ...)
 		-- Release the tooltip
 		--LibQTip:Release(self.tooltip)
 		--self.tooltip = nil
 	end
 	local function OnClick(self, ...)
-		module:Debug("OnClick", self, ...)
+		--module:Debug("OnClick", self, ...)
 	end
 
 	function module:CreateLDB()
@@ -187,7 +184,7 @@ do
 end
 
 function module:PruneDB(FoceClean)
-	self:Debug("Pruning non-existant DB")
+	--self:Debug("Pruning non-existant DB")
 	if FoceClean then
 		self:Debug("FORCE CLEAN, CLEARING DB")
 		for k,v in pairs(db.char) do
