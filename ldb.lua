@@ -82,9 +82,9 @@ do
 			ttlA = db.char[a]
 			ttlB = db.char[b]
 			if ttlA == ttlB then
-				return a > b
+				return a < b
 			else
-				return ttlA > ttlB
+				return ttlA < ttlB
 			end
 		end,
 	}
@@ -98,19 +98,19 @@ do
 	end
 	local tmpSort = {}
 	function populateTooltip(tooltip)
-		tooltip:AddHeader("")
-		tooltip:SetCell(1,1, AddonName, nil, "LEFT", 3)
-		tooltip:AddLine("","","")
-		tooltip:SetCell(2, 1, prefix:format( SecondsToTime(GetQuestResetTime()) ), nil, "LEFT", 2)
-		tooltip:SetCell(2, 3, QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests()) , nil, "RIGHT")
+		tooltip:AddLine()
+		tooltip:SetCell(1,1, AddonName, GameTooltipText, "LEFT", 3)
+		tooltip:AddLine()
+		tooltip:SetCell(2, 1, prefix:format( SecondsToTime(GetQuestResetTime()) ), GameTooltipText, "LEFT", 2)
+		tooltip:SetCell(2, 3, QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests()) , GameTooltipText, "RIGHT")
 		----Element Listing Header
-		tooltip:SetColumnLayout(3, "RIGHT", "LEFT", "CENTER")
-		tooltip:AddHeader()
-		tooltip:SetCell(3, 1, "T", nil, "RIGHT", nil, nil, nil, nil, 16)
+--		tooltip:SetColumnLayout(3, "RIGHT", "LEFT", "CENTER")
+		tooltip:AddLine()
+		tooltip:SetCell(3, 1, "T", GameTooltipText, "RIGHT", nil, nil, nil, nil, 8, 0)
 		tooltip:SetCellScript(3, 1, "OnMouseDown", Tooltip_OnClick_Sort, "class")
-		tooltip:SetCell(3, 2, L["Element"], nil, "LEFT")
+		tooltip:SetCell(3, 2, L["Element"], GameTooltipText, "LEFT")
 		tooltip:SetCellScript(3, 2, "OnMouseDown", Tooltip_OnClick_Sort, "element")
-		tooltip:SetCell(3, 3, L["TTL"], nil, "CENTER")
+		tooltip:SetCell(3, 3, L["TTL"], GameTooltipText, "CENTER")
 		tooltip:SetCellScript(3, 3, "OnMouseDown", Tooltip_OnClick_Sort, "ttl")
 		----Elements of Listing
 
@@ -120,13 +120,13 @@ do
 		end
 		table.sort(tmpSort, sortByFunction)
 		for i = 1, #tmpSort do
-			tooltip:AddLine("", tmpSort[i], date("%c", db.char[ tmpSort[i] ] ) )
+			tooltip:AddLine("|TInterface\\Icons\\INV_Misc_Coin_01:0|t", tmpSort[i], date("%c", db.char[ tmpSort[i] ] ) )
 		end
 
 		tooltip:AddLine()
 		local lastY, lastX = tooltip:AddLine()
-		tooltip:SetCell(lastY, lastX, L["Click: Left for Quest Log"], nil, "LEFT", 2)
-		tooltip:SetCell(lastY, lastX+2, L["Right for SOCD Options"] )	
+		tooltip:SetCell(lastY, lastX, L["Click: Left for Quest Log"], GameTooltipText, "LEFT", 2)
+		tooltip:SetCell(lastY, lastX+2, L["Right for SOCD Options"], GameTooltipText, "RIGHT" )	
 	end
 	
 	local function OnEnter(self, ...)

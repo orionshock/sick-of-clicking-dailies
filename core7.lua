@@ -285,11 +285,11 @@ end
 ---Completion Hook :)
 	function SOCD_GetQuestRewardHook(opt)
 		local title = GetTitleText()
-		Debug("GetQuestRewardHook, IsDaily:", addon:IsDailyQuest(title), "~IsWeekly:", IsWeeklyQuest(title))
+		Debug("GetQuestRewardHook, IsDaily:", addon:IsDailyQuest(title), "~IsWeekly:", addon:IsWeeklyQuest(title))
 		if addon:IsRepeatable(title) then return end
 		
 		if addon:IsDailyQuest(title) then
-			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", title, time()+GetQuestResetTime() )
+			addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", title, (time()+GetQuestResetTime()) - ( (time()+GetQuestResetTime()) % 60 ) )
 		elseif addon:IsWeeklyQuest(title) then
 			addon:SendMessage("SOCD_WEEKLY_QUEST_COMPLETE", title, addon:GetNextWeeklyReset() )
 		end
@@ -297,7 +297,7 @@ end
 	hooksecurefunc("GetQuestReward", SOCD_GetQuestRewardHook )
 	function SOCD_TestDailyEventSend()
 		Debug("Firing Test Events")
-		addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", title or "Test Daily Quest", time()+GetQuestResetTime() )
+		addon:SendMessage("SOCD_DAILIY_QUEST_COMPLETE", title or "Test Daily Quest", (time()+GetQuestResetTime()) - ( (time()+GetQuestResetTime()) % 60 ) )
 		addon:SendMessage("SOCD_WEEKLY_QUEST_COMPLETE", title or "Test Weekly Quest", addon:GetNextWeeklyReset() )
 	end
 	
@@ -352,7 +352,7 @@ do		-- === Weekly Reset Function ===
 		end
 		
 		diff.hour = date("%H", time() + GetQuestResetTime())	--Rip the next Hour and Min of the reset from the API.
-		diff.min = date("%M", time() + GetQuestResetTime())
+		diff.min = date("%M", time() + GetQuestResetTime())		-- will eventually use (time()+GetQuestResetTime()) - ( (time()+GetQuestResetTime()) % 60 ) if needed.
 		return time(diff)
 	end
 end
