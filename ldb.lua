@@ -103,11 +103,11 @@ do
 		----Element Listing Header
 --		tooltip:SetColumnLayout(3, "RIGHT", "LEFT", "CENTER")
 		tooltip:AddLine()
-		tooltip:SetCell(3, 1, "T", GameTooltipText, "RIGHT", nil, nil, nil, nil, 8, 0)
+		tooltip:SetCell(3, 1, "", GameTooltipText, "RIGHT", nil, nil, nil, nil, 8, 0)
 		tooltip:SetCellScript(3, 1, "OnMouseDown", Tooltip_OnClick_Sort, "class")
-		tooltip:SetCell(3, 2, L["Element"], GameTooltipText, "LEFT")
+		tooltip:SetCell(3, 2, L["Quest"], GameTooltipText, "LEFT")
 		tooltip:SetCellScript(3, 2, "OnMouseDown", Tooltip_OnClick_Sort, "element")
-		tooltip:SetCell(3, 3, L["TTL"], GameTooltipText, "CENTER")
+		tooltip:SetCell(3, 3, L["Expires"], GameTooltipText, "CENTER")
 		tooltip:SetCellScript(3, 3, "OnMouseDown", Tooltip_OnClick_Sort, "ttl")
 		----Elements of Listing
 
