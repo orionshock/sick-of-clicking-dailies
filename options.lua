@@ -152,6 +152,14 @@ end
 --[[==========================================================
 	Gossip Options
 --==========================================================]]--
+--=====================================================================
+local old_GossipFrameUpdate = GossipFrameUpdate
+function GossipFrameUpdate()
+	for i=1, NUMGOSSIPBUTTONS do
+		_G["GossipTitleButton" .. i].realType = nil
+	end
+	return old_GossipFrameUpdate()
+end
 
 function GossipFrameOptionsUpdate(...)	--Hook Replace the blizzard function :)
 	local titleButton;
@@ -182,12 +190,13 @@ function GossipFrameOptionsUpdate(...)	--Hook Replace the blizzard function :)
 	end
 end
 
+--===========================================
+
 
 local function GossipButton_OnEvent(self)
 	if self:GetParent():GetText() == nil then return end
 	module:Debug("CheckBox#", self.index,"~Type:", self:GetParent().realType, "~Text:", self:GetParent():GetText() )
-	
-	if self:GetParent().realType == "Gossip" then --we're the gossip option
+	if self:GetParent().realType == "gossip" then --we're the gossip option
 		module:Debug("RealType:", self:GetParent().realType )
 		self:Show()
 		if self.index == 1 then	--if we're the first option we need to off set from the Greeting Text
@@ -196,11 +205,11 @@ local function GossipButton_OnEvent(self)
 		else	--else we need to check what the last guy was doing..
 			module:Debug("Not First Index:", self.index)
 			local anchorFrame = _G["GossipTitleButton"..self.index-1]
-			if anchorFrame.realType =="Gossip" then
+			if anchorFrame.realType =="gossip" then
 				module:Debug("AnchorFrame:", anchorFrame:GetName(), "~PreviousIs:", anchorFrame.realType, "We're and it is, lineup")
 				self:GetParent():SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", 0, -5)
-			elseif anchorFrame.realType ~="Gossip" then
-			module:Debug("AnchorFrame:", anchorFrame:GetName(), "~PreviousIs:", anchorFrame.realType, "We're and it's not, offset to lineup")
+			elseif anchorFrame.realType ~="gossip" then
+				module:Debug("AnchorFrame:", anchorFrame:GetName(), "~PreviousIs:", anchorFrame.realType, "We're and it's not, offset to lineup")
 				self:GetParent():SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", 20, -5)		
 			end
 		end
@@ -210,9 +219,9 @@ local function GossipButton_OnEvent(self)
 			GossipTitleButton1:SetPoint("TOPLEFT", GossipGreetingText, "BOTTOMLEFT", -5, -20)
 		else	--check previous and offset accordingly..
 			local anchorFrame = _G["GossipTitleButton"..self.index-1]
-			if anchorFrame.realType =="Gossip" then
+			if anchorFrame.realType =="gossip" then
 				self:GetParent():SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", -5, -5)
-			elseif anchorFrame.realType ~="Gossip" then
+			elseif anchorFrame.realType ~="gossip" then
 				self:GetParent():SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", 0, -5)		
 			end
 		end
@@ -226,6 +235,7 @@ local function GossipButton_OnEvent(self)
 	else
 --		module:Debug("! Fail")
 	end
+
 end
 
 local function GossipButton_OnClick(self, button, ...)
@@ -254,14 +264,14 @@ function module:CreateGossipOptions()
 	--First Move the Buttons over
 	GossipTitleButton1:SetPoint("TOPLEFT", GossipGreetingText, "BOTTOMLEFT", 20, -20)
 	local check = CreateFrame("CheckButton", nil, GossipTitleButton1)
-	check:SetPoint("RIGHT", GossipTitleButton1, "LEFT", 7, 0)
+	check:SetPoint("RIGHT", GossipTitleButton1, "LEFT", 3, 0)
 	StyleNSizeBox(check)
 	check.index = 1
 	tinsert(gossipButtons, check)
 	for i = 2, 32 do
 		_G["GossipTitleButton"..i]:SetPoint("TOPLEFT", _G["GossipTitleButton"..i-1], "BOTTOMLEFT", 0,0)
 		local check = CreateFrame("CheckButton", nil, _G["GossipTitleButton"..i])
-		check:SetPoint("RIGHT", _G["GossipTitleButton"..i], "LEFT", 7, 0)
+		check:SetPoint("RIGHT", _G["GossipTitleButton"..i], "LEFT", 3, 0)
 		check.index = i
 		StyleNSizeBox(check)
 		tinsert(gossipButtons, check)
