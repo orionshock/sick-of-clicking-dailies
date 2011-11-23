@@ -82,10 +82,10 @@ function addon:OnEnable(event)
 	db = self.db
 	--Events
 	self:RegisterEvent("GOSSIP_SHOW")
---	self:RegisterEvent("QUEST_GREETING")
---	self:RegisterEvent("QUEST_DETAIL")
---	self:RegisterEvent("QUEST_PROGRESS")
---	self:RegisterEvent("QUEST_COMPLETE")
+	self:RegisterEvent("QUEST_GREETING")
+	self:RegisterEvent("QUEST_DETAIL")
+	self:RegisterEvent("QUEST_PROGRESS")
+	self:RegisterEvent("QUEST_COMPLETE")
 
 --Options & Slash command 
 --	local AceConfigDialog = LibStub("AceConfigDialog-3.0")

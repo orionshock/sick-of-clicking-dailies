@@ -264,14 +264,14 @@ function module:CreateGossipOptions()
 	--First Move the Buttons over
 	GossipTitleButton1:SetPoint("TOPLEFT", GossipGreetingText, "BOTTOMLEFT", 20, -20)
 	local check = CreateFrame("CheckButton", nil, GossipTitleButton1)
-	check:SetPoint("RIGHT", GossipTitleButton1, "LEFT", 3, 0)
+	check:SetPoint("TOPRIGHT", GossipTitleButton1, "TOPLEFT", 3, 3)
 	StyleNSizeBox(check)
 	check.index = 1
 	tinsert(gossipButtons, check)
 	for i = 2, 32 do
 		_G["GossipTitleButton"..i]:SetPoint("TOPLEFT", _G["GossipTitleButton"..i-1], "BOTTOMLEFT", 0,0)
 		local check = CreateFrame("CheckButton", nil, _G["GossipTitleButton"..i])
-		check:SetPoint("RIGHT", _G["GossipTitleButton"..i], "LEFT", 3, 0)
+		check:SetPoint("TOPRIGHT", _G["GossipTitleButton"..i], "TOPLEFT", 3, 3)
 		check.index = i
 		StyleNSizeBox(check)
 		tinsert(gossipButtons, check)
