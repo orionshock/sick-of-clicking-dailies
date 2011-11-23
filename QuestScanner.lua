@@ -27,16 +27,15 @@ module:RegisterEvent("ADDON_LOADED")
 local localeQuestNameByID
 
 
-function module:Debug(...)
-	local str = string.join(", ", tostringall(...) )
-	str = str:gsub("([:=>]),", "%1")
-	str = str:gsub(", ([%-])", " %1")
-	ChatFrame5:AddMessage("SOCD-QS: "..str)
+--function module:Debug(...)
+--	local str = string.join(", ", tostringall(...) )
+--	str = str:gsub("([:=>]),", "%1")
+--	str = str:gsub(", ([%-])", " %1")
+--	ChatFrame5:AddMessage("SOCD-QS: "..str)
 --	return str
-end
+--end
 
 function module:PLAYER_LOGIN(event,...)
-	self:Debug(event)
 	LocalizedQuestDictionary = LocalizedQuestDictionary or {}	--Prime the Global Varg
 	localeQuestNameByID = LocalizedQuestDictionary	--Make global Varg local...
 	if LocalizedQuestVersion ~= lastChanged then	--check version
@@ -139,9 +138,9 @@ local ttScanFrame = CreateFrame("frame")
 ttScanFrame:Hide()
 do
 		local function ScanTheTooltip(self, ...)
-		module:Debug("OnTooltipSetElement", self.k)
+		--module:Debug("OnTooltipSetElement", self.k)
 		if (not self.k) or (not self.v) then
-			module:Debug("Invalid Setup for SOCD Scanning")
+			--module:Debug("Invalid Setup for SOCD Scanning")
 			ttScanFrame:Hide()
 		end
 		local titleText = (ttlt:GetText() or ""):trim()
@@ -155,11 +154,11 @@ do
 
 		self.count = self.count + 1
 
-		module:Debug("Cached:", self.k, "-->", titleText )
+		--module:Debug("Cached:", self.k, "-->", titleText )
 
 		local id, qtype = next(self.t, self.k)
 		if not id or not qtype then
-			module:Debug("Reached end of Table. Total Scanned:", self.count)
+			--module:Debug("Reached end of Table. Total Scanned:", self.count)
 			if self.finishfunc then
 				self.finishfunc()
 			end
@@ -170,7 +169,7 @@ do
 		end
 		self.k = id
 		self.v = qtype
-		module:Debug("Showing scan frame:")
+		--module:Debug("Showing scan frame:")
 		ttScanFrame:Show()
 		return
 	end
@@ -191,7 +190,7 @@ do
 
 end
 function module:StartQuestScan()
-	self:Debug("StartingTooltip Scan - QUEST")
+	--self:Debug("StartingTooltip Scan - QUEST")
 	local id, qtype = next(qTable)
 	tt.t = qTable
 	tt.k = id
@@ -213,7 +212,7 @@ function module:StartQuestScan()
 end
 
 function module:StartItemScan()
-	self:Debug("Starting Tooltip Scan - ITEMS")
+	--self:Debug("Starting Tooltip Scan - ITEMS")
 	local id, name = next(iTable)
 	tt.t = iTable
 	tt.k = id
@@ -228,7 +227,7 @@ function module:StartItemScan()
 end
 
 function module:StopScan(info)
-	self:Debug("Stopping Tooltip Scanning?")
+	--self:Debug("Stopping Tooltip Scanning?")
 	ttScanFrame:Hide()
 end
 

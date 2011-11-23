@@ -4,27 +4,28 @@ local AddonName, AddonParent = ...
 local module = AddonParent:NewModule("LDB", "AceEvent-3.0")
 local SortedQuestList, questsCompleted = {}
 local L = LibStub("AceLocale-3.0"):GetLocale(AddonName)
+local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 
 local SecondsToTime, GetQuestResetTime = SecondsToTime, GetQuestResetTime
 local ldbObj, LibDataBroker, db, SpecialQuestResets, playerName, LibQTip
 
-function module:Debug(...)
-	local str = string.join(", ", tostringall(...) )
-	str = str:gsub("([:=>]),", "%1")
-	str = str:gsub(", ([%-])", " %1")
-	ChatFrame5:AddMessage("SOCD-LDB: "..str)
-	return str
-end
+--function module:Debug(...)
+	--local str = string.join(", ", tostringall(...) )
+	--str = str:gsub("([:=>]),", "%1")
+	--str = str:gsub(", ([%-])", " %1")
+	--ChatFrame5:AddMessage("SOCD-LDB: "..str)
+	--return str
+--end
 
 
 function module:OnInitialize()
-	self:Debug("OnInit")
+	--self:Debug("OnInit")
 	LibDataBroker = LibStub("LibDataBroker-1.1", true)
 	LibQTip = LibStub('LibQTip-1.0', true)
 end
 
 function module:OnEnable()
-	self:Debug("OnEnable")
+	--self:Debug("OnEnable")
 
 	db = AddonParent.db
 	
@@ -39,13 +40,13 @@ function module:OnEnable()
 end
 
 function module:SOCD_DAILIY_QUEST_COMPLETE(event, title, ttl)
-	self:Debug(event, title, ttl)
+	--self:Debug(event, title, ttl)
 	if (not title) or (not ttl) then return end
 	db.char[title] = ttl
 	db.realm.questLog[playerName][title] = ttl
 end
 function module:SOCD_WEEKLY_QUEST_COMPLETE(event, title, ttl)
-	self:Debug(event, title, ttl)
+	--self:Debug(event, title, ttl)
 	if (not title) or (not ttl) then return end
 	db.char[title] = ttl
 	db.realm.questLog[playerName][title] = ttl
@@ -143,8 +144,16 @@ do
 		--LibQTip:Release(self.tooltip)
 		--self.tooltip = nil
 	end
-	local function OnClick(self, ...)
-		--module:Debug("OnClick", self, ...)
+	local function OnClick(self, button, ...)
+		if button == "LeftButton" then
+			ToggleFrame(QuestLogFrame)
+		elseif button == "RightButton" then
+			if  AceConfigDialog.OpenFrames[AddonName] then
+				AceConfigDialog:Close(AddonName)
+			else
+				AceConfigDialog:Open(AddonName)
+			end
+		end
 	end
 
 	function module:CreateLDB()
@@ -186,7 +195,7 @@ end
 function module:PruneDB(FoceClean)
 	--self:Debug("Pruning non-existant DB")
 	if FoceClean then
-		self:Debug("FORCE CLEAN, CLEARING DB")
+		--self:Debug("FORCE CLEAN, CLEARING DB")
 		for k,v in pairs(db.char) do
 			db.char[k] = nil
 		end
@@ -195,23 +204,23 @@ function module:PruneDB(FoceClean)
 				questlog[quest] = nil
 			end
 		end
-		return self:Debug("FORCE CLEAN COMPLETED")
+		return --self:Debug("FORCE CLEAN COMPLETED")
 	end
-	self:Debug("Clearing Char DB")
+	--self:Debug("Clearing Char DB")
 	for quest, ttl in pairs(db.char) do
-		self:Debug("Quest:", quest, "~TTL: ", date("%c", ttl) )
+		--self:Debug("Quest:", quest, "~TTL: ", date("%c", ttl) )
 		if time() > ttl then
-			self:Debug("Quest Expired")
+			--self:Debug("Quest Expired")
 			db.char[quest] = nil
 		end
 	end
-	self:Debug("Clearing Realm Quest Log")
+	--self:Debug("Clearing Realm Quest Log")
 	for char, questLog in pairs(db.realm.questLog) do
-		self:Debug("Clearing Char:", char)
+		--self:Debug("Clearing Char:", char)
 		for quest, ttl in pairs(questLog) do
-			self:Debug("Quest:", quest, "~TTL: ", date("%c", ttl) )
+			--self:Debug("Quest:", quest, "~TTL: ", date("%c", ttl) )
 			if time() > ttl then
-				self:Debug("Quest Expired")
+				--self:Debug("Quest Expired")
 				questLog[quest] = nil
 			end
 		end

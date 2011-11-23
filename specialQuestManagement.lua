@@ -7,13 +7,13 @@
 local addonName, addon = ...
 local GetLocalizedQuestNameByID = addon.GetLocalizedQuestNameByID
 
-local function Debug(...)
-	local str = string.join(", ", tostringall(...) )
-	str = str:gsub("([:=>]),", "%1")
-	str = str:gsub(", ([%-])", " %1")
-	ChatFrame5:AddMessage("SOCD-SQM: "..str)
-	return str
-end
+--local function Debug(...)
+--	local str = string.join(", ", tostringall(...) )
+--	str = str:gsub("([:=>]),", "%1")
+--	str = str:gsub(", ([%-])", " %1")
+--	ChatFrame5:AddMessage("SOCD-SQM: "..str)
+--	return str
+--end
 
 local function load()
 

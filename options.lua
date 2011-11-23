@@ -10,13 +10,13 @@ local module = AddonParent:NewModule("Options")
 local L = LibStub("AceLocale-3.0"):GetLocale(AddonName)
 local db
 
-function module:Debug(...)
-	local str = string.join(", ", tostringall(...) )
-	str = str:gsub("([:=>]),", "%1")
-	str = str:gsub(", ([%-])", " %1")
-	ChatFrame5:AddMessage("SOCD-OPT: "..str)
-	return str
-end
+--function module:Debug(...)
+	--local str = string.join(", ", tostringall(...) )
+	--str = str:gsub("([:=>]),", "%1")
+	--str = str:gsub(", ([%-])", " %1")
+	--ChatFrame5:AddMessage("SOCD-OPT: "..str)
+	--return str
+--end
 
 function module:OnInitialize()
 	self:CreateInteractionFrame()
@@ -24,7 +24,7 @@ function module:OnInitialize()
 end
 
 function module:OnEnable()
-	self:Debug("OnEnable")
+	--self:Debug("OnEnable")
 	db = AddonParent.db
 	self.frame:RegisterEvent("QUEST_GREETING")
 	self.frame:RegisterEvent("QUEST_PROGRESS")
@@ -35,7 +35,7 @@ end
 
 
 function module:OnDisable()
-	self:Debug("OnDisable")
+	--self:Debug("OnDisable")
 	self.frame:UnregisterEvent("QUEST_GREETING")
 	self.frame:UnregisterEvent("QUEST_PROGRESS")
 	self.frame:UnregisterEvent("QUEST_DETAIL")
@@ -48,14 +48,14 @@ end
 
 
 local function CheckButton_OnClick(self, button)
-	module:Debug("OnClick, Button:", button, "IsChecked:", self:GetChecked() )
+	--module:Debug("OnClick, Button:", button, "IsChecked:", self:GetChecked() )
 	local isChecked = self:GetChecked() and true or false
 	local title = GetTitleText()
 	if isChecked then
-		module:Debug("Option is checked, clearing from disabled quest list")
+		--module:Debug("Option is checked, clearing from disabled quest list")
 		db.profile.status[title] = nil
 	else
-		module:Debug("Option !NOT! checked, adding to disabled quest list")
+		--module:Debug("Option !NOT! checked, adding to disabled quest list")
 		db.profile.status[title] = false
 	end
 end
@@ -82,7 +82,7 @@ local showEvents = {
 local function SOCD_OnEvnet(self, event, ...)
 	if showEvents[event] then
 		if QuestIsDaily() or QuestIsWeekly() or AddonParent:IsRepeatable(GetTitleText()) then
-			module:Debug("Daily/Weekly/Repeatable:", QuestIsDaily() or QuestIsWeekly() or AddonParent:IsRepeatable(GetTitleText()) )
+			--module:Debug("Daily/Weekly/Repeatable:", QuestIsDaily() or QuestIsWeekly() or AddonParent:IsRepeatable(GetTitleText()) )
 			self:Show()
 		else
 			self:Hide()
@@ -180,7 +180,7 @@ function GossipFrameOptionsUpdate(...)	--Hook Replace the blizzard function :)
 		titleButtonIcon:SetVertexColor(1, 1, 1, 1);
 		---------
 		local realType = select(realOption, GetGossipOptions())
-		module:Debug("BlizReplace",titleButton:GetName(), realType)
+		--module:Debug("BlizReplace",titleButton:GetName(), realType)
 		titleButton.realType = realType
 		---------
 		GossipFrame.buttonIndex = GossipFrame.buttonIndex + 1;
@@ -195,21 +195,21 @@ end
 
 local function GossipButton_OnEvent(self)
 	if self:GetParent():GetText() == nil then return end
-	module:Debug("CheckBox#", self.index,"~Type:", self:GetParent().realType, "~Text:", self:GetParent():GetText() )
+	--module:Debug("CheckBox#", self.index,"~Type:", self:GetParent().realType, "~Text:", self:GetParent():GetText() )
 	if self:GetParent().realType == "gossip" then --we're the gossip option
-		module:Debug("RealType:", self:GetParent().realType )
+		--module:Debug("RealType:", self:GetParent().realType )
 		self:Show()
 		if self.index == 1 then	--if we're the first option we need to off set from the Greeting Text
-			module:Debug("FirstIndex, anchor to Greeting Text")
+			--module:Debug("FirstIndex, anchor to Greeting Text")
 			GossipTitleButton1:SetPoint("TOPLEFT", GossipGreetingText, "BOTTOMLEFT", 20, -20)
 		else	--else we need to check what the last guy was doing..
-			module:Debug("Not First Index:", self.index)
+			--module:Debug("Not First Index:", self.index)
 			local anchorFrame = _G["GossipTitleButton"..self.index-1]
 			if anchorFrame.realType =="gossip" then
-				module:Debug("AnchorFrame:", anchorFrame:GetName(), "~PreviousIs:", anchorFrame.realType, "We're and it is, lineup")
+				--module:Debug("AnchorFrame:", anchorFrame:GetName(), "~PreviousIs:", anchorFrame.realType, "We're and it is, lineup")
 				self:GetParent():SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", 0, -5)
 			elseif anchorFrame.realType ~="gossip" then
-				module:Debug("AnchorFrame:", anchorFrame:GetName(), "~PreviousIs:", anchorFrame.realType, "We're and it's not, offset to lineup")
+				--module:Debug("AnchorFrame:", anchorFrame:GetName(), "~PreviousIs:", anchorFrame.realType, "We're and it's not, offset to lineup")
 				self:GetParent():SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", 20, -5)		
 			end
 		end
@@ -239,7 +239,7 @@ local function GossipButton_OnEvent(self)
 end
 
 local function GossipButton_OnClick(self, button, ...)
-	module:Debug("CheckBox#", self.index, "~Text:", self:GetParent():GetText() )
+	--module:Debug("CheckBox#", self.index, "~Text:", self:GetParent():GetText() )
 	local isChecked = self:GetChecked() and true or nil
 	local gossipText = self:GetParent():GetText():trim()
 	db.profile.enabledGossip[gossipText] = isChecked
@@ -255,7 +255,6 @@ local function StyleNSizeBox(frame)
 	frame:SetScript("OnClick", GossipButton_OnClick)
 	frame:SetScript("OnEvent", GossipButton_OnEvent)
 	frame:RegisterEvent("GOSSIP_SHOW")
---	frame:Hide()
 end
 
 function module:CreateGossipOptions()

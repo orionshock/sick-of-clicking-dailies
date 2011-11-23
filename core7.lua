@@ -30,13 +30,13 @@ addon.version = projectVersion.."-"..projectRevision
 local db
 --local L = LibStub("AceLocale-3.0"):GetLocale(addonName)
 
-local function Debug(...)
-	local str = string.join(", ", tostringall(...) )
-	str = str:gsub("([:=>]),", "%1")
-	str = str:gsub(", ([%-])", " %1")
-	ChatFrame5:AddMessage("SOCD-Debug: "..str)
-	return str
-end
+--local function Debug(...)
+	--local str = string.join(", ", tostringall(...) )
+	--str = str:gsub("([:=>]),", "%1")
+	--str = str:gsub(", ([%-])", " %1")
+	--ChatFrame5:AddMessage("SOCD-Debug: "..str)
+	--return str
+--end
 
 addon.db_defaults = {
 	char = {},	--basically the char table is the quest log of dailies/weeklys completed.
@@ -258,7 +258,7 @@ function addon:QUEST_COMPLETE(event, ...)
 			--Has quest option but we don't have a selection, means that this is a new quest that isn't in the DB.
 		if (GetQuestItemInfo("choice", 1) ~= "") and (not rewardOpt) then
 			if not self:IsRepeatable(title) then
-				print(Debug("Sick Of Clicking Dailies: Found a new Quest:", title, " It has reward choices but is not yet added to the addon. Please report it at www.wowace.com"))
+				print("Sick Of Clicking Dailies: Found a new Quest: ", title, " It has reward choices but is not yet added to the addon. Please report it at www.wowace.com")
 				return
 			else
 				return
