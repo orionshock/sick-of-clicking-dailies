@@ -4,9 +4,11 @@ license-output: LICENSE.txt
 
 externals:
 	libs/CallbackHandler-1.0:
-		url: svn://svn.wowace.com/wow/callbackhandler/mainline/tags/1.0.3/CallbackHandler-1.0
+		url: svn://svn.wowace.com/wow/callbackhandler/mainline/trunk
+		tag: latest
 	libs/LibStub:
-		url: svn://svn.wowace.com/wow/libstub/mainline/tags/1.0
+		url: svn://svn.wowace.com/wow/libstub/mainline/trunk
+		tag: latest
 
 
 	libs/AceAddon-3.0:

@@ -1,25 +1,5 @@
-<!--
-$Revision$
-<script file="libs\ "/>
-
-Externals:
-
-LibStub.lua http://svn.wowace.com/wowace/tags/LibStub/1.0/LibStub.lua
-
-AceAddon-3.0 http://svn.wowace.com/wowace/branches/Ace3/Beta/AceAddon-3.0/
-CallbackHandler-1.0 http://svn.wowace.com/wowace/branches/Ace3/Beta/CallbackHandler-1.0/
-AceEvent-3.0 http://svn.wowace.com/wowace/branches/Ace3/Beta/AceEvent-3.0/
-AceDB-3.0 http://svn.wowace.com/wowace/branches/Ace3/Beta/AceDB-3.0/
-AceConfig-3.0 http://svn.wowace.com/wowace/branches/Ace3/Beta/AceConfig-3.0/
-AceGUI-3.0 http://svn.wowace.com/wowace/branches/Ace3/Beta/AceGUI-3.0/
-AceLocale-3.0 http://svn.wowace.com/wowace/branches/Ace3/Beta/AceLocale-3.0/
-
--->
-
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
-
-
 <Include file="libs\AceAddon-3.0\AceAddon-3.0.xml"/>
 <Include file="libs\AceConsole-3.0\AceConsole-3.0.xml"/>
 <Include file="libs\AceEvent-3.0\AceEvent-3.0.xml"/>
@@ -29,6 +9,4 @@ AceLocale-3.0 http://svn.wowace.com/wowace/branches/Ace3/Beta/AceLocale-3.0/
 <Include file="libs\AceConfig-3.0\AceConfig-3.0.xml"/>
 <Include file="libs\AceLocale-3.0\AceLocale-3.0.xml"/>
 <Include file="libs\LibQTip-1.0\lib.xml"/>
-
-
 </Ui>
