@@ -53,10 +53,10 @@ local function CheckButton_OnClick(self, button)
 	local title = GetTitleText()
 	if isChecked then
 		module:Debug("Option is checked, clearing from disabled quest list")
-		db.profile.disabledQuests[title] = nil
+		db.profile.status[title] = nil
 	else
 		module:Debug("Option !NOT! checked, adding to disabled quest list")
-		db.profile.disabledQuests[title] = false
+		db.profile.status[title] = false
 	end
 end
 
@@ -94,7 +94,7 @@ end
 
 local function Frame_OnShow(self)
 	local title = GetTitleText():trim()
-	if db.profile.disabledQuests[title] == false then
+	if db.profile.status[title] == false then
 		self.check:SetChecked(false)
 	else
 		self.check:SetChecked(true)
@@ -278,3 +278,41 @@ function module:CreateGossipOptions()
 	end
 end
 
+--============================================================================
+--Ace Options Table::
+--============================================================================
+
+function AddonParent.GetOptionsTable()
+	local tmp = {}
+	local t = { name = AddonName, type = "group", handler = addon,
+		args = {
+			info = {type = "description", name = L["MainOptionsDesc"], order = 1 },
+			profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(db),
+			rewards = { name = L["Quest Reward Choices"], type = "group", order = 10,
+				args = {
+				},
+			},
+			status = { name = L["Disabled Quests"], type = "group", order = 5,
+				args = {
+					desc = { type = "description", name = L["Listed here are disabled quests, when unchecked they will be enabled and will be removed here"], order = 1 },
+					holder = { name = "Disabled Quests", type = "multiselect", width = "double",
+						get = function(info, arg) return not db.profile.status[arg] end,
+						set = function(info, arg, value) db.profile.status[arg] = nil end,
+						values = function(info) wipe(tmp) for k,v in pairs(db.profile.status) do tmp[k] = k end return tmp end,
+					},
+				},
+			},
+		},
+	}
+	t.args.profiles.order = -10
+	for questName, rewardTable in pairs(db.global.reward) do
+		t.args.rewards.args[questName] = {
+			name = function(info) return info[#info] end,
+			type = "select", width = "double",
+			get = function(info) return db.profile.reward[info[#info]] end,
+			set = function(info, value) db.profile.reward[info[#info]] = value end,
+			values = function(info) return db.global.reward[info[#info]] end,
+		}
+	end
+	return t
+end

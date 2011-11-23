@@ -41,7 +41,7 @@ end
 addon.db_defaults = {
 	char = {},	--basically the char table is the quest log of dailies/weeklys completed.
 	profile = {
-			disabledQuests = {},
+			--status = {},
 			enabledGossip = {},
 		},
 	realm = {
@@ -88,19 +88,15 @@ function addon:OnEnable(event)
 	self:RegisterEvent("QUEST_COMPLETE")
 
 --Options & Slash command 
---	local AceConfigDialog = LibStub("AceConfigDialog-3.0")
---	LibStub("AceConfig-3.0"):RegisterOptionsTable(addonName, self.GetOptionsTable)
---	self:RegisterChatCommand("socd", function()
---		if self.QuestNameScanned then
---			if  AceConfigDialog.OpenFrames[addonName] then
---				AceConfigDialog:Close(addonName)
---			else
---				AceConfigDialog:Open(addonName)
---			end
---		else
---			print("|cff9933FFSickOfClickingDailies|r --", L["Still Setting up localizations please wait"])
---		end
---	end)
+	local AceConfigDialog = LibStub("AceConfigDialog-3.0")
+	LibStub("AceConfig-3.0"):RegisterOptionsTable(addonName, self.GetOptionsTable)
+	self:RegisterChatCommand("socd", function()
+		if  AceConfigDialog.OpenFrames[addonName] then
+			AceConfigDialog:Close(addonName)
+		else
+			AceConfigDialog:Open(addonName)
+		end
+	end)
 
 end
 
@@ -129,7 +125,7 @@ function addon:IsRepeatable(name)
 end
 
 function addon:IsDisabled(title)
-	return db.profile.disabledQuests[title] == false
+	return db.profile.status[title] == false
 end
 
 
