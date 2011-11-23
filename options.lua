@@ -286,7 +286,6 @@ function AddonParent.GetOptionsTable()
 	local tmp = {}
 	local t = { name = AddonName, type = "group", handler = addon,
 		args = {
-			info = {type = "description", name = L["MainOptionsDesc"], order = 1 },
 			profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(db),
 			rewards = { name = L["Quest Reward Choices"], type = "group", order = 10,
 				args = {
