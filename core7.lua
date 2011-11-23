@@ -184,7 +184,7 @@ function addon:GOSSIP_SHOW(event)
 		return SelectGossipActiveQuest(index)
 	end
 
-	Debug("Proccessing Gossip ")
+	--Debug("Proccessing Gossip ")
 	proccessGossipOptions( GetGossipOptions() )
 end
 
