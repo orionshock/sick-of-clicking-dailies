@@ -201,7 +201,7 @@ local function GossipButton_OnEvent(self)
 		self:Show()
 		if self.index == 1 then	--if we're the first option we need to off set from the Greeting Text
 			--module:Debug("FirstIndex, anchor to Greeting Text")
-			GossipTitleButton1:SetPoint("TOPLEFT", GossipGreetingText, "BOTTOMLEFT", 20, -20)
+			GossipTitleButton1:SetPoint("TOPLEFT", GossipGreetingText, "BOTTOMLEFT", 10, -20)
 		else	--else we need to check what the last guy was doing..
 			--module:Debug("Not First Index:", self.index)
 			local anchorFrame = _G["GossipTitleButton"..self.index-1]
@@ -216,11 +216,11 @@ local function GossipButton_OnEvent(self)
 	else	--We're something other than a gossip option...
 		self:Hide()
 		if self.index == 1 then	--first index, not gossip, reset to GreetingText
-			GossipTitleButton1:SetPoint("TOPLEFT", GossipGreetingText, "BOTTOMLEFT", -5, -20)
+			GossipTitleButton1:SetPoint("TOPLEFT", GossipGreetingText, "BOTTOMLEFT", -10, -20)
 		else	--check previous and offset accordingly..
 			local anchorFrame = _G["GossipTitleButton"..self.index-1]
 			if anchorFrame.realType =="gossip" then
-				self:GetParent():SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", -5, -5)
+				self:GetParent():SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", -20, -5)
 			elseif anchorFrame.realType ~="gossip" then
 				self:GetParent():SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", 0, -5)		
 			end
@@ -261,14 +261,20 @@ function module:CreateGossipOptions()
 	self.gossipButtons = {}
 	local gossipButtons = self.gossipButtons
 	--First Move the Buttons over
-	GossipTitleButton1:SetPoint("TOPLEFT", GossipGreetingText, "BOTTOMLEFT", 20, -20)
+	-- staring point is -10
+	GossipTitleButton1:SetPoint("TOPLEFT", GossipGreetingText, "BOTTOMLEFT", 10, -20)
+	GossipTitleButton1:SetPoint("RIGHT", GossipGreetingScrollChildFrame, "RIGHT", -20,0)
+	GossipTitleButton1:GetFontString():SetPoint("RIGHT", GossipTitleButton1, "RIGHT")
 	local check = CreateFrame("CheckButton", nil, GossipTitleButton1)
 	check:SetPoint("TOPRIGHT", GossipTitleButton1, "TOPLEFT", 3, 3)
+	
 	StyleNSizeBox(check)
 	check.index = 1
 	tinsert(gossipButtons, check)
 	for i = 2, 32 do
 		_G["GossipTitleButton"..i]:SetPoint("TOPLEFT", _G["GossipTitleButton"..i-1], "BOTTOMLEFT", 0,0)
+		_G["GossipTitleButton"..i]:SetPoint("RIGHT", GossipGreetingScrollChildFrame, "RIGHT", -20,0)
+		_G["GossipTitleButton"..i]:GetFontString():SetPoint("RIGHT", GossipTitleButton1, "RIGHT")
 		local check = CreateFrame("CheckButton", nil, _G["GossipTitleButton"..i])
 		check:SetPoint("TOPRIGHT", _G["GossipTitleButton"..i], "TOPLEFT", 3, 3)
 		check.index = i
