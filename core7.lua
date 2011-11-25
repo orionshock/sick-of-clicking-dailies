@@ -161,6 +161,8 @@ end
 local function scanQuestsAvailable(title, _, _, isDaily, isRepeatable, ...)
 	if title and (isDaily or isRepeatable ) then
 		addon:CacheQuestName(title, isDaily, nil, isRepeatable)	--Only Cache Daily and Weekly Quests, this list will help with the LDB Tracker to filter out Repeatable Quests.
+	else
+		return
 	end
 	return 	scanQuestsAvailable(...)
 end
