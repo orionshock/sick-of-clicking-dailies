@@ -102,6 +102,7 @@ end
 
 function addon:CacheQuestName(name, isDaily, isWeekly, isRepeatable)
 --	Debug("Caching QuestName", name, (isDaily and "d") or (isWeekly and "w") or (isRepeatable and "r") )
+	if not name then return end
 	if isDaily then
 		db.global.questCache[name] = "d"
 	elseif isWeekly then
@@ -157,6 +158,13 @@ local function procGetGossipActiveQuests(index, title, _, _, isComplete, ...)
 	end
 end
 
+local function scanQuestsAvailable(title, _, _, isDaily, isRepeatable, ...)
+	if title and (isDaily or isRepeatable ) then
+		addon:CacheQuestName(title, isDaily, nil, isRepeatable)	--Only Cache Daily and Weekly Quests, this list will help with the LDB Tracker to filter out Repeatable Quests.
+	end
+	return 	scanQuestsAvailable(...)
+end
+
 local function proccessGossipOptions( ... )
 	for i = 1, select("#", ...), 2 do
 		local txt, tpe = select(i, ...)
@@ -174,7 +182,10 @@ function addon:GOSSIP_SHOW(event)
 	local Nindex, Ntitle = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
 	local Aindex, Atitle, AisComplete = procGetGossipActiveQuests(1, GetGossipActiveQuests() )
 	
-	if IsShiftKeyDown() then return end
+	if IsShiftKeyDown() then 
+		scanQuestsAvailable(GetGossipAvailableQuests())
+		return
+	end
 	if Nindex then
 	--	Debug("Found Available, Quest:", Ntitle, "~IsDisabled:", self:IsDisabled(Ntitle) )
 		return SelectGossipAvailableQuest(Nindex)
@@ -209,7 +220,9 @@ function addon:QUEST_GREETING(event, ...)
 	--	Debug("Quest:", title, "~isComplete:", isComplete, "~IsDisabled:", self:IsDisabled(title) )
 		if procGetGossipActiveQuests(i, title, _, _, isComplete) then
 		--	Debug("turning in quest:", title)
-			return SelectActiveQuest(i)
+			if not IsShiftKeyDown() then
+				return SelectActiveQuest(i)
+			end
 		end
 	end
 end
