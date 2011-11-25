@@ -170,18 +170,20 @@ end
 
 function addon:GOSSIP_SHOW(event)
 --	Debug(event)
-	if IsShiftKeyDown() then return end
 
-	local index, title = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
-	if index then
-	--	Debug("Found Available, Quest:", title, "~IsDisabled:", self:IsDisabled(title) )
-		return SelectGossipAvailableQuest(index)
+	local Nindex, Ntitle = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
+	local Aindex, Atitle, AisComplete = procGetGossipActiveQuests(1, GetGossipActiveQuests() )
+	
+	if IsShiftKeyDown() then return end
+	if Nindex then
+	--	Debug("Found Available, Quest:", Ntitle, "~IsDisabled:", self:IsDisabled(Ntitle) )
+		return SelectGossipAvailableQuest(Nindex)
 	end
 
-	local index, title, isComplete = procGetGossipActiveQuests(1, GetGossipActiveQuests() )
-	if index then
-	--	Debug("Found Active Quest that is Complete:", title, "~IsComplete:", isComplete, "~IsDisabled:", self:IsDisabled(title) )
-		return SelectGossipActiveQuest(index)
+
+	if Aindex then
+	--	Debug("Found Active Quest that is Complete:", Atitle, "~IsComplete:", AisComplete, "~IsDisabled:", self:IsDisabled(Atitle) )
+		return SelectGossipActiveQuest(Aindex)
 	end
 
 	--Debug("Proccessing Gossip ")
@@ -191,14 +193,15 @@ end
 --Shown when the NPC Dosn't want to talk
 function addon:QUEST_GREETING(event, ...)
 --	Debug(event, ...)
-	if IsShiftKeyDown() then return end
 	local numActiveQuests = GetNumActiveQuests()
 	local numAvailableQuests = GetNumAvailableQuests()
 --	Debug("Looking @ AvailableQuests")
 	for i = 1, numAvailableQuests do
 		local title, _, isDaily, isRepeatable = GetAvailableTitle(i), GetAvailableQuestInfo(i)
 		if procGetGossipAvailableQuests(i, title, nil, nil, isDaily, isRepeatable) then
-			return SelectAvailableQuest(i)
+			if not IsShiftKeyDown() then
+				return SelectAvailableQuest(i)
+			end
 		end
 	end
 	for i = 1, numActiveQuests do
@@ -217,10 +220,10 @@ end
 function addon:QUEST_DETAIL(event, ...)
 	local title = GetTitleText()
 --	Debug(event, title, ...)
-	if IsShiftKeyDown() then return end
 --	Debug(event, title, "~IsDaily:", QuestIsDaily() and "true" or "false", "~QuestIsWeekly:", QuestIsWeekly() and "true" or "false", "~IsRepeatable:", addon:IsRepeatable(title) and "true" or "false" )
 	if QuestIsDaily() or QuestIsWeekly() or addon:IsRepeatable(title) then
 		addon:CacheQuestName(title, QuestIsDaily(), QuestIsWeekly() )
+		if IsShiftKeyDown() then return end
 		if self:IsDisabled(title) then
 		--	Debug("Ignoring Quest")
 			return
