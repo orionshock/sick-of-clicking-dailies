@@ -43,6 +43,7 @@ function module:SOCD_DAILIY_QUEST_COMPLETE(event, title, ttl)
 	--self:Debug(event, title, ttl)
 	if (not title) or (not ttl) then return end
 	db.char[title] = ttl
+	db.realm.questLog[playerName] = db.realm.questLog[playerName] or {}
 	db.realm.questLog[playerName][title] = ttl
 end
 function module:SOCD_WEEKLY_QUEST_COMPLETE(event, title, ttl)
