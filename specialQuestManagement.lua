@@ -104,8 +104,6 @@ local function load()
 	end
 	function addon:SpecialFixQuest( questID )
 		questID = tonumber(questID)
-		print("Special Fix Quest", questID, specialFixQuestList[questID] )
-
 		if specialFixQuestList[questID] then
 			return true
 		end
