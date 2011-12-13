@@ -91,12 +91,23 @@ local function load()
 		[ GetLocalizedQuestNameByID(14059) ] = thxgivingRewardOpts,	--"We're Out of Cranberry Chutney Again?"
 		--== Cata ==--	
 	}
+	local specialFixQuestList = {
+		[11006] = true,	--More Shadow Dust
+	}
 
 	function addon:IsChoiceQuest(name)
 		--Debug("IsChoiceQuest", name, self.db.profile.reward[name])
 		name = name:trim()
 		if self.db.profile.reward[name] then
 			return self.db.profile.reward[name] or -1
+		end
+	end
+	function addon:SpecialFixQuest( questID )
+		questID = tonumber(questID)
+		print("Special Fix Quest", questID, specialFixQuestList[questID] )
+
+		if specialFixQuestList[questID] then
+			return true
 		end
 	end
 end

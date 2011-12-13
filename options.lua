@@ -81,7 +81,7 @@ local showEvents = {
 
 local function SOCD_OnEvnet(self, event, ...)
 	if showEvents[event] then
-		if QuestIsDaily() or QuestIsWeekly() or AddonParent:IsRepeatable(GetTitleText()) then
+		if QuestIsDaily() or QuestIsWeekly() or AddonParent:IsRepeatable(GetTitleText()) or AddonParent:SpecialFixQuest( GetQuestID() ) then
 			--module:Debug("Daily/Weekly/Repeatable:", QuestIsDaily() or QuestIsWeekly() or AddonParent:IsRepeatable(GetTitleText()) )
 			self:Show()
 		else
@@ -172,7 +172,8 @@ function GossipFrameOptionsUpdate(...)	--Hook Replace the blizzard function :)
 		end
 		titleButton = _G["GossipTitleButton" .. GossipFrame.buttonIndex];
 		titleButton:SetText(select(i, ...));
-		GossipResize(titleButton);
+		titleButton:Show();
+
 		titleButton:SetID(titleIndex);
 		titleButton.type="Gossip";
 		titleButtonIcon = _G[titleButton:GetName() .. "GossipIcon"];
@@ -186,7 +187,19 @@ function GossipFrameOptionsUpdate(...)	--Hook Replace the blizzard function :)
 		GossipFrame.buttonIndex = GossipFrame.buttonIndex + 1;
 		titleIndex = titleIndex + 1;
 		realOption = titleIndex*2
+		GossipResize(titleButton);
 		titleButton:Show();
+	end
+end
+
+function Unused_GossipResize(titleButton)
+	print( titleButton:GetName(), "String Height", titleButton:GetFontString():GetHeight() )
+	if titleButton:GetFontString() then
+		print( "Has Font string",  titleButton:GetTextHeight() )
+		titleButton:SetHeight( titleButton:GetTextHeight() + 2);
+	else
+		print( "no font string?", titleButton:GetFontString())
+		titleButton:SetHeight( titleButton:GetTextHeight() + 2);
 	end
 end
 
@@ -263,8 +276,8 @@ function module:CreateGossipOptions()
 	--First Move the Buttons over
 	-- staring point is -10
 	GossipTitleButton1:SetPoint("TOPLEFT", GossipGreetingText, "BOTTOMLEFT", 10, -20)
-	GossipTitleButton1:SetPoint("RIGHT", GossipGreetingScrollChildFrame, "RIGHT", -20,0)
-	GossipTitleButton1:GetFontString():SetPoint("RIGHT", GossipTitleButton1, "RIGHT")
+	--GossipTitleButton1:SetPoint("RIGHT", GossipGreetingScrollChildFrame, "RIGHT", -20,0)
+	--GossipTitleButton1:GetFontString():SetPoint("RIGHT", GossipTitleButton1, "RIGHT")
 	local check = CreateFrame("CheckButton", nil, GossipTitleButton1)
 	check:SetPoint("TOPRIGHT", GossipTitleButton1, "TOPLEFT", 3, 3)
 	
@@ -273,8 +286,8 @@ function module:CreateGossipOptions()
 	tinsert(gossipButtons, check)
 	for i = 2, 32 do
 		_G["GossipTitleButton"..i]:SetPoint("TOPLEFT", _G["GossipTitleButton"..i-1], "BOTTOMLEFT", 0,0)
-		_G["GossipTitleButton"..i]:SetPoint("RIGHT", GossipGreetingScrollChildFrame, "RIGHT", -20,0)
-		_G["GossipTitleButton"..i]:GetFontString():SetPoint("RIGHT", GossipTitleButton1, "RIGHT")
+--		_G["GossipTitleButton"..i]:SetPoint("RIGHT", GossipGreetingScrollChildFrame, "RIGHT", -5,0)
+--		_G["GossipTitleButton"..i]:GetFontString():SetPoint("RIGHT", _G["GossipTitleButton"..i], "RIGHT")
 		local check = CreateFrame("CheckButton", nil, _G["GossipTitleButton"..i])
 		check:SetPoint("TOPRIGHT", _G["GossipTitleButton"..i], "TOPLEFT", 3, 3)
 		check.index = i

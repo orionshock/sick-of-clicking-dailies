@@ -133,7 +133,7 @@ end
 --Shown when the NPC wants to talk..
 local function procGetGossipAvailableQuests(index, title, _, _, isDaily, isRepeatable, ...)
 --	Debug("IttGossipAvail:", title, " ~IsDaily: ", isDaily and "true" or "false", "~IsRepeatable: ", isRepeatable and "true" or "false")
-	if (index and title) and (isDaily or isRepeatable or addon:IsWeeklyQuest(title) ) then
+	if (index and title) and (isDaily or isRepeatable or addon:IsWeeklyQuest(title) or addon:SpecialFixQuest( GetQuestID() ) ) then
 		addon:CacheQuestName(title, isDaily, nil, isRepeatable)	--Only Cache Daily and Weekly Quests, this list will help with the LDB Tracker to filter out Repeatable Quests.
 		if not addon:IsDisabled(title) then
 		--	Debug("found:", title)
@@ -151,7 +151,7 @@ end
 
 local function procGetGossipActiveQuests(index, title, _, _, isComplete, ...)
 --	Debug("IttGossipActive:", index, title, "~IsComplete:", isComplete, "~IsDaily:", addon:IsDailyQuest(title) or addon:IsWeeklyQuest(title))
-	if (addon:IsDailyQuest(title) or addon:IsWeeklyQuest(title)) and isComplete then
+	if (addon:IsDailyQuest(title) or addon:IsWeeklyQuest(title) or addon:SpecialFixQuest( GetQuestID() ) ) and isComplete then
 		return index, title, isComplete
 	elseif ... then
 		return procGetGossipActiveQuests(index+1, ...)
@@ -236,7 +236,7 @@ function addon:QUEST_DETAIL(event, ...)
 	local title = GetTitleText()
 --	Debug(event, title, ...)
 --	Debug(event, title, "~IsDaily:", QuestIsDaily() and "true" or "false", "~QuestIsWeekly:", QuestIsWeekly() and "true" or "false", "~IsRepeatable:", addon:IsRepeatable(title) and "true" or "false" )
-	if QuestIsDaily() or QuestIsWeekly() or addon:IsRepeatable(title) then
+	if QuestIsDaily() or QuestIsWeekly() or addon:IsRepeatable(title) or addon:SpecialFixQuest( GetQuestID() ) then
 		addon:CacheQuestName(title, QuestIsDaily(), QuestIsWeekly() )
 		if IsShiftKeyDown() then return end
 		if self:IsDisabled(title) then
@@ -257,7 +257,7 @@ function addon:QUEST_PROGRESS(event, ...)
 	if IsShiftKeyDown() then return end
 	if not IsQuestCompletable() then return end
 	if self:IsDisabled(title) then return end
-	if ( QuestIsDaily() or QuestIsWeekly() or addon:IsRepeatable(title) ) then
+	if ( QuestIsDaily() or QuestIsWeekly() or addon:IsRepeatable(title) or addon:SpecialFixQuest( GetQuestID() ) ) then
 		self:CacheQuestName(title, QuestIsDaily(), QuestIsWeekly() )
 	--	Debug("Completing Quest:", title)
 		CompleteQuest()
@@ -270,7 +270,7 @@ function addon:QUEST_COMPLETE(event, ...)
 	if IsShiftKeyDown() then return end
 	local title = GetTitleText()
 	if self:IsDisabled(title) then return end
-	if QuestIsDaily() or QuestIsWeekly() or self:IsRepeatable(title) then
+	if QuestIsDaily() or QuestIsWeekly() or self:IsRepeatable(title) or addon:SpecialFixQuest( GetQuestID() ) then
 	--	Debug("Quest Enabled & Daily/Weekly/Repeatable")
 		local rewardOpt = self:IsChoiceQuest(title)
 			--Has quest option but we don't have a selection, means that this is a new quest that isn't in the DB.
