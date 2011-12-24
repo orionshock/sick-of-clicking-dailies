@@ -53,12 +53,12 @@ local qTable = {
 		--== Burrning Crusade ==--
 		[11545] = daily,	--"A Charitable Donation"
 		[11548] = daily,	--"Your Continued Support"
-		[11379] = daily, --SuperHotStew
-		[11381] = daily, --SoupForTheSoul
-		[11377] = daily, --RevengeIsTasty
-		[11380] = daily, --Manalicious
-		[11515] = daily, --BloodForBlood
-		[11544] = daily, --AtamalArmaments
+		[11379] = daily,	--SuperHotStew
+		[11381] = daily,	--SoupForTheSoul
+		[11377] = daily,	--RevengeIsTasty
+		[11380] = daily,	--Manalicious
+		[11515] = daily,	--BloodForBlood
+		[11544] = daily,	--AtamalArmaments
 		--== Wrath Of the Lich King ==--
 		--WG Weekly Quests
 		[13195] = weekly,	--"A Rare Herb"
@@ -109,7 +109,7 @@ local qTable = {
 		[14058] = daily,	--"She Says Potato"
 		[14059] = daily,	--"We're Out of Cranberry Chutney Again?"
 		
-		[11548] = daily,	--"Hand of the Oracles"	--Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
+		[12689] = daily,	--"Hand of the Oracles"	--Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
 		[12582] = daily,	--"Frenzyheart Champion"	--Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
 		[13846] = daily,	-- "Contributin' To The Cause"	--AC gold for rep quest
 
