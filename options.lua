@@ -301,7 +301,8 @@ end
 --============================================================================
 
 function AddonParent.GetOptionsTable()
-	local tmp = {}
+	local qtmp = {}
+	local gtmp = {}
 	local t = { name = AddonName, type = "group", handler = addon,
 		args = {
 			profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(db),
@@ -309,13 +310,23 @@ function AddonParent.GetOptionsTable()
 				args = {
 				},
 			},
-			status = { name = L["Disabled Quests"], type = "group", order = 5,
+			qstatus = { name = L["Disabled Quests"], type = "group", order = 5,
 				args = {
 					desc = { type = "description", name = L["Listed here are disabled quests, when unchecked they will be enabled and will be removed here"], order = 1 },
-					holder = { name = "Disabled Quests", type = "multiselect", width = "double",
+					holder = { name = "Disabled Quests", type = "multiselect", width = "full",
 						get = function(info, arg) return not db.profile.status[arg] end,
 						set = function(info, arg, value) db.profile.status[arg] = nil end,
-						values = function(info) wipe(tmp) for k,v in pairs(db.profile.status) do tmp[k] = k end return tmp end,
+						values = function(info) wipe(qtmp) for k,v in pairs(db.profile.status) do qtmp[k] = k end return qtmp end,
+					},
+				},
+			},
+			gstatus = { name = L["Enabled Gossip"], type = "group", order = 5,
+				args = {
+					desc = { type = "description", name = L["Listed here are Enabled Gossip Options, when unchecked they will be disabled and be removed here"], order = 1 },
+					holder = { name = "Enabled Gossip", type = "multiselect", width = "full",
+						get = function(info, arg) return db.profile.enabledGossip[arg] end,
+						set = function(info, arg, value) db.profile.enabledGossip[arg] = nil end,
+						values = function(info) wipe(gtmp) for k,v in pairs(db.profile.enabledGossip) do gtmp[k] = k end return gtmp end,
 					},
 				},
 			},
