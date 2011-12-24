@@ -24,7 +24,7 @@ local function load()
 		[ GetLocalizedQuestNameByID(11548) ] = false,	--"Your Continued Support"
 	
 		--== Wrath Of the Lich King ==--
-		[ GetLocalizedQuestNameByID(11548) ] = false,	--"Hand of the Oracles"	--Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
+		[ GetLocalizedQuestNameByID(12689) ] = false,	--"Hand of the Oracles"	--Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
 		[ GetLocalizedQuestNameByID(12582) ] = false,	--"Frenzyheart Champion"	--Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
 		[ GetLocalizedQuestNameByID(13846) ] = false,	-- "Contributin' To The Cause"	--AC gold for rep quest
 		--== Cata ==--
@@ -93,6 +93,7 @@ local function load()
 	}
 	local specialFixQuestList = {
 		[11006] = true,	--More Shadow Dust
+		[12618] = true, --Blessing of Zim'Torga
 	}
 
 	function addon:IsChoiceQuest(name)
