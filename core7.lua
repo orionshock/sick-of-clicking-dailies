@@ -173,7 +173,7 @@ local function proccessGossipOptions( ... )
 		local txt, tpe = select(i, ...)
 		if tpe == "gossip" then
 			if db.profile.enabledGossip[txt] then
-				SelectGossipOption( i+1/2 )
+				SelectGossipOption( (i+1)/2 )
 			end
 		end
 	end
