@@ -6,7 +6,7 @@
 
 		final goal here is to provide the lists of quests & what toons have not completed that quest.
 	
-	Written By: @project-author@
+	Written By: OrionShock
 ]]--
 
 local AddoName, AddonParent = ..., LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")

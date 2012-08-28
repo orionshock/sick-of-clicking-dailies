@@ -7,7 +7,7 @@ This version comes with a built in config system made with Ace3's Config GUI Lib
 @project-abbreviated-hash@
 
 =====================================================================================================
- Copyright (c) 2010 by Orionshock
+ Copyright (c) 2010 by OrionShock
 
 	see included "LICENSE.txt" file with zip for details on copyright.
 

@@ -1,6 +1,6 @@
 --[[
 	Sick Of Clicking Dailies? - Locale file for koKR
-	Written By: @project-author@
+	Written By: OrionShock
 
 ]]--
 local addonName = ...

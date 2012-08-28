@@ -1,6 +1,6 @@
 --[[
 	Sick Of Clicking Dailies? - Quest Scanner
-	Written By: @project-author@
+	Written By: OrionShock
 ]]--
 
 local projectVersion = "@project-version@"

@@ -1,6 +1,6 @@
 --[[
 	Sick Of Clicking Dailies? - DataBroker module
-	Written By: @project-author@
+	Written By: OrionShock
 ]]--
 
 local AddonName, AddonParent = ...

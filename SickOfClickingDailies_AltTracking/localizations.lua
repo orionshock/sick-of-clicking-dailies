@@ -1,6 +1,6 @@
 --[[
 	Sick Of Clicking Dailies? - Locale file for alt tracking module
-	Written By: @project-author@
+	Written By: OrionShock
 	
 	Please Visit: http://www.wowace.com/addons/sick-of-clicking-dailies/pages/how-to-add-localizations/
 	to contribute to localizations :)
