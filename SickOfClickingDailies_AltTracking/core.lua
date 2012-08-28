@@ -11,7 +11,7 @@
 
 local AddoName, AddonParent = ..., LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")
 local module = AddonParent:NewModule("AltTrack", "AceEvent-3.0")
-local L = LibStub("AceLocale-3.0"):GetLocale("SickOfClickingDailies")
+local L = LibStub("AceLocale-3.0"):GetLocale("SOCD_AltTracking")
 local LibQTip
 local unsortedPlayers, sortedPlayerList, sortedQuestList, totalQuests = {}, {}, {}, {}
 local classColorTable = RAID_CLASS_COLORS

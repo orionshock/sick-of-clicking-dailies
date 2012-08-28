@@ -1,4 +1,4 @@
---[[
+﻿--[[
 	Sick Of Clicking Dailies? - Locale file for deDE
 	Written By: OrionShock
 
