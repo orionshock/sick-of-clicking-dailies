@@ -1,5 +1,5 @@
 --[[
-	Sick Of Clicking Dailies? - Locale file for enUS
+	Sick Of Clicking Dailies? - Locale file for alt tracking module
 	Written By: @project-author@
 	
 	Please Visit: http://www.wowace.com/addons/sick-of-clicking-dailies/pages/how-to-add-localizations/
@@ -8,16 +8,16 @@
 
 do
 				--EnUS Base, Always Load--
-	local debug = false
+	local silent = false
 	--@debug@
-	debug = true
+	silent = true
 	--@end-debug@
 
 	----------------------------------------------------------------------------
 	--	General -- Used by all or most :)				  --
 	----------------------------------------------------------------------------
 
-	local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_AltTracking", "enUS", true, debug)
+	local L = LibStub("AceLocale-3.0"):NewLocale("SOCD_AltTracking", "enUS", true, silent)
 
 		if L then
 	--These are not importable to WoWAce/Curseforge Locale system, as these are pulled directly from the client.

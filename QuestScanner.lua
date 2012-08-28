@@ -1,7 +1,7 @@
 --[[
- 
-
-]]
+	Sick Of Clicking Dailies? - Quest Scanner
+	Written By: @project-author@
+]]--
 
 local projectVersion = "@project-version@"
 local projectRevision = "@project-abbreviated-hash@"
@@ -10,10 +10,12 @@ if projectVersion:find("project") then
 	projectRevision = "dev"
 end
 
-local lastChanged = "@file-date-integer@"
+local fileLastChanged = "@file-date-integer@"
 
 local AddonName, AddonParent = ...
+local L = LibStub("AceLocale-3.0"):GetLocale(AddonName)
 local module = CreateFrame("frame")
+
 module:SetScript("OnEvent", function(self, event, ...)
 	if IsLoggedIn() then
 		self:UnregisterEvent("PLAYER_LOGIN")
@@ -25,6 +27,7 @@ module:RegisterEvent("PLAYER_LOGIN")
 module:RegisterEvent("ADDON_LOADED")
 
 local localeQuestNameByID
+local scannerStarted = false
 
 
 --function module:Debug(...)
@@ -35,14 +38,21 @@ local localeQuestNameByID
 --	return str
 --end
 
+-- Builds the value for the LocalizedQuestVersion saved variable.
+-- Includes build version and change date of this file, so the quests are rescanned after a
+-- client patch or a change of this file.
+local function GetCurrentLocalizedQuestVersion()
+	version, internalVersion = GetBuildInfo()
+	return version.." "..internalVersion.." "..fileLastChanged
+end
+
 function module:PLAYER_LOGIN(event,...)
 	LocalizedQuestDictionary = LocalizedQuestDictionary or {}	--Prime the Global Varg
 	localeQuestNameByID = LocalizedQuestDictionary	--Make global Varg local...
-	if LocalizedQuestVersion ~= lastChanged then	--check version
+	if LocalizedQuestVersion ~= GetCurrentLocalizedQuestVersion() then	--check version
 		return self:StartQuestScan()
 	else
 		AddonParent:SendMessage("SOCD_FINISH_QUEST_SCAN")
-		AddonParent.QuestNameScanned = true
 	end
 end
 
@@ -179,7 +189,7 @@ do
 
 	local interval, delay = .01, 0
 	ttScanFrame:SetScript("OnUpdate", function(self, elapsed)
---		module:Debug("OnUpdate", delay, elapsed, tt.questId)
+		--module:Debug("OnUpdate", delay, elapsed, tt.questId)
 		delay = delay + elapsed
 		if delay > interval then
 			delay = 0
@@ -190,7 +200,14 @@ do
 
 end
 function module:StartQuestScan()
+	if scannerStarted then
+		return
+	end
+	scannerStarted = true
+	
+	AddonParent:Print(L["QuestScanner started, Sick of Clicking Dailies can be used once it's finished."])
 	--self:Debug("StartingTooltip Scan - QUEST")
+	
 	local id, qtype = next(qTable)
 	tt.t = qTable
 	tt.k = id
@@ -201,12 +218,13 @@ function module:StartQuestScan()
 	tt.prefix = "quest:"
 	tt.NextScanFunc = "StartItemScan"
 	tt.finishfunc = function()
-			LocalizedQuestVersion = lastChanged
+			LocalizedQuestVersion = GetCurrentLocalizedQuestVersion()
 			AddonParent:SendMessage("SOCD_FINISH_QUEST_SCAN")
 			local questCache = AddonParent.db.global.questCache
 			for k,v in pairs(tt.dbb) do
 				questCache[k] = v
 			end
+			AddonParent:Print(L["QuestScanner finished, Sick of Clicking Dailies is now ready for use."])
 		end
 	return tt:SetHyperlink(tt.prefix..tt.k)
 end

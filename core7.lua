@@ -28,15 +28,15 @@ SOCD = LibStub("AceAddon-3.0"):NewAddon(addon, addonName, "AceEvent-3.0", "AceCo
 addon.version = projectVersion.."-"..projectRevision
 
 local db
---local L = LibStub("AceLocale-3.0"):GetLocale(addonName)
+local L = LibStub("AceLocale-3.0"):GetLocale(addonName)
 
-local function Debug(...)
-	local str = string.join(", ", tostringall(...) )
-	str = str:gsub("([:=>]),", "%1")
-	str = str:gsub(", ([%-])", " %1")
-	ChatFrame5:AddMessage("SOCD-Debug: "..str)
-	return str
-end
+--local function Debug(...)
+--	local str = string.join(", ", tostringall(...) )
+--	str = str:gsub("([:=>]),", "%1")
+--	str = str:gsub(", ([%-])", " %1")
+--	DEFAULT_CHAT_FRAME:AddMessage("SOCD-Debug: "..str)
+--	return str
+--end
 
 addon.db_defaults = {
 	char = {},	--basically the char table is the quest log of dailies/weeklys completed.
@@ -101,7 +101,7 @@ function addon:OnEnable(event)
 end
 
 function addon:CacheQuestName(name, isDaily, isWeekly, isRepeatable)
-	Debug("Caching QuestName", name, (isDaily and "d") or (isWeekly and "w") or (isRepeatable and "r") )
+	--Debug("Caching QuestName", name, (isDaily and "d") or (isWeekly and "w") or (isRepeatable and "r") )
 	if not name then return end
 	if isDaily then
 		db.global.questCache[name] = "d"
@@ -113,15 +113,15 @@ function addon:CacheQuestName(name, isDaily, isWeekly, isRepeatable)
 end
 
 function addon:IsDailyQuest(name)
-	Debug("API: IsDailyQuest:", name, db.global.questCache[name] == "d")
+	--Debug("API: IsDailyQuest:", name, db.global.questCache[name] == "d")
 	return db.global.questCache[name] == "d"
 end
 function addon:IsWeeklyQuest(name)
-	Debug("API: IsWeeklyQuest:", name, db.global.questCache[name] == "w")
+	--Debug("API: IsWeeklyQuest:", name, db.global.questCache[name] == "w")
 	return db.global.questCache[name] == "w"
 end
 function addon:IsRepeatable(name)
-	Debug("API: IsRepeatable:", name, db.global.questCache[name] == "r")
+	--Debug("API: IsRepeatable:", name, db.global.questCache[name] == "r")
 	return db.global.questCache[name] == "r"
 end
 
@@ -132,26 +132,26 @@ end
 
 --Shown when the NPC wants to talk..
 local function procGetGossipAvailableQuests(index, title, _, _, isDaily, isRepeatable, ...)
-	Debug("IttGossipAvail:", title, " ~IsDaily: ", isDaily and "true" or "false", "~IsRepeatable: ", isRepeatable and "true" or "false")
+	--Debug("IttGossipAvail:", title, " ~IsDaily: ", isDaily and "true" or "false", "~IsRepeatable: ", isRepeatable and "true" or "false")
 	if (index and title) and (isDaily or isRepeatable or addon:IsWeeklyQuest(title) or addon:SpecialFixQuest( GetQuestID() ) ) then
 		addon:CacheQuestName(title, isDaily, nil, isRepeatable)	--Only Cache Daily and Weekly Quests, this list will help with the LDB Tracker to filter out Repeatable Quests.
 		if not addon:IsDisabled(title) then
-			Debug("found:", title)
+			--Debug("found:", title)
 			return index, title
 		end
 	end
 	if ... then
-		Debug("indexing next quest")
+		--Debug("indexing next quest")
 		return procGetGossipAvailableQuests(index + 1, ...)
 	else
-		Debug("End of Quests")
+		--Debug("End of Quests")
 		return
 	end
 end
 
 
 local function procGetGossipActiveQuests(index, title, _, _, isComplete, ...)
-	Debug("IttGossipActive:", index, title, "~IsComplete:", isComplete, "~IsDaily:", addon:IsDailyQuest(title) or addon:IsWeeklyQuest(title))
+	--Debug("IttGossipActive:", index, title, "~IsComplete:", isComplete, "~IsDaily:", addon:IsDailyQuest(title) or addon:IsWeeklyQuest(title))
 	if (addon:IsDailyQuest(title) or addon:IsWeeklyQuest(title) or addon:SpecialFixQuest( GetQuestID() ) ) and isComplete then
 		return index, title, isComplete
 	elseif ... then
@@ -180,7 +180,7 @@ local function proccessGossipOptions( ... )
 end
 
 function addon:GOSSIP_SHOW(event)
-	Debug(event)
+	--Debug(event)
 
 	local Nindex, Ntitle = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
 	local Aindex, Atitle, AisComplete = procGetGossipActiveQuests(1, GetGossipActiveQuests() )
@@ -190,26 +190,26 @@ function addon:GOSSIP_SHOW(event)
 		return
 	end
 	if Nindex then
-		Debug("Found Available, Quest:", Ntitle, "~IsDisabled:", self:IsDisabled(Ntitle) )
+		--Debug("Found Available, Quest:", Ntitle, "~IsDisabled:", self:IsDisabled(Ntitle) )
 		return SelectGossipAvailableQuest(Nindex)
 	end
 
 
 	if Aindex then
-		Debug("Found Active Quest that is Complete:", Atitle, "~IsComplete:", AisComplete, "~IsDisabled:", self:IsDisabled(Atitle) )
+		--Debug("Found Active Quest that is Complete:", Atitle, "~IsComplete:", AisComplete, "~IsDisabled:", self:IsDisabled(Atitle) )
 		return SelectGossipActiveQuest(Aindex)
 	end
 
-	Debug("Proccessing Gossip ")
+	--Debug("Proccessing Gossip ")
 	proccessGossipOptions( GetGossipOptions() )
 end
 
 --Shown when the NPC Dosn't want to talk
 function addon:QUEST_GREETING(event, ...)
-	Debug(event, ...)
+	--Debug(event, ...)
 	local numActiveQuests = GetNumActiveQuests()
 	local numAvailableQuests = GetNumAvailableQuests()
-	Debug("Looking @ AvailableQuests")
+	--Debug("Looking @ AvailableQuests")
 	for i = 1, numAvailableQuests do
 		local title, _, isDaily, isRepeatable = GetAvailableTitle(i), GetAvailableQuestInfo(i)
 		if procGetGossipAvailableQuests(i, title, nil, nil, isDaily, isRepeatable) then
@@ -220,9 +220,9 @@ function addon:QUEST_GREETING(event, ...)
 	end
 	for i = 1, numActiveQuests do
 		local title, isComplete = GetActiveTitle(i)
-		Debug("Quest:", title, "~isComplete:", isComplete, "~IsDisabled:", self:IsDisabled(title) )
+		--Debug("Quest:", title, "~isComplete:", isComplete, "~IsDisabled:", self:IsDisabled(title) )
 		if procGetGossipActiveQuests(i, title, _, _, isComplete) then
-			Debug("turning in quest:", title)
+			--Debug("turning in quest:", title)
 			if not IsShiftKeyDown() then
 				return SelectActiveQuest(i)
 			end
@@ -235,15 +235,15 @@ end
 --Shown to Accept Quest
 function addon:QUEST_DETAIL(event, ...)
 	local title = GetTitleText()
-	Debug(event, title, "~IsDaily:", QuestIsDaily() and "true" or "false", "~QuestIsWeekly:", QuestIsWeekly() and "true" or "false", "~IsRepeatable:", addon:IsRepeatable(title) and "true" or "false" )
+	--Debug(event, title, "~IsDaily:", QuestIsDaily() and "true" or "false", "~QuestIsWeekly:", QuestIsWeekly() and "true" or "false", "~IsRepeatable:", addon:IsRepeatable(title) and "true" or "false" )
 	if QuestIsDaily() or QuestIsWeekly() or addon:IsRepeatable(title) or addon:SpecialFixQuest( GetQuestID() ) then
 		addon:CacheQuestName(title, QuestIsDaily(), QuestIsWeekly() )
 		if IsShiftKeyDown() then return end
 		if self:IsDisabled(title) then
-			Debug("Ignoring Quest")
+			--Debug("Ignoring Quest")
 			return
 		else
-			Debug("Accepting Quest:", title)
+			--Debug("Accepting Quest:", title)
 			return AcceptQuest()
 		end
 	end
@@ -251,46 +251,47 @@ end
 
 --Shown when Quest is being turned in
 function addon:QUEST_PROGRESS(event, ...)
-	Debug(event,...)
+	--Debug(event,...)
 	local title = GetTitleText()
-	Debug(event, title, "~IsCompleteable:", IsQuestCompletable(),"~IsDaily:", QuestIsDaily() and "true" or "false", "~QuestIsWeekly:", QuestIsWeekly() and "true" or "false", "~IsRepeatable:", addon:IsRepeatable(title) and "true" or "false" )
+	--Debug(event, title, "~IsCompleteable:", IsQuestCompletable(),"~IsDaily:", QuestIsDaily() and "true" or "false", "~QuestIsWeekly:", QuestIsWeekly() and "true" or "false", "~IsRepeatable:", addon:IsRepeatable(title) and "true" or "false" )
 	if IsShiftKeyDown() then return end
 	if not IsQuestCompletable() then return end
 	if self:IsDisabled(title) then return end
 	if ( QuestIsDaily() or QuestIsWeekly() or addon:IsRepeatable(title) or addon:SpecialFixQuest( GetQuestID() ) ) then
 		self:CacheQuestName(title, QuestIsDaily(), QuestIsWeekly() )
-		Debug("Completing Quest:", title)
+		--Debug("Completing Quest:", title)
 		CompleteQuest()
 	end
 end
 
 --Shown when Selecting reqward for quest.
 function addon:QUEST_COMPLETE(event, ...)
-	Debug(event,...)
+	--Debug(event,...)
 	if IsShiftKeyDown() then return end
 	local title = GetTitleText()
 	if self:IsDisabled(title) then return end
 	if QuestIsDaily() or QuestIsWeekly() or self:IsRepeatable(title) or addon:SpecialFixQuest( GetQuestID() ) then
-		Debug("Quest Enabled & Daily/Weekly/Repeatable")
+		--Debug("Quest Enabled & Daily/Weekly/Repeatable")
 		local rewardOpt = self:IsChoiceQuest(title)
 			--Has quest option but we don't have a selection, means that this is a new quest that isn't in the DB.
 		if (GetQuestItemInfo("choice", 1) ~= "") and (not rewardOpt) then
 			if not self:IsRepeatable(title) then
-				print("Sick Of Clicking Dailies: Found a new Quest: ", title, " It has reward choices but is not yet added to the addon. Please report it at www.wowace.com")
+				self:Print(L["Found a new Quest:"].." "..title)
+				self:Print(L["It has reward choices but is not yet added to the addon. Please report it at http://www.wowace.com/addons/sick-of-clicking-dailies/tickets/"])
 				return
 			else
 				return
 			end
 		end
 		if (rewardOpt and (rewardOpt == -1)) then
-			Debug(event, "Reward opt is -1, do nothing")
+			--Debug(event, "Reward opt is -1, do nothing")
 			return
 		elseif rewardOpt then
-			Debug(event, "Getting Reward:", (GetQuestItemInfo("choice", rewardOpt)) )
+			--Debug(event, "Getting Reward:", (GetQuestItemInfo("choice", rewardOpt)) )
 			GetQuestReward( rewardOpt )
 			return
 		end
-		Debug(event, "Getting Money!")
+		--Debug(event, "Getting Money!")
 		GetQuestReward(0)
 		return
 		
@@ -316,7 +317,7 @@ end
 	end
 	hooksecurefunc("GetQuestReward", SOCD_GetQuestRewardHook )
 	function SOCD_TestDailyEventSend()
-	--	Debug("Firing Test Events")
+		--Debug("Firing Test Events")
 		SOCD_GetQuestRewardHook(opt, "Test Daily Quest")
 		SOCD_GetQuestRewardHook(opt, "Test Weekly Quest")
 	end

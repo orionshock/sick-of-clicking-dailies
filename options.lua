@@ -1,8 +1,7 @@
---
---	Repeatable Reputation Quests Module
---
---
---
+--[[
+	Sick Of Clicking Dailies? - Options frame
+	Written By: @project-author@
+]]--
 
 local AddonName, AddonParent = ...
 
@@ -192,16 +191,16 @@ function GossipFrameOptionsUpdate(...)	--Hook Replace the blizzard function :)
 	end
 end
 
-function Unused_GossipResize(titleButton)
-	print( titleButton:GetName(), "String Height", titleButton:GetFontString():GetHeight() )
-	if titleButton:GetFontString() then
-		print( "Has Font string",  titleButton:GetTextHeight() )
-		titleButton:SetHeight( titleButton:GetTextHeight() + 2);
-	else
-		print( "no font string?", titleButton:GetFontString())
-		titleButton:SetHeight( titleButton:GetTextHeight() + 2);
-	end
-end
+-- function Unused_GossipResize(titleButton)
+	-- print( titleButton:GetName(), "String Height", titleButton:GetFontString():GetHeight() )
+	-- if titleButton:GetFontString() then
+		-- print( "Has Font string",  titleButton:GetTextHeight() )
+		-- titleButton:SetHeight( titleButton:GetTextHeight() + 2);
+	-- else
+		-- print( "no font string?", titleButton:GetFontString())
+		-- titleButton:SetHeight( titleButton:GetTextHeight() + 2);
+	-- end
+-- end
 
 --===========================================
 

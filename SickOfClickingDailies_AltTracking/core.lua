@@ -1,10 +1,12 @@
 --[[
-	Alt Daily Quest Tracking
+	Sick Of Clicking Dailies? - Alt Daily Quest Tracking
 	purpose: to provide a LDB feed / Tooltip showing a summary of toon and what quests are completed for that toon
 		currently it's all displayed in one tooltip, however it's know fact that if you do your dailies on more than 3
 		chars that your going to fill your tooltip up.. 
 
 		final goal here is to provide the lists of quests & what toons have not completed that quest.
+	
+	Written By: @project-author@
 ]]--
 
 local AddoName, AddonParent = ..., LibStub("AceAddon-3.0"):GetAddon("SickOfClickingDailies")

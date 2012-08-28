@@ -4,12 +4,12 @@
 
 ]]--
 local addonName = ...
-local debug = false
+local silent = false
 --@debug@
-debug = true
+silent = true
 --@end-debug@
 
-local L = LibStub("AceLocale-3.0"):NewLocale(addonName, "enUS", true, debug)
+local L = LibStub("AceLocale-3.0"):NewLocale(addonName, "enUS", true, silent)
 
 if L then
 

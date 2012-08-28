@@ -1,7 +1,6 @@
-﻿## Interface: 40300
+﻿## Interface: 50001
 ## X-WoWI-ID: 7798
 
-#@non-debug@
 ## Title: @localization(locale="enUS", key="Title", namespace="ToC")@
 ## Title-frFR: @localization(locale="frFR", key="Title", namespace="ToC")@
 ## Title-deDE: @localization(locale="deDE", key="Title", namespace="ToC")@
@@ -20,40 +19,37 @@
 ## Notes-zhCN: @localization(locale="zhCN", key="Description", namespace="ToC")@
 ## Notes-esES: @localization(locale="esES", key="Description", namespace="ToC")@
 ## Notes-zhTW: @localization(locale="zhTW", key="Description", namespace="ToC")@
-#@end-non-debug@
 
 #@debug@
-## Title: Sick of Clicking Dailys? v6
+## Title: Sick of Clicking Dailies
 ## Notes: AutoMagicly clicks though Daily Quests, and Turns them In.
 #@end-debug@
 
-
-
 ## Author: OrionShock
-
-## Credits: Sinxia/kunda (deDE Translation), Cinedelle (frFR Translation), Crafty/Vyacheslav (ruRU Translation)
+## Credits: cremor (deDE translation), Cinedelle (frFR translation), wowuicn (zhCN translation), BNSSNB (zhTW translation)
 ## Version: @project-version@
 ## X-Email: Orionshock@gmail.com
+
 ## SavedVariables: SOCD_DB, LocalizedQuestDictionary, LocalizedQuestVersion
 ## OptionalDeps: Ace3, LibQTip-1.0
-## X-Embeds: Ace3
+## X-Embeds: Ace3, LibQTip-1.0
 
-## DefaultState: Enabled
+## DefaultState: enabled
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: delayed
-# ## LoadOnDemand: 1
 
 ## X-Category: Quests & Leveling
 
 #@no-lib-strip@
 libs\LibStub\LibStub.lua
 libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+#@end-no-lib-strip@
 libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+#@no-lib-strip@
 embeds.xml
 #@end-no-lib-strip@
 
 localizations\localization.xml
-
 
 core7.lua
 QuestScanner.lua

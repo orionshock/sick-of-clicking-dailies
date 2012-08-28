@@ -1,3 +1,7 @@
+--[[
+	Sick Of Clicking Dailies? - DataBroker module
+	Written By: @project-author@
+]]--
 
 local AddonName, AddonParent = ...
 
@@ -101,7 +105,12 @@ do
 		tooltip:SetCell(1,1, AddonName, GameTooltipText, "LEFT", 3)
 		tooltip:AddLine()
 		tooltip:SetCell(2, 1, prefix:format( SecondsToTime(GetQuestResetTime()) ), GameTooltipText, "LEFT", 2)
-		tooltip:SetCell(2, 3, QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests()) , GameTooltipText, "RIGHT")
+		local _, _, _, uiVersion = GetBuildInfo()
+		if uiVersion < 50001 then
+			tooltip:SetCell(2, 3, QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests()) , GameTooltipText, "RIGHT")
+		else
+			tooltip:SetCell(2, 3, QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted()) , GameTooltipText, "RIGHT")
+		end
 		----Element Listing Header
 --		tooltip:SetColumnLayout(3, "RIGHT", "LEFT", "CENTER")
 		tooltip:AddLine()

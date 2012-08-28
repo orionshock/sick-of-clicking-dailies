@@ -1,7 +1,10 @@
 --[[
+	Sick Of Clicking Dailies? - Special quest management module
 	This "module" will handle the special quests / quest with rewards.
 	Repeatable Quests w/ Selectable Rewards will not be supported for auto complete, but will still work as normal.
 		--it will be posible to manually add the repeatable quest to the LUA & will note where to do it :)
+	
+	Written By: @project-author@
 ]]--
 
 local addonName, addon = ...
