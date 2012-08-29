@@ -115,7 +115,7 @@ function module:CreateInteractionFrame()
 	local frame = CreateFrame("frame", "SOCD_QuestOptionFrame", QuestFrame)
 	frame:SetWidth(200)
 	frame:SetHeight(50)
-	frame:SetPoint("BOTTOMRIGHT", QuestFrame, "TOPRIGHT", -30, -20)
+	frame:SetPoint("BOTTOMRIGHT", QuestFrame, "TOPRIGHT", -30, 10)
 	frame:SetBackdrop(backdrop)
 
 	--CheckBox

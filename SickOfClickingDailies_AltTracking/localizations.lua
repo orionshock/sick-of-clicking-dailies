@@ -13,7 +13,7 @@ do	--enUS Base, Always Load
 
 	if L then
 
-	--@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
+--@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
 
 	end
 end
@@ -23,7 +23,7 @@ do	--deDE
 
 	if L then
 
-	--@localization(locale="deDE", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
+--@localization(locale="deDE", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
 
 	end
 end
@@ -33,7 +33,7 @@ do	--esES
 
 	if L then
 
-	--@localization(locale="esES", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
+--@localization(locale="esES", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
 
 	end
 end
@@ -43,7 +43,7 @@ do	--esMX
 
 	if L then
 
-	--@localization(locale="esMX", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
+--@localization(locale="esMX", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
 
 	end
 end
@@ -53,7 +53,7 @@ do	--frFR
 
 	if L then
 
-	--@localization(locale="frFR", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
+--@localization(locale="frFR", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
 
 	end
 end
@@ -63,7 +63,7 @@ do	--itIT
 
 	if L then
 
-	--@localization(locale="itIT", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
+--@localization(locale="itIT", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
 
 	end
 end
@@ -73,7 +73,7 @@ do	--koKR
 
 	if L then
 
-	--@localization(locale="koKR", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
+--@localization(locale="koKR", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
 
 	end
 end
@@ -83,7 +83,7 @@ do	--ptBR
 
 	if L then
 
-	--@localization(locale="ptBR", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
+--@localization(locale="ptBR", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
 
 	end
 end
@@ -93,7 +93,7 @@ do	--ruRU
 
 	if L then
 
-	--@localization(locale="ruRU", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
+--@localization(locale="ruRU", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
 
 	end
 end
@@ -103,7 +103,7 @@ do	--zhCN
 
 	if L then
 
-	--@localization(locale="zhCN", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
+--@localization(locale="zhCN", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
 
 	end
 end
@@ -113,7 +113,7 @@ do	--zhTW
 
 	if L then
 
-	--@localization(locale="zhTW", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
+--@localization(locale="zhTW", format="lua_additive_table", same-key-is-true=true, namespace="AltTrackingModule", table-name="L")@
 
 	end
 end
