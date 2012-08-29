@@ -221,7 +221,7 @@ function addon:QUEST_GREETING(event, ...)
 	for i = 1, numActiveQuests do
 		local title, isComplete = GetActiveTitle(i)
 		--Debug("Quest:", title, "~isComplete:", isComplete, "~IsDisabled:", self:IsDisabled(title) )
-		if procGetGossipActiveQuests(i, title, _, _, isComplete) then
+		if procGetGossipActiveQuests(i, title, nil, nil, isComplete) then
 			--Debug("turning in quest:", title)
 			if not IsShiftKeyDown() then
 				return SelectActiveQuest(i)
@@ -316,11 +316,12 @@ end
 		end
 	end
 	hooksecurefunc("GetQuestReward", SOCD_GetQuestRewardHook )
-	function SOCD_TestDailyEventSend()
+	
+	-- function SOCD_TestDailyEventSend()
 		--Debug("Firing Test Events")
-		SOCD_GetQuestRewardHook(opt, "Test Daily Quest")
-		SOCD_GetQuestRewardHook(opt, "Test Weekly Quest")
-	end
+		-- SOCD_GetQuestRewardHook(opt, "Test Daily Quest")
+		-- SOCD_GetQuestRewardHook(opt, "Test Weekly Quest")
+	-- end
 	
 do		-- === Weekly Reset Function ===
 		--Testing needed to make sure reset schedule is correct. On My Server in the US, first day of the week is on monday.

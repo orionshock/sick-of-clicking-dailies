@@ -16,6 +16,7 @@ local LibQTip
 local unsortedPlayers, sortedPlayerList, sortedQuestList, totalQuests = {}, {}, {}, {}
 local classColorTable = RAID_CLASS_COLORS
 local specialQuests = setmetatable({}, { _index = AddonParent.IsWeeklyQuest } )
+local db
 
 --function module:Debug(...)
 	--local str = string.join(", ", tostringall(...) )

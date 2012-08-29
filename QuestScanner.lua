@@ -42,7 +42,7 @@ local scannerStarted = false
 -- Includes build version and change date of this file, so the quests are rescanned after a
 -- client patch or a change of this file.
 local function GetCurrentLocalizedQuestVersion()
-	version, internalVersion = GetBuildInfo()
+	local version, internalVersion = GetBuildInfo()
 	return version.." "..internalVersion.." "..fileLastChanged
 end
 
@@ -189,7 +189,7 @@ function module:ScanItemTooltips()
 	local id, name = next(iTable)
 	tt.t = iTable
 	tt.k = id
-	tt.v = qtype
+	tt.v = nil
 	tt.dba = nil
 	tt.dbb = nil
 	tt.count = 0

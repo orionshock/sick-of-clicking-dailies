@@ -60,13 +60,13 @@ end
 do
 	local tooltip, populateTooltip, Tooltip_OnClick_Sort, sortByFunction
 	local classWeight = { ["d"] = 1, ["l"] = 2, ["p"] = 3, ["w"] = 4 }
-	sortByFuncs = {
+	local sortByFuncs = {
 		class = function(a,b)
-			typeA = db.global.questCache[a]	--Get Type
-			typeB = db.global.questCache[b]
+			local typeA = db.global.questCache[a]	--Get Type
+			local typeB = db.global.questCache[b]
 			if typeA and typeB then	--If both Type
-				weightA = classWeight[typeA]	--Get Weight Class
-				weightB = classWeight[typeB]
+				local weightA = classWeight[typeA]	--Get Weight Class
+				local weightB = classWeight[typeB]
 				if weightA == weightB then	--if same Weight class then return Alphabetical - likely same TTL
 					return a < b
 				else		--else return one better than other
@@ -82,8 +82,8 @@ do
 			return a < b
 		end,
 		ttl = function(a,b)
-			ttlA = db.char[a]
-			ttlB = db.char[b]
+			local ttlA = db.char[a]
+			local ttlB = db.char[b]
 			if ttlA == ttlB then
 				return a < b
 			else
