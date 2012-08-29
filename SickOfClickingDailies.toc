@@ -30,7 +30,7 @@
 ## Version: @project-version@
 ## X-Email: Orionshock@gmail.com
 
-## SavedVariables: SOCD_DB, LocalizedQuestDictionary, LocalizedQuestVersion
+## SavedVariables: SOCD_DB, SOCD_LocalizedQuestDictionary, SOCD_LocalizedQuestVersion
 ## OptionalDeps: Ace3, LibQTip-1.0
 ## X-Embeds: Ace3, LibQTip-1.0
 

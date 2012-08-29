@@ -106,11 +106,7 @@ do
 		tooltip:AddLine()
 		tooltip:SetCell(2, 1, prefix:format( SecondsToTime(GetQuestResetTime()) ), GameTooltipText, "LEFT", 2)
 		local _, _, _, uiVersion = GetBuildInfo()
-		if uiVersion < 50001 then
-			tooltip:SetCell(2, 3, QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted(), GetMaxDailyQuests()) , GameTooltipText, "RIGHT")
-		else
-			tooltip:SetCell(2, 3, QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted()) , GameTooltipText, "RIGHT")
-		end
+		tooltip:SetCell(2, 3, QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted()) , GameTooltipText, "RIGHT")
 		----Element Listing Header
 --		tooltip:SetColumnLayout(3, "RIGHT", "LEFT", "CENTER")
 		tooltip:AddLine()
