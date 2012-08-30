@@ -9,13 +9,15 @@ local module = AddonParent:NewModule("Options")
 local L = LibStub("AceLocale-3.0"):GetLocale(AddonName)
 local db
 
---function module:Debug(...)
-	--local str = string.join(", ", tostringall(...) )
-	--str = str:gsub("([:=>]),", "%1")
-	--str = str:gsub(", ([%-])", " %1")
-	--ChatFrame5:AddMessage("SOCD-OPT: "..str)
-	--return str
---end
+--@debug@
+function module:Debug(...)
+	local str = string.join(", ", tostringall(...) )
+	str = str:gsub("([:=>]),", "%1")
+	str = str:gsub(", ([%-])", " %1")
+	DEFAULT_CHAT_FRAME:AddMessage("SOCD-OPT: "..str)
+	return str
+end
+--@end-debug@
 
 function module:OnInitialize()
 	self:CreateInteractionFrame()

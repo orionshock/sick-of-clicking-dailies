@@ -30,13 +30,15 @@ addon.version = projectVersion.."-"..projectRevision
 local db
 local L = LibStub("AceLocale-3.0"):GetLocale(addonName)
 
---local function Debug(...)
---	local str = string.join(", ", tostringall(...) )
---	str = str:gsub("([:=>]),", "%1")
---	str = str:gsub(", ([%-])", " %1")
---	DEFAULT_CHAT_FRAME:AddMessage("SOCD-Debug: "..str)
---	return str
---end
+--@debug@
+local function Debug(...)
+	local str = string.join(", ", tostringall(...) )
+	str = str:gsub("([:=>]),", "%1")
+	str = str:gsub(", ([%-])", " %1")
+	DEFAULT_CHAT_FRAME:AddMessage("SOCD-Debug: "..str)
+	return str
+end
+--@end-debug@
 
 addon.db_defaults = {
 	char = {},	--basically the char table is the quest log of dailies/weeklys completed.

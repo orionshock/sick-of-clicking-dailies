@@ -29,14 +29,15 @@ module:RegisterEvent("ADDON_LOADED")
 local localeQuestNameByID
 local scannerStarted = false
 
-
---function module:Debug(...)
---	local str = string.join(", ", tostringall(...) )
---	str = str:gsub("([:=>]),", "%1")
---	str = str:gsub(", ([%-])", " %1")
---	DEFAULT_CHAT_FRAME:AddMessage("SOCD-QS: "..str)
---	return str
---end
+--@debug@
+function module:Debug(...)
+	local str = string.join(", ", tostringall(...) )
+	str = str:gsub("([:=>]),", "%1")
+	str = str:gsub(", ([%-])", " %1")
+	DEFAULT_CHAT_FRAME:AddMessage("SOCD-QS: "..str)
+	return str
+end
+--@end-debug@
 
 -- Builds the value for the SOCD_LocalizedQuestVersion saved variable.
 -- Includes build version and change date of this file, so the quests are rescanned after a
@@ -116,7 +117,7 @@ local ttScanFrame = CreateFrame("frame")
 ttScanFrame:Hide()
 do
 		local function ScanTheTooltip(self, ...)
-		--module:Debug("OnTooltipSetElement", self.k)
+		--module:Debug("OnTooltipSetElement", self.k, self.v)
 		if (not self.k) or (not self.v) then
 			--module:Debug("Invalid Setup for SOCD Scanning")
 			ttScanFrame:Hide()

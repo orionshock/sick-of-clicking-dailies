@@ -13,13 +13,15 @@ local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 local SecondsToTime, GetQuestResetTime = SecondsToTime, GetQuestResetTime
 local ldbObj, LibDataBroker, db, SpecialQuestResets, playerName, LibQTip
 
---function module:Debug(...)
-	--local str = string.join(", ", tostringall(...) )
-	--str = str:gsub("([:=>]),", "%1")
-	--str = str:gsub(", ([%-])", " %1")
-	--ChatFrame5:AddMessage("SOCD-LDB: "..str)
-	--return str
---end
+--@debug@
+function module:Debug(...)
+	local str = string.join(", ", tostringall(...) )
+	str = str:gsub("([:=>]),", "%1")
+	str = str:gsub(", ([%-])", " %1")
+	DEFAULT_CHAT_FRAME:AddMessage("SOCD-LDB: "..str)
+	return str
+end
+--@end-debug@
 
 
 function module:OnInitialize()

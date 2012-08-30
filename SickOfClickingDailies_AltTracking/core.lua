@@ -18,13 +18,15 @@ local classColorTable = RAID_CLASS_COLORS
 local specialQuests = setmetatable({}, { _index = AddonParent.IsWeeklyQuest } )
 local db
 
---function module:Debug(...)
-	--local str = string.join(", ", tostringall(...) )
-	--str = str:gsub("([:=>]),", "%1")
-	--str = str:gsub(", ([%-])", " %1")
-	--ChatFrame5:AddMessage("SOCD-ALT: "..str)
-	--return str
---end
+--@debug@
+function module:Debug(...)
+	local str = string.join(", ", tostringall(...) )
+	str = str:gsub("([:=>]),", "%1")
+	str = str:gsub(", ([%-])", " %1")
+	DEFAULT_CHAT_FRAME:AddMessage("SOCD-ALT: "..str)
+	return str
+end
+--@end-debug@
 
 function module:OnEnable()
 	LibQTip = LibStub('LibQTip-1.0', true)
