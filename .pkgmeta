@@ -38,6 +38,7 @@ externals:
 
 tools-used:
     - libdatabroker-1-1
+    - findglobals
 
 move-folders:
     SickOfClickingDailies/SickOfClickingDailies_AltTracking: SickOfClickingDailies_AltTracking
