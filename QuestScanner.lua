@@ -189,7 +189,7 @@ function module:ScanItemTooltips()
 	local id, name = next(iTable)
 	tt.t = iTable
 	tt.k = id
-	tt.v = nil
+	tt.v = name
 	tt.dba = nil
 	tt.dbb = nil
 	tt.count = 0
