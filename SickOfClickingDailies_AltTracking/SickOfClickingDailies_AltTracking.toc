@@ -26,7 +26,7 @@
 #@end-debug@
 
 ## Author: OrionShock
-## Credits: cremor (deDE translation), Cinedelle (frFR translation), wowuicn (zhCN translation), BNSSNB (zhTW translation)
+## Credits: cremor (maintainer, deDE translation), Cinedelle (frFR translation), wowuicn (zhCN translation), BNSSNB (zhTW translation)
 ## Version: @project-version@
 ## X-Email: Orionshock@gmail.com
 
