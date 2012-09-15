@@ -26,7 +26,8 @@ end)
 module:RegisterEvent("PLAYER_LOGIN")
 module:RegisterEvent("ADDON_LOADED")
 
-local localeQuestNameByID
+local questNameByID = {}
+local questTypeByName = {}
 local scannerStarted = false
 
 --@debug@
@@ -48,15 +49,13 @@ local function GetCurrentLocalizedQuestVersion()
 end
 
 function module:Startup()
-	SOCD_LocalizedQuestDictionary = SOCD_LocalizedQuestDictionary or {}
-	
 	-- Check the version of the saved localized quests
-	if SOCD_LocalizedQuestVersion ~= GetCurrentLocalizedQuestVersion() then
+	if (not SOCD_LocalizedQuestDictionary) or (SOCD_LocalizedQuestVersion ~= GetCurrentLocalizedQuestVersion()) then
 		-- Scan needed, don't enable the main addon until the scan has finished.
 		self:StartQuestScan()
 	else
 		-- No scan needed, start the main addon now.
-		localeQuestNameByID = SOCD_LocalizedQuestDictionary
+		questNameByID = SOCD_LocalizedQuestDictionary
 		AddonParent:SendMessage("SOCD_FINISHED_QUEST_SCAN")
 	end
 end
@@ -133,31 +132,26 @@ do
 			ttScanFrame:Hide()
 		end
 		
-		if self.dbIdToTitle and self.dbTitleToType then
+		if self.prefix == "quest:" then
 			-- Scanning a quest. Get the title of it.
 			local titleText = (ttlt:GetText() or ""):trim()
 
-			self.dbIdToTitle[ tonumber(self.k) ] = titleText
-			self.dbTitleToType[ titleText ] = self.v
+			questNameByID[ tonumber(self.k) ] = titleText
+			questTypeByName[ titleText ] = self.v
 
 			--module:Debug("Cached:", self.k, "-->", titleText)
 		end
 
 		self.count = self.count + 1
 
-		local nextKey, nextValue = next(self.t, self.k)
+		local nextKey, nextValue = next(self.table, self.k)
 		
 		if (not nextKey) or (not nextValue) then
 			--module:Debug("Reached end of Table. Total Scanned:", self.count)
 			
-			if self.finishfunc then
-				--module:Debug("Calling finishfunc")
-				self.finishfunc()
-			end
-			
-			if self.nextScanFunc then
-				--module:Debug("Calling nextScanFunc:", self.nextScanFunc)
-				module[ self.nextScanFunc ](module)
+			if self.nextFunc then
+				--module:Debug("Calling nextFunc:", self.nextFunc)
+				module[ self.nextFunc ](module)
 			end
 			
 			return
@@ -193,7 +187,10 @@ function module:StartQuestScan()
 	
 	AddonParent:Print(L["QuestScanner started, Sick of Clicking Dailies can be used once it's finished."])
 	
-	module:ScanItemTooltips()
+	-- Caution: Do not scan the items first! It seems like calling SetHyperlink() for a quest
+	-- immediately after calling SetHyperlink() for an item doesn't work if the item isn't in the
+	-- client cache yet.
+	module:ScanQuestTooltips()
 end
 
 function module:StopScan(info)
@@ -201,80 +198,56 @@ function module:StopScan(info)
 	ttScanFrame:Hide()
 end
 
+function module:ScanQuestTooltips()
+	--module:Debug("StartingTooltip Scan - QUESTS")
+	local id, qtype = next(qTable)
+	tt.table = qTable
+	tt.k = id
+	tt.v = qtype
+	tt.count = 0
+	tt.prefix = "quest:"
+	tt.nextFunc = "ScanItemTooltips"
+	
+	--module:Debug("Setting first quest hyperlink", tt.prefix..tt.k)
+	tt:SetHyperlink(tt.prefix..tt.k)
+end
+
 function module:ScanItemTooltips()
 	--module:Debug("Starting Tooltip Scan - ITEMS")
-	
 	local id, name = next(iTable)
-	tt.t = iTable
+	tt.table = iTable
 	tt.k = id
 	tt.v = name
-	tt.dbIdToTitle = nil
-	tt.dbTitleToType = nil
 	tt.count = 0
 	tt.prefix = "item:"
-	tt.nextScanFunc = "ScanQuestTooltips"
-	tt.finishfunc = nil
+	tt.nextFunc = "SaveScannedQuestTitles"
 	
 	--module:Debug("Setting first item hyperlink", tt.prefix..tt.k)
 	tt:SetHyperlink(tt.prefix..tt.k)
 end
 
-function module:ScanQuestTooltips()
-	--module:Debug("StartingTooltip Scan - QUESTS")
+
+function module:SaveScannedQuestTitles()
+	-- Save the scanned quest titles and update the saved version.
+	SOCD_LocalizedQuestDictionary = questNameByID
+	SOCD_LocalizedQuestVersion = GetCurrentLocalizedQuestVersion()
 	
-	local id, qtype = next(qTable)
-	tt.t = qTable
-	tt.k = id
-	tt.v = qtype
-	tt.dbIdToTitle = {}
-	tt.dbTitleToType = {}
-	tt.count = 0
-	tt.prefix = "quest:"
-	tt.nextScanFunc = nil
-	tt.finishfunc = function()
-		-- Save the scanned quest titles
-		SOCD_LocalizedQuestDictionary = tt.dbIdToTitle
-		-- Update the saved version
-		SOCD_LocalizedQuestVersion = GetCurrentLocalizedQuestVersion()
-		
-		-- Make global table local
-		localeQuestNameByID = SOCD_LocalizedQuestDictionary
-		
-		AddonParent:SendMessage("SOCD_FINISHED_QUEST_SCAN")
-		local questCache = AddonParent.db.global.questCache
-		for k,v in pairs(tt.dbTitleToType) do
-			questCache[k] = v
-		end
-		
-		AddonParent:Print(L["QuestScanner finished, Sick of Clicking Dailies is now ready for use."])
+	AddonParent:SendMessage("SOCD_FINISHED_QUEST_SCAN")
+	
+	local questCache = AddonParent.db.global.questCache
+	for k, v in pairs(questTypeByName) do
+		questCache[k] = v
 	end
 	
-	-- The following is a HACK!
-	-- If the client cache is empty (e.g. after a patch), OnTooltipSetQuest is never called after
-	-- calling SetHyperlink for the first quest. Waiting 5 seconds seems to fix that.
-	
-	--module:Debug("Creating WaitFrame")
-	
-	local waitFrame = CreateFrame("Frame", "SOCDWaitFrame", UIParent)
-	local delay, currentDelay = 5, 0
-	waitFrame:SetScript("OnUpdate", function(self, elapsed)
-		--module:Debug("OnUpdate of SOCDWaitFrame", currentDelay, elapsed)
-		currentDelay = currentDelay + elapsed
-		if currentDelay > delay then
-			self:Hide()
-			--module:Debug("Setting first quest hyperlink", tt.prefix..tt.k)
-			tt:SetHyperlink(tt.prefix..tt.k)
-		end
-	end)
+	AddonParent:Print(L["QuestScanner finished, Sick of Clicking Dailies is now ready for use."])
 end
-
 
 
 function AddonParent.GetLocalizedQuestNameByID(self, id)
 	if id then
-		return localeQuestNameByID and localeQuestNameByID[id] or nil
+		return questNameByID and questNameByID[id] or nil
 	else
 		id = tonumber(self)
-		return localeQuestNameByID and localeQuestNameByID[id] or nil
+		return questNameByID and questNameByID[id] or nil
 	end
 end
