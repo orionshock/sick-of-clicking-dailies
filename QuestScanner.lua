@@ -1,6 +1,10 @@
 --[[
 	Sick Of Clicking Dailies? - Quest Scanner
 	Written By: OrionShock
+	
+	This file makes sure that all needed localized quest titles and item names are available before
+	the main addon is enabled. Quest titles are scanned from tooltips, items are requested by
+	GetItemInfo().
 ]]--
 
 local projectVersion = "@project-version@"
@@ -17,10 +21,14 @@ local L = LibStub("AceLocale-3.0"):GetLocale(AddonName)
 local module = CreateFrame("frame")
 
 module:SetScript("OnEvent", function(self, event, ...)
-	if IsLoggedIn() then
-		self:UnregisterEvent("PLAYER_LOGIN")
-		self:UnregisterEvent("ADDON_LOADED")
-		self:Startup()
+	if event == "PLAYER_LOGIN" or event == "ADDON_LOADED" then
+		if IsLoggedIn() then
+			self:UnregisterEvent("PLAYER_LOGIN")
+			self:UnregisterEvent("ADDON_LOADED")
+			self:Startup()
+		end
+	elseif event == "GET_ITEM_INFO_RECEIVED" then
+		self:GET_ITEM_INFO_RECEIVED()
 	end
 end)
 module:RegisterEvent("PLAYER_LOGIN")
@@ -28,6 +36,8 @@ module:RegisterEvent("ADDON_LOADED")
 
 local questNameByID = {}
 local questTypeByName = {}
+local itemNameByID = {}
+local itemsWaitingForInfo = {}
 local scannerStarted = false
 
 --@debug@
@@ -94,28 +104,27 @@ local qTable = {
 	[13846] = daily,	-- "Contributin' To The Cause"	--AC gold for rep quest
 }
 
--- All selectable quest rewards need to be scanned.
--- Note: The tooltip for the items might show something like "requesting item information" if the
--- item isn't in the cache yet. This doesn't matter since the tooltip text of items isn't used.
--- We only need to set the tooltip so that the call to GetItemInfo later succeeds.
+-- All selectable quest rewards need to be scanned here so that the call to GetItemInfo in specialQuestManagement.lua later succeeds.
 local iTable = {
 	--BC
-	[30809] = "Mark of Sargeras",
-	[30810] = "Sunfury Signet",
-	[34538] = "Blessed Weapon Coating",
-	[34539] = "Righteous Weapon Coating",
-	[33844] = "Barrel of Fish",
-	[33857] = "Crate of Meat",
+	30809, -- "Mark of Sargeras"
+	30810, -- "Sunfury Signet"
+	34538, -- "Blessed Weapon Coating"
+	34539, -- "Righteous Weapon Coating"
+	33844, -- "Barrel of Fish"
+	33857, -- "Crate of Meat"
+	
 	--Wrath
-	[46114] = "Champion's Writ",
-	[45724] = "Champion's Purse",
+	46114, -- "Champion's Writ"
+	45724, -- "Champion's Purse"
+	
 	--Thx Holliday
-	[46723] = "Pilgrim's Hat",
-	[46800] = "Pilgrim's Attire",
-	[44785] = "Pilgrim's Dress",
-	[46824] = "Pilgrim's Robe",
-	[44788] = "Pilgrim's Boots",
-	[44812] = "Turkey Shooter",
+	46723, -- "Pilgrim's Hat"
+	46800, -- "Pilgrim's Attire"
+	44785, -- "Pilgrim's Dress"
+	46824, -- "Pilgrim's Robe"
+	44788, -- "Pilgrim's Boots"
+	44812, -- "Turkey Shooter"
 }
 
 
@@ -132,15 +141,12 @@ do
 			ttScanFrame:Hide()
 		end
 		
-		if self.prefix == "quest:" then
-			-- Scanning a quest. Get the title of it.
-			local titleText = (ttlt:GetText() or ""):trim()
+		local titleText = (ttlt:GetText() or ""):trim()
 
-			questNameByID[ tonumber(self.k) ] = titleText
-			questTypeByName[ titleText ] = self.v
+		questNameByID[ tonumber(self.k) ] = titleText
+		questTypeByName[ titleText ] = self.v
 
-			--module:Debug("Cached:", self.k, "-->", titleText)
-		end
+		--module:Debug("Cached:", self.k, "-->", titleText)
 
 		self.count = self.count + 1
 
@@ -188,7 +194,7 @@ function module:StartQuestScan()
 	AddonParent:Print(L["QuestScanner started, Sick of Clicking Dailies can be used once it's finished."])
 	
 	-- Caution: Do not scan the items first! It seems like calling SetHyperlink() for a quest
-	-- immediately after calling SetHyperlink() for an item doesn't work if the item isn't in the
+	-- immediately after requesting the info of an item doesn't work if the item isn't in the
 	-- client cache yet.
 	module:ScanQuestTooltips()
 end
@@ -206,28 +212,56 @@ function module:ScanQuestTooltips()
 	tt.v = qtype
 	tt.count = 0
 	tt.prefix = "quest:"
-	tt.nextFunc = "ScanItemTooltips"
+	tt.nextFunc = "RequestItemInfo"
 	
 	--module:Debug("Setting first quest hyperlink", tt.prefix..tt.k)
 	tt:SetHyperlink(tt.prefix..tt.k)
 end
 
-function module:ScanItemTooltips()
-	--module:Debug("Starting Tooltip Scan - ITEMS")
-	local id, name = next(iTable)
-	tt.table = iTable
-	tt.k = id
-	tt.v = name
-	tt.count = 0
-	tt.prefix = "item:"
-	tt.nextFunc = "SaveScannedQuestTitles"
+function module:RequestItemInfo()
+	--module:Debug("Running GetItemInfo for all items")
 	
-	--module:Debug("Setting first item hyperlink", tt.prefix..tt.k)
-	tt:SetHyperlink(tt.prefix..tt.k)
+	module:RegisterEvent("GET_ITEM_INFO_RECEIVED")
+
+	for index, itemID in ipairs(iTable) do
+		local itemName = GetItemInfo(itemID)
+		--module:Debug("GetItemInfo first try:", itemID, "-->", itemName)
+		
+		if itemName then
+			itemNameByID[itemID] = itemName
+		else
+			tinsert(itemsWaitingForInfo, itemID)
+		end
+	end
+	
+	if #itemsWaitingForInfo == 0 then
+		--module:Debug("GetItemInfo for all items finished first try")
+		module:SaveScannedQuestTitles()
+	end
 end
 
+function module:GET_ITEM_INFO_RECEIVED()
+	--module:Debug("GET_ITEM_INFO_RECEIVED, items waiting for info:", #itemsWaitingForInfo)
+	
+	for index, itemID in ipairs(itemsWaitingForInfo) do
+		local itemName = GetItemInfo(itemID)
+		--module:Debug("GetItemInfo in callback:", itemID, "-->", itemName)
+		
+		if itemName then
+			itemNameByID[itemID] = itemName
+			tremove(itemsWaitingForInfo, index)
+		end
+	end
+	
+	if #itemsWaitingForInfo == 0 then
+		--module:Debug("GetItemInfo for all items finished in callback")
+		module:SaveScannedQuestTitles()
+	end
+end
 
 function module:SaveScannedQuestTitles()
+	module:UnregisterEvent("GET_ITEM_INFO_RECEIVED")
+		
 	-- Save the scanned quest titles and update the saved version.
 	SOCD_LocalizedQuestDictionary = questNameByID
 	SOCD_LocalizedQuestVersion = GetCurrentLocalizedQuestVersion()
