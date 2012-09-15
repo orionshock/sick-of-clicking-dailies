@@ -236,7 +236,7 @@ local function GossipButton_OnEvent(self)
 		gossipText = gossipText:trim()
 		self:SetChecked( db.profile.enabledGossip[gossipText] )
 	else
---		module:Debug("! Fail")
+		--module:Debug("! Fail")
 	end
 
 end
@@ -289,10 +289,63 @@ end
 --============================================================================
 --Ace Options Table::
 --============================================================================
+local function RequestItemInfo()
+	-- All selectable quest rewards need to be scanned here so that the call to GetItemInfo in specialQuestManagement.lua later succeeds.
+	local iTable = {
+		--== Burning Crusade ==--
+		--Cooking
+		33844, -- "Barrel of Fish"
+		33857, -- "Crate of Meat"
+		
+		--SSO
+		30809, -- "Mark of Sargeras"
+		30810, -- "Sunfury Signet"
+		
+		--Ata'mal
+		34538, -- "Blessed Weapon Coating"
+		34539, -- "Righteous Weapon Coating"
+		
+		--== Wrath Of the Lich King ==--
+		--Argent Tourny
+		46114, -- "Champion's Writ"
+		45724, -- "Champion's Purse"
+		
+		--Thx Holliday
+		46723, -- "Pilgrim's Hat"
+		46800, -- "Pilgrim's Attire"
+		44785, -- "Pilgrim's Dress"
+		46824, -- "Pilgrim's Robe"
+		44788, -- "Pilgrim's Boots"
+		44812, -- "Turkey Shooter"
+	}
+	
+	--module:Debug("Running GetItemInfo for all items")
 
+	for index, itemID in ipairs(iTable) do
+		-- We don't need the item name here, we just request it from the server so it's cached in memory.
+		-- In fact, most of them will be nil on first login.
+		local itemName = GetItemInfo(itemID)
+		--module:Debug("GetItemInfo first try:", itemID, "-->", itemName)
+	end
+end
+
+local itemInfoWasRequested = false
+
+-- This function is called when the options dialog is opened.
 function AddonParent.GetOptionsTable()
+	if not itemInfoWasRequested then
+		itemInfoWasRequested = true
+		-- Request item info of all items that might be shown in the options dialog from the server.
+		-- If this isn't done, the call to GetItemInfo() that happens later will always return nil on
+		-- first login (WoW only caches item info in memory, not on hard disk).
+		-- Usually we would need to wait for GET_ITEM_INFO_RECEIVED, but since the item names for the UI
+		-- aren't requested unit the user opens the quest rewards category, we don't need to handle that event.
+		RequestItemInfo()
+	end
+
 	local qtmp = {}
 	local gtmp = {}
+	local rtmp = {}
 	local t = { name = AddonName, type = "group", handler = addon,
 		args = {
 			profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(db),
@@ -329,7 +382,21 @@ function AddonParent.GetOptionsTable()
 			type = "select", width = "double",
 			get = function(info) return db.profile.reward[info[#info]] end,
 			set = function(info, value) db.profile.reward[info[#info]] = value end,
-			values = function(info) return db.global.reward[info[#info]] end,
+			values = function(info)
+				wipe(rtmp)
+				for k,v in pairs(db.global.reward[info[#info]]) do
+					local itemName
+					if k == -1 then
+						-- v is "None"
+						itemName = v
+					else
+						itemName = GetItemInfo(tonumber(v))
+					end
+					--module:Debug("Building values for reward options", k, ":", v, "-->", itemName)
+					rtmp[k] = itemName
+				end
+				return rtmp
+			end,
 		}
 	end
 	return t

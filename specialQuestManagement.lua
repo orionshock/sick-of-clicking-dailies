@@ -58,13 +58,30 @@ local function load()
 
 	--=== Multi-Quest Reward Tables===--
 	--== Burning Crusade ==--
-	local bc_cookingRewards = { [-1] = NONE, (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate of Meat" }
-	local ssoRewards = { [-1] = NONE, (GetItemInfo(30809)) or "Mark of Sargeras", (GetItemInfo(30810)) or "Sunfury Signet" }
-	local atamalRewards = { [-1] = NONE, (GetItemInfo(34538)) or "Blessed Weapon Coating", (GetItemInfo(34539)) or "Righteous Weapon Coating" }
+	-- 33844 "Barrel of Fish"
+	-- 33857 "Crate of Meat"
+	local bc_cookingRewards = { [-1] = NONE, 33844, 33857 }
+	
+	-- 30809 "Mark of Sargeras"
+	-- 30810 "Sunfury Signet"
+	local ssoRewards = { [-1] = NONE, 30809, 30810 }
+	
+	-- 34538 "Blessed Weapon Coating"
+	-- 34539 "Righteous Weapon Coating"
+	local atamalRewards = { [-1] = NONE, 34538, 34539 }
+	
 	--== Wrath of the Lich King ==--
-	local champQuestRewardOpts = { [-1] = NONE, (GetItemInfo(46114)) or "Champion's Writ", (GetItemInfo(45724)) or "Champion's Purse" }
-	local thxgivingRewardOpts = { [-1] = NONE, (GetItemInfo(46723)) or "Pilgrim's Hat", (GetItemInfo(46800)) or "Pilgrim's Attire", (GetItemInfo(44785)) or "Pilgrim's Dress",
-		(GetItemInfo(46824)) or "Pilgrim's Robe", (GetItemInfo(44788)) or "Pilgrim's Boots", (GetItemInfo(44812)) or "Turkey Shooter" }
+	-- 46114 "Champion's Writ"
+	-- 45724 "Champion's Purse"
+	local champQuestRewards = { [-1] = NONE, 46114, 45724 }
+	
+	-- 46723 "Pilgrim's Hat"
+	-- 46800 "Pilgrim's Attire"
+	-- 44785 "Pilgrim's Dress"
+	-- 46824 "Pilgrim's Robe"
+	-- 44788 "Pilgrim's Boots"
+	-- 44812 "Turkey Shooter"
+	local thxgivingRewards = { [-1] = NONE, 46723, 46800, 44785, 46824, 44788, 44812 }
 
 	addon.db_defaults.global.reward = {	--DB Globals for reward list
 		--== Burning Crusade ==--
@@ -76,21 +93,23 @@ local function load()
 		
 		--SSO
 		[ GetLocalizedQuestNameByID(11515) ] = ssoRewards, --"Blood for Blood"
+		
+		--Ata'mal
 		[ GetLocalizedQuestNameByID(11544) ] = atamalRewards, --"Ata'mal Armaments"
 		
 		--== Wrath Of the Lich King ==--
 		--Argent Tourny
-		[ GetLocalizedQuestNameByID(13789) ] = champQuestRewardOpts, --"Taking Battle To The Enemy"
-		[ GetLocalizedQuestNameByID(13861) ] = champQuestRewardOpts, --"Battle Before The Citadel"
-		[ GetLocalizedQuestNameByID(13682) ] = champQuestRewardOpts, --"Threat From Above"
-		[ GetLocalizedQuestNameByID(13790) ] = champQuestRewardOpts, --"Among the Champions"
+		[ GetLocalizedQuestNameByID(13789) ] = champQuestRewards, --"Taking Battle To The Enemy"
+		[ GetLocalizedQuestNameByID(13861) ] = champQuestRewards, --"Battle Before The Citadel"
+		[ GetLocalizedQuestNameByID(13682) ] = champQuestRewards, --"Threat From Above"
+		[ GetLocalizedQuestNameByID(13790) ] = champQuestRewards, --"Among the Champions"
 		
 		--Thx Holliday
-		[ GetLocalizedQuestNameByID(14061) ] = thxgivingRewardOpts,	--"Can't Get Enough Turkey"
-		[ GetLocalizedQuestNameByID(14062) ] = thxgivingRewardOpts,	--"Don't Forget The Stuffing!"
-		[ GetLocalizedQuestNameByID(14060) ] = thxgivingRewardOpts,	--"Easy As Pie",
-		[ GetLocalizedQuestNameByID(14058) ] = thxgivingRewardOpts,	--"She Says Potato"
-		[ GetLocalizedQuestNameByID(14059) ] = thxgivingRewardOpts,	--"We're Out of Cranberry Chutney Again?"
+		[ GetLocalizedQuestNameByID(14061) ] = thxgivingRewards,	--"Can't Get Enough Turkey"
+		[ GetLocalizedQuestNameByID(14062) ] = thxgivingRewards,	--"Don't Forget The Stuffing!"
+		[ GetLocalizedQuestNameByID(14060) ] = thxgivingRewards,	--"Easy As Pie",
+		[ GetLocalizedQuestNameByID(14058) ] = thxgivingRewards,	--"She Says Potato"
+		[ GetLocalizedQuestNameByID(14059) ] = thxgivingRewards,	--"We're Out of Cranberry Chutney Again?"
 	}
 	
 	local specialFixQuestList = {

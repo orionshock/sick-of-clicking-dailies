@@ -2,9 +2,8 @@
 	Sick Of Clicking Dailies? - Quest Scanner
 	Written By: OrionShock
 	
-	This file makes sure that all needed localized quest titles and item names are available before
-	the main addon is enabled. Quest titles are scanned from tooltips, items are requested by
-	GetItemInfo().
+	This file makes sure that all needed localized quest titles are available before the main addon
+	is enabled. Quest titles are scanned from tooltips.
 ]]--
 
 local projectVersion = "@project-version@"
@@ -21,14 +20,10 @@ local L = LibStub("AceLocale-3.0"):GetLocale(AddonName)
 local module = CreateFrame("frame")
 
 module:SetScript("OnEvent", function(self, event, ...)
-	if event == "PLAYER_LOGIN" or event == "ADDON_LOADED" then
-		if IsLoggedIn() then
-			self:UnregisterEvent("PLAYER_LOGIN")
-			self:UnregisterEvent("ADDON_LOADED")
-			self:Startup()
-		end
-	elseif event == "GET_ITEM_INFO_RECEIVED" then
-		self:GET_ITEM_INFO_RECEIVED()
+	if IsLoggedIn() then
+		self:UnregisterEvent("PLAYER_LOGIN")
+		self:UnregisterEvent("ADDON_LOADED")
+		self:Startup()
 	end
 end)
 module:RegisterEvent("PLAYER_LOGIN")
@@ -36,8 +31,6 @@ module:RegisterEvent("ADDON_LOADED")
 
 local questNameByID = {}
 local questTypeByName = {}
-local itemNameByID = {}
-local itemsWaitingForInfo = {}
 local scannerStarted = false
 
 --@debug@
@@ -62,7 +55,7 @@ function module:Startup()
 	-- Check the version of the saved localized quests
 	if (not SOCD_LocalizedQuestDictionary) or (SOCD_LocalizedQuestVersion ~= GetCurrentLocalizedQuestVersion()) then
 		-- Scan needed, don't enable the main addon until the scan has finished.
-		self:StartQuestScan()
+		self:ScanQuestTooltips()
 	else
 		-- No scan needed, start the main addon now.
 		questNameByID = SOCD_LocalizedQuestDictionary
@@ -99,32 +92,9 @@ local qTable = {
 	[14059] = daily,	--"We're Out of Cranberry Chutney Again?"
 	
 	--Misc disabled Quests
-	[12689] = daily,	--"Hand of the Oracles"	--Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
-	[12582] = daily,	--"Frenzyheart Champion"	--Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
-	[13846] = daily,	-- "Contributin' To The Cause"	--AC gold for rep quest
-}
-
--- All selectable quest rewards need to be scanned here so that the call to GetItemInfo in specialQuestManagement.lua later succeeds.
-local iTable = {
-	--BC
-	30809, -- "Mark of Sargeras"
-	30810, -- "Sunfury Signet"
-	34538, -- "Blessed Weapon Coating"
-	34539, -- "Righteous Weapon Coating"
-	33844, -- "Barrel of Fish"
-	33857, -- "Crate of Meat"
-	
-	--Wrath
-	46114, -- "Champion's Writ"
-	45724, -- "Champion's Purse"
-	
-	--Thx Holliday
-	46723, -- "Pilgrim's Hat"
-	46800, -- "Pilgrim's Attire"
-	44785, -- "Pilgrim's Dress"
-	46824, -- "Pilgrim's Robe"
-	44788, -- "Pilgrim's Boots"
-	44812, -- "Turkey Shooter"
+	[12689] = daily,	--"Hand of the Oracles" --Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
+	[12582] = daily,	--"Frenzyheart Champion" --Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
+	[13846] = daily,	-- "Contributin' To The Cause" --AC gold for rep quest
 }
 
 
@@ -134,7 +104,7 @@ local ttScanFrame = CreateFrame("frame")
 ttScanFrame:Hide()
 do
 	local function ScanTheTooltip(self, ...)
-		--module:Debug("OnTooltipSetElement", self.k, self.v)
+		--module:Debug("OnTooltipSetQuest", self.k)
 		
 		if (not self.k) or (not self.v) then
 			--module:Debug("Invalid Setup for SOCD Scanning")
@@ -154,12 +124,7 @@ do
 		
 		if (not nextKey) or (not nextValue) then
 			--module:Debug("Reached end of Table. Total Scanned:", self.count)
-			
-			if self.nextFunc then
-				--module:Debug("Calling nextFunc:", self.nextFunc)
-				module[ self.nextFunc ](module)
-			end
-			
+			module:SaveScannedQuestTitles()
 			return
 		end
 		
@@ -170,7 +135,6 @@ do
 	end
 
 	tt:SetScript("OnTooltipSetQuest", ScanTheTooltip)
-	tt:SetScript("OnTooltipSetItem", ScanTheTooltip)
 
 	local interval, currentDelay = .01, 0
 	ttScanFrame:SetScript("OnUpdate", function(self, elapsed)
@@ -179,24 +143,26 @@ do
 		if currentDelay > interval then
 			self:Hide()
 			currentDelay = 0
-			tt:SetHyperlink(tt.prefix..tt.k)
+			tt:SetHyperlink("quest:"..tt.k)
 		end
 	end)
 
 end
 
-function module:StartQuestScan()
-	if scannerStarted then
-		return
-	end
+function module:ScanQuestTooltips()
+	if scannerStarted then return end
 	scannerStarted = true
 	
 	AddonParent:Print(L["QuestScanner started, Sick of Clicking Dailies can be used once it's finished."])
 	
-	-- Caution: Do not scan the items first! It seems like calling SetHyperlink() for a quest
-	-- immediately after requesting the info of an item doesn't work if the item isn't in the
-	-- client cache yet.
-	module:ScanQuestTooltips()
+	local id, qtype = next(qTable)
+	tt.table = qTable
+	tt.k = id
+	tt.v = qtype
+	tt.count = 0
+	
+	--module:Debug("Setting first quest hyperlink")
+	tt:SetHyperlink("quest:"..tt.k)
 end
 
 function module:StopScan(info)
@@ -204,64 +170,7 @@ function module:StopScan(info)
 	ttScanFrame:Hide()
 end
 
-function module:ScanQuestTooltips()
-	--module:Debug("StartingTooltip Scan - QUESTS")
-	local id, qtype = next(qTable)
-	tt.table = qTable
-	tt.k = id
-	tt.v = qtype
-	tt.count = 0
-	tt.prefix = "quest:"
-	tt.nextFunc = "RequestItemInfo"
-	
-	--module:Debug("Setting first quest hyperlink", tt.prefix..tt.k)
-	tt:SetHyperlink(tt.prefix..tt.k)
-end
-
-function module:RequestItemInfo()
-	--module:Debug("Running GetItemInfo for all items")
-	
-	module:RegisterEvent("GET_ITEM_INFO_RECEIVED")
-
-	for index, itemID in ipairs(iTable) do
-		local itemName = GetItemInfo(itemID)
-		--module:Debug("GetItemInfo first try:", itemID, "-->", itemName)
-		
-		if itemName then
-			itemNameByID[itemID] = itemName
-		else
-			tinsert(itemsWaitingForInfo, itemID)
-		end
-	end
-	
-	if #itemsWaitingForInfo == 0 then
-		--module:Debug("GetItemInfo for all items finished first try")
-		module:SaveScannedQuestTitles()
-	end
-end
-
-function module:GET_ITEM_INFO_RECEIVED()
-	--module:Debug("GET_ITEM_INFO_RECEIVED, items waiting for info:", #itemsWaitingForInfo)
-	
-	for index, itemID in ipairs(itemsWaitingForInfo) do
-		local itemName = GetItemInfo(itemID)
-		--module:Debug("GetItemInfo in callback:", itemID, "-->", itemName)
-		
-		if itemName then
-			itemNameByID[itemID] = itemName
-			tremove(itemsWaitingForInfo, index)
-		end
-	end
-	
-	if #itemsWaitingForInfo == 0 then
-		--module:Debug("GetItemInfo for all items finished in callback")
-		module:SaveScannedQuestTitles()
-	end
-end
-
 function module:SaveScannedQuestTitles()
-	module:UnregisterEvent("GET_ITEM_INFO_RECEIVED")
-		
 	-- Save the scanned quest titles and update the saved version.
 	SOCD_LocalizedQuestDictionary = questNameByID
 	SOCD_LocalizedQuestVersion = GetCurrentLocalizedQuestVersion()
