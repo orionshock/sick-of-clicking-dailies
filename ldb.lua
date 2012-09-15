@@ -107,7 +107,6 @@ do
 		tooltip:SetCell(1,1, AddonName, GameTooltipText, "LEFT", 3)
 		tooltip:AddLine()
 		tooltip:SetCell(2, 1, prefix:format( SecondsToTime(GetQuestResetTime()) ), GameTooltipText, "LEFT", 2)
-		local _, _, _, uiVersion = GetBuildInfo()
 		tooltip:SetCell(2, 3, QUEST_LOG_DAILY_COUNT_TEMPLATE:format(GetDailyQuestsCompleted()) , GameTooltipText, "RIGHT")
 		----Element Listing Header
 --		tooltip:SetColumnLayout(3, "RIGHT", "LEFT", "CENTER")
