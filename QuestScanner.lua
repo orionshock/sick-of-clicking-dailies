@@ -20,7 +20,7 @@ module:SetScript("OnEvent", function(self, event, ...)
 	if IsLoggedIn() then
 		self:UnregisterEvent("PLAYER_LOGIN")
 		self:UnregisterEvent("ADDON_LOADED")
-		self:PLAYER_LOGIN("Good Morning!")
+		self:Startup()
 	end
 end)
 module:RegisterEvent("PLAYER_LOGIN")
@@ -40,56 +40,65 @@ end
 --@end-debug@
 
 -- Builds the value for the SOCD_LocalizedQuestVersion saved variable.
--- Includes build version and change date of this file, so the quests are rescanned after a
+-- Includes build version and change date of this file, so that the quests are rescanned after a
 -- client patch or a change of this file.
 local function GetCurrentLocalizedQuestVersion()
 	local version, internalVersion = GetBuildInfo()
 	return version.." "..internalVersion.." "..fileLastChanged
 end
 
-function module:PLAYER_LOGIN(event,...)
-	SOCD_LocalizedQuestDictionary = SOCD_LocalizedQuestDictionary or {}	--Prime the Global Varg
-	localeQuestNameByID = SOCD_LocalizedQuestDictionary	--Make global Varg local...
-	if SOCD_LocalizedQuestVersion ~= GetCurrentLocalizedQuestVersion() then	--check version
-		return self:StartQuestScan()
+function module:Startup()
+	SOCD_LocalizedQuestDictionary = SOCD_LocalizedQuestDictionary or {}
+	
+	-- Check the version of the saved localized quests
+	if SOCD_LocalizedQuestVersion ~= GetCurrentLocalizedQuestVersion() then
+		-- Scan needed, don't enable the main addon until the scan has finished.
+		self:StartQuestScan()
 	else
-		AddonParent:SendMessage("SOCD_FINISH_QUEST_SCAN")
+		-- No scan needed, start the main addon now.
+		localeQuestNameByID = SOCD_LocalizedQuestDictionary
+		AddonParent:SendMessage("SOCD_FINISHED_QUEST_SCAN")
 	end
 end
 
 local daily, weekly, repeatable = "d", "w", "r"
-	--Ony quests with reward options and ones which are disabled by default need to be scanned, the rest will be built as needed.
-local qTable = {
-		--== Burning Crusade ==--
-		[11545] = daily,	--"A Charitable Donation" --Gold for rep quest
-		[11548] = daily,	--"Your Continued Support" --Gold for rep quest
-		[11379] = daily,	--"Super Hot Stew"
-		[11381] = daily,	--"Soup for the Soul"
-		[11377] = daily,	--"Revenge is Tasty"
-		[11380] = daily,	--"Manalicious"
-		[11515] = daily,	--"Blood for Blood"
-		[11544] = daily,	--"Ata'mal Armaments"
-		
-		--== Wrath of the Lich King ==--
-		--Argent Tourny
-		[13789] = daily,	--"Taking Battle To The Enemy"
-		[13861] = daily,	--"Battle Before The Citadel"
-		[13682] = daily,	--"Threat From Above"
-		[13790] = daily,	--"Among the Champions"
-		
-		--Thx Holliday
-		[14061] = daily,	--"Can't Get Enough Turkey"
-		[14062] = daily,	--"Don't Forget The Stuffing!"
-		[14060] = daily,	--"Easy As Pie",
-		[14058] = daily,	--"She Says Potato"
-		[14059] = daily,	--"We're Out of Cranberry Chutney Again?"
-		
-		--Misc disabled Quests
-		[12689] = daily,	--"Hand of the Oracles"	--Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
-		[12582] = daily,	--"Frenzyheart Champion"	--Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
-		[13846] = daily,	-- "Contributin' To The Cause"	--AC gold for rep quest
-}	--End of name Scanner Master Table
 
+-- Only quests with reward options and ones which are disabled by default need to be scanned, the rest will be built as needed.
+local qTable = {
+	--== Burning Crusade ==--
+	[11545] = daily,	--"A Charitable Donation" --Gold for rep quest
+	[11548] = daily,	--"Your Continued Support" --Gold for rep quest
+	[11379] = daily,	--"Super Hot Stew"
+	[11381] = daily,	--"Soup for the Soul"
+	[11377] = daily,	--"Revenge is Tasty"
+	[11380] = daily,	--"Manalicious"
+	[11515] = daily,	--"Blood for Blood"
+	[11544] = daily,	--"Ata'mal Armaments"
+	
+	--== Wrath of the Lich King ==--
+	--Argent Tourny
+	[13789] = daily,	--"Taking Battle To The Enemy"
+	[13861] = daily,	--"Battle Before The Citadel"
+	[13682] = daily,	--"Threat From Above"
+	[13790] = daily,	--"Among the Champions"
+	
+	--Thx Holliday
+	[14061] = daily,	--"Can't Get Enough Turkey"
+	[14062] = daily,	--"Don't Forget The Stuffing!"
+	[14060] = daily,	--"Easy As Pie",
+	[14058] = daily,	--"She Says Potato"
+	[14059] = daily,	--"We're Out of Cranberry Chutney Again?"
+	
+	--Misc disabled Quests
+	[12689] = daily,	--"Hand of the Oracles"	--Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
+	[12582] = daily,	--"Frenzyheart Champion"	--Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
+	[13846] = daily,	-- "Contributin' To The Cause"	--AC gold for rep quest
+}
+
+-- All selectable quest rewards need to be scanned.
+-- Note: The tooltip for the items might show something like "requesting item information" if the
+-- item isn't in the cache yet. This doesn't matter since the tooltip text of items isn't used.
+-- We only need to set the tooltip so that the call to GetItemInfo later succeeds.
 local iTable = {
 	--BC
 	[30809] = "Mark of Sargeras",
@@ -116,54 +125,61 @@ local ttlt = _G[tt:GetName().."TextLeft1"]
 local ttScanFrame = CreateFrame("frame")
 ttScanFrame:Hide()
 do
-		local function ScanTheTooltip(self, ...)
+	local function ScanTheTooltip(self, ...)
 		--module:Debug("OnTooltipSetElement", self.k, self.v)
+		
 		if (not self.k) or (not self.v) then
 			--module:Debug("Invalid Setup for SOCD Scanning")
 			ttScanFrame:Hide()
 		end
-		local titleText = (ttlt:GetText() or ""):trim()
+		
+		if self.dbIdToTitle and self.dbTitleToType then
+			-- Scanning a quest. Get the title of it.
+			local titleText = (ttlt:GetText() or ""):trim()
 
-		if tt.dba then
-			tt.dba[ tonumber(self.k) ] = titleText
-		end
-		if tt.dbb then
-			tt.dbb[ titleText ] = tt.v
+			self.dbIdToTitle[ tonumber(self.k) ] = titleText
+			self.dbTitleToType[ titleText ] = self.v
+
+			--module:Debug("Cached:", self.k, "-->", titleText)
 		end
 
 		self.count = self.count + 1
 
-		--module:Debug("Cached:", self.k, "-->", titleText )
-
-		local id, qtype = next(self.t, self.k)
-		if not id or not qtype then
+		local nextKey, nextValue = next(self.t, self.k)
+		
+		if (not nextKey) or (not nextValue) then
 			--module:Debug("Reached end of Table. Total Scanned:", self.count)
+			
 			if self.finishfunc then
+				--module:Debug("Calling finishfunc")
 				self.finishfunc()
 			end
-			if self.NextScanFunc then
-				return module[ self.NextScanFunc ](module)
+			
+			if self.nextScanFunc then
+				--module:Debug("Calling nextScanFunc:", self.nextScanFunc)
+				module[ self.nextScanFunc ](module)
 			end
+			
 			return
 		end
-		self.k = id
-		self.v = qtype
-		--module:Debug("Showing scan frame:")
+		
+		self.k = nextKey
+		self.v = nextValue
+		--module:Debug("Showing scan frame")
 		ttScanFrame:Show()
-		return
 	end
 
 	tt:SetScript("OnTooltipSetQuest", ScanTheTooltip)
 	tt:SetScript("OnTooltipSetItem", ScanTheTooltip)
 
-	local interval, delay = .01, 0
+	local interval, currentDelay = .01, 0
 	ttScanFrame:SetScript("OnUpdate", function(self, elapsed)
-		--module:Debug("OnUpdate", delay, elapsed, tt.questId)
-		delay = delay + elapsed
-		if delay > interval then
-			delay = 0
+		--module:Debug("OnUpdate of SOCDQuestScanTT", currentDelay, elapsed, tt.questId)
+		currentDelay = currentDelay + elapsed
+		if currentDelay > interval then
 			self:Hide()
-			return tt:SetHyperlink(tt.prefix..tt.k)
+			currentDelay = 0
+			tt:SetHyperlink(tt.prefix..tt.k)
 		end
 	end)
 
@@ -181,46 +197,75 @@ function module:StartQuestScan()
 end
 
 function module:StopScan(info)
-	--self:Debug("Stopping Tooltip Scanning?")
+	--module:Debug("Stopping Tooltip Scanning?")
 	ttScanFrame:Hide()
 end
 
 function module:ScanItemTooltips()
-	--self:Debug("Starting Tooltip Scan - ITEMS")
+	--module:Debug("Starting Tooltip Scan - ITEMS")
+	
 	local id, name = next(iTable)
 	tt.t = iTable
 	tt.k = id
 	tt.v = name
-	tt.dba = nil
-	tt.dbb = nil
+	tt.dbIdToTitle = nil
+	tt.dbTitleToType = nil
 	tt.count = 0
 	tt.prefix = "item:"
-	tt.NextScanFunc = "ScanQuestTooltips"
+	tt.nextScanFunc = "ScanQuestTooltips"
 	tt.finishfunc = nil
-	return tt:SetHyperlink(tt.prefix..tt.k)
+	
+	--module:Debug("Setting first item hyperlink", tt.prefix..tt.k)
+	tt:SetHyperlink(tt.prefix..tt.k)
 end
 
 function module:ScanQuestTooltips()
-	--self:Debug("StartingTooltip Scan - QUEST")
+	--module:Debug("StartingTooltip Scan - QUESTS")
+	
 	local id, qtype = next(qTable)
 	tt.t = qTable
 	tt.k = id
 	tt.v = qtype
-	tt.dba = localeQuestNameByID
-	tt.dbb = {}
+	tt.dbIdToTitle = {}
+	tt.dbTitleToType = {}
 	tt.count = 0
 	tt.prefix = "quest:"
-	tt.NextScanFunc = nil
+	tt.nextScanFunc = nil
 	tt.finishfunc = function()
-			SOCD_LocalizedQuestVersion = GetCurrentLocalizedQuestVersion()
-			AddonParent:SendMessage("SOCD_FINISH_QUEST_SCAN")
-			local questCache = AddonParent.db.global.questCache
-			for k,v in pairs(tt.dbb) do
-				questCache[k] = v
-			end
-			AddonParent:Print(L["QuestScanner finished, Sick of Clicking Dailies is now ready for use."])
+		-- Save the scanned quest titles
+		SOCD_LocalizedQuestDictionary = tt.dbIdToTitle
+		-- Update the saved version
+		SOCD_LocalizedQuestVersion = GetCurrentLocalizedQuestVersion()
+		
+		-- Make global table local
+		localeQuestNameByID = SOCD_LocalizedQuestDictionary
+		
+		AddonParent:SendMessage("SOCD_FINISHED_QUEST_SCAN")
+		local questCache = AddonParent.db.global.questCache
+		for k,v in pairs(tt.dbTitleToType) do
+			questCache[k] = v
 		end
-	return tt:SetHyperlink(tt.prefix..tt.k)
+		
+		AddonParent:Print(L["QuestScanner finished, Sick of Clicking Dailies is now ready for use."])
+	end
+	
+	-- The following is a HACK!
+	-- If the client cache is empty (e.g. after a patch), OnTooltipSetQuest is never called after
+	-- calling SetHyperlink for the first quest. Waiting 5 seconds seems to fix that.
+	
+	--module:Debug("Creating WaitFrame")
+	
+	local waitFrame = CreateFrame("Frame", "SOCDWaitFrame", UIParent)
+	local delay, currentDelay = 5, 0
+	waitFrame:SetScript("OnUpdate", function(self, elapsed)
+		--module:Debug("OnUpdate of SOCDWaitFrame", currentDelay, elapsed)
+		currentDelay = currentDelay + elapsed
+		if currentDelay > delay then
+			self:Hide()
+			--module:Debug("Setting first quest hyperlink", tt.prefix..tt.k)
+			tt:SetHyperlink(tt.prefix..tt.k)
+		end
+	end)
 end
 
 

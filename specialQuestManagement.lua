@@ -57,14 +57,14 @@ local function load()
 	}
 
 	--=== Multi-Quest Reward Tables===--
-		--== Burning Crusade ==--
-		local bc_cookingRewards = { [-1] = NONE, (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate of Meat" }
-		local ssoRewards = { [-1] = NONE, (GetItemInfo(30809)) or "Mark of Sargeras", (GetItemInfo(30810)) or "Sunfury Signet" }
-		local atamalRewards = { [-1] = NONE, (GetItemInfo(34538)) or "Blessed Weapon Coating", (GetItemInfo(34539)) or "Righteous Weapon Coating" }
-		--== Wrath of the Lich King ==--
-		local champQuestRewardOpts = { [-1] = NONE, (GetItemInfo(46114)) or "Champion's Writ", (GetItemInfo(45724)) or "Champion's Purse" }
-		local thxgivingRewardOpts = { [-1] = NONE, GetItemInfo(46723) or "Pilgrim's Hat", GetItemInfo(46800) or "Pilgrim's Attire",GetItemInfo(44785) or "Pilgrim's Dress",
-				GetItemInfo(46824) or "Pilgrim's Robe", GetItemInfo(44788) or "Pilgrim's Boots", GetItemInfo(44812) or "Turkey Shooter",}
+	--== Burning Crusade ==--
+	local bc_cookingRewards = { [-1] = NONE, (GetItemInfo(33844)) or "Barrel of Fish", (GetItemInfo(33857)) or "Crate of Meat" }
+	local ssoRewards = { [-1] = NONE, (GetItemInfo(30809)) or "Mark of Sargeras", (GetItemInfo(30810)) or "Sunfury Signet" }
+	local atamalRewards = { [-1] = NONE, (GetItemInfo(34538)) or "Blessed Weapon Coating", (GetItemInfo(34539)) or "Righteous Weapon Coating" }
+	--== Wrath of the Lich King ==--
+	local champQuestRewardOpts = { [-1] = NONE, (GetItemInfo(46114)) or "Champion's Writ", (GetItemInfo(45724)) or "Champion's Purse" }
+	local thxgivingRewardOpts = { [-1] = NONE, (GetItemInfo(46723)) or "Pilgrim's Hat", (GetItemInfo(46800)) or "Pilgrim's Attire", (GetItemInfo(44785)) or "Pilgrim's Dress",
+		(GetItemInfo(46824)) or "Pilgrim's Robe", (GetItemInfo(44788)) or "Pilgrim's Boots", (GetItemInfo(44812)) or "Turkey Shooter" }
 
 	addon.db_defaults.global.reward = {	--DB Globals for reward list
 		--== Burning Crusade ==--
@@ -92,6 +92,7 @@ local function load()
 		[ GetLocalizedQuestNameByID(14058) ] = thxgivingRewardOpts,	--"She Says Potato"
 		[ GetLocalizedQuestNameByID(14059) ] = thxgivingRewardOpts,	--"We're Out of Cranberry Chutney Again?"
 	}
+	
 	local specialFixQuestList = {
 		[11006] = true,	--More Shadow Dust
 		[12618] = true, --Blessing of Zim'Torga
@@ -104,6 +105,7 @@ local function load()
 			return self.db.profile.reward[name] or -1
 		end
 	end
+	
 	function addon:SpecialFixQuest( questID )
 		questID = tonumber(questID)
 		if specialFixQuestList[questID] then
@@ -111,4 +113,4 @@ local function load()
 		end
 	end
 end
-addon.RegisterMessage("SpecialQuests", "SOCD_FINISH_QUEST_SCAN", load)
+addon.RegisterMessage("SpecialQuests", "SOCD_FINISHED_QUEST_SCAN", load)

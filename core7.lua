@@ -70,13 +70,13 @@ addon:SetDefaultModuleState(false)
 
 function addon:OnInitialize()
 	self:SetEnabledState(false)
-	self:RegisterMessage("SOCD_FINISH_QUEST_SCAN", 
-			function(event, ...) 
-				addon:Enable()
-				for k,v in addon:IterateModules() do
-					v:Enable()
-				end
-			end )
+	
+	self:RegisterMessage("SOCD_FINISHED_QUEST_SCAN", function(event, ...) 
+		addon:Enable()
+		for k,v in addon:IterateModules() do
+			v:Enable()
+		end
+	end )
 end
 
 function addon:OnEnable(event)
@@ -275,15 +275,13 @@ function addon:QUEST_COMPLETE(event, ...)
 	if QuestIsDaily() or QuestIsWeekly() or self:IsRepeatable(title) or addon:SpecialFixQuest( GetQuestID() ) then
 		--Debug("Quest Enabled & Daily/Weekly/Repeatable")
 		local rewardOpt = self:IsChoiceQuest(title)
-			--Has quest option but we don't have a selection, means that this is a new quest that isn't in the DB.
 		if (GetQuestItemInfo("choice", 1) ~= "") and (not rewardOpt) then
+			--Has quest option but we don't have a selection, means that this is a new quest that isn't in the DB.
 			if not self:IsRepeatable(title) then
 				self:Print(L["Found a new Quest:"].." "..title)
 				self:Print(L["It has reward choices but is not yet added to the addon. Please report it at http://www.wowace.com/addons/sick-of-clicking-dailies/tickets/"])
-				return
-			else
-				return
 			end
+			return
 		end
 		if (rewardOpt and (rewardOpt == -1)) then
 			--Debug(event, "Reward opt is -1, do nothing")

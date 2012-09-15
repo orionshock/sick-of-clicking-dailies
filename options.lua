@@ -61,17 +61,6 @@ local function CheckButton_OnClick(self, button)
 	end
 end
 
---local function CheckButton_OnEnter(self)
---	GameTooltip:ClearAllPoints()
---	GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT")
---	GameTooltip:AddLine(L["Only Works for Daily and Weekly Quests"])
---	GameTooltip:Show()
---end
-
---local function CheckButton_OnLeave(self)
---	GameTooltip:Hide()
---end
-
 
 local showEvents = {
 	["QUEST_DETAIL"] = true,
@@ -80,7 +69,7 @@ local showEvents = {
 	["QUEST_PROGRESS"] = true,
 }
 
-local function SOCD_OnEvnet(self, event, ...)
+local function Frame_OnEvent(self, event, ...)
 	if showEvents[event] then
 		if QuestIsDaily() or QuestIsWeekly() or AddonParent:IsRepeatable(GetTitleText()) or AddonParent:SpecialFixQuest( GetQuestID() ) then
 			--module:Debug("Daily/Weekly/Repeatable:", QuestIsDaily() or QuestIsWeekly() or AddonParent:IsRepeatable(GetTitleText()) )
@@ -140,13 +129,13 @@ function module:CreateInteractionFrame()
 	frame.check = check
 	frame.text = text
 	frame.addon = self
+	
+	--Hide it by default, otherwise it might be shown before the addon is ready
+	frame:Hide()
 
-
-	frame:SetScript("OnEvent", SOCD_OnEvnet)
+	frame:SetScript("OnEvent", Frame_OnEvent)
 	frame:SetScript("OnShow", Frame_OnShow)
 	check:SetScript("OnClick", CheckButton_OnClick)
---	check:SetScript("OnEnter", CheckButton_OnEnter)
---	check:SetScript("OnLeave", CheckButton_OnLeave)
 
 	self.frame = frame
 end
@@ -323,7 +312,7 @@ function AddonParent.GetOptionsTable()
 			},
 			gstatus = { name = L["Enabled Gossip"], type = "group", order = 5,
 				args = {
-					desc = { type = "description", name = L["Listed here are Enabled Gossip Options, when unchecked they will be disabled and be removed here"], order = 1 },
+					desc = { type = "description", name = L["Listed here are enabled gossip options, when unchecked they will be disabled and will be removed here"], order = 1 },
 					holder = { name = L["Enabled Gossip"], type = "multiselect", width = "full",
 						get = function(info, arg) return db.profile.enabledGossip[arg] end,
 						set = function(info, arg, value) db.profile.enabledGossip[arg] = nil end,
