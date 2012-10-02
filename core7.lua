@@ -268,33 +268,46 @@ end
 
 --Shown when Selecting reqward for quest.
 function addon:QUEST_COMPLETE(event, ...)
-	--Debug(event,...)
+	--Debug(event, ...)
 	if IsShiftKeyDown() then return end
 	local title = GetTitleText()
 	if self:IsDisabled(title) then return end
-	if QuestIsDaily() or QuestIsWeekly() or self:IsRepeatable(title) or addon:SpecialFixQuest( GetQuestID() ) then
-		--Debug("Quest Enabled & Daily/Weekly/Repeatable")
-		local rewardOpt = self:IsChoiceQuest(title)
-		if (GetQuestItemInfo("choice", 1) ~= "") and (not rewardOpt) then
-			--Has quest option but we don't have a selection, means that this is a new quest that isn't in the DB.
-			if not self:IsRepeatable(title) then
-				self:Print(L["Found a new Quest:"].." "..title)
-				self:Print(L["It has reward choices but is not yet added to the addon. Please report it at http://www.wowace.com/addons/sick-of-clicking-dailies/tickets/"])
-			end
-			return
-		end
-		if (rewardOpt and (rewardOpt == -1)) then
-			--Debug(event, "Reward opt is -1, do nothing")
-			return
-		elseif rewardOpt then
-			--Debug(event, "Getting Reward:", (GetQuestItemInfo("choice", rewardOpt)) )
-			GetQuestReward( rewardOpt )
-			return
-		end
-		--Debug(event, "Getting Money!")
-		GetQuestReward(0)
-		return
+	
+	if QuestIsDaily() or QuestIsWeekly() or self:IsRepeatable(title) or addon:SpecialFixQuest(GetQuestID()) then
+		--Debug(event, "Quest Enabled & Daily/Weekly/Repeatable")
+		local numQuestChoices = GetNumQuestChoices()
+		--Debug(event, "NumQuestChoices:", numQuestChoices)
+		local userChosenReward = self:IsChoiceQuest(title)
 		
+		if numQuestChoices > 1 then
+			if not userChosenReward then
+				--Has quest option but we don't have a selection, means that this is a new quest that isn't in the DB.
+				if not self:IsRepeatable(title) then
+					self:Print(L["Found a new Quest:"].." "..title)
+					self:Print(L["It has reward choices but is not yet added to the addon. Please report it at http://www.wowace.com/addons/sick-of-clicking-dailies/tickets/"])
+				end
+				return
+			end
+		
+			if userChosenReward == -1 then
+				--Debug(event, "userChosenReward is -1, do nothing")
+				return
+			end
+			
+			--Debug(event, "Getting userChosenReward, index:", userChosenReward, "item:", (GetQuestItemInfo("choice", userChosenReward)))
+			GetQuestReward(userChosenReward)
+			return
+		end
+		
+		if numQuestChoices == 1 then
+			--Debug(event, "Getting only possible Reward:", (GetQuestItemInfo("choice", 1)))
+			GetQuestReward(1)
+			return
+		end
+		
+		--Debug(event, "Getting Money!")
+		GetQuestReward()
+		return
 	end
 end
 
