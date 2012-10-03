@@ -289,43 +289,43 @@ end
 --============================================================================
 --Ace Options Table::
 --============================================================================
-local function RequestItemInfo()
-	-- All selectable quest rewards need to be scanned here so that the call to GetItemInfo in specialQuestManagement.lua later succeeds.
-	local iTable = {
-		--== Burning Crusade ==--
-		--Cooking
-		33844, -- "Barrel of Fish"
-		33857, -- "Crate of Meat"
-		
-		--SSO
-		30809, -- "Mark of Sargeras"
-		30810, -- "Sunfury Signet"
-		
-		--Ata'mal
-		34538, -- "Blessed Weapon Coating"
-		34539, -- "Righteous Weapon Coating"
-		
-		--== Wrath Of the Lich King ==--
-		--Argent Tourny
-		46114, -- "Champion's Writ"
-		45724, -- "Champion's Purse"
-		
-		--Thx Holliday
-		46723, -- "Pilgrim's Hat"
-		46800, -- "Pilgrim's Attire"
-		44785, -- "Pilgrim's Dress"
-		46824, -- "Pilgrim's Robe"
-		44788, -- "Pilgrim's Boots"
-		44812, -- "Turkey Shooter"
-	}
+-- All selectable quest rewards need to be scanned here so that the call to GetItemInfo in specialQuestManagement.lua later succeeds.
+local rewardItems = {
+	--== Burning Crusade ==--
+	--Cooking
+	[33844] = "Barrel of Fish",
+	[33857] = "Crate of Meat",
 	
+	--SSO
+	[30809] = "Mark of Sargeras",
+	[30810] = "Sunfury Signet",
+	
+	--Ata'mal
+	[34538] = "Blessed Weapon Coating",
+	[34539] = "Righteous Weapon Coating",
+	
+	--== Wrath Of the Lich King ==--
+	--Argent Tourny
+	[46114] = "Champion's Writ",
+	[45724] = "Champion's Purse",
+	
+	--Thx Holliday
+	[46723] = "Pilgrim's Hat",
+	[46800] = "Pilgrim's Attire",
+	[44785] = "Pilgrim's Dress",
+	[46824] = "Pilgrim's Robe",
+	[44788] = "Pilgrim's Boots",
+	[44812] = "Turkey Shooter",
+}
+	
+local function RequestItemInfo()
 	--module:Debug("Running GetItemInfo for all items")
 
-	for index, itemID in ipairs(iTable) do
+	for k, v in pairs(rewardItems) do
 		-- We don't need the item name here, we just request it from the server so it's cached in memory.
 		-- In fact, most of them will be nil on first login.
-		local itemName = GetItemInfo(itemID)
-		--module:Debug("GetItemInfo first try:", itemID, "-->", itemName)
+		local itemName = GetItemInfo(k)
+		--module:Debug("GetItemInfo first try:", k, "-->", itemName)
 	end
 end
 
@@ -390,7 +390,8 @@ function AddonParent.GetOptionsTable()
 						-- v is "None"
 						itemName = v
 					else
-						itemName = GetItemInfo(tonumber(v))
+						local itemId = tonumber(v)
+						itemName = GetItemInfo(itemId) or rewardItems[itemId] or "Unknown item"
 					end
 					--module:Debug("Building values for reward options", k, ":", v, "-->", itemName)
 					rtmp[k] = itemName
