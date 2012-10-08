@@ -95,6 +95,54 @@ local qTable = {
 	[12689] = daily,	--"Hand of the Oracles" --Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
 	[12582] = daily,	--"Frenzyheart Champion" --Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
 	[13846] = daily,	-- "Contributin' To The Cause" --AC gold for rep quest
+	
+	--== Mists of Pandaria ==--
+	--The Tillers
+	--Non-ideal Blue Feather gifts
+	[30382] = repeatable,	--"A Blue Feather for Ella"
+	[30419] = repeatable,	--"A Blue Feather for Farmer Fung"
+	[30425] = repeatable,	--"A Blue Feather for Fish"
+	[30388] = repeatable,	--"A Blue Feather for Gina"
+	[30412] = repeatable,	--"A Blue Feather for Haohan"
+	[30437] = repeatable,	--"A Blue Feather for Jogu"
+	[30406] = repeatable,	--"A Blue Feather for Sho"
+	[30431] = repeatable,	--"A Blue Feather for Tina"
+	--Non-ideal Jade Cat gifts
+	[30399] = repeatable,	--"A Jade Cat for Chee Chee"
+	[30418] = repeatable,	--"A Jade Cat for Farmer Fung"
+	[30387] = repeatable,	--"A Jade Cat for Gina"
+	[30411] = repeatable,	--"A Jade Cat for Haohan"
+	[30436] = repeatable,	--"A Jade Cat for Jogu"
+	[30393] = repeatable,	--"A Jade Cat for Old Hillpaw"
+	[30405] = repeatable,	--"A Jade Cat for Sho"
+	[30430] = repeatable,	--"A Jade Cat for Tina"
+	--Non-ideal Lovely Apple gifts
+	[30398] = repeatable,	--"A Lovely Apple for Chee Chee"
+	[30189] = repeatable,	--"A Lovely Apple for Ella"
+	[30417] = repeatable,	--"A Lovely Apple for Farmer Fung"
+	[30423] = repeatable,	--"A Lovely Apple for Fish"
+	[30380] = repeatable,	--"A Lovely Apple for Gina"
+	[30410] = repeatable,	--"A Lovely Apple for Haohan"
+	[30392] = repeatable,	--"A Lovely Apple for Old Hillpaw"
+	[30429] = repeatable,	--"A Lovely Apple for Tina"
+	--Non-ideal Ruby Shard gifts
+	[30397] = repeatable,	--"A Ruby Shard for Chee Chee"
+	[30160] = repeatable,	--"A Ruby Shard for Ella"
+	[30416] = repeatable,	--"A Ruby Shard for Farmer Fung"
+	[30422] = repeatable,	--"A Ruby Shard for Fish"
+	[30379] = repeatable,	--"A Ruby Shard for Gina"
+	[30434] = repeatable,	--"A Ruby Shard for Jogu"
+	[30391] = repeatable,	--"A Ruby Shard for Old Hillpaw"
+	[30403] = repeatable,	--"A Ruby Shard for Sho"
+	--Non-ideal Marsh Lily gifts
+	[30401] = repeatable,	--"A Marsh Lily for Chee Chee"
+	[30383] = repeatable,	--"A Marsh Lily for Ella"
+	[30426] = repeatable,	--"A Marsh Lily for Fish"
+	[30413] = repeatable,	--"A Marsh Lily for Haohan"
+	[30438] = repeatable,	--"A Marsh Lily for Jogu"
+	[30395] = repeatable,	--"A Marsh Lily for Old Hillpaw"
+	[30407] = repeatable,	--"A Marsh Lily for Sho"
+	[30432] = repeatable,	--"A Marsh Lily for Tina"
 }
 
 
