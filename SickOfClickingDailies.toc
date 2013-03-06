@@ -1,4 +1,4 @@
-﻿## Interface: 50001
+﻿## Interface: 50200
 ## X-WoWI-ID: 7798
 
 ## Title: @localization(locale="enUS", key="Title", namespace="ToC")@
