@@ -232,7 +232,7 @@ local function GossipButton_OnEvent(self)
 	end
 	--
 	local gossipText = self:GetParent():GetText()
-	if gossipText then
+	if gossipText and db then
 		gossipText = gossipText:trim()
 		self:SetChecked( db.profile.enabledGossip[gossipText] )
 	else
@@ -243,6 +243,7 @@ end
 
 local function GossipButton_OnClick(self, button, ...)
 	--module:Debug("CheckBox#", self.index, "~Text:", self:GetParent():GetText() )
+	if not db then return end
 	local isChecked = self:GetChecked() and true or nil
 	local gossipText = self:GetParent():GetText():trim()
 	db.profile.enabledGossip[gossipText] = isChecked
