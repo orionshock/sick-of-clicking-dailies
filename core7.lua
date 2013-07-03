@@ -340,7 +340,7 @@ do		-- === Weekly Reset Function ===
 		--Testing needed to make sure reset schedule is correct. On My Server in the US, first day of the week is on monday.
 	local diff_to_next_wk_reset = GetCVar("realmList"):find("^eu%.") and { 
 				-- Europe
-		[7] = 3,	-- sunday
+		[0] = 3,	-- sunday
 		[1] = 2,	-- monday
 		[2] = 1,	-- tuesday
 		[3] = 7,	-- wednesday *Reset Day
@@ -348,7 +348,7 @@ do		-- === Weekly Reset Function ===
 		[5] = 5,	-- friday
 		[6] = 4,	-- saturday
 	} or { 		-- Rest of the world
-		[7] = 2,	-- sunday
+		[0] = 2,	-- sunday
 		[1] = 1,	-- monday
 		[2] = 7,	-- tuesday *Reset Day
 		[3] = 6,	-- wednesday
