@@ -317,6 +317,12 @@ local rewardItems = {
 	[46824] = "Pilgrim's Robe",
 	[44788] = "Pilgrim's Boots",
 	[44812] = "Turkey Shooter",
+	
+	--== Mists of Pandaria ==--
+	--Path of the Mistwalker
+	[103643] = "Dew of Eternal Morning",
+	[103642] = "Book of the Ages",
+	[103641] = "Singing Crystal",
 }
 	
 local function RequestItemInfo()

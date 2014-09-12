@@ -143,6 +143,9 @@ local qTable = {
 	[30395] = repeatable,	--"A Marsh Lily for Old Hillpaw"
 	[30407] = repeatable,	--"A Marsh Lily for Sho"
 	[30432] = repeatable,	--"A Marsh Lily for Tina"
+	
+	--Timeless Isle
+	[33374] = daily,	--"Path of the Mistwalker"
 }
 
 

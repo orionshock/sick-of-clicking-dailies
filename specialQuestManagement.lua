@@ -28,9 +28,9 @@ local function load()
 		[GetLocalizedQuestNameByID(11548)] = false,	--"Your Continued Support" --Gold for rep quest
 	
 		--== Wrath of the Lich King ==--
-		[GetLocalizedQuestNameByID(12689)] = false,	--"Hand of the Oracles"	--Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
-		[GetLocalizedQuestNameByID(12582)] = false,	--"Frenzyheart Champion"	--Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
-		[GetLocalizedQuestNameByID(13846)] = false,	-- "Contributin' To The Cause"	--AC gold for rep quest
+		[GetLocalizedQuestNameByID(12689)] = false,	--"Hand of the Oracles" --Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
+		[GetLocalizedQuestNameByID(12582)] = false,	--"Frenzyheart Champion" --Disabled by request of "Fisker-" in IRC, these 2 quests switch faction
+		[GetLocalizedQuestNameByID(13846)] = false,	--"Contributin' To The Cause" --AC gold for rep quest
 		
 		--== Mists of Pandaria ==--
 		--The Tillers
@@ -102,6 +102,9 @@ local function load()
 		[GetLocalizedQuestNameByID(14060)] = -1,	--"Easy As Pie",
 		[GetLocalizedQuestNameByID(14058)] = -1,	--"She Says Potato"
 		[GetLocalizedQuestNameByID(14059)] = -1,	--"We're Out of Cranberry Chutney Again?"
+	
+		--== Mists of Pandaria ==--
+		[GetLocalizedQuestNameByID(33374)] = -1,	--"Path of the Mistwalker"
 	}
 
 	--=== Multi-Quest Reward Tables===--
@@ -130,6 +133,12 @@ local function load()
 	-- 44788 "Pilgrim's Boots"
 	-- 44812 "Turkey Shooter"
 	local thxgivingRewards = { [-1] = NONE, 46723, 46800, 44785, 46824, 44788, 44812 }
+	
+	--== Mists of Pandaria ==--
+	-- 103643 "Dew of Eternal Morning"
+	-- 103642 "Book of the Ages"
+	-- 103641 "Singing Crystal"
+	local pathOfTheMistwalkerRewards = { [-1] = NONE, 103643, 103642, 103641 }
 
 	addon.db_defaults.global.reward = {	--DB Globals for reward list
 		--== Burning Crusade ==--
@@ -158,6 +167,9 @@ local function load()
 		[GetLocalizedQuestNameByID(14060)] = thxgivingRewards,	--"Easy As Pie",
 		[GetLocalizedQuestNameByID(14058)] = thxgivingRewards,	--"She Says Potato"
 		[GetLocalizedQuestNameByID(14059)] = thxgivingRewards,	--"We're Out of Cranberry Chutney Again?"
+		
+		--== Mists of Pandaria ==--
+		[GetLocalizedQuestNameByID(33374)] = pathOfTheMistwalkerRewards, --"Path of the Mistwalker"
 	}
 	
 	local specialFixQuestList = {
