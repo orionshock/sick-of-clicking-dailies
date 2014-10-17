@@ -24,7 +24,9 @@ local function load()
 
 	addon.db_defaults.profile.status = {	--Quests that should be disabled by Default for one reason or another
 		--== Burning Crusade ==--
-		[GetLocalizedQuestNameByID(11545)] = false,	--"A Charitable Donation" --Gold for rep quest
+		--Disabled per 2014-10-17 because the tooltip is always empty for this quest.
+		--If you enable it again, also do it in QuestScanner.lua!
+		--[GetLocalizedQuestNameByID(11545)] = false,	--"A Charitable Donation" --Gold for rep quest
 		[GetLocalizedQuestNameByID(11548)] = false,	--"Your Continued Support" --Gold for rep quest
 	
 		--== Wrath of the Lich King ==--

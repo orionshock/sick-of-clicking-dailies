@@ -68,7 +68,9 @@ local daily, weekly, repeatable = "d", "w", "r"
 -- Only quests with reward options and ones which are disabled by default need to be scanned, the rest will be built as needed.
 local qTable = {
 	--== Burning Crusade ==--
-	[11545] = daily,	--"A Charitable Donation" --Gold for rep quest
+	--Disabled per 2014-10-17 because the tooltip is always empty for this quest.
+	--If you enable it again, also do it in specialQuestManagement.lua!
+	--[11545] = daily,	--"A Charitable Donation" --Gold for rep quest
 	[11548] = daily,	--"Your Continued Support" --Gold for rep quest
 	[11379] = daily,	--"Super Hot Stew"
 	[11381] = daily,	--"Soup for the Soul"
@@ -181,7 +183,7 @@ do
 		
 		self.k = nextKey
 		self.v = nextValue
-		--module:Debug("Showing scan frame")
+		--module:Debug("Showing scan frame for ", self.k, self.v)
 		ttScanFrame:Show()
 	end
 

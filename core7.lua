@@ -82,6 +82,9 @@ end
 function addon:OnEnable(event)
 	self.db = LibStub("AceDB-3.0"):New("SOCD_DB", self.db_defaults, true)
 	db = self.db
+	
+	hooksecurefunc("GetQuestReward", SOCD_GetQuestRewardHook )
+	
 	--Events
 	self:RegisterEvent("GOSSIP_SHOW")
 	self:RegisterEvent("QUEST_GREETING")
@@ -328,7 +331,6 @@ end
 			addon:SendMessage("SOCD_WEEKLY_QUEST_COMPLETE", title, addon:GetNextWeeklyReset() )
 		end
 	end
-	hooksecurefunc("GetQuestReward", SOCD_GetQuestRewardHook )
 	
 	-- function SOCD_TestDailyEventSend()
 		--Debug("Firing Test Events")
@@ -338,7 +340,8 @@ end
 	
 do		-- === Weekly Reset Function ===
 		--Testing needed to make sure reset schedule is correct. On My Server in the US, first day of the week is on monday.
-	local diff_to_next_wk_reset = GetCVar("realmList"):find("^eu%.") and { 
+	local is_eu = GetCVar("portal"):lower() == "eu"
+	local diff_to_next_wk_reset = is_eu and { 
 				-- Europe
 		[0] = 3,	-- sunday
 		[1] = 2,	-- monday
@@ -362,7 +365,7 @@ do		-- === Weekly Reset Function ===
 	function addon:GetNextWeeklyReset()
 		local cur_day, cur_month, cur_year, cur_wDay = tonumber(date("%d")), tonumber(date("%m")), tonumber(date("%Y")), tonumber(date("%w"))
 		local monthNumDay = select(3, CalendarGetMonth(0))
-		if (cur_wDay == 2) or ( (GetCVar("realmList"):find("^eu%.")) and (cur_wDay == 3) ) then	--If on Reset Day
+		if (cur_wDay == 2) or ( is_eu and (cur_wDay == 3) ) then	--If on Reset Day
 			if cur_day == date("%d", time()+GetQuestResetTime() ) then	--and Next Quest Reset is on today
 				return GetQuestResetTime()	-- Return Next Daily Reset because it will happen then regardless.
 			end

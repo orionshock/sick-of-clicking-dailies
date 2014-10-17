@@ -153,7 +153,7 @@ do
 	end
 	local function OnClick(self, button, ...)
 		if button == "LeftButton" then
-			ToggleFrame(QuestLogFrame)
+			ToggleFrame(WorldMapFrame)
 		elseif button == "RightButton" then
 			if  AceConfigDialog.OpenFrames[AddonName] then
 				AceConfigDialog:Close(AddonName)
