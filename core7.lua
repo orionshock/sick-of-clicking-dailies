@@ -136,10 +136,12 @@ end
 
 
 --Shown when the NPC wants to talk..
-local function procGetGossipAvailableQuests(index, title, level, isTrivial, isDaily, isRepeatable, isLegendary, ...)
-	--Debug("IttGossipAvail:", index, title, "~IsDaily:", isDaily, "~IsRepeatable:", isRepeatable)
-	if (index and title) and (isDaily or isRepeatable or addon:IsWeeklyQuest(title) or addon:SpecialFixQuest(GetQuestID())) then
-		addon:CacheQuestName(title, isDaily, nil, isRepeatable)	--Only Cache Daily and Weekly Quests, this list will help with the LDB Tracker to filter out Repeatable Quests.
+local function procGetGossipAvailableQuests(index, title, level, isTrivial, frequency, isRepeatable, isLegendary, ...)
+	local isDaily = frequency == LE_QUEST_FREQUENCY_DAILY
+	local isWeekly = frequency == LE_QUEST_FREQUENCY_WEEKLY
+	--Debug("IttGossipAvail:", index, title, "~Frequency", frequency, "~IsDaily:", isDaily, "~IsWeekly:", isWeekly, "~IsRepeatable:", isRepeatable)
+	if (index and title) and (isDaily or isWeekly or isRepeatable or addon:SpecialFixQuest(GetQuestID())) then
+		addon:CacheQuestName(title, isDaily, isWeekly, isRepeatable)	--Only Cache Daily and Weekly Quests, this list will help with the LDB Tracker to filter out Repeatable Quests.
 		if not addon:IsDisabled(title) then
 			--Debug("found:", title)
 			return index, title
@@ -156,7 +158,7 @@ end
 
 
 local function procGetGossipActiveQuests(index, title, level, isTrivial, isComplete, isLegendary, ...)
-	--Debug("IttGossipActive:", index, title, "~IsComplete:", isComplete, "~IsDaily:", addon:IsDailyQuest(title) or addon:IsWeeklyQuest(title))
+	--Debug("IttGossipActive:", index, title, "~IsComplete:", isComplete, "~IsDaily:", addon:IsDailyQuest(title), "~IsWeekly:", addon:IsWeeklyQuest(title))
 	if (index and title) and (addon:IsDailyQuest(title) or addon:IsWeeklyQuest(title) or addon:SpecialFixQuest(GetQuestID())) and isComplete then
 		return index, title, isComplete
 	elseif ... then
@@ -164,9 +166,12 @@ local function procGetGossipActiveQuests(index, title, level, isTrivial, isCompl
 	end
 end
 
-local function scanQuestsAvailable(title, level, isTrivial, isDaily, isRepeatable, isLegendary, ...)
-	if title and (isDaily or isRepeatable) then
-		addon:CacheQuestName(title, isDaily, nil, isRepeatable)	--Only Cache Daily and Weekly Quests, this list will help with the LDB Tracker to filter out Repeatable Quests.
+local function scanQuestsAvailable(title, level, isTrivial, frequency, isRepeatable, isLegendary, ...)
+	local isDaily = frequency == LE_QUEST_FREQUENCY_DAILY
+	local isWeekly = frequency == LE_QUEST_FREQUENCY_WEEKLY
+	--Debug("scanQuestsAvailable:", title, "~Frequency", frequency, "~IsDaily:", isDaily, "~IsWeekly:", isWeekly, "~IsRepeatable:", isRepeatable)
+	if title and (isDaily or isWeekly or isRepeatable) then
+		addon:CacheQuestName(title, isDaily, isWeekly, isRepeatable)	--Only Cache Daily and Weekly Quests, this list will help with the LDB Tracker to filter out Repeatable Quests.
 	else
 		return
 	end
@@ -216,8 +221,9 @@ function addon:QUEST_GREETING(event, ...)
 	local numAvailableQuests = GetNumAvailableQuests()
 	--Debug("Looking @ AvailableQuests")
 	for i = 1, numAvailableQuests do
-		local title, _, isDaily, isRepeatable = GetAvailableTitle(i), GetAvailableQuestInfo(i)
-		if procGetGossipAvailableQuests(i, title, nil, nil, isDaily, isRepeatable) then
+		local title = GetAvailableTitle(i)
+		local isTrivial, frequency, isRepeatable, isLegendary = GetAvailableQuestInfo(i)
+		if procGetGossipAvailableQuests(i, title, nil, isTrivial, frequency, isRepeatable, isLegendary) then
 			if not IsShiftKeyDown() then
 				return SelectAvailableQuest(i)
 			end
