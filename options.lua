@@ -316,7 +316,7 @@ local rewardItems = {
 	[44785] = "Pilgrim's Dress",
 	[46824] = "Pilgrim's Robe",
 	[44788] = "Pilgrim's Boots",
-	[44812] = "Turkey Shooter",
+	[116404] = "Pilgrim's Bounty",
 	
 	--== Mists of Pandaria ==--
 	--Path of the Mistwalker

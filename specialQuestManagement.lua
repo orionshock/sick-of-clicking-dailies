@@ -133,8 +133,8 @@ local function load()
 	-- 44785 "Pilgrim's Dress"
 	-- 46824 "Pilgrim's Robe"
 	-- 44788 "Pilgrim's Boots"
-	-- 44812 "Turkey Shooter"
-	local thxgivingRewards = { [-1] = NONE, 46723, 46800, 44785, 46824, 44788, 44812 }
+	-- 116404 "Pilgrim's Bounty"
+	local thxgivingRewards = { [-1] = NONE, 46723, 46800, 44785, 46824, 44788, 116404 }
 	
 	--== Mists of Pandaria ==--
 	-- 103643 "Dew of Eternal Morning"
