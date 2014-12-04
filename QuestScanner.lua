@@ -68,9 +68,7 @@ local daily, weekly, repeatable = "d", "w", "r"
 -- Only quests with reward options and ones which are disabled by default need to be scanned, the rest will be built as needed.
 local qTable = {
 	--== Burning Crusade ==--
-	--Disabled per 2014-10-17 because the tooltip is always empty for this quest.
-	--If you enable it again, also do it in specialQuestManagement.lua!
-	--[11545] = daily,	--"A Charitable Donation" --Gold for rep quest
+	[11545] = daily,	--"A Charitable Donation" --Gold for rep quest
 	[11548] = daily,	--"Your Continued Support" --Gold for rep quest
 	[11379] = daily,	--"Super Hot Stew"
 	[11381] = daily,	--"Soup for the Soul"
@@ -148,8 +146,34 @@ local qTable = {
 	
 	--Timeless Isle
 	[33374] = daily,	--"Path of the Mistwalker"
+		
+	--== Warlords of Draenor ==--
+	--Seal of Tempered Fate
+	[36054] = weekly,	--"Sealing Fate: Gold"
+	[37454] = weekly,	--"Sealing Fate: Piles of Gold"
+	[37455] = weekly,	--"Sealing Fate: Immense Fortune of Gold"
+	[36056] = weekly,	--"Sealing Fate: Garrison Resources"
+	[37456] = weekly,	--"Sealing Fate: Stockpiled Garrison Resources"
+	[37457] = weekly,	--"Sealing Fate: Tremendous Garrison Resources"
+	[36057] = weekly,	--"Sealing Fate: Honor"
+	[37458] = weekly,	--"Sealing Fate: Extended Honor"
+	[37459] = weekly,	--"Sealing Fate: Monumental Honor"
+	[36055] = weekly,	--"Sealing Fate: Apexis Crystals"
+	[37452] = weekly,	--"Sealing Fate: Heap of Apexis Crystals"
+	[37453] = weekly,	--"Sealing Fate: Mountain of Apexis Crystals"
 }
 
+-- As of 2014-12-04 some quests always show an empty tooltip. Skip those.
+-- TODO: Check later if fixed by Blizzard. If yes, also enable their default value in specialQuestManagement.lua again.
+local brokenQuests = {
+	[11545] = true,	--"A Charitable Donation"
+	[30398] = true,	--"A Lovely Apple for Chee Chee"
+	[30399] = true,	--"A Jade Cat for Chee Chee"
+	[30401] = true,	--"A Marsh Lily for Chee Chee"
+	[30397] = true,	--"A Ruby Shard for Chee Chee"
+	[30429] = true,	--"A Lovely Apple for Tina"
+	[30431] = true,	--"A Blue Feather for Tina"
+}
 
 local tt = CreateFrame("GameTooltip", "SOCDQuestScanTT", UIParent, "GameTooltipTemplate")
 local ttlt = _G[tt:GetName().."TextLeft1"]
@@ -172,24 +196,34 @@ do
 		--module:Debug("Cached:", self.k, "-->", titleText)
 
 		self.count = self.count + 1
-
-		local nextKey, nextValue = next(self.table, self.k)
 		
-		if (not nextKey) or (not nextValue) then
-			--module:Debug("Reached end of Table. Total Scanned:", self.count)
-			module:SaveScannedQuestTitles()
-			return
+		local nextKey, nextValue
+		while ((not nextKey) or (not nextValue)) do
+			nextKey, nextValue = next(self.table, self.k)
+		
+			if (not nextKey) or (not nextValue) then
+				--module:Debug("Reached end of Table. Total Scanned:", self.count)
+				module:SaveScannedQuestTitles()
+				return
+			end
+			
+			self.k = nextKey
+			self.v = nextValue
+			
+			if (brokenQuests[nextKey]) then
+				--module:Debug("Skipping quest with broken tooltip:", nextKey)
+				nextKey = nil
+				nextValue = nil
+			end
 		end
 		
-		self.k = nextKey
-		self.v = nextValue
 		--module:Debug("Showing scan frame for ", self.k, self.v)
 		ttScanFrame:Show()
 	end
 
 	tt:SetScript("OnTooltipSetQuest", ScanTheTooltip)
 
-	local interval, currentDelay = .01, 0
+	local interval, currentDelay = .1, 0
 	ttScanFrame:SetScript("OnUpdate", function(self, elapsed)
 		--module:Debug("OnUpdate of SOCDQuestScanTT", currentDelay, elapsed, tt.questId)
 		currentDelay = currentDelay + elapsed

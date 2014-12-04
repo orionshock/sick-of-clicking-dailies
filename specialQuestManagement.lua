@@ -22,10 +22,10 @@ end
 
 local function load()
 
-	addon.db_defaults.profile.status = {	--Quests that should be disabled by Default for one reason or another
+	--Quests that should be disabled by Default for one reason or another
+	--Those which are commented out are broken. See QuestScanner.lua table "brokenQuests".
+	addon.db_defaults.profile.status = {	
 		--== Burning Crusade ==--
-		--Disabled per 2014-10-17 because the tooltip is always empty for this quest.
-		--If you enable it again, also do it in QuestScanner.lua!
 		--[GetLocalizedQuestNameByID(11545)] = false,	--"A Charitable Donation" --Gold for rep quest
 		[GetLocalizedQuestNameByID(11548)] = false,	--"Your Continued Support" --Gold for rep quest
 	
@@ -44,9 +44,9 @@ local function load()
 		[GetLocalizedQuestNameByID(30412)] = false,	--"A Blue Feather for Haohan"
 		[GetLocalizedQuestNameByID(30437)] = false,	--"A Blue Feather for Jogu"
 		[GetLocalizedQuestNameByID(30406)] = false,	--"A Blue Feather for Sho"
-		[GetLocalizedQuestNameByID(30431)] = false,	--"A Blue Feather for Tina"
+		--[GetLocalizedQuestNameByID(30431)] = false,	--"A Blue Feather for Tina"
 		--Non-ideal Jade Cat gifts
-		[GetLocalizedQuestNameByID(30399)] = false,	--"A Jade Cat for Chee Chee"
+		--[GetLocalizedQuestNameByID(30399)] = false,	--"A Jade Cat for Chee Chee"
 		[GetLocalizedQuestNameByID(30418)] = false,	--"A Jade Cat for Farmer Fung"
 		[GetLocalizedQuestNameByID(30387)] = false,	--"A Jade Cat for Gina"
 		[GetLocalizedQuestNameByID(30411)] = false,	--"A Jade Cat for Haohan"
@@ -55,16 +55,16 @@ local function load()
 		[GetLocalizedQuestNameByID(30405)] = false,	--"A Jade Cat for Sho"
 		[GetLocalizedQuestNameByID(30430)] = false,	--"A Jade Cat for Tina"
 		--Non-ideal Lovely Apple gifts
-		[GetLocalizedQuestNameByID(30398)] = false,	--"A Lovely Apple for Chee Chee"
+		--[GetLocalizedQuestNameByID(30398)] = false,	--"A Lovely Apple for Chee Chee"
 		[GetLocalizedQuestNameByID(30189)] = false,	--"A Lovely Apple for Ella"
 		[GetLocalizedQuestNameByID(30417)] = false,	--"A Lovely Apple for Farmer Fung"
 		[GetLocalizedQuestNameByID(30423)] = false,	--"A Lovely Apple for Fish"
 		[GetLocalizedQuestNameByID(30380)] = false,	--"A Lovely Apple for Gina"
 		[GetLocalizedQuestNameByID(30410)] = false,	--"A Lovely Apple for Haohan"
 		[GetLocalizedQuestNameByID(30392)] = false,	--"A Lovely Apple for Old Hillpaw"
-		[GetLocalizedQuestNameByID(30429)] = false,	--"A Lovely Apple for Tina"
+		--[GetLocalizedQuestNameByID(30429)] = false,	--"A Lovely Apple for Tina"
 		--Non-ideal Ruby Shard gifts
-		[GetLocalizedQuestNameByID(30397)] = false,	--"A Ruby Shard for Chee Chee"
+		--[GetLocalizedQuestNameByID(30397)] = false,	--"A Ruby Shard for Chee Chee"
 		[GetLocalizedQuestNameByID(30160)] = false,	--"A Ruby Shard for Ella"
 		[GetLocalizedQuestNameByID(30416)] = false,	--"A Ruby Shard for Farmer Fung"
 		[GetLocalizedQuestNameByID(30422)] = false,	--"A Ruby Shard for Fish"
@@ -73,7 +73,7 @@ local function load()
 		[GetLocalizedQuestNameByID(30391)] = false,	--"A Ruby Shard for Old Hillpaw"
 		[GetLocalizedQuestNameByID(30403)] = false,	--"A Ruby Shard for Sho"
 		--Non-ideal Marsh Lily gifts
-		[GetLocalizedQuestNameByID(30401)] = false,	--"A Marsh Lily for Chee Chee"
+		--[GetLocalizedQuestNameByID(30401)] = false,	--"A Marsh Lily for Chee Chee"
 		[GetLocalizedQuestNameByID(30383)] = false,	--"A Marsh Lily for Ella"
 		[GetLocalizedQuestNameByID(30426)] = false,	--"A Marsh Lily for Fish"
 		[GetLocalizedQuestNameByID(30413)] = false,	--"A Marsh Lily for Haohan"
@@ -81,6 +81,21 @@ local function load()
 		[GetLocalizedQuestNameByID(30395)] = false,	--"A Marsh Lily for Old Hillpaw"
 		[GetLocalizedQuestNameByID(30407)] = false,	--"A Marsh Lily for Sho"
 		[GetLocalizedQuestNameByID(30432)] = false,	--"A Marsh Lily for Tina"
+		
+		--== Warlords of Draenor ==--
+		--Seal of Tempered Fate
+		[GetLocalizedQuestNameByID(36054)] = false,	--"Sealing Fate: Gold"
+		[GetLocalizedQuestNameByID(37454)] = false,	--"Sealing Fate: Piles of Gold"
+		[GetLocalizedQuestNameByID(37455)] = false,	--"Sealing Fate: Immense Fortune of Gold"
+		[GetLocalizedQuestNameByID(36056)] = false,	--"Sealing Fate: Garrison Resources"
+		[GetLocalizedQuestNameByID(37456)] = false,	--"Sealing Fate: Stockpiled Garrison Resources"
+		[GetLocalizedQuestNameByID(37457)] = false,	--"Sealing Fate: Tremendous Garrison Resources"
+		[GetLocalizedQuestNameByID(36057)] = false,	--"Sealing Fate: Honor"
+		[GetLocalizedQuestNameByID(37458)] = false,	--"Sealing Fate: Extended Honor"
+		[GetLocalizedQuestNameByID(37459)] = false,	--"Sealing Fate: Monumental Honor"
+		[GetLocalizedQuestNameByID(36055)] = false,	--"Sealing Fate: Apexis Crystals"
+		[GetLocalizedQuestNameByID(37452)] = false,	--"Sealing Fate: Heap of Apexis Crystals"
+		[GetLocalizedQuestNameByID(37453)] = false,	--"Sealing Fate: Mountain of Apexis Crystals"
 	}
 
 	addon.db_defaults.profile.reward = {	--DB Defaults for ones with selectable rewards
