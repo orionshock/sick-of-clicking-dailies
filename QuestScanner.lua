@@ -163,78 +163,60 @@ local qTable = {
 	[37453] = weekly,	--"Sealing Fate: Mountain of Apexis Crystals"
 }
 
--- As of 2014-12-04 some quests always show an empty tooltip. Skip those.
--- TODO: Check later if fixed by Blizzard. If yes, also enable their default value in specialQuestManagement.lua again.
-local brokenQuests = {
-	[11545] = true,	--"A Charitable Donation"
-	[30398] = true,	--"A Lovely Apple for Chee Chee"
-	[30399] = true,	--"A Jade Cat for Chee Chee"
-	[30401] = true,	--"A Marsh Lily for Chee Chee"
-	[30397] = true,	--"A Ruby Shard for Chee Chee"
-	[30429] = true,	--"A Lovely Apple for Tina"
-	[30431] = true,	--"A Blue Feather for Tina"
-}
-
 local tt = CreateFrame("GameTooltip", "SOCDQuestScanTT", UIParent, "GameTooltipTemplate")
 local ttlt = _G[tt:GetName().."TextLeft1"]
-local ttScanFrame = CreateFrame("frame")
-ttScanFrame:Hide()
-do
-	local function ScanTheTooltip(self, ...)
-		--module:Debug("OnTooltipSetQuest", self.k)
-		
-		if (not self.k) or (not self.v) then
-			--module:Debug("Invalid Setup for SOCD Scanning")
-			ttScanFrame:Hide()
-		end
-		
-		local titleText = (ttlt:GetText() or ""):trim()
 
-		questNameByID[ tonumber(self.k) ] = titleText
-		questTypeByName[ titleText ] = self.v
-
-		--module:Debug("Cached:", self.k, "-->", titleText)
-
-		self.count = self.count + 1
-		
-		local nextKey, nextValue
-		while ((not nextKey) or (not nextValue)) do
-			nextKey, nextValue = next(self.table, self.k)
-		
-			if (not nextKey) or (not nextValue) then
-				--module:Debug("Reached end of Table. Total Scanned:", self.count)
-				module:SaveScannedQuestTitles()
-				return
-			end
-			
-			self.k = nextKey
-			self.v = nextValue
-			
-			if (brokenQuests[nextKey]) then
-				--module:Debug("Skipping quest with broken tooltip:", nextKey)
-				nextKey = nil
-				nextValue = nil
-			end
-		end
-		
-		--module:Debug("Showing scan frame for ", self.k, self.v)
-		ttScanFrame:Show()
+local function SetNextQuestHyperlink()
+	local nextKey, nextValue
+	
+	if tt.k then
+		nextKey, nextValue = next(tt.table, tt.k)
+	else
+		nextKey, nextValue = next(tt.table)
 	end
 
-	tt:SetScript("OnTooltipSetQuest", ScanTheTooltip)
-
-	local interval, currentDelay = .1, 0
-	ttScanFrame:SetScript("OnUpdate", function(self, elapsed)
-		--module:Debug("OnUpdate of SOCDQuestScanTT", currentDelay, elapsed, tt.questId)
-		currentDelay = currentDelay + elapsed
-		if currentDelay > interval then
-			self:Hide()
-			currentDelay = 0
-			tt:SetHyperlink("quest:"..tt.k)
+	if (not nextKey) or (not nextValue) then
+		--module:Debug("Reached end of Table. Total Scanned:", tt.count)
+		module:SaveScannedQuestTitles()
+		return
+	end
+	
+	tt.k = nextKey
+	tt.v = nextValue
+	
+	--module:Debug("Setting quest hyperlink for ", tt.k, tt.v)
+	tt:SetHyperlink("quest:"..tt.k)
+	
+	-- Some quests don't have a working tooltip since Patch 6.0.2.
+	-- We need to skip those, otherwise SOCD is never completely enabled.
+	C_Timer.After(5, function()
+		--module:Debug("Fallback timer elapsed")
+		if (not questNameByID[ tonumber(nextKey) ]) then
+			AddonParent:Print("Quest ID "..nextKey.." didn't return a valid tooltip, skipping.")
+			SetNextQuestHyperlink()
 		end
 	end)
-
 end
+
+local function ScanTheTooltip(self)
+	--module:Debug("OnTooltipSetQuest", self.k)
+	
+	if (not self.k) or (not self.v) then
+		--module:Debug("Invalid Setup for SOCD Scanning")
+	end
+	
+	local titleText = (ttlt:GetText() or ""):trim()
+
+	questNameByID[ tonumber(self.k) ] = titleText
+	questTypeByName[ titleText ] = self.v
+
+	--module:Debug("Cached:", self.k, "-->", titleText)
+
+	self.count = self.count + 1
+	C_Timer.After(0.1, SetNextQuestHyperlink)
+end
+
+tt:SetScript("OnTooltipSetQuest", ScanTheTooltip)
 
 function module:ScanQuestTooltips()
 	if scannerStarted then return end
@@ -242,19 +224,15 @@ function module:ScanQuestTooltips()
 	
 	AddonParent:Print(L["QuestScanner started, Sick of Clicking Dailies can be used once it's finished."])
 	
-	local id, qtype = next(qTable)
 	tt.table = qTable
-	tt.k = id
-	tt.v = qtype
 	tt.count = 0
 	
 	--module:Debug("Setting first quest hyperlink")
-	tt:SetHyperlink("quest:"..tt.k)
+	SetNextQuestHyperlink()
 end
 
 function module:StopScan(info)
 	--module:Debug("Stopping Tooltip Scanning?")
-	ttScanFrame:Hide()
 end
 
 function module:SaveScannedQuestTitles()
@@ -275,9 +253,9 @@ end
 
 function AddonParent.GetLocalizedQuestNameByID(self, id)
 	if id then
-		return questNameByID and questNameByID[id] or nil
+		return questNameByID and questNameByID[id] or "Unknown quest "..id
 	else
 		id = tonumber(self)
-		return questNameByID and questNameByID[id] or nil
+		return questNameByID and questNameByID[id] or "Unknown quest "..id
 	end
 end

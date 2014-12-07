@@ -22,11 +22,9 @@ end
 
 local function load()
 
-	--Quests that should be disabled by Default for one reason or another
-	--Those which are commented out are broken. See QuestScanner.lua table "brokenQuests".
-	addon.db_defaults.profile.status = {	
+	addon.db_defaults.profile.status = {	--Quests that should be disabled by Default for one reason or another
 		--== Burning Crusade ==--
-		--[GetLocalizedQuestNameByID(11545)] = false,	--"A Charitable Donation" --Gold for rep quest
+		[GetLocalizedQuestNameByID(11545)] = false,	--"A Charitable Donation" --Gold for rep quest
 		[GetLocalizedQuestNameByID(11548)] = false,	--"Your Continued Support" --Gold for rep quest
 	
 		--== Wrath of the Lich King ==--
@@ -44,9 +42,9 @@ local function load()
 		[GetLocalizedQuestNameByID(30412)] = false,	--"A Blue Feather for Haohan"
 		[GetLocalizedQuestNameByID(30437)] = false,	--"A Blue Feather for Jogu"
 		[GetLocalizedQuestNameByID(30406)] = false,	--"A Blue Feather for Sho"
-		--[GetLocalizedQuestNameByID(30431)] = false,	--"A Blue Feather for Tina"
+		[GetLocalizedQuestNameByID(30431)] = false,	--"A Blue Feather for Tina"
 		--Non-ideal Jade Cat gifts
-		--[GetLocalizedQuestNameByID(30399)] = false,	--"A Jade Cat for Chee Chee"
+		[GetLocalizedQuestNameByID(30399)] = false,	--"A Jade Cat for Chee Chee"
 		[GetLocalizedQuestNameByID(30418)] = false,	--"A Jade Cat for Farmer Fung"
 		[GetLocalizedQuestNameByID(30387)] = false,	--"A Jade Cat for Gina"
 		[GetLocalizedQuestNameByID(30411)] = false,	--"A Jade Cat for Haohan"
@@ -55,16 +53,16 @@ local function load()
 		[GetLocalizedQuestNameByID(30405)] = false,	--"A Jade Cat for Sho"
 		[GetLocalizedQuestNameByID(30430)] = false,	--"A Jade Cat for Tina"
 		--Non-ideal Lovely Apple gifts
-		--[GetLocalizedQuestNameByID(30398)] = false,	--"A Lovely Apple for Chee Chee"
+		[GetLocalizedQuestNameByID(30398)] = false,	--"A Lovely Apple for Chee Chee"
 		[GetLocalizedQuestNameByID(30189)] = false,	--"A Lovely Apple for Ella"
 		[GetLocalizedQuestNameByID(30417)] = false,	--"A Lovely Apple for Farmer Fung"
 		[GetLocalizedQuestNameByID(30423)] = false,	--"A Lovely Apple for Fish"
 		[GetLocalizedQuestNameByID(30380)] = false,	--"A Lovely Apple for Gina"
 		[GetLocalizedQuestNameByID(30410)] = false,	--"A Lovely Apple for Haohan"
 		[GetLocalizedQuestNameByID(30392)] = false,	--"A Lovely Apple for Old Hillpaw"
-		--[GetLocalizedQuestNameByID(30429)] = false,	--"A Lovely Apple for Tina"
+		[GetLocalizedQuestNameByID(30429)] = false,	--"A Lovely Apple for Tina"
 		--Non-ideal Ruby Shard gifts
-		--[GetLocalizedQuestNameByID(30397)] = false,	--"A Ruby Shard for Chee Chee"
+		[GetLocalizedQuestNameByID(30397)] = false,	--"A Ruby Shard for Chee Chee"
 		[GetLocalizedQuestNameByID(30160)] = false,	--"A Ruby Shard for Ella"
 		[GetLocalizedQuestNameByID(30416)] = false,	--"A Ruby Shard for Farmer Fung"
 		[GetLocalizedQuestNameByID(30422)] = false,	--"A Ruby Shard for Fish"
@@ -73,7 +71,7 @@ local function load()
 		[GetLocalizedQuestNameByID(30391)] = false,	--"A Ruby Shard for Old Hillpaw"
 		[GetLocalizedQuestNameByID(30403)] = false,	--"A Ruby Shard for Sho"
 		--Non-ideal Marsh Lily gifts
-		--[GetLocalizedQuestNameByID(30401)] = false,	--"A Marsh Lily for Chee Chee"
+		[GetLocalizedQuestNameByID(30401)] = false,	--"A Marsh Lily for Chee Chee"
 		[GetLocalizedQuestNameByID(30383)] = false,	--"A Marsh Lily for Ella"
 		[GetLocalizedQuestNameByID(30426)] = false,	--"A Marsh Lily for Fish"
 		[GetLocalizedQuestNameByID(30413)] = false,	--"A Marsh Lily for Haohan"
