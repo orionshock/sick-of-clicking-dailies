@@ -323,6 +323,19 @@ local rewardItems = {
 	[103643] = "Dew of Eternal Morning",
 	[103642] = "Book of the Ages",
 	[103641] = "Singing Crystal",
+	
+	--== Warlords of Draenor ==--
+	--Alchemy Experiment
+	[122453] = "Draenic Agility Potion",
+	[122451] = "Draenic Invisibility Potion",
+	[122454] = "Draenic Intellect Potion",
+	[122452] = "Draenic Swiftness Potion",
+	[122455] = "Draenic Strength Potion",
+	[122456] = "Draenic Armor Potion",
+	
+	--Scrap Meltdown
+	[120301] = "Armor Enhancement Token",
+	[120302] = "Weapon Enhancement Token",
 }
 	
 local function RequestItemInfo()

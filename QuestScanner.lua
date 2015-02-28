@@ -161,6 +161,11 @@ local qTable = {
 	[36055] = weekly,	--"Sealing Fate: Apexis Crystals"
 	[37452] = weekly,	--"Sealing Fate: Heap of Apexis Crystals"
 	[37453] = weekly,	--"Sealing Fate: Mountain of Apexis Crystals"
+	
+	--Garrison
+	[37270] = daily,	--"Alchemy Experiment"
+	[38175] = daily,	--"Scrap Meltdown"
+	[38188] = daily,	--"Scrap Meltdown"
 }
 
 local tt = CreateFrame("GameTooltip", "SOCDQuestScanTT", UIParent, "GameTooltipTemplate")

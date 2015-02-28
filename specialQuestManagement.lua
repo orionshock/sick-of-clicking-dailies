@@ -120,6 +120,11 @@ local function load()
 	
 		--== Mists of Pandaria ==--
 		[GetLocalizedQuestNameByID(33374)] = -1,	--"Path of the Mistwalker"
+	
+		--== Mists of Pandaria ==--
+		[GetLocalizedQuestNameByID(37270)] = -1, --"Alchemy Experiment"
+		[GetLocalizedQuestNameByID(38175)] = -1, --"Scrap Meltdown"
+		[GetLocalizedQuestNameByID(38188)] = -1, --"Scrap Meltdown"
 	}
 
 	--=== Multi-Quest Reward Tables===--
@@ -154,6 +159,20 @@ local function load()
 	-- 103642 "Book of the Ages"
 	-- 103641 "Singing Crystal"
 	local pathOfTheMistwalkerRewards = { [-1] = NONE, 103643, 103642, 103641 }
+	
+	--== Warlords of Draenor ==--
+	-- 122453 "Draenic Agility Potion"
+	-- 122451 "Draenic Invisibility Potion"
+	-- 122454 "Draenic Intellect Potion"
+	-- 122452 "Draenic Swiftness Potion"
+	-- 122455 "Draenic Strength Potion"
+	-- 122456 "Draenic Armor Potion"
+	local alchemyExperimentRewards = { [-1] = NONE, 122453, 122451, 122454, 122452, 122455, 122456 }
+	
+	-- 120301 "Armor Enhancement Token"
+	-- 120302 "Weapon Enhancement Token"
+	local scrapMeltdownRewards = { [-1] = NONE, 120301, 120302 }
+	
 
 	addon.db_defaults.global.reward = {	--DB Globals for reward list
 		--== Burning Crusade ==--
@@ -185,6 +204,11 @@ local function load()
 		
 		--== Mists of Pandaria ==--
 		[GetLocalizedQuestNameByID(33374)] = pathOfTheMistwalkerRewards, --"Path of the Mistwalker"
+		
+		--== Warlords of Draenor ==--
+		[GetLocalizedQuestNameByID(37270)] = alchemyExperimentRewards, --"Alchemy Experiment"
+		[GetLocalizedQuestNameByID(38175)] = scrapMeltdownRewards, --"Scrap Meltdown"
+		[GetLocalizedQuestNameByID(38188)] = scrapMeltdownRewards, --"Scrap Meltdown"
 	}
 	
 	local specialFixQuestList = {
