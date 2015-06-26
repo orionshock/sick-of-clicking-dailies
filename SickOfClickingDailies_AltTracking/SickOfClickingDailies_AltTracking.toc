@@ -1,4 +1,4 @@
-﻿## Interface: 60100
+﻿## Interface: 60200
 ## X-WoWI-ID: 7798
 
 ## Title: @localization(locale="enUS", key="Title-AltTracking", namespace="ToC")@

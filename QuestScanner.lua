@@ -19,11 +19,13 @@ local AddonName, AddonParent = ...
 local L = LibStub("AceLocale-3.0"):GetLocale(AddonName)
 local module = CreateFrame("frame")
 
-module:SetScript("OnEvent", function(self, event, ...)
+module:SetScript("OnEvent", function(self, event, arg1)
 	if IsLoggedIn() then
-		self:UnregisterEvent("PLAYER_LOGIN")
-		self:UnregisterEvent("ADDON_LOADED")
-		self:Startup()
+		if event == "PLAYER_LOGIN" or (event == "ADDON_LOADED" and arg1 == "SickOfClickingDailies") then
+			self:UnregisterEvent("PLAYER_LOGIN")
+			self:UnregisterEvent("ADDON_LOADED")
+			self:Startup()
+		end
 	end
 end)
 module:RegisterEvent("PLAYER_LOGIN")

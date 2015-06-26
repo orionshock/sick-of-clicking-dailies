@@ -18,6 +18,12 @@ local classColorTable = RAID_CLASS_COLORS
 local specialQuests = setmetatable({}, { _index = AddonParent.IsWeeklyQuest } )
 local db
 
+if AddonParent:IsEnabled() then
+	-- If the main addon was already enabled before this module was loaded (this happens if both are delayed loaded by AddonLoader)
+	-- this module has to be enabled manually because the main addon sets the default state of all modules to disabled.
+	module:Enable()
+end
+
 --@debug@
 function module:Debug(...)
 	local str = string.join(", ", tostringall(...) )
