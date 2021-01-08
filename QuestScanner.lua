@@ -70,7 +70,6 @@ local daily, weekly, repeatable = "d", "w", "r"
 -- Only quests with reward options and ones which are disabled by default need to be scanned, the rest will be built as needed.
 local qTable = {
 	--== Burning Crusade ==--
-	[11545] = daily,	--"A Charitable Donation" --Gold for rep quest
 	[11548] = daily,	--"Your Continued Support" --Gold for rep quest
 	[11379] = daily,	--"Super Hot Stew"
 	[11381] = daily,	--"Soup for the Soul"
@@ -158,8 +157,6 @@ local qTable = {
 	[37456] = weekly,	--"Sealing Fate: Stockpiled Garrison Resources"
 	[37457] = weekly,	--"Sealing Fate: Tremendous Garrison Resources"
 	[36057] = weekly,	--"Sealing Fate: Honor"
-	[37458] = weekly,	--"Sealing Fate: Extended Honor"
-	[37459] = weekly,	--"Sealing Fate: Monumental Honor"
 	[36055] = weekly,	--"Sealing Fate: Apexis Crystals"
 	[37452] = weekly,	--"Sealing Fate: Heap of Apexis Crystals"
 	[37453] = weekly,	--"Sealing Fate: Mountain of Apexis Crystals"
@@ -170,60 +167,58 @@ local qTable = {
 	[38188] = daily,	--"Scrap Meltdown"
 }
 
-local tt = CreateFrame("GameTooltip", "SOCDQuestScanTT", UIParent, "GameTooltipTemplate")
-local ttlt = _G[tt:GetName().."TextLeft1"]
 
-local function SetNextQuestHyperlink()
+function module:setQuestCache(titleText)
+	titleText = titleText:trim()
+
+	questNameByID[ tonumber(module.k) ] = titleText
+	questTypeByName[ titleText ] = module.v
+	--module:Debug("Cached:", module.k, "-->", titleText)
+	module.count = module.count + 1
+end
+
+
+
+function module:SetNextQuestHyperlink()
 	local nextKey, nextValue
 	
-	if tt.k then
-		nextKey, nextValue = next(tt.table, tt.k)
+	if module.k then
+		nextKey, nextValue = next(module.table, module.k)
 	else
-		nextKey, nextValue = next(tt.table)
+		nextKey, nextValue = next(module.table)
 	end
 
 	if (not nextKey) or (not nextValue) then
-		--module:Debug("Reached end of Table. Total Scanned:", tt.count)
+		--module:Debug("Reached end of Table. Total Scanned:", module.count)
 		module:SaveScannedQuestTitles()
 		return
 	end
 	
-	tt.k = nextKey
-	tt.v = nextValue
-	
-	--module:Debug("Setting quest hyperlink for ", tt.k, tt.v)
-	tt:SetHyperlink("quest:"..tt.k)
-	
-	-- Some quests don't have a working tooltip since Patch 6.0.2.
-	-- We need to skip those, otherwise SOCD is never completely enabled.
-	C_Timer.After(5, function()
-		--module:Debug("Fallback timer elapsed")
-		if (not questNameByID[ tonumber(nextKey) ]) then
-			AddonParent:Print("Quest ID "..nextKey.." didn't return a valid tooltip, skipping.")
-			SetNextQuestHyperlink()
-		end
-	end)
-end
+	module.k = nextKey
+	module.v = nextValue	
 
-local function ScanTheTooltip(self)
-	--module:Debug("OnTooltipSetQuest", self.k)
-	
-	if (not self.k) or (not self.v) then
-		--module:Debug("Invalid Setup for SOCD Scanning")
+	local titleText = C_QuestLog.GetTitleForQuestID(module.k)
+	if (titleText == nil) then
+		C_Timer.After(5, function()
+			--module:Debug("Fallback timer elapsed")
+
+			titleText = C_QuestLog.GetTitleForQuestID(module.k)
+			if (titleText ~= nil) then
+				module:setQuestCache(titleText)
+				module:SetNextQuestHyperlink()
+				return
+			end
+
+			if (not questNameByID[ tonumber(nextKey) ]) then
+				AddonParent:Print("Quest ID "..nextKey.." didn't return a valid tooltip, skipping.")
+				module:SetNextQuestHyperlink()
+			end
+		end)
+	else
+		module:setQuestCache(titleText)
+		C_Timer.After(0.1, module.SetNextQuestHyperlink)
 	end
-	
-	local titleText = (ttlt:GetText() or ""):trim()
-
-	questNameByID[ tonumber(self.k) ] = titleText
-	questTypeByName[ titleText ] = self.v
-
-	--module:Debug("Cached:", self.k, "-->", titleText)
-
-	self.count = self.count + 1
-	C_Timer.After(0.1, SetNextQuestHyperlink)
 end
-
-tt:SetScript("OnTooltipSetQuest", ScanTheTooltip)
 
 function module:ScanQuestTooltips()
 	if scannerStarted then return end
@@ -231,11 +226,16 @@ function module:ScanQuestTooltips()
 	
 	AddonParent:Print(L["QuestScanner started, Sick of Clicking Dailies can be used once it's finished."])
 	
-	tt.table = qTable
-	tt.count = 0
+	--try and prime the clients quest cache
+	for k, v in pairs(qTable) do
+		C_QuestLog.GetTitleForQuestID(k)
+	end
+
+	module.table = qTable
+	module.count = 0
 	
 	--module:Debug("Setting first quest hyperlink")
-	SetNextQuestHyperlink()
+	module:SetNextQuestHyperlink()
 end
 
 function module:StopScan(info)
