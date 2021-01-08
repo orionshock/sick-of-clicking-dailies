@@ -1,0 +1,14 @@
+SOCD2020 - Classic - Planning
+
+It's Still Classic, so no daily quests actually available.
+Best we get is repeatables... However the API system has changed ALOT
+
+Don't need to scan tooltips anymore C_QuestLog.GetQuestInfo() takes Quest ID's and returns quest names localized.
+GetAvailableQuestInfo() & GetGossipOptions() have different return values (7 now instead of 3, a lot of API is like this now)
+
+Dont scan tips anymore! use the API
+All Quests Will be disabled by default! (again, i don't want to be touching this thing every single patch!)
+Dynamically generate options as quests are discovered
+ -Only Really have options for quests that are enabled or have selection of rewards & create dynamically.
+ -Means we need a UI window, likely created by hand with a check box and ?DropDown... 
+	(-Can i cheat and use AceGUI or AceOptions?)
