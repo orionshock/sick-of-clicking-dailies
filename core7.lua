@@ -24,6 +24,10 @@ if projectVersion:find("project") then
 end
 
 
+local LE_QUEST_FREQUENCY_DAILY=1
+local LE_QUEST_FREQUENCY_DEFAULT=0
+local LE_QUEST_FREQUENCY_WEEKLY=2
+
 SOCD = LibStub("AceAddon-3.0"):NewAddon(addon, addonName, "AceEvent-3.0", "AceConsole-3.0")
 addon.version = projectVersion.."-"..projectRevision
 
@@ -178,40 +182,80 @@ local function scanQuestsAvailable(title, level, isTrivial, frequency, isRepeata
 	return scanQuestsAvailable(...)
 end
 
-local function proccessGossipOptions( ... )
-	for i = 1, select("#", ...), 2 do
-		local txt, tpe = select(i, ...)
-		if tpe == "gossip" then
-			if db.profile.enabledGossip[txt] then
-				SelectGossipOption( (i+1)/2 )
+local function proccessGossipOptions( )
+	local options = C_GossipInfo.GetOptions()
+
+	for i = 1, table.getn(options) do
+		local GossipOptionUIInfo = options[i]
+		--print(GossipOptionUIInfo.type)
+		if GossipOptionUIInfo.type == "gossip" then
+			--print(GossipOptionUIInfo.name)
+			if db.profile.enabledGossip[GossipOptionUIInfo.name] then
+				--Debug("Found gossip we should click:", GossipOptionUIInfo.name)
+				C_GossipInfo.SelectOption( (i+1)/2 )
 			end
 		end
 	end
 end
 
+
+--These functions are really hacky, but much easier then refactoring the functions the datas used to feed into
+local function unpackGetAvailableQuests(GossipQuestUIInfo)
+
+	local tabl = {}
+	local avail =  GossipQuestUIInfo;
+	for i = 1, #avail do
+		table.insert(tabl,avail[i].title)
+		table.insert(tabl,avail[i].questLevel)
+		table.insert(tabl,avail[i].isTrivial)
+		table.insert(tabl,avail[i].frequency)
+		table.insert(tabl,avail[i].repeatable)
+		table.insert(tabl,avail[i].isLegendary)
+	end
+
+	return unpack(tabl)
+end
+
+local function unpackGetActiveQuests(GossipQuestUIInfo)
+
+	local tabl = {}
+	local avail =  GossipQuestUIInfo;
+	for i = 1, #avail do
+		table.insert(tabl,avail[i].title)
+		table.insert(tabl,avail[i].questLevel)
+		table.insert(tabl,avail[i].isTrivial)
+		table.insert(tabl,avail[i].isComplete)
+		table.insert(tabl,avail[i].isLegendary)
+	end
+
+	return unpack(tabl)
+end
+
 function addon:GOSSIP_SHOW(event)
 	--Debug(event)
+	
 
-	local Nindex, Ntitle = procGetGossipAvailableQuests(1, GetGossipAvailableQuests() )
-	local Aindex, Atitle, AisComplete = procGetGossipActiveQuests(1, GetGossipActiveQuests() )
+	
+	local Nindex, Ntitle = procGetGossipAvailableQuests(1, unpackGetAvailableQuests(C_GossipInfo.GetAvailableQuests()) )
+	local Aindex, Atitle, AisComplete = procGetGossipActiveQuests(1, unpackGetActiveQuests(C_GossipInfo.GetActiveQuests()) )
 	
 	if IsShiftKeyDown() then 
-		scanQuestsAvailable(GetGossipAvailableQuests())
+		scanQuestsAvailable(C_GossipInfo.GetAvailableQuests())
 		return
 	end
 	if Nindex then
 		--Debug("Found Available, Quest:", Ntitle, "~IsDisabled:", self:IsDisabled(Ntitle) )
-		return SelectGossipAvailableQuest(Nindex)
+		return C_GossipInfo.SelectAvailableQuest(Nindex)
 	end
 
 
 	if Aindex then
 		--Debug("Found Active Quest that is Complete:", Atitle, "~IsComplete:", AisComplete, "~IsDisabled:", self:IsDisabled(Atitle) )
-		return SelectGossipActiveQuest(Aindex)
+		return C_GossipInfo.SelectActiveQuest(Aindex)
 	end
 
 	--Debug("Proccessing Gossip ")
-	proccessGossipOptions( GetGossipOptions() )
+	proccessGossipOptions( )
 end
 
 --Shown when the NPC Dosn't want to talk
@@ -370,7 +414,8 @@ do		-- === Weekly Reset Function ===
 	local diff = {}
 	function addon:GetNextWeeklyReset()
 		local cur_day, cur_month, cur_year, cur_wDay = tonumber(date("%d")), tonumber(date("%m")), tonumber(date("%Y")), tonumber(date("%w"))
-		local monthNumDay = select(3, CalendarGetMonth(0))
+		local monthInfo = C_Calendar.GetMonthInfo(0)
+		local monthNumDay = monthInfo.numDays
 		if (cur_wDay == 2) or ( is_eu and (cur_wDay == 3) ) then	--If on Reset Day
 			if cur_day == date("%d", time()+GetQuestResetTime() ) then	--and Next Quest Reset is on today
 				return GetQuestResetTime()	-- Return Next Daily Reset because it will happen then regardless.

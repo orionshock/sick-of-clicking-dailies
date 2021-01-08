@@ -24,7 +24,6 @@ local function load()
 
 	addon.db_defaults.profile.status = {	--Quests that should be disabled by Default for one reason or another
 		--== Burning Crusade ==--
-		[GetLocalizedQuestNameByID(11545)] = false,	--"A Charitable Donation" --Gold for rep quest
 		[GetLocalizedQuestNameByID(11548)] = false,	--"Your Continued Support" --Gold for rep quest
 	
 		--== Wrath of the Lich King ==--
@@ -89,8 +88,6 @@ local function load()
 		[GetLocalizedQuestNameByID(37456)] = false,	--"Sealing Fate: Stockpiled Garrison Resources"
 		[GetLocalizedQuestNameByID(37457)] = false,	--"Sealing Fate: Tremendous Garrison Resources"
 		[GetLocalizedQuestNameByID(36057)] = false,	--"Sealing Fate: Honor"
-		[GetLocalizedQuestNameByID(37458)] = false,	--"Sealing Fate: Extended Honor"
-		[GetLocalizedQuestNameByID(37459)] = false,	--"Sealing Fate: Monumental Honor"
 		[GetLocalizedQuestNameByID(36055)] = false,	--"Sealing Fate: Apexis Crystals"
 		[GetLocalizedQuestNameByID(37452)] = false,	--"Sealing Fate: Heap of Apexis Crystals"
 		[GetLocalizedQuestNameByID(37453)] = false,	--"Sealing Fate: Mountain of Apexis Crystals"
@@ -214,6 +211,109 @@ local function load()
 	local specialFixQuestList = {
 		[11006] = true,	--More Shadow Dust
 		[12618] = true, --Blessing of Zim'Torga
+
+
+		--Shadowland callings
+		[60450] = true,
+		[60452] = true,
+		[60454] = true,
+		[60456] = true,
+		[60449] = true,
+		[60395] = true,
+		[60430] = true,
+		[60418] = true,
+		[60435] = true,
+		[60455] = true,
+		[60424] = true,
+		[60415] = true,
+		[60448] = true,
+		[60403] = true,
+		[60400] = true,
+		[62692] = true,
+		[62693] = true,
+		[60420] = true,
+		[60392] = true,
+		[60422] = true,
+		[62691] = true,
+		[60434] = true,
+		[60388] = true,
+		[60383] = true,
+		[60442] = true,
+		[62694] = true,
+		[60441] = true,
+		[60447] = true,
+		[60410] = true,
+		[60423] = true,
+		[60419] = true,
+		[60401] = true,
+		[60439] = true,
+		[60437] = true,
+		[60425] = true,
+		[60431] = true,
+		[60458] = true,
+		[60429] = true,
+		[60397] = true,
+		[60404] = true,
+		[60444] = true,
+		[60408] = true,
+		[60446] = true,
+		[60445] = true,
+		[60387] = true,
+		[60457] = true,
+		[60407] = true,
+		[60402] = true,
+		[60391] = true,
+		[60432] = true,
+		[60421] = true,
+		[60427] = true,
+		[60396] = true,
+		[60459] = true,
+		[60460] = true,
+		[60414] = true,
+		[60416] = true,
+		[60393] = true,
+		[60386] = true,
+		[60438] = true,
+		[60405] = true,
+		[60399] = true,
+		[60443] = true,
+		[60426] = true,
+		[60390] = true,
+		[60398] = true,
+		[60465] = true,
+		[60412] = true,
+		[60409] = true,
+		[60385] = true,
+		[60433] = true,
+		[60384] = true,
+		[60436] = true,
+		[60358] = true,
+		[60417] = true,
+		[60380] = true,
+		[60440] = true,
+		[60377] = true,
+		[60381] = true,
+		[60372] = true,
+		[60411] = true,
+		[60406] = true,
+		[60464] = true,
+		[60394] = true,
+		[60382] = true,
+		[60369] = true,
+		[60389] = true,
+		[60463] = true,
+		[60378] = true,
+		[60462] = true,
+		[60365] = true,
+		[60375] = true,
+		[60373] = true,
+		[60376] = true,
+		[60364] = true,
+		[60371] = true,
+		[60379] = true,
+		[60363] = true,
+		[60370] = true,
+		[60374] = true
 	}
 
 	function addon:IsChoiceQuest(name)
