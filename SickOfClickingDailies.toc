@@ -1,5 +1,4 @@
 ﻿## Interface: 90002
-## X-WoWI-ID: 7798
 
 ## Title: @localization(locale="enUS", key="Title", namespace="ToC")@
 ## Title-frFR: @localization(locale="frFR", key="Title", namespace="ToC")@
@@ -26,7 +25,7 @@
 #@end-debug@
 
 ## Author: OrionShock
-## Credits: cremor (maintainer, deDE translation), Cinedelle (frFR translation), wowuicn (zhCN translation), BNSSNB (zhTW translation)
+## Credits: Cexikitin (Maintainer in 2021), cremor(Maintainer 2010-2015)
 ## Version: @project-version@
 ## X-Email: Orionshock@gmail.com
 
@@ -60,5 +59,3 @@ options.lua
 #@debug@
 SickOfClickingDailies_AltTracking\module.xml
 #@end-debug@
-
-#TEST COMMIT -- 10yrs later :)
