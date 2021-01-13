@@ -321,6 +321,20 @@ local function load()
 		[62286] = true,
 		[62288] = true,
 		[62285] = true,
+		--Ve'nari weekly quests
+		[63206] = true,
+		[60775] = true,
+		[61088] = true,
+		[60622] = true,
+		[61079] = true,
+		[60646] = true,
+		[60762] = true,
+		[61104] = true,
+		[61103] = true,
+		[61075] = true,
+		[61765] = true,
+		[62234] = true,
+		[62214] = true,
 
 	}
 
