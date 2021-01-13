@@ -313,7 +313,15 @@ local function load()
 		[60379] = true,
 		[60363] = true,
 		[60370] = true,
-		[60374] = true
+		[60374] = true,
+
+		--Shadowlands pvp quests
+		[62287] = true,
+		[62284] = true,
+		[62286] = true,
+		[62288] = true,
+		[62285] = true,
+
 	}
 
 	function addon:IsChoiceQuest(name)
