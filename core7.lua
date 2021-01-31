@@ -188,13 +188,13 @@ local function proccessGossipOptions( )
 	for i = 1, table.getn(options) do
 		local GossipOptionUIInfo = options[i]
 		--print(GossipOptionUIInfo.type)
-		if GossipOptionUIInfo.type == "gossip" then
+		--if GossipOptionUIInfo.type == "gossip" then
 			--print(GossipOptionUIInfo.name)
 			if db.profile.enabledGossip[GossipOptionUIInfo.name] then
 				--Debug("Found gossip we should click:", GossipOptionUIInfo.name)
 				C_GossipInfo.SelectOption( (i+1)/2 )
 			end
-		end
+		--end
 	end
 end
 
