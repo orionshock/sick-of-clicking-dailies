@@ -42,3 +42,6 @@ tools-used:
 
 move-folders:
     SickOfClickingDailies/SickOfClickingDailies_AltTracking: SickOfClickingDailies_AltTracking
+
+ignore: 
+    - README.md
