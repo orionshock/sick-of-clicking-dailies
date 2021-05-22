@@ -33,7 +33,7 @@ externals:
         url: svn://repos.wowace.com/wow/ace3/mainline/trunk/AceLocale-3.0
         tag: latest
     libs/LibQTip-1.0:
-        url: git://repos.wowace.com/wow/libqtip-1-0
+        url: git://repos.wowace.com/wow/libqtip-1-0/mainline.git
         tag: latest
 
 enable-nolib-creation: no
