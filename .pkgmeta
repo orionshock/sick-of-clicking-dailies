@@ -36,6 +36,8 @@ externals:
         url: svn://repos.wowace.com/wow/libqtip-1-0/mainline/trunk
         tag: latest
 
+enable-nolib-creation: no
+
 tools-used:
     - libdatabroker-1-1
     - findglobals
