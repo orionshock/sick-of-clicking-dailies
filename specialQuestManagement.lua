@@ -335,7 +335,30 @@ local function load()
 		[61765] = true,
 		[62234] = true,
 		[62214] = true,
-
+		--covenant-assaults
+		[63827] = true,
+		[63829] = true,
+		[64106] = true,
+		[63863] = true,
+		[63864] = true,
+		[63545] = true,
+		[63951] = true,
+		[63594] = true,
+		[63840] = true,
+		[63772] = true,
+		[63837] = true,
+		[63773] = true,
+		[63970] = true,
+		[63833] = true,
+		[63973] = true,
+		[63835] = true,
+		[63972] = true,
+		[63969] = true,
+		[63952] = true,
+		[63858] = true,
+		[63669] = true,
+		[63774] = true,
+		[63974] = true,
 	}
 
 	function addon:IsChoiceQuest(name)
